@@ -1,0 +1,7 @@
+.userSettings {
+  display: flex;
+
+  button {
+    padding: 0.7vw;
+  }
+}
