@@ -1,15 +1,20 @@
+import { Route, Routes } from "react-router-dom";
+import { ProductList } from "./components/ProductList/ProductList";
 import "./App.css";
-
 import { Header } from "./components/Header/Header";
-import { HomeHero } from "./components/HomeHero/HomeHero";
-import Products from "./components/Products";
+import { HomePage } from "./Pages/HomePage/HomePage";
+import { CheckoutPage } from "./components/CheckoutPage";
 
 function App() {
   return (
     <>
       <Header />
-      <HomeHero />
-      <Products />
+
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+      </Routes>
+      <ProductList />
+      <CheckoutPage />
     </>
   );
 }

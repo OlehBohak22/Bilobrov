@@ -3,5 +3,11 @@
   "references": [
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
-  ]
+  ],
+  "compilerOptions": {
+    "moduleResolution": "node", // Пошук модулів у стилі Node.js
+    "esModuleInterop": true, // Для підтримки імпортів ESM
+    "allowSyntheticDefaultImports": true, // Дозволяє імпорти без `default`
+    "skipLibCheck": true // Ігнорує перевірку типів у бібліотеках
+  }
 }

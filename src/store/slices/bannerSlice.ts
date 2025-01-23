@@ -1,9 +1,7 @@
-// store/slices/bannerSlice.ts
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const API_URL = "https://bilobrov.projection-learn.website/wp-json/wp/v2/";
 const consumerKey = "ck_f6e14983147c7a65ff3dd554625c6ae3069dbd5b";
-
 const consumerSecret = "cs_f9430f1ca298c36b0001d95521253a5b1deb2fc5";
 
 // Заголовок авторизації
@@ -13,14 +11,25 @@ headers.set(
   "Basic " + btoa(`${consumerKey}:${consumerSecret}`)
 );
 
+// Типи для стану
+interface BannerState {
+  items: []; // Змініть на конкретний тип, якщо є деталі про структуру
+  loading: boolean;
+  error: string | null;
+}
+
+const initialState: BannerState = {
+  items: [],
+  loading: false,
+  error: null,
+};
+
 // Асинхронний екшн для отримання банерів
 export const fetchBanner = createAsyncThunk("banners/fetchBanner", async () => {
   const response = await fetch(`${API_URL}banner`, {
     method: "GET",
     headers: headers,
   });
-
-  console.log(response);
 
   if (!response.ok) {
     throw new Error("Failed to fetch banners");
@@ -31,11 +40,7 @@ export const fetchBanner = createAsyncThunk("banners/fetchBanner", async () => {
 // Слайс для роботи з банерами
 const bannerSlice = createSlice({
   name: "banners",
-  initialState: {
-    items: [],
-    loading: false,
-    error: null,
-  },
+  initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
@@ -49,7 +54,7 @@ const bannerSlice = createSlice({
       })
       .addCase(fetchBanner.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message;
+        state.error = action.error.message || "An unknown error occurred";
       });
   },
 });

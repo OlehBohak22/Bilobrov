@@ -1,0 +1,7 @@
+.banners-swiper .swiper-pagination-bullet-active {
+  background-color: #fff;
+}
+
+.banners-swiper .swiper-pagination {
+  bottom: 2vw !important;
+}

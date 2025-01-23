@@ -1,6 +1,7 @@
 import { Layout } from "../Layout/Layout";
 import s from "./Header.module.css";
 import { HeaderUserSettings } from "../HeaderUserSettings/HeaderUserSettings";
+import { NavLink } from "react-router";
 
 export const Header = () => {
   return (
@@ -33,7 +34,6 @@ export const Header = () => {
               width="194"
               height="28"
               viewBox="0 0 194 28"
-              fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
               <g clipPath="url(#clip0_959_3585)">
@@ -49,6 +49,43 @@ export const Header = () => {
           </div>
 
           <HeaderUserSettings />
+        </div>
+
+        <div className={s.headerBottomLine}>
+          <nav>
+            <ul>
+              <li>
+                <NavLink to="/">Акції</NavLink>
+              </li>
+              <li>
+                <NavLink to="/">Новинки</NavLink>
+              </li>
+              <li>
+                <NavLink to="/">Бренди</NavLink>
+              </li>
+              <li>
+                <NavLink to="/">Обличчя</NavLink>
+              </li>
+              <li>
+                <NavLink to="/">Волосся</NavLink>
+              </li>
+              <li>
+                <NavLink to="/">Тіло</NavLink>
+              </li>
+              <li>
+                <NavLink to="/">Декоративна косметика</NavLink>
+              </li>
+              <li>
+                <NavLink to="/">Вітаміни</NavLink>
+              </li>
+              <li>
+                <NavLink to="/">Подарункові сертифікати</NavLink>
+              </li>
+              <li>
+                <NavLink to="/">Про нас</NavLink>
+              </li>
+            </ul>
+          </nav>
         </div>
       </Layout>
     </header>

@@ -1,5 +1,44 @@
 .header {
-  background-color: brown;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  transition: background 0.3s;
+  z-index: 9999999;
+
+  a,
+  span {
+    transition: color 0.3s;
+  }
+
+  path {
+    transition: stroke 0.3s;
+  }
+}
+
+.header:hover {
+  background-color: #ffffff;
+}
+
+.header:hover a,
+.header:hover span {
+  color: black;
+}
+
+.header:hover path {
+  stroke: rgb(0, 0, 0);
+}
+
+.header:hover .headerLogo {
+  filter: invert();
+  path {
+    stroke: #ffffff;
+  }
+
+  /* rect {
+    fill: black;
+  } */
 }
 
 .menuBtn {
@@ -35,4 +74,38 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.headerBottomLine {
+  ul {
+    display: flex;
+    justify-content: space-around;
+
+    a {
+      position: relative;
+      display: block;
+      font-family: Manrope, sans-serif;
+      font-size: 0.8vw;
+      font-weight: 600;
+      line-height: 0.8vw;
+      text-transform: uppercase;
+      padding: 1.25vw;
+    }
+
+    a::before {
+      position: absolute;
+      content: "";
+      bottom: -0.1vw;
+      left: 0;
+      width: 100%;
+      height: 0.2vw;
+      background-color: black;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    a:hover::before {
+      opacity: 1;
+    }
+  }
 }
