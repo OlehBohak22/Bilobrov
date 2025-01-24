@@ -20,3 +20,9 @@ a {
   text-decoration: none;
   color: #ffffff;
 }
+
+img {
+  max-width: 100%;
+  object-fit: cover;
+  height: max-content;
+}

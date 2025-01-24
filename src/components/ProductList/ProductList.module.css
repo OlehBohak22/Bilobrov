@@ -1,3 +1,85 @@
+.section {
+  padding: 8.3vw 0;
+}
+
 .productList {
   display: flex;
+  gap: 0.7vw;
+
+  li {
+    flex-basis: calc((100% - 4 * 0.7vw) / 5);
+  }
+}
+
+.navigationContainer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.prevButton,
+.nextButton {
+  background-color: #fff;
+  display: flex;
+  padding: 1vw;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 16px;
+  color: #333;
+  transition: background-color 0.3s ease;
+
+  svg {
+    fill: black;
+    width: 1.2vw;
+  }
+}
+
+.prevButton:hover,
+.nextButton:hover {
+  background-color: #f4f4f4;
+}
+
+.swiperController {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 2vw;
+}
+
+.tabsController {
+  display: flex;
+  gap: 2.1vw;
+
+  li {
+    font-family: Manrope, sans-serif;
+    font-size: 1.4vw;
+    font-weight: 500;
+    line-height: 1.4vw;
+    color: rgba(26, 26, 26, 0.1);
+  }
+}
+
+.tabsController {
+  display: flex;
+  gap: 20px;
+}
+
+.tabItem {
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.tabItem:hover {
+  text-decoration: underline;
+}
+
+.activeTab {
+  font-family: Playfair !important;
+  font-size: 1.6vw !important;
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.6vw !important;
+  color: black !important;
 }

@@ -1,0 +1,133 @@
+.productItem {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 31.5vw;
+}
+
+.productItem:hover img {
+  transform: scale(1.2);
+}
+
+.productImage {
+  position: relative;
+  max-height: 17.7vw; /* або можете встановити конкретну висоту */
+  height: 100%; /* встановлюємо висоту контейнера */
+  width: 100%; /* контейнер займає всю ширину */
+  overflow: hidden;
+  margin-bottom: 0.8vw;
+}
+
+.wishList::before {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  content: "";
+  width: 0.1vw;
+  height: 0.1vw;
+  opacity: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(214, 61, 68, 1);
+  transition: width 0.3s, height 0.3s;
+}
+
+.cart {
+  display: flex;
+  opacity: 0;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 1.2vw;
+  right: 1.2vw;
+  width: 2.8vw;
+  height: 2.8vw;
+  border-radius: 50%;
+  background-color: rgba(214, 61, 68, 1);
+  transition: opacity 0.3s;
+
+  svg {
+    width: 1.1vw;
+  }
+}
+
+.productItem:hover .cart {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.wishList {
+  position: absolute;
+  top: 1.2vw;
+  right: 1.2vw;
+  cursor: pointer;
+
+  svg {
+    fill: black;
+    width: 1.2vw;
+    transition: fill 0.3s;
+  }
+}
+
+.wishList:hover::before {
+  width: 2.5vw;
+  height: 2.5vw;
+  opacity: 1;
+}
+
+.wishList:hover svg {
+  fill: rgba(214, 61, 68, 1);
+}
+
+.productImage img {
+  object-fit: cover; /* це забезпечить, щоб зображення покривало всю область */
+  width: 100%;
+  height: 100%; /* робимо висоту 100% для зображення */
+  transition: transform 0.3s;
+}
+
+.productBrand {
+  font-family: Manrope, sans-serif;
+  font-size: 0.7vw;
+  font-weight: 600;
+  line-height: 0.7vw;
+  letter-spacing: 0.12em;
+  margin-bottom: 0.4vw;
+}
+
+.productName {
+  font-family: Manrope, sans-serif;
+  font-size: 0.9vw;
+  font-weight: 600;
+  line-height: 1.3vw;
+}
+
+.currency {
+  font-family: Manrope, sans-serif;
+  font-size: 0.9vw;
+  font-weight: 500;
+  line-height: 0.9vw;
+  margin-right: 0.2vw;
+}
+
+.salePrice {
+  font-family: Manrope, sans-serif;
+  font-size: 0.9vw;
+  font-weight: 600;
+  line-height: 0.9vw;
+  margin-right: 0.2vw;
+}
+
+.regularPrice {
+  font-family: Manrope, sans-serif;
+  font-size: 0.8vw;
+  font-weight: 500;
+  line-height: 0.8vw;
+  letter-spacing: -0.01em;
+  text-decoration: line-through;
+  color: rgba(167, 169, 170, 1);
+}
+
+.red {
+  color: rgba(214, 61, 68, 1); /* зміна кольору тексту на червоний */
+}
