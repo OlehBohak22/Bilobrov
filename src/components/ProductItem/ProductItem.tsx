@@ -47,8 +47,8 @@ export const ProductItem: React.FC<ProductItemProps> = ({ info }) => {
                 strokeLinecap="square"
               />
               <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
+                fillRule="evenodd"
+                clipRule="evenodd"
                 d="M18.2164 6.29297L19.0309 19.7086L2.9707 19.7086L3.78523 6.29297L18.2164 6.29297Z"
                 stroke="white"
                 strokeWidth="1.3"

@@ -1,0 +1,163 @@
+.section {
+  position: relative;
+  padding: 6.2vw 0;
+  background-color: rgba(214, 61, 68, 1);
+
+  h2 {
+    color: #ffffff;
+    width: 13vw;
+
+    span:nth-child(1) {
+      font-family: Playfair, serif;
+      font-size: 2.7vw;
+      font-style: italic;
+      font-weight: 400;
+      line-height: 3.5vw;
+    }
+
+    span:nth-child(2) {
+      display: block;
+      margin-top: -1vw;
+      font-family: Manrope, sans-serif;
+      font-size: 2vw;
+      font-weight: 500;
+      line-height: 2.9vw;
+      text-indent: 3.5vw;
+    }
+  }
+}
+
+.sectionLineSvg {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 73vw;
+  height: 8vw;
+  pointer-events: none;
+}
+
+.navigationContainer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.prevButton,
+.nextButton {
+  display: flex;
+  padding: 1vw;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 16px;
+  color: #333;
+  transition: background-color 0.3s ease;
+
+  svg {
+    fill: rgb(255, 255, 255);
+    width: 1.2vw;
+  }
+}
+
+.prevButton:hover,
+.nextButton:hover {
+  background-color: #f8f8f81e;
+}
+
+.brandItem {
+  h4 {
+    text-transform: uppercase;
+    font-family: Manrope;
+    font-size: 0.9vw;
+    font-weight: 600;
+    line-height: 1.2vw;
+    letter-spacing: 0.09em;
+    color: #ffffff;
+    text-align: center;
+  }
+
+  img {
+    transform: scale(0.7);
+    transition: transform 0.3s;
+  }
+
+  .brandImageCircle {
+    position: relative;
+    margin: 0 auto;
+    width: 6.5vw;
+    height: 6.5vw;
+    background-color: rgba(232, 232, 232, 1);
+    border-radius: 50%;
+    margin-bottom: 1.25vw;
+  }
+
+  .brandImageCircle::before {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    content: "";
+    width: 110%;
+    height: 110%;
+    border: 2px solid rgba(255, 255, 255, 1);
+    border-radius: 50%;
+    transform: translateX(-50%) translateY(-50%);
+  }
+}
+
+.brandItem:hover img {
+  transform: scale(1);
+}
+
+.swiper {
+  padding: 0.4vw 0;
+}
+
+.brandLink {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.2vw;
+  width: fit-content;
+
+  span {
+    font-family: Manrope, sans-serif;
+    font-size: 0.9vw;
+    font-weight: 500;
+    line-height: 1.2vw;
+    transition: transform 0.3s;
+  }
+
+  .svg {
+    width: 1.6vw;
+    height: 1.6vw;
+    transition: transform 0.3s;
+  }
+
+  .line {
+    position: absolute;
+    top: -65%;
+    left: -65%;
+    width: 15.3vw;
+    height: 3.7vw;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+}
+
+.brandLink:hover span {
+  transform: translateX(2vw);
+}
+
+.brandLink:hover .svg {
+  transform: translateX(-5vw);
+}
+
+.brandLink:hover .line {
+  opacity: 1;
+}
+
+.bottomController {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

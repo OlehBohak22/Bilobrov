@@ -11,7 +11,9 @@ export interface ProductInfo {
   key: string;
   categories: Category[];
   regular_price: "";
+  total_sales: number;
   sale_price: "";
+  date_created: string;
   images: { src: string; alt: string }[];
   meta_data: {
     key: string;

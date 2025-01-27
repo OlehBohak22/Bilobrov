@@ -11,12 +11,6 @@ import s from "./ProductList.module.css";
 import { ProductInfo } from "../../types/productTypes";
 import { Layout } from "../Layout/Layout";
 
-interface Category {
-  id: number;
-  name: string;
-  slug: string;
-}
-
 interface ProductListProps {
   categories: string[];
   defaultCategory?: string;
@@ -24,7 +18,7 @@ interface ProductListProps {
 
 export const ProductList = ({
   categories,
-  defaultCategory = "Без категорії",
+  defaultCategory = "Новинки",
 }: ProductListProps) => {
   const dispatch = useDispatch<AppDispatch>();
   const [activeTab, setActiveTab] = useState(defaultCategory);
@@ -34,13 +28,55 @@ export const ProductList = ({
     loading,
     error,
   } = useSelector((state: RootState) => state.products);
+
   useEffect(() => {
     dispatch(fetchProducts());
   }, [dispatch]);
 
-  const filteredProducts = products.filter((product: ProductInfo) =>
-    product.categories.some((category: Category) => category.name === activeTab)
-  );
+  const filterProducts = (
+    products: ProductInfo[],
+    tab: string
+  ): ProductInfo[] => {
+    let filteredProducts: ProductInfo[];
+
+    switch (tab) {
+      case "Новинки":
+        // Сортуємо всі продукти за датою додавання та беремо 10 останніх
+        filteredProducts = [...products].sort(
+          (a, b) =>
+            new Date(b.date_created).getTime() -
+            new Date(a.date_created).getTime() // Сортуємо за датою (найновіші спочатку)
+        );
+        break;
+
+      case "Бестселлери":
+        // Сортуємо за кількістю продажів
+        filteredProducts = [...products].sort(
+          (a, b) => Number(b.total_sales) - Number(a.total_sales)
+        );
+        break;
+
+      case "Акції":
+        // Фільтруємо продукти зі знижкою та сортуємо за датою
+        filteredProducts = products
+          .filter((product) => product.sale_price && product.regular_price)
+          .sort(
+            (a, b) =>
+              new Date(b.date_created).getTime() -
+              new Date(a.date_created).getTime()
+          );
+        break;
+
+      default:
+        // Повертаємо всі продукти
+        filteredProducts = [...products];
+        break;
+    }
+
+    return filteredProducts.slice(0, 10); // Беремо перші 10 продуктів
+  };
+
+  const filteredProducts = filterProducts(products, activeTab);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;

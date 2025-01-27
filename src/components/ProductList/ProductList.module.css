@@ -19,8 +19,8 @@
 
 .prevButton,
 .nextButton {
+  display: block;
   background-color: #fff;
-  display: flex;
   padding: 1vw;
   justify-content: center;
   align-items: center;
