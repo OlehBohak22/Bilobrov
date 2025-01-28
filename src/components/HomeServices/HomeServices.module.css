@@ -1,0 +1,53 @@
+.section {
+  padding: 8.3vw 0;
+
+  ul {
+    display: flex;
+    gap: 0.8vw;
+
+    li {
+      flex-basis: calc((100% - 3 * 0.8vw) / 4);
+      padding: 1.6vw;
+
+      .iconContainer {
+        width: 8.3vw;
+        height: 8.3vw;
+        background-color: rgba(254, 228, 229, 1);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 2vw;
+      }
+
+      .descContainer {
+        width: 14.5vw;
+
+        h4 {
+          max-width: 13vw;
+        }
+      }
+
+      svg {
+        width: 4.1vw;
+        height: 4.1vw;
+        fill: rgba(182, 86, 82, 1);
+      }
+
+      h4 {
+        font-family: Manrope, sans-serif;
+        font-size: 1.2vw;
+        font-weight: 700;
+        line-height: 1.4vw;
+        margin-bottom: 1.2vw;
+      }
+
+      p {
+        font-family: Manrope, sans-serif;
+        font-size: 0.9vw;
+        font-weight: 400;
+        line-height: 1.3vw;
+        color: rgba(102, 102, 102, 1);
+      }
+    }
+  }
+}

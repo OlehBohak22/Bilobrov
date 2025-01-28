@@ -83,3 +83,26 @@
   line-height: 1.6vw !important;
   color: black !important;
 }
+
+.swiperController h2 {
+  color: #000000;
+  width: 13vw;
+
+  span:nth-child(1) {
+    font-family: Playfair, serif;
+    font-size: 2.7vw;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 3.5vw;
+  }
+
+  span:nth-child(2) {
+    display: block;
+    margin-top: -1vw;
+    font-family: Manrope, sans-serif;
+    font-size: 2vw;
+    font-weight: 500;
+    line-height: 2.9vw;
+    text-indent: 2vw;
+  }
+}

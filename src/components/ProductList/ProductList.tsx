@@ -14,11 +14,13 @@ import { Layout } from "../Layout/Layout";
 interface ProductListProps {
   categories: string[];
   defaultCategory?: string;
+  children?: React.ReactNode;
 }
 
 export const ProductList = ({
   categories,
   defaultCategory = "Новинки",
+  children,
 }: ProductListProps) => {
   const dispatch = useDispatch<AppDispatch>();
   const [activeTab, setActiveTab] = useState(defaultCategory);
@@ -59,7 +61,7 @@ export const ProductList = ({
       case "Акції":
         // Фільтруємо продукти зі знижкою та сортуємо за датою
         filteredProducts = products
-          .filter((product) => product.sale_price && product.regular_price)
+          .filter((product) => product.sale_price || product.regular_price)
           .sort(
             (a, b) =>
               new Date(b.date_created).getTime() -
@@ -85,19 +87,21 @@ export const ProductList = ({
     <div className={s.section}>
       <Layout>
         <div className={s.swiperController}>
-          <ul className={s.tabsController}>
-            {categories.map((tab) => (
-              <li
-                key={tab}
-                className={`${s.tabItem} ${
-                  activeTab === tab ? s.activeTab : ""
-                }`}
-                onClick={() => setActiveTab(tab)}
-              >
-                {tab}
-              </li>
-            ))}
-          </ul>
+          {children || (
+            <ul className={s.tabsController}>
+              {categories.map((tab) => (
+                <li
+                  key={tab}
+                  className={`${s.tabItem} ${
+                    activeTab === tab ? s.activeTab : ""
+                  }`}
+                  onClick={() => setActiveTab(tab)}
+                >
+                  {tab}
+                </li>
+              ))}
+            </ul>
+          )}
 
           <div className={s.navigationContainer}>
             <button className={s.prevButton}>

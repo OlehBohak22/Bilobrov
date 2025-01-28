@@ -1,0 +1,80 @@
+.container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.descContainers {
+  background-color: rgba(182, 86, 82, 1);
+  padding-left: 6.2vw;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+
+  .titleContainer {
+    margin-bottom: 2vw;
+    span {
+      font-family: Playfair Display;
+      font-size: 1.2vw;
+      font-style: italic;
+      font-weight: 600;
+      line-height: 1.6vw;
+      color: #ffffff;
+      margin-bottom: 0.8vw;
+    }
+
+    h2 {
+      font-family: Manrope, sans-serif;
+      font-size: 2.7vw;
+      font-weight: 700;
+      line-height: 2.9vw;
+      color: #ffffff;
+      margin-bottom: 2vw;
+      max-width: 15vw;
+    }
+
+    p {
+      font-family: Manrope, sans-serif;
+      font-size: 0.9vw;
+      font-weight: 400;
+      line-height: 1.3vw;
+      color: #ffffff;
+      max-width: 25vw;
+    }
+  }
+}
+
+.details {
+  color: black;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  gap: 0.8vw;
+  padding: 1vw 3.7vw;
+  transition: background 0.3s;
+
+  svg {
+    fill: black;
+    transition: fill 0.3s;
+  }
+
+  span {
+    font-family: Manrope, sans-serif;
+    font-size: 0.8vw;
+    font-weight: 600;
+    line-height: 0.8vw;
+    transition: color 0.3s;
+  }
+}
+
+.details:hover {
+  background-color: rgba(255, 196, 58, 1);
+}
+
+.details:hover svg {
+  fill: rgba(182, 86, 82, 1);
+}
+
+.details:hover span {
+  color: rgba(182, 86, 82, 1);
+}
