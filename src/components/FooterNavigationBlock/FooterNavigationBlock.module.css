@@ -1,0 +1,29 @@
+.navigationBlock {
+  display: flex;
+  gap: 5.8vw;
+}
+
+.block {
+  h3 {
+    font-family: Manrope, sans-serif;
+    font-size: 1vw;
+    font-weight: 700;
+    line-height: 1vw;
+    color: #ffffff;
+    margin-bottom: 1.45vw;
+  }
+
+  ul {
+    a {
+      font-family: Manrope, sans-serif;
+      font-size: 0.8vw;
+      font-weight: 500;
+      line-height: 0.8vw;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    li:not(:last-child) {
+      margin-bottom: 1.25vw;
+    }
+  }
+}

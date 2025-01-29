@@ -2,12 +2,12 @@
 import { HomeHero } from "../../components/HomeHero/HomeHero";
 import BrandsList from "../../components/PopularBrands/BrandsList";
 import { ProductList } from "../../components/ProductList/ProductList";
-import Register from "../../components/Register";
-import { LoginForm } from "../../components/Login";
+
 import { CategoriesSection } from "../../components/CategoriesSection/CategoriesSection";
 import { HomeAbout } from "../../components/HomeAbout/HomeAbout";
 import { HomeServices } from "../../components/HomeServices/HomeServices";
 import { CashbackSection } from "../../components/CashbackSection/CashbackSection";
+import { BlogSection } from "../../components/BlogSection/BlogSection";
 
 export const HomePage = () => {
   return (
@@ -56,8 +56,7 @@ export const HomePage = () => {
 
       <CashbackSection />
 
-      <Register />
-      <LoginForm />
+      <BlogSection />
     </main>
   );
 };

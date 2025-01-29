@@ -1,0 +1,208 @@
+.footer {
+  background-color: rgba(182, 86, 82, 1);
+  padding: 12.2vw 0 8.3vw 0;
+
+  .instaBlock {
+    display: flex;
+    gap: 12.8vw;
+    margin-bottom: 3.7vw;
+
+    a {
+      display: flex;
+      align-items: center;
+      gap: 1.3vw;
+      width: fit-content;
+
+      div {
+        span:nth-child(1) {
+          display: block;
+          font-family: Manrope, sans-serif;
+          font-size: 1.3vw;
+          font-weight: 600;
+          line-height: 1.3vw;
+          margin-bottom: 0.8vw;
+        }
+
+        span:nth-child(2) {
+          display: flex;
+          align-items: center;
+          gap: 0.3vw;
+          font-family: Manrope, sans-serif;
+          font-size: 0.9vw;
+          font-weight: 500;
+          line-height: 1.2vw;
+
+          svg {
+            width: 1.3vw;
+            height: 1.3vw;
+          }
+        }
+      }
+    }
+
+    svg {
+      width: 6.6vw;
+      height: 6.6vw;
+    }
+  }
+
+  .instaTitle {
+    span {
+      display: block;
+      font-family: Playfair Display;
+      font-size: 1.2vw;
+      font-style: italic;
+      font-weight: 600;
+      line-height: 1.6vw;
+      color: rgba(255, 255, 255, 1);
+      margin-bottom: 0.8vw;
+    }
+
+    p {
+      font-family: Manrope;
+      font-size: 2.7vw;
+      font-weight: 700;
+      line-height: 2.9vw;
+      color: rgba(255, 255, 255, 1);
+      max-width: 35vw;
+    }
+  }
+
+  .supportBlock {
+    .linkBlock {
+      margin-bottom: 2vw;
+
+      a {
+        display: block;
+        font-family: Manrope, sans-serif;
+        font-size: 1.4vw;
+        font-weight: 700;
+        line-height: 2vw;
+      }
+    }
+  }
+
+  .scheduleBlock {
+    margin-bottom: 2vw;
+
+    span {
+      display: block;
+      font-family: Manrope, sans-serif;
+      font-size: 0.8vw;
+      font-weight: 500;
+      line-height: 0.9vw;
+      color: #ffffff;
+      margin-bottom: 0.4vw;
+    }
+
+    p {
+      font-family: Manrope, sans-serif;
+      font-size: 0.8vw;
+      font-weight: 500;
+      line-height: 1vw;
+      color: #ffffff;
+      max-width: 8vw;
+    }
+  }
+
+  .tgLink {
+    display: flex;
+    align-items: center;
+    gap: 0.5vw;
+    width: fit-content;
+
+    .icon {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 2.7vw;
+      height: 2.7vw;
+      background-color: rgba(230, 230, 224, 0.1);
+      border-radius: 50%;
+      transition: border-radius 0.3s, background-color 0.3s;
+
+      svg {
+        width: 1.1vw;
+        height: 1.1vw;
+        fill: #ffffff;
+        transition: fill 0.3s;
+      }
+    }
+
+    span {
+      font-family: Manrope, sans-serif;
+      font-size: 1vw;
+      font-weight: 600;
+      line-height: 1.3vw;
+    }
+  }
+
+  .tgLink:hover {
+    .icon {
+      border-radius: 0;
+      background-color: #ffffff;
+
+      svg {
+        fill: black;
+      }
+    }
+  }
+
+  .footerInfoBlocks {
+    display: grid;
+    grid-template-columns: 2fr 2fr 1.2fr;
+  }
+
+  .bilobrovFooterLogo {
+    width: 15vw;
+    height: 2.1vw;
+    margin-bottom: 3.3vw;
+  }
+
+  .paymentBlock {
+    display: flex;
+    justify-content: space-between;
+    padding: 1.2vw 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    margin-bottom: 2.9vw;
+
+    ul {
+      display: flex;
+      gap: 1.2vw;
+
+      li svg {
+        transform: scale(1);
+        width: 3vw;
+        height: 2vw;
+      }
+    }
+
+    .paymentLinks {
+      display: flex;
+      gap: 1.8vw;
+    }
+  }
+
+  .footerBottomBlock {
+    display: flex;
+    justify-content: space-between;
+
+    p {
+      font-family: Manrope;
+      font-size: 0.8vw;
+      font-weight: 500;
+      line-height: 0.8vw;
+      color: #ffffff;
+    }
+
+    a {
+      margin-left: 0.3vw;
+      font-family: Manrope;
+      font-size: 0.8vw;
+      font-weight: 700;
+      line-height: 0.8vw;
+      border-bottom: 1px solid rgba(255, 255, 255, 1);
+    }
+  }
+}

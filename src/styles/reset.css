@@ -1,7 +1,6 @@
 *,
 ::after,
 ::before {
-  padding: 0;
   box-sizing: border-box;
 }
 
@@ -28,4 +27,9 @@ img {
 
 .swiper-button-disabled {
   opacity: 0;
+}
+
+input {
+  border: none !important;
+  outline: none !important;
 }
