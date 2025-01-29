@@ -82,7 +82,7 @@ export const CategoriesSection: React.FC<CategoriesSectionProps> = ({
             <li className={s.large} key={subcategories[0].id}>
               <Link to="/">
                 <p>{subcategories[0].name}</p>
-                <img src={subcategories[0].image.src} alt="" />
+                <img src={subcategories[0].image?.src} alt="" />
               </Link>
             </li>
           )}
@@ -92,7 +92,7 @@ export const CategoriesSection: React.FC<CategoriesSectionProps> = ({
               <li key={sub.id}>
                 <Link to="/">
                   <p>{sub.name}</p>
-                  <img src={sub.image.src} alt="" />
+                  {sub.image?.src && <img src={sub.image.src} alt="" />}
                 </Link>
               </li>
             ))}
@@ -102,7 +102,7 @@ export const CategoriesSection: React.FC<CategoriesSectionProps> = ({
             <li className={s.large} key={subcategories[0].id}>
               <Link to="/">
                 <p>{subcategories[0].name}</p>
-                <img src={subcategories[0].image.src} alt="" />
+                <img src={subcategories[0].image?.src} alt="" />
               </Link>
             </li>
           )}

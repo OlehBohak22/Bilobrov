@@ -2,10 +2,10 @@ import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import { Header } from "./components/Header/Header";
 import { HomePage } from "./Pages/HomePage/HomePage";
-import { CheckoutPage } from "./components/CheckoutPage";
+// import { CheckoutPage } from "./components/CheckoutPage";
 import { Footer } from "./components/Footer/Footer";
-import Register from "./components/Register";
-import { LoginForm } from "./components/Login";
+// import Register from "./components/Register";
+// import { LoginForm } from "./components/Login";
 
 function App() {
   return (
@@ -16,9 +16,9 @@ function App() {
         <Route path="/" element={<HomePage />} />
       </Routes>
       <Footer />
-      <Register />
+      {/* <Register />
       <LoginForm />
-      <CheckoutPage />
+      <CheckoutPage /> */}
     </>
   );
 }
