@@ -15,16 +15,11 @@ const BrandsList = () => {
   const dispatch = useAppDispatch();
 
   // Додаємо тип для useSelector
-  const { items, loading, error } = useSelector(
-    (state: RootState) => state.brands
-  );
+  const { items } = useSelector((state: RootState) => state.brands);
 
   useEffect(() => {
     dispatch(fetchBrands()); // Викликаємо асинхронну дію для завантаження брендів
   }, [dispatch]);
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
 
   return (
     <section className={s.section}>

@@ -1,0 +1,61 @@
+.section {
+  padding: 7.3vw 0 14.7vw 0;
+
+  h2 {
+    font-family: Manrope;
+    font-size: 1.2vw;
+    font-weight: 700;
+    line-height: 1.2vw;
+    text-align: center;
+    margin-bottom: 3.1vw;
+  }
+
+  ul {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 1.6vw;
+
+    li:not(:nth-child(3)) {
+      padding: 2vw 1.8vw;
+    }
+
+    li {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-align: center;
+
+      h3 {
+        font-family: Playfair Display;
+        font-size: 1.2vw;
+        font-style: italic;
+        font-weight: 600;
+        line-height: 1.6vw;
+      }
+
+      P {
+        text-align: center;
+        font-family: Inter;
+        font-size: 0.8vw;
+
+        font-weight: 400;
+        line-height: 1.2vw;
+      }
+    }
+  }
+}
+
+.red {
+  background-color: var(--primary);
+  color: white;
+}
+
+.white {
+  background-color: #fffcf5;
+  color: var(--primary);
+}
+
+.rose {
+  background-color: #fee4e5;
+  color: var(--primary);
+}

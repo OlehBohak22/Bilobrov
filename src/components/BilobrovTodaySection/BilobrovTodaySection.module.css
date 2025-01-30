@@ -1,0 +1,51 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 4.1vw 0;
+
+  div {
+    p {
+      font-family: Playfair;
+      font-size: 1.2vw;
+      /* font-style: italic; */
+      font-weight: 600;
+      line-height: 1.6vw;
+      margin-bottom: -0.2vw;
+    }
+
+    span {
+      font-family: Manrope;
+      font-size: 1.2vw;
+      font-weight: 700;
+      line-height: 1.6vw;
+    }
+  }
+
+  ul {
+    display: flex;
+    gap: 3.4vw;
+    text-align: center;
+
+    span {
+      display: block;
+      font-family: Playfair display;
+      font-size: 3.2vw;
+      font-style: italic;
+      font-weight: 700;
+      line-height: 4.2vw;
+      letter-spacing: -0.02em;
+      color: var(--primary);
+      margin-bottom: 0.2vw;
+    }
+
+    p {
+      font-family: Manrope;
+      font-size: 0.9vw;
+      font-weight: 700;
+      line-height: 1.2vw;
+      letter-spacing: -0.02em;
+    }
+  }
+}

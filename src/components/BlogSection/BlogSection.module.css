@@ -17,7 +17,7 @@
     font-size: 0.8vw;
     font-weight: 700;
     line-height: 1vw;
-    color: rgba(182, 86, 82, 1);
+    color: var(--primary);
     margin-bottom: 0.8vw;
   }
 
@@ -87,10 +87,10 @@
 
   a:hover {
     span {
-      color: rgba(214, 61, 68, 1);
+      color: var(--primary);
     }
     svg {
-      fill: rgba(214, 61, 68, 1);
+      fill: var(--primary);
     }
   }
 }

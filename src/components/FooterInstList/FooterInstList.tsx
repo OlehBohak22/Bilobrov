@@ -27,7 +27,7 @@ export const FooterInstList = () => {
   return (
     <ul className={s.list}>
       {items.map((item) => (
-        <li>
+        <li key={item.id}>
           <a href={item.link}>
             <img src={item.image} alt="Inst" />
           </a>

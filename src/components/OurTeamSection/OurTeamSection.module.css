@@ -1,0 +1,167 @@
+.section {
+  padding: 8.3vw 0 7.3vw 0;
+}
+
+.container {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+}
+
+.leftSide {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  .teamCount {
+    span {
+      font-family: Playfair;
+      font-size: 62px;
+      /* font-style: italic; */
+      font-weight: 600;
+      line-height: 82.46px;
+      letter-spacing: -0.02em;
+      text-align: left;
+      text-underline-position: from-font;
+      text-decoration-skip-ink: none;
+
+      color: var(--primary);
+    }
+
+    p {
+      font-family: Manrope;
+      font-size: 0.9vw;
+      font-weight: 700;
+      line-height: 1.2vw;
+      letter-spacing: -0.02em;
+    }
+  }
+}
+
+.hoverBlock {
+  position: absolute;
+  bottom: 1.6vw;
+  left: 1.6vw;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+
+  .name {
+    margin-bottom: 0.8vw;
+    span {
+      display: block;
+      color: #ffffff;
+    }
+    span:nth-child(1) {
+      font-family: Playfair Display;
+      font-size: 1.2vw;
+      font-style: italic;
+      font-weight: 600;
+      line-height: 1.6vw;
+    }
+    span:nth-child(2) {
+      font-family: Manrope;
+      font-size: 1.2vw;
+      font-weight: 600;
+      line-height: 1.6vw;
+      text-indent: 1vw;
+    }
+  }
+
+  p {
+    font-family: Manrope;
+    font-size: 0.9vw;
+    font-weight: 400;
+    line-height: 1.3vw;
+    color: #ffffff;
+  }
+}
+
+.imageList {
+  display: flex;
+  gap: 0.6vw;
+
+  .imageLine:nth-child(odd) {
+    margin-top: 8vw;
+  }
+
+  .imageItem {
+    position: relative;
+    width: 15.6vw;
+    height: 21.7vw;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .imageItem:hover {
+    .hoverBlock {
+      opacity: 1;
+    }
+  }
+
+  .imageItem::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(0.5vw);
+    background-color: rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+  }
+
+  .imageItem:hover::before {
+    opacity: 1;
+  }
+
+  .imageItem img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .imageItem:not(:last-child) {
+    margin-bottom: 0.6vw;
+  }
+}
+
+.titleContainer {
+  span {
+    display: block;
+  }
+
+  span:nth-child(1) {
+    font-family: Playfair;
+    font-size: 3.2vw;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 3.2vw;
+  }
+  span:nth-child(2) {
+    font-family: Manrope;
+    font-size: 3.2vw;
+    font-weight: 500;
+    font-size: 3.2vw;
+    text-indent: 2vw;
+    margin-top: -1.5vw;
+  }
+  span:nth-child(3) {
+    font-family: Manrope;
+    font-size: 0.9vw;
+    font-weight: 700;
+    line-height: 1.2vw;
+    letter-spacing: -0.02em;
+    text-indent: 2vw;
+    margin-top: -0.1vw;
+  }
+}
+
+.rose {
+  position: absolute;
+  top: 10.2vw;
+  left: 14.4vw;
+  width: 22vw;
+  height: 29vw;
+  z-index: -1;
+}

@@ -1,3 +1,7 @@
+:root {
+  --primary: rgba(214, 61, 68, 1);
+}
+
 *,
 ::after,
 ::before {

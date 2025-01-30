@@ -1,7 +1,7 @@
 .section {
   position: relative;
   padding: 6.2vw 0;
-  background-color: rgba(214, 61, 68, 1);
+  background-color: var(--primary);
 
   h2 {
     color: #ffffff;

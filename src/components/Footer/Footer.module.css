@@ -1,5 +1,5 @@
 .footer {
-  background-color: rgba(182, 86, 82, 1);
+  background-color: var(--primary);
   padding: 12.2vw 0 8.3vw 0;
 
   .instaBlock {

@@ -4,7 +4,7 @@
 }
 
 .descContainers {
-  background-color: rgba(182, 86, 82, 1);
+  background-color: var(--primary);
   padding-left: 6.2vw;
   display: flex;
   justify-content: center;
@@ -72,9 +72,9 @@
 }
 
 .details:hover svg {
-  fill: rgba(182, 86, 82, 1);
+  fill: var(--primary);
 }
 
 .details:hover span {
-  color: rgba(182, 86, 82, 1);
+  color: var(--primary);
 }

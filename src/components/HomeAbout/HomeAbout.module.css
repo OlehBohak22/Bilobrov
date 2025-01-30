@@ -15,7 +15,7 @@
     font-style: italic;
     font-weight: 600;
     line-height: 1.6vw;
-    color: rgba(182, 86, 82, 1);
+    color: var(--primary);
     margin-bottom: 1vw;
   }
 
@@ -25,7 +25,7 @@
     font-weight: 700;
     line-height: 2.6vw;
     margin-bottom: 3.1vw;
-    color: rgba(182, 86, 82, 1);
+    color: var(--primary);
     max-width: 37vw;
   }
 }
@@ -33,7 +33,7 @@
 .arrow {
   width: 1.6vw;
   height: 1.6vw;
-  stroke: rgba(182, 86, 82, 1);
+  stroke: var(--primary);
   z-index: 9;
   transition: stroke 0.3s;
 }
@@ -45,7 +45,7 @@
   margin-left: 2.5vw;
 
   span {
-    color: rgba(182, 86, 82, 1);
+    color: var(--primary);
     font-family: Manrope, sans-serif;
     font-size: 1.1vw;
     font-weight: 500;
@@ -105,10 +105,10 @@
   top: 30.6vw;
   left: 35.7vw;
 
-  color: rgba(182, 86, 82, 1);
+  color: var(--primary);
   span:nth-child(1) {
     font-family: Playfair, serif;
-    font-size: 1.2vw;
+    font-size: 1.5vw;
     font-style: italic;
     font-weight: 600;
     line-height: 1.6vw;

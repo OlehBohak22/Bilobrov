@@ -17,20 +17,25 @@
   }
 }
 
-.header:hover {
+.header:hover,
+.header.hovered {
   background-color: #ffffff;
 }
 
 .header:hover a,
-.header:hover span {
+.header.hovered a,
+.header:hover span,
+.header.hovered span {
   color: black;
 }
 
-.header:hover path {
+.header:hover path,
+.header.hovered path {
   stroke: rgb(0, 0, 0);
 }
 
-.header:hover .headerLogo {
+.header:hover .headerLogo,
+.header.hovered .headerLogo {
   filter: invert();
   path {
     stroke: #ffffff;

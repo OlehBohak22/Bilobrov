@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 31.5vw;
+  height: 30vw;
 }
 
 .productItem:hover img {
@@ -16,6 +16,62 @@
   width: 100%; /* контейнер займає всю ширину */
   overflow: hidden;
   margin-bottom: 0.8vw;
+  background-color: rgba(246, 246, 246, 1);
+}
+
+.markersBlock {
+  position: absolute;
+  top: 0.8vw;
+  left: 0;
+  z-index: 9;
+
+  div:not(:last-child) {
+    margin-bottom: 0.4vw;
+  }
+
+  .bestMarker {
+    background-color: rgba(255, 196, 58, 1);
+    color: var(--primary);
+    padding: 0.4vw 0.8vw;
+    text-transform: uppercase;
+    font-family: Raleway;
+    font-size: 0.6vw;
+    font-weight: 800;
+    line-height: 0.7vw;
+    letter-spacing: 0.01em;
+
+    span {
+      display: block;
+    }
+  }
+
+  .topMarker,
+  .newMarker {
+    padding: 0.4vw 0;
+    width: 4vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(254, 228, 229, 1);
+    font-family: Raleway;
+    font-size: 0.6vw;
+    font-weight: 800;
+    line-height: 0.7vw;
+    letter-spacing: 0.01em;
+    color: var(--primary);
+  }
+
+  .saleMarker {
+    padding: 0.4vw 0.8vw;
+    /* font-family: Raleway, sans-serif; */
+    font-size: 0.6vw;
+    font-weight: 800;
+    line-height: 0.7vw;
+    letter-spacing: 0.01em;
+    color: #ffffff;
+    background-color: var(--primary);
+    width: fit-content;
+  }
 }
 
 .wishList::before {
@@ -28,7 +84,7 @@
   height: 0.1vw;
   opacity: 0;
   border-radius: 50%;
-  border: 1px solid rgba(214, 61, 68, 1);
+  border: 1px solid var(--primary);
   transition: width 0.3s, height 0.3s;
 }
 
@@ -43,7 +99,7 @@
   width: 2.8vw;
   height: 2.8vw;
   border-radius: 50%;
-  background-color: rgba(214, 61, 68, 1);
+  background-color: var(--primary);
   transition: opacity 0.3s;
 
   svg {
@@ -76,7 +132,7 @@
 }
 
 .wishList:hover svg {
-  fill: rgba(214, 61, 68, 1);
+  fill: var(--primary);
 }
 
 .productImage img {
@@ -100,6 +156,7 @@
   font-size: 0.9vw;
   font-weight: 600;
   line-height: 1.3vw;
+  margin-bottom: 0.4vw;
 }
 
 .currency {
@@ -129,5 +186,29 @@
 }
 
 .red {
-  color: rgba(214, 61, 68, 1); /* зміна кольору тексту на червоний */
+  color: var(--primary); /* зміна кольору тексту на червоний */
+}
+
+.ratingBlock {
+  display: flex;
+  align-items: center;
+  gap: 0.4vw;
+
+  span {
+    font-family: Manrope, sans-serif;
+    font-size: 0.8vw;
+    font-weight: 600;
+    line-height: 1vw;
+    letter-spacing: -0.02em;
+    color: rgba(26, 26, 26, 0.4);
+  }
+}
+
+.shortDesc {
+  font-family: Manrope, sans-serif;
+  font-size: 0.8vw;
+  font-weight: 600;
+  line-height: 1.1vw;
+  color: rgba(26, 26, 26, 0.4);
+  margin-bottom: 0.8vw;
 }

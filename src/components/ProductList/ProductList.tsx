@@ -25,11 +25,9 @@ export const ProductList = ({
   const dispatch = useDispatch<AppDispatch>();
   const [activeTab, setActiveTab] = useState(defaultCategory);
 
-  const {
-    items: products = [],
-    loading,
-    error,
-  } = useSelector((state: RootState) => state.products);
+  const { items: products = [] } = useSelector(
+    (state: RootState) => state.products
+  );
 
   useEffect(() => {
     dispatch(fetchProducts());
@@ -39,49 +37,39 @@ export const ProductList = ({
     products: ProductInfo[],
     tab: string
   ): ProductInfo[] => {
-    let filteredProducts: ProductInfo[];
+    let filteredProducts: ProductInfo[] = [];
 
     switch (tab) {
       case "Новинки":
-        // Сортуємо всі продукти за датою додавання та беремо 10 останніх
         filteredProducts = [...products].sort(
           (a, b) =>
             new Date(b.date_created).getTime() -
-            new Date(a.date_created).getTime() // Сортуємо за датою (найновіші спочатку)
+            new Date(a.date_created).getTime()
         );
         break;
-
       case "Бестселлери":
-        // Сортуємо за кількістю продажів
         filteredProducts = [...products].sort(
           (a, b) => Number(b.total_sales) - Number(a.total_sales)
         );
         break;
-
       case "Акції":
-        // Фільтруємо продукти зі знижкою та сортуємо за датою
         filteredProducts = products
-          .filter((product) => product.sale_price || product.regular_price)
+          .filter((product) => product.sale_price && product.sale_price !== "0")
           .sort(
             (a, b) =>
               new Date(b.date_created).getTime() -
               new Date(a.date_created).getTime()
           );
         break;
-
       default:
-        // Повертаємо всі продукти
         filteredProducts = [...products];
         break;
     }
 
-    return filteredProducts.slice(0, 10); // Беремо перші 10 продуктів
+    return filteredProducts.slice(0, 10); // Return first 10 products
   };
 
   const filteredProducts = filterProducts(products, activeTab);
-
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
 
   return (
     <div className={s.section}>
@@ -150,6 +138,7 @@ export const ProductList = ({
         </div>
 
         <Swiper
+          key={activeTab} // This ensures that Swiper will reinitialize when the tab changes
           modules={[Navigation]}
           spaceBetween={20}
           slidesPerView={5}

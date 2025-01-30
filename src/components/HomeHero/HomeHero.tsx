@@ -22,73 +22,69 @@ export const HomeHero = () => {
 
   return (
     <div className={s.sliderContainer}>
-      {Array.isArray(banners) && banners.length > 0 ? (
-        <Swiper
-          modules={[Pagination, Autoplay]}
-          pagination={{
-            clickable: true, // Дозволяє клікабельність точок
-          }}
-          loop
-          autoplay={{ delay: 5000 }} // Автоматична прокрутка
-          slidesPerView={1} // Кількість слайдів на екрані
-          className="banners-swiper"
-        >
-          {banners.map(
-            (banner: {
-              id: number;
-              load_image_text_img_desktop: string;
-              input_title: string;
-              input_description: string;
-              input_link: string;
-            }) => (
-              <SwiperSlide key={banner.id}>
-                <div
-                  className={s.slide}
-                  style={{
-                    backgroundImage: `url(${banner.load_image_text_img_desktop})`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                  }}
-                >
-                  <Layout className={s.slideContent}>
-                    <h3>{banner.input_title}</h3>
-                    <p>{banner.input_description}</p>
-                    <a href={banner.input_link}>
-                      <span>Детальніше</span>
-                      <svg
-                        width="25"
-                        height="24"
-                        viewBox="0 0 25 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <g clipPath="url(#clip0_691_3833)">
-                          <path
-                            d="M17.9177 5L16.8487 6.05572L21.6059 10.7535H0.5V12.2465H21.6059L16.8487 16.9443L17.9177 18L24.5 11.5L17.9177 5Z"
-                            fill="black"
+      <Swiper
+        modules={[Pagination, Autoplay]}
+        pagination={{
+          clickable: true, // Дозволяє клікабельність точок
+        }}
+        loop
+        autoplay={{ delay: 5000 }} // Автоматична прокрутка
+        slidesPerView={1} // Кількість слайдів на екрані
+        className="banners-swiper"
+      >
+        {banners.map(
+          (banner: {
+            id: number;
+            load_image_text_img_desktop: string;
+            input_title: string;
+            input_description: string;
+            input_link: string;
+          }) => (
+            <SwiperSlide key={banner.id}>
+              <div
+                className={s.slide}
+                style={{
+                  backgroundImage: `url(${banner.load_image_text_img_desktop})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                }}
+              >
+                <Layout className={s.slideContent}>
+                  <h3>{banner.input_title}</h3>
+                  <p>{banner.input_description}</p>
+                  <a href={banner.input_link}>
+                    <span>Детальніше</span>
+                    <svg
+                      width="25"
+                      height="24"
+                      viewBox="0 0 25 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <g clipPath="url(#clip0_691_3833)">
+                        <path
+                          d="M17.9177 5L16.8487 6.05572L21.6059 10.7535H0.5V12.2465H21.6059L16.8487 16.9443L17.9177 18L24.5 11.5L17.9177 5Z"
+                          fill="black"
+                        />
+                      </g>
+                      <defs>
+                        <clipPath id="clip0_691_3833">
+                          <rect
+                            width="24"
+                            height="24"
+                            fill="white"
+                            transform="translate(0.5)"
                           />
-                        </g>
-                        <defs>
-                          <clipPath id="clip0_691_3833">
-                            <rect
-                              width="24"
-                              height="24"
-                              fill="white"
-                              transform="translate(0.5)"
-                            />
-                          </clipPath>
-                        </defs>
-                      </svg>
-                    </a>
-                  </Layout>
-                </div>
-              </SwiperSlide>
-            )
-          )}
-        </Swiper>
-      ) : (
-        <p>No banners available</p>
-      )}
+                        </clipPath>
+                      </defs>
+                    </svg>
+                  </a>
+                </Layout>
+              </div>
+            </SwiperSlide>
+          )
+        )}
+      </Swiper>
     </div>
   );
 };

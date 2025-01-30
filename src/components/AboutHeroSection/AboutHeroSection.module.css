@@ -1,0 +1,29 @@
+.section {
+  padding-top: 12.5vw;
+  width: 100%;
+
+  .titleContainer {
+    margin: 0 auto;
+    width: 30vw;
+    text-align: center;
+    margin-bottom: 4.1vw;
+
+    p {
+      font-family: Manrope;
+      font-size: 1.2vw;
+      font-weight: 700;
+      line-height: 1.2vw;
+      color: black;
+      margin-bottom: 2.1vw;
+    }
+
+    h1 {
+      font-family: Playfair Display;
+      font-size: 5.3vw;
+      font-style: italic;
+      font-weight: 600;
+      line-height: 5.3vw;
+      color: var(--primary);
+    }
+  }
+}
