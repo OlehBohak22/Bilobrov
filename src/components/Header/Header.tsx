@@ -9,7 +9,10 @@ export const Header = () => {
 
   return (
     <header
-      className={`${s.header} ${location.pathname === "/about" && s.hovered}`}
+      className={`${s.header} ${
+        location.pathname === "/about" ||
+        (location.pathname === "/support" && s.hovered)
+      }`}
     >
       <Layout>
         <div className={s.headerTopLine}>
