@@ -1,0 +1,25 @@
+.section {
+  background-image: url(/images/bonus-hero.avif);
+  background-size: cover;
+  padding-top: 17vw;
+  padding-bottom: 12.3vw;
+
+  h1 {
+    font-family: Playfair Display;
+    font-size: 5.3vw;
+    font-style: italic;
+    font-weight: 600;
+    line-height: 5.3vw;
+    color: #ffffff;
+    margin-bottom: 1.6vw;
+  }
+
+  p {
+    font-family: Manrope;
+    font-size: 1.2vw;
+    font-weight: 400;
+    line-height: 1.7vw;
+    color: #ffffff;
+    max-width: 21vw;
+  }
+}

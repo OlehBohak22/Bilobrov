@@ -2,6 +2,7 @@
   padding-top: 13vw;
   padding-bottom: 5.8vw;
   min-height: 80vh;
+  background-color: blue;
 
   h3 {
     font-family: Manrope, sans-serif;
@@ -43,4 +44,9 @@
 
 .slideContent {
   padding-left: 4vw;
+}
+
+.sliderContainer {
+  background-color: var(--primary);
+  min-height: 80vh;
 }

@@ -1,0 +1,85 @@
+.section {
+  padding: 4.2vw 0;
+  padding-bottom: 8.4vw;
+
+  h2 {
+    color: #000000;
+    text-align: center;
+    margin-bottom: 3.4vw;
+
+    span:nth-child(1) {
+      font-family: Playfair display;
+      font-size: 2.7vw;
+      font-style: italic;
+      font-weight: 400;
+      line-height: 3.5vw;
+    }
+
+    span:nth-child(2) {
+      display: block;
+      margin-top: -0.7vw;
+      font-family: Manrope, sans-serif;
+      font-size: 2.2vw;
+      font-weight: 500;
+      line-height: 2.9vw;
+      text-indent: 8vw;
+    }
+  }
+
+  .faqList {
+    max-width: 61.5vw;
+    margin: 0 auto;
+
+    li {
+      padding: 1.25vw;
+      background-color: #f9f7f8;
+      cursor: pointer;
+      overflow: hidden;
+    }
+
+    li:not(:last-child) {
+      margin-bottom: 0.6vw;
+    }
+
+    li:hover h3 div {
+      background-color: #ffc43a;
+    }
+  }
+
+  .accordionTitle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: Manrope;
+    font-size: 1.2vw;
+    font-weight: 700;
+    line-height: 1.5vw;
+    margin-bottom: 0.8vw;
+
+    div {
+      background-color: #1a1a1a;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 2.7vw;
+      height: 2.7vw;
+      transition: background-color 0.3s;
+    }
+
+    svg {
+      stroke: #ffffff;
+    }
+  }
+
+  .accordionContent {
+    max-width: 53vw;
+    padding: 1vw;
+    background-color: #000000;
+    color: #ffffff;
+    font-family: Manrope;
+    font-size: 0.9vw;
+    font-weight: 600;
+    line-height: 1.4vw;
+    letter-spacing: -0.02em;
+  }
+}

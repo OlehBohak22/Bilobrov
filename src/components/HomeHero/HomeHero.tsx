@@ -21,7 +21,7 @@ export const HomeHero = () => {
   }, [dispatch]);
 
   return (
-    <div className={s.sliderContainer}>
+    <section className={s.sliderContainer}>
       <Swiper
         modules={[Pagination, Autoplay]}
         pagination={{
@@ -85,6 +85,6 @@ export const HomeHero = () => {
           )
         )}
       </Swiper>
-    </div>
+    </section>
   );
 };

@@ -1,0 +1,158 @@
+.section {
+  padding: 4.2vw 0;
+
+  h2 {
+    color: #000000;
+    text-align: center;
+    margin-bottom: 3.4vw;
+
+    span:nth-child(1) {
+      font-family: Playfair display;
+      font-size: 2.7vw;
+      font-style: italic;
+      font-weight: 400;
+      line-height: 3.5vw;
+    }
+
+    span:nth-child(2) {
+      display: block;
+      margin-top: -0.7vw;
+      font-family: Manrope, sans-serif;
+      font-size: 2vw;
+      font-weight: 500;
+      line-height: 2.9vw;
+      text-indent: 4vw;
+    }
+  }
+
+  .list {
+    display: flex;
+    justify-content: center;
+    gap: 1.6vw;
+    margin-bottom: 4.7vw;
+
+    li {
+      width: 17vw;
+    }
+
+    .price {
+      padding: 2vw;
+      background-color: #f9f7f8;
+
+      h4 {
+        font-family: Manrope;
+        font-size: 0.9vw;
+        font-weight: 600;
+        line-height: 1.4vw;
+      }
+
+      p {
+        font-family: Playfair Display;
+        font-size: 3.2vw;
+        font-style: italic;
+        font-weight: 600;
+        line-height: 4.2vw;
+
+        span {
+          font-family: Playfair Display;
+          font-size: 1.2vw;
+          font-style: italic;
+          font-weight: 600;
+          line-height: 1.6vw;
+          margin-left: 0.2vw;
+        }
+      }
+    }
+
+    .cashback {
+      background-color: var(--primary);
+      padding: 2vw;
+
+      span {
+        display: block;
+        font-family: Playfair Display;
+        font-size: 3.2vw;
+        font-style: italic;
+        font-weight: 700;
+        line-height: 4.2vw;
+        letter-spacing: -0.02em;
+        color: #ffffff;
+        margin-bottom: 0.2vw;
+        text-align: center;
+      }
+
+      p {
+        font-family: Manrope;
+        font-size: 0.9vw;
+        font-weight: 600;
+        line-height: 1.4vw;
+        text-align: center;
+        color: #ffffff;
+      }
+    }
+  }
+
+  .bonusList {
+    display: flex;
+    justify-content: center;
+    gap: 2.7vw;
+
+    li {
+      display: flex;
+      align-items: center;
+      gap: 1.6vw;
+    }
+
+    .icon {
+      width: 6.25vw;
+      height: 6.25vw;
+      border-radius: 50%;
+      border: 1px solid var(--primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      svg {
+        width: 2.7vw;
+        height: 2.7vw;
+      }
+    }
+
+    .info {
+      p {
+        font-family: Playfair Display;
+        font-size: 3.2vw;
+        font-style: italic;
+        font-weight: 600;
+        line-height: 2vw;
+        color: #000000;
+        margin-bottom: 1vw;
+
+        span {
+          font-family: Playfair Display;
+          font-size: 1.2vw;
+          font-style: italic;
+          font-weight: 600;
+          line-height: 1.6vw;
+          margin-left: 0.2vw;
+        }
+      }
+
+      span {
+        font-family: Manrope;
+        font-size: 0.9vw;
+        font-weight: 700;
+        line-height: 1.4vw;
+      }
+    }
+  }
+
+  .subTitle {
+    font-family: Manrope;
+    font-size: 1.2vw;
+    font-weight: 700;
+    line-height: 1.2vw;
+    text-align: center;
+    margin-bottom: 2.1vw;
+  }
+}

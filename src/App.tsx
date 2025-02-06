@@ -6,6 +6,7 @@ import { HomePage } from "./Pages/HomePage/HomePage";
 import { Footer } from "./components/Footer/Footer";
 import { AboutPage } from "./Pages/AboutPage/AboutPage";
 import { ClientsSupportPage } from "./Pages/ClientsSupportPage/ClientsSupportPage";
+import { BonusPage } from "./Pages/BonusPage/BonusPage";
 // import Register from "./components/Register";
 // import { LoginForm } from "./components/Login";
 
@@ -18,6 +19,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/support" element={<ClientsSupportPage />} />
+        <Route path="/bilobrov-club" element={<BonusPage />} />
       </Routes>
       <Footer />
       {/* <Register />

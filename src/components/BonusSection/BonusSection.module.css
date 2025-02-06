@@ -1,0 +1,99 @@
+.section {
+  padding: 8.4vw 0 4.2vw 0;
+
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4.1vw;
+  }
+
+  h2 {
+    color: #000000;
+    margin-bottom: 1.6vw;
+
+    span:nth-child(2) {
+      display: block;
+
+      font-family: Playfair display;
+      font-size: 3.2vw;
+      font-style: italic;
+      font-weight: 400;
+      line-height: 3.2vw;
+      text-indent: 2.5vw;
+    }
+
+    span:nth-child(1) {
+      display: block;
+      font-family: Manrope, sans-serif;
+      font-size: 3.2vw;
+      font-weight: 500;
+      line-height: 3.2vw;
+      margin-bottom: 0.5vw;
+    }
+  }
+
+  p {
+    font-family: Manrope;
+    font-size: 0.9vw;
+    font-weight: 600;
+    line-height: 1.4vw;
+    letter-spacing: -0.02em;
+    max-width: 67vw;
+    margin-bottom: 1.2vw;
+  }
+
+  a {
+    color: rgb(255, 255, 255);
+    background-color: var(--primary);
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    gap: 0.8vw;
+    padding: 1vw 3.7vw;
+    transition: background-color 0.3s;
+
+    span {
+      font-family: Manrope, sans-serif;
+      font-size: 0.8vw;
+      font-weight: 600;
+      line-height: 0.8vw;
+      transition: color 0.3s;
+    }
+
+    svg {
+      width: 1.25vw;
+      height: 1.25vw;
+      fill: rgb(255, 255, 255);
+      transition: fill 0.3s;
+    }
+  }
+
+  a:hover {
+    background-color: #ffc43a;
+
+    span {
+      color: var(--primary);
+    }
+
+    svg {
+      fill: var(--primary);
+    }
+  }
+
+  .bonus {
+    background-color: #fffcf5;
+    padding: 0.8vw;
+    display: flex;
+    gap: 0.6vw;
+    width: fit-content;
+    margin-bottom: 1.6vw;
+
+    span {
+      font-family: Manrope;
+      font-size: 0.9vw;
+      font-weight: 700;
+      line-height: 1.3vw;
+    }
+  }
+}
