@@ -28,12 +28,12 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     // Реєстрація користувача
-    registerStart: (state) => {
+    registerStart: (state: AuthState) => {
       state.loading = true;
       state.error = null;
     },
     registerSuccess: (
-      state,
+      state: AuthState,
       action: PayloadAction<{ token: string; user: UserData }>
     ) => {
       state.token = action.payload.token;
@@ -42,18 +42,18 @@ const userSlice = createSlice({
       state.error = null;
     },
 
-    registerFailure: (state, action: PayloadAction<string>) => {
+    registerFailure: (state: AuthState, action: PayloadAction<string>) => {
       state.loading = false;
       state.error = action.payload;
     },
 
     // Вхід користувача
-    loginStart: (state) => {
+    loginStart: (state: AuthState) => {
       state.loading = true;
       state.error = null;
     },
     loginSuccess: (
-      state,
+      state: AuthState,
       action: PayloadAction<{ token: string; user: UserData }>
     ) => {
       state.token = action.payload.token;
@@ -61,19 +61,19 @@ const userSlice = createSlice({
       state.loading = false;
       state.error = null;
     },
-    loginFailure: (state, action: PayloadAction<string>) => {
+    loginFailure: (state: AuthState, action: PayloadAction<string>) => {
       state.loading = false;
       state.error = action.payload;
     },
 
     // Вихід з акаунту
-    logout: (state) => {
+    logout: (state: AuthState) => {
       state.token = null;
       state.user = null;
     },
 
     // Оновлення даних користувача (якщо є)
-    updateUserData: (state, action: PayloadAction<UserData>) => {
+    updateUserData: (state: AuthState, action: PayloadAction<UserData>) => {
       state.user = action.payload;
     },
   },

@@ -1,5 +1,5 @@
-import axios, { AxiosError } from "axios";
-import { Dispatch } from "redux";
+// import { Dispatch } from "redux";
+import { AxiosError } from "axios";
 import {
   registerStart,
   registerSuccess,
@@ -8,6 +8,8 @@ import {
   loginSuccess,
   loginFailure,
 } from "../slices/userSlice";
+import { AppDispatch } from "../index"; // тип для dispatch
+import axios from "axios";
 
 const API_URL = "https://bilobrov.projection-learn.website/wp-json";
 
@@ -29,14 +31,9 @@ interface ErrorResponse {
 
 // Реєстрація користувача
 export const registerUser =
-  (
-    email: string,
-    password: string,
-    name: string,
-    secondName: string,
-    phone: string
-  ) =>
-  async (dispatch: Dispatch) => {
+  (email: string, password: string, name: string) =>
+  async (dispatch: AppDispatch) => {
+    // Типізуємо dispatch
     try {
       dispatch(registerStart());
 
@@ -45,9 +42,7 @@ export const registerUser =
         {
           email,
           password,
-          phone,
           name,
-          secondName,
         }
       );
 
@@ -74,28 +69,35 @@ export const registerUser =
 
 // Вхід користувача
 export const loginUser =
-  (email: string, password: string) => async (dispatch: Dispatch) => {
+  (email: string, password: string) => async (dispatch: AppDispatch) => {
     try {
       dispatch(loginStart());
 
       // Отримуємо дані користувача
       const response = await axiosInstance.post(
         "/responses/v1/user_authorization",
-        {
-          email,
-          password,
-        }
+        { email, password }
       );
 
-      const token = response.data.jwt;
+      // Перевіряємо, чи є JWT у відповіді
+      const token = response.data?.jwt;
+      if (!token) {
+        throw new Error("Не вдалося отримати токен");
+      }
 
       console.log(token);
 
+      // Збереження токену в localStorage
+      // localStorage.setItem("token", token);
+
       // Отримуємо інформацію про користувача
-      const userResponse = await axiosInstance.get("/wc/v3/customers/me", {
+      const userResponse = await axiosInstance.get("/responses/v1/user_info", {
         headers: { Authorization: `Bearer ${token}` },
       });
 
+      console.log(userResponse.data);
+
+      // Диспатчимо успішний вхід
       dispatch(loginSuccess({ token, user: userResponse.data }));
     } catch (error) {
       const axiosError = error as AxiosError<ErrorResponse>;

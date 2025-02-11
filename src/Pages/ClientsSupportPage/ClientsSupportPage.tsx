@@ -12,40 +12,42 @@ const categories = [
       {
         id: "delivery",
         label: "Умови доставки",
-        icon: "/icons/support-icons.svg#icon-policy",
+        icon: "/icons/support-icons.svg#icon-delivery",
       },
       {
         id: "payment",
         label: "Умови оплати",
-        icon: "/icons/support-icons.svg#icon-policy",
+        icon: "/icons/support-icons.svg#icon-payment",
       },
       {
         id: "return",
         label: "Обмін та повернення",
-        icon: "/icons/support-icons.svg#icon-policy",
+        icon: "/icons/support-icons.svg#icon-return",
       },
       {
         id: "faq",
         label: "Часті питання",
-        icon: "/icons/support-icons.svg#icon-policy",
+        icon: "/icons/support-icons.svg#icon-faq",
       },
       {
         id: "contacts",
         label: "Наші контакти",
-        icon: "/icons/support-icons.svg#icon-policy",
+        icon: "/icons/support-icons.svg#icon-contacts",
       },
     ],
   },
+
   {
     title: "Програма лояльності",
     tabs: [
       {
         id: "bonus",
         label: "Бонусна система",
-        icon: "/icons/support-icons.svg#icon-policy",
+        icon: "/icons/support-icons.svg#icon-ofert",
       },
     ],
   },
+
   {
     title: "Юридична інформація",
     tabs: [

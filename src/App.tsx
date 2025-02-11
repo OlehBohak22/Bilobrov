@@ -7,8 +7,9 @@ import { Footer } from "./components/Footer/Footer";
 import { AboutPage } from "./Pages/AboutPage/AboutPage";
 import { ClientsSupportPage } from "./Pages/ClientsSupportPage/ClientsSupportPage";
 import { BonusPage } from "./Pages/BonusPage/BonusPage";
-// import Register from "./components/Register";
-// import { LoginForm } from "./components/Login";
+import { AccountPage } from "./Pages/AccountPage/AccountPage";
+import Register from "./components/RegisterPopup/Register";
+import { LoginForm } from "./components/Login";
 
 function App() {
   return (
@@ -20,11 +21,12 @@ function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/support" element={<ClientsSupportPage />} />
         <Route path="/bilobrov-club" element={<BonusPage />} />
+        <Route path="/account" element={<AccountPage />} />
       </Routes>
       <Footer />
-      {/* <Register />
+      <Register />
       <LoginForm />
-      <CheckoutPage /> */}
+      {/* <CheckoutPage /> */}
     </>
   );
 }

@@ -10,8 +10,9 @@ export const Header = () => {
   return (
     <header
       className={`${s.header} ${
-        location.pathname === "/about" ||
-        (location.pathname === "/support" && s.hovered)
+        ["/about", "/account", "/support"].includes(location.pathname)
+          ? s.hovered
+          : ""
       }`}
     >
       <Layout>
