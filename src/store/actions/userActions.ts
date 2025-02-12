@@ -1,4 +1,3 @@
-// import { Dispatch } from "redux";
 import { AxiosError } from "axios";
 import {
   registerStart,
@@ -7,6 +6,7 @@ import {
   loginStart,
   loginSuccess,
   loginFailure,
+  setUserFromToken, // нова дія для завантаження користувача по токену
 } from "../slices/userSlice";
 import { AppDispatch } from "../index"; // тип для dispatch
 import axios from "axios";
@@ -29,11 +29,33 @@ interface ErrorResponse {
   message: string;
 }
 
+// Функція для отримання токену з localStorage
+export const getTokenFromLocalStorage = () => {
+  return localStorage.getItem("token");
+};
+
+// Перевірка токену при завантаженні додатка
+export const checkUserSession = () => async (dispatch: AppDispatch) => {
+  const token = getTokenFromLocalStorage();
+  if (token) {
+    try {
+      // Якщо токен є, отримаємо інформацію про користувача
+      const userResponse = await axiosInstance.get("/responses/v1/user_info", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      // Диспатчимо інформацію про користувача
+      dispatch(setUserFromToken({ token, user: userResponse.data }));
+    } catch (error) {
+      console.error("Помилка перевірки сесії:", error);
+    }
+  }
+};
+
 // Реєстрація користувача
 export const registerUser =
   (email: string, password: string, name: string) =>
   async (dispatch: AppDispatch) => {
-    // Типізуємо dispatch
     try {
       dispatch(registerStart());
 
@@ -54,7 +76,8 @@ export const registerUser =
 
       const { token } = tokenResponse.data;
 
-      console.log(token);
+      // Зберігаємо токен в localStorage
+      localStorage.setItem("token", token);
 
       dispatch(registerSuccess({ token, user: response.data }));
     } catch (error) {
@@ -73,31 +96,23 @@ export const loginUser =
     try {
       dispatch(loginStart());
 
-      // Отримуємо дані користувача
       const response = await axiosInstance.post(
         "/responses/v1/user_authorization",
         { email, password }
       );
 
-      // Перевіряємо, чи є JWT у відповіді
       const token = response.data?.jwt;
       if (!token) {
         throw new Error("Не вдалося отримати токен");
       }
 
-      console.log(token);
+      // Зберігаємо токен в localStorage
+      localStorage.setItem("token", token);
 
-      // Збереження токену в localStorage
-      // localStorage.setItem("token", token);
-
-      // Отримуємо інформацію про користувача
       const userResponse = await axiosInstance.get("/responses/v1/user_info", {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      console.log(userResponse.data);
-
-      // Диспатчимо успішний вхід
       dispatch(loginSuccess({ token, user: userResponse.data }));
     } catch (error) {
       const axiosError = error as AxiosError<ErrorResponse>;

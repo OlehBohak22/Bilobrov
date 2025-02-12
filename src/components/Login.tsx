@@ -8,7 +8,7 @@ export const LoginForm: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
-  const { loading, error } = useSelector((state: RootState) => state.auth); // Вибираємо стан авторизації
+  const { loading, error } = useSelector((state: RootState) => state.user); // Вибираємо стан авторизації
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();

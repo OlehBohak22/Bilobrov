@@ -10,8 +10,17 @@ import { BonusPage } from "./Pages/BonusPage/BonusPage";
 import { AccountPage } from "./Pages/AccountPage/AccountPage";
 import Register from "./components/RegisterPopup/Register";
 import { LoginForm } from "./components/Login";
+import { useEffect } from "react";
+import { checkUserSession } from "./store/actions/userActions";
+import { useAppDispatch } from "./hooks/useAppDispatch";
 
 function App() {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(checkUserSession());
+  }, [dispatch]);
+
   return (
     <>
       <Header />

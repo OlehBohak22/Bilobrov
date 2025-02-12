@@ -1,0 +1,22 @@
+.wishList {
+  position: absolute;
+  top: 1.2vw;
+  right: 1.2vw;
+  cursor: pointer;
+
+  svg {
+    fill: black;
+    width: 1.2vw;
+    transition: fill 0.3s;
+  }
+}
+
+.wishList:hover::before {
+  width: 2.5vw;
+  height: 2.5vw;
+  opacity: 1;
+}
+
+.wishList:hover svg {
+  fill: var(--primary);
+}

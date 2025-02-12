@@ -5,7 +5,7 @@ interface UserData {
   id: number;
   email: string;
   first_name: string;
-  last_name: string;
+
   // Інші поля, що ти хочеш зберігати
 }
 
@@ -76,6 +76,14 @@ const userSlice = createSlice({
     updateUserData: (state: AuthState, action: PayloadAction<UserData>) => {
       state.user = action.payload;
     },
+
+    setUserFromToken: (
+      state,
+      action: PayloadAction<{ token: string; user: UserData }>
+    ) => {
+      state.token = action.payload.token;
+      state.user = action.payload.user;
+    },
   },
 });
 
@@ -88,6 +96,7 @@ export const {
   loginFailure,
   logout,
   updateUserData,
+  setUserFromToken,
 } = userSlice.actions;
 
 export default userSlice.reducer;
