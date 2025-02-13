@@ -14,15 +14,19 @@ const WishlistButton: React.FC<WishlistButtonProps> = ({
   token,
 }) => {
   const dispatch = useDispatch();
+
+  // БЕРЕМО preferences ЗАВДЯКИ user.meta.preferences
   const preferences = useSelector(
-    (state: RootState) => state.wishlist.preferences
+    (state: RootState) => state.user?.user?.meta?.preferences || []
   );
+
   const loading = useSelector((state: RootState) => state.wishlist.loading);
 
+  // ПЕРЕВІРЯЄМО ЧИ ПРОДУКТ У СПИСКУ ВПОДОБАНЬ
   const isInWishlist = preferences.includes(productId);
 
   const handleToggle = () => {
-    if (!loading) {
+    if (!loading && token) {
       dispatch(togglePreference({ token, preference: productId }) as any);
     }
   };

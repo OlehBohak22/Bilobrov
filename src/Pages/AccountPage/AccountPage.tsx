@@ -2,6 +2,7 @@ import s from "./AccountPage.module.css";
 import { useState } from "react";
 import { Layout } from "../../components/Layout/Layout";
 import { MainAccountTab } from "../../components/MainAccountTab/MainAccountTab";
+import { UpdateInfoTab } from "../../components/UpdateInfoTab/UpdateInfoTab";
 
 const categories = [
   {
@@ -60,7 +61,7 @@ export const AccountPage = () => {
       case "wishlist":
         return <p>Інформація про список побажань</p>;
       case "contact":
-        return <p>Інформація про контактні дані</p>;
+        return <UpdateInfoTab />;
       case "password":
         return <p>Зміна пароля </p>;
       case "address":

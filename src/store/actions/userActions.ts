@@ -6,6 +6,9 @@ import {
   loginStart,
   loginSuccess,
   loginFailure,
+  updateUserStart,
+  updateUserSuccess,
+  updateUserFailure,
   setUserFromToken, // нова дія для завантаження користувача по токену
 } from "../slices/userSlice";
 import { AppDispatch } from "../index"; // тип для dispatch
@@ -53,12 +56,14 @@ export const checkUserSession = () => async (dispatch: AppDispatch) => {
 };
 
 // Реєстрація користувача
+// Реєстрація користувача
 export const registerUser =
   (email: string, password: string, name: string) =>
   async (dispatch: AppDispatch) => {
     try {
       dispatch(registerStart());
 
+      // Виконання запиту на реєстрацію
       const response = await axiosInstance.post(
         "/responses/v1/user_registration",
         {
@@ -79,7 +84,14 @@ export const registerUser =
       // Зберігаємо токен в localStorage
       localStorage.setItem("token", token);
 
+      // Диспатчимо успішну реєстрацію
       dispatch(registerSuccess({ token, user: response.data }));
+
+      // Тепер виконуємо авторизацію автоматично
+      // Власне, це виклик функції loginUser, щоб одразу авторизувати користувача
+      dispatch(
+        loginUser(email, password) // Замість того, щоб викликати окрему авторизацію, ми просто викликаємо loginUser
+      );
     } catch (error) {
       const axiosError = error as AxiosError<ErrorResponse>;
       dispatch(
@@ -119,5 +131,60 @@ export const loginUser =
       dispatch(
         loginFailure(axiosError.response?.data.message || "Помилка входу")
       );
+    }
+  };
+
+export const updateUserInfo =
+  (userData: {
+    first_name: string;
+    last_name: string;
+    email: string;
+    phone: string;
+    birthday: string;
+  }) =>
+  async (dispatch: AppDispatch, getState: any) => {
+    try {
+      dispatch(updateUserStart());
+
+      const token = getTokenFromLocalStorage();
+      if (!token) throw new Error("Користувач не авторизований");
+
+      const response = await axiosInstance.post(
+        "/responses/v1/update_user_info",
+        userData,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      // Отримуємо поточного користувача зі стану Redux
+      const currentUser = getState().user.user;
+
+      console.log(response.data); // Переконайся, що в response є поля first_name та last_name
+
+      if (!currentUser) throw new Error("Дані користувача не знайдені в Redux");
+
+      // Оновлюємо тільки meta, зберігаючи старі значення
+      const updatedUser = {
+        ...currentUser,
+
+        meta: {
+          ...currentUser,
+          ...userData, // Оновлюємо тільки передані поля
+        },
+      };
+
+      // Диспатчимо оновлені дані користувача
+      dispatch(updateUserSuccess(updatedUser));
+
+      // Якщо змінився email, оновлюємо токен
+      if (userData.email !== currentUser.email) {
+        localStorage.setItem("token", response.data.token);
+      }
+    } catch (error) {
+      const axiosError = error as AxiosError<ErrorResponse>;
+
+      const errorMessage =
+        axiosError.response?.data.message || "Помилка оновлення даних";
+
+      dispatch(updateUserFailure(errorMessage));
     }
   };

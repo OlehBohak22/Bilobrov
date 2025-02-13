@@ -1,12 +1,19 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { togglePreference } from "./wishlistSlice";
 
-// Типи для користувача та автентифікації
+// Оновлюємо інтерфейс UserData
+interface UserMeta {
+  preferences: number[];
+  birthday?: string;
+  bonus?: string;
+  phone?: string;
+}
+
 interface UserData {
   id: number;
   email: string;
   first_name: string;
-
-  // Інші поля, що ти хочеш зберігати
+  meta: UserMeta; // Додано поле meta
 }
 
 interface AuthState {
@@ -27,13 +34,12 @@ const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    // Реєстрація користувача
-    registerStart: (state: AuthState) => {
+    registerStart: (state) => {
       state.loading = true;
       state.error = null;
     },
     registerSuccess: (
-      state: AuthState,
+      state,
       action: PayloadAction<{ token: string; user: UserData }>
     ) => {
       state.token = action.payload.token;
@@ -41,19 +47,16 @@ const userSlice = createSlice({
       state.loading = false;
       state.error = null;
     },
-
-    registerFailure: (state: AuthState, action: PayloadAction<string>) => {
+    registerFailure: (state, action: PayloadAction<string>) => {
       state.loading = false;
       state.error = action.payload;
     },
-
-    // Вхід користувача
-    loginStart: (state: AuthState) => {
+    loginStart: (state) => {
       state.loading = true;
       state.error = null;
     },
     loginSuccess: (
-      state: AuthState,
+      state,
       action: PayloadAction<{ token: string; user: UserData }>
     ) => {
       state.token = action.payload.token;
@@ -61,22 +64,18 @@ const userSlice = createSlice({
       state.loading = false;
       state.error = null;
     },
-    loginFailure: (state: AuthState, action: PayloadAction<string>) => {
+
+    loginFailure: (state, action: PayloadAction<string>) => {
       state.loading = false;
       state.error = action.payload;
     },
-
-    // Вихід з акаунту
-    logout: (state: AuthState) => {
+    logout: (state) => {
       state.token = null;
       state.user = null;
     },
-
-    // Оновлення даних користувача (якщо є)
-    updateUserData: (state: AuthState, action: PayloadAction<UserData>) => {
+    updateUserData: (state, action: PayloadAction<UserData>) => {
       state.user = action.payload;
     },
-
     setUserFromToken: (
       state,
       action: PayloadAction<{ token: string; user: UserData }>
@@ -84,6 +83,28 @@ const userSlice = createSlice({
       state.token = action.payload.token;
       state.user = action.payload.user;
     },
+
+    updateUserStart: (state) => {
+      state.loading = true;
+      state.error = null;
+    },
+    updateUserSuccess: (state, action: PayloadAction<UserData>) => {
+      state.user = action.payload;
+      state.loading = false;
+      state.error = null;
+    },
+    updateUserFailure: (state, action: PayloadAction<string>) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+  },
+
+  extraReducers: (builder) => {
+    builder.addCase(togglePreference.fulfilled, (state, action) => {
+      if (state.user && state.user.meta) {
+        state.user.meta.preferences = action.payload; // Оновлення вподобань
+      }
+    });
   },
 });
 
@@ -97,6 +118,9 @@ export const {
   logout,
   updateUserData,
   setUserFromToken,
+  updateUserStart,
+  updateUserSuccess,
+  updateUserFailure,
 } = userSlice.actions;
 
 export default userSlice.reducer;

@@ -1,0 +1,70 @@
+.title {
+  padding: 0.8vw 1.2vw;
+  display: flex;
+  align-items: center;
+  gap: 0.6vw;
+  background-color: #f9f7f8;
+  margin-bottom: 1.25vw;
+
+  svg {
+    width: 1.25vw;
+    height: 1.25vw;
+  }
+
+  p {
+    font-family: Manrope;
+    font-weight: 700;
+    font-size: 0.8vw;
+    line-height: 0.8vw;
+    letter-spacing: 0%;
+    text-transform: uppercase;
+  }
+}
+
+.form {
+  .inputLine {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.6vw;
+    padding-bottom: 1.6vw;
+    margin-bottom: 1.6vw;
+    border-bottom: 1px solid #efedee;
+
+    div {
+      flex-grow: 1;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.6vw;
+      font-family: Manrope;
+      font-weight: 500;
+      font-size: 0.8vw;
+      line-height: 1vw;
+      letter-spacing: 0%;
+
+      span {
+        color: var(--primary);
+      }
+    }
+
+    input {
+      border: 1px solid #efedee !important;
+      padding: 0.9vw 0.8vw;
+      width: 100%;
+      font-family: Manrope;
+      font-weight: 500;
+      font-size: 0.9vw;
+      line-height: 1.3vw;
+      letter-spacing: 0%;
+    }
+
+    input::placeholder {
+      font-family: Manrope;
+      font-weight: 500;
+      font-size: 0.9vw;
+      line-height: 1.3vw;
+      letter-spacing: 0%;
+    }
+  }
+}

@@ -11,6 +11,20 @@
   }
 }
 
+.wishList::before {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  content: "";
+  width: 0.1vw;
+  height: 0.1vw;
+  opacity: 0;
+  border-radius: 50%;
+  border: 1px solid var(--primary);
+  transition: width 0.3s, height 0.3s;
+}
+
 .wishList:hover::before {
   width: 2.5vw;
   height: 2.5vw;

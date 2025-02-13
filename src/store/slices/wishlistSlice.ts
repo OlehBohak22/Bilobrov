@@ -1,69 +1,66 @@
-import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-
-const API_URL =
-  "https://bilobrov.projection-learn.website/wp-json/responses/v1/user_edit_preferences";
-
-export const togglePreference = createAsyncThunk(
-  "wishlist/togglePreference",
-  async (
-    { token, preference }: { token: string; preference: number },
-    { rejectWithValue }
-  ) => {
-    try {
-      const response = await axios.post(
-        API_URL,
-        { preference },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-
-      console.log(response.data);
-
-      return response.data;
-    } catch (error: any) {
-      return rejectWithValue(
-        error.response?.data || "Failed to update preferences"
-      );
-    }
-  }
-);
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 
 interface WishlistState {
-  userId: number | null;
   preferences: number[];
   loading: boolean;
   error: string | null;
 }
 
 const initialState: WishlistState = {
-  userId: null,
   preferences: [],
   loading: false,
   error: null,
 };
 
+// 🔥 Асинхронна дія для зміни вподобань через API
+export const togglePreference = createAsyncThunk<
+  number[], // Очікуваний тип повернених даних (масив вподобань)
+  { token: string; preference: number } // Аргумент (token + productId)
+>(
+  "wishlist/togglePreference",
+  async ({ token, preference }, { rejectWithValue }) => {
+    try {
+      const response = await fetch(
+        "https://bilobrov.projection-learn.website/wp-json/responses/v1/user_edit_preferences",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ preference }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Помилка оновлення вподобань");
+      }
+
+      const data = await response.json();
+      return data.current_preferences; // Повертаємо оновлений масив вподобань
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 const wishlistSlice = createSlice({
   name: "wishlist",
   initialState,
   reducers: {
-    setWishlist: (
-      state,
-      action: PayloadAction<{ userId: number; preferences: number[] }>
-    ) => {
-      state.userId = action.payload.userId;
-      state.preferences = action.payload.preferences;
+    setWishlist: (state, action: PayloadAction<number[]>) => {
+      state.preferences = action.payload;
     },
   },
   extraReducers: (builder) => {
     builder
-
       .addCase(togglePreference.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
       .addCase(togglePreference.fulfilled, (state, action) => {
         state.loading = false;
-        state.preferences = action.payload.current_preferences;
+        state.preferences = action.payload; // Оновлюємо масив вподобань
       })
       .addCase(togglePreference.rejected, (state, action) => {
         state.loading = false;

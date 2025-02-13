@@ -28,7 +28,7 @@ export const ProductItem: React.FC<ProductItemProps> = ({ info }) => {
   const { token, user } = useSelector((state: RootState) => state.user);
 
   if (!token || !user) {
-    return;
+    return null;
   }
 
   const brandName = Array.isArray(brandMeta?.value)
