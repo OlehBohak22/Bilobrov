@@ -14,6 +14,7 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RegisterModal } from "./components/RegisterPopup/Register";
 import { RootState } from "./store/index";
+import { fetchProducts } from "./store/slices/productsSlice";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -23,6 +24,7 @@ function App() {
 
   useEffect(() => {
     dispatch(checkUserSession());
+    dispatch(fetchProducts());
   }, [dispatch]);
 
   useEffect(() => {

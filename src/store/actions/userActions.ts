@@ -49,6 +49,7 @@ export const checkUserSession = () => async (dispatch: AppDispatch) => {
 
       // Диспатчимо інформацію про користувача
       dispatch(setUserFromToken({ token, user: userResponse.data }));
+      console.log(userResponse.data);
     } catch (error) {
       console.error("Помилка перевірки сесії:", error);
     }
@@ -158,25 +159,32 @@ export const updateUserInfo =
       // Отримуємо поточного користувача зі стану Redux
       const currentUser = getState().user.user;
 
-      console.log(response.data); // Переконайся, що в response є поля first_name та last_name
-
       if (!currentUser) throw new Error("Дані користувача не знайдені в Redux");
 
-      // Оновлюємо тільки meta, зберігаючи старі значення
+      // Оновлюємо дані користувача
       const updatedUser = {
         ...currentUser,
-
+        first_name: userData.first_name,
+        last_name: userData.last_name,
+        email: userData.email, // Додаємо email, якщо він змінюється
         meta: {
-          ...currentUser,
-          ...userData, // Оновлюємо тільки передані поля
+          ...currentUser.meta, // Залишаємо всі попередні мета-дані
+          phone: userData.phone,
+          birthday: userData.birthday,
         },
       };
 
       // Диспатчимо оновлені дані користувача
       dispatch(updateUserSuccess(updatedUser));
 
+      // const userResponse = await axiosInstance.get("/responses/v1/user_info", {
+      //   headers: { Authorization: `Bearer ${token}` },
+      // });
+
+      // console.log(userResponse);
+
       // Якщо змінився email, оновлюємо токен
-      if (userData.email !== currentUser.email) {
+      if (userData.email !== currentUser.email && response.data.token) {
         localStorage.setItem("token", response.data.token);
       }
     } catch (error) {

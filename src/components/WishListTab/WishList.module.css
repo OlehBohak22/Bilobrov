@@ -1,0 +1,124 @@
+.navigationContainer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.slide {
+  width: auto !important; /* Або вказати конкретну ширину, наприклад 200px */
+  max-width: 16vw;
+}
+
+.prevButton,
+.nextButton {
+  display: block;
+  background-color: #fff;
+  padding: 1vw;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 16px;
+  color: #333;
+  transition: background-color 0.3s ease;
+
+  svg {
+    fill: black;
+    width: 1.2vw;
+  }
+}
+
+.prevButton:hover,
+.nextButton:hover {
+  background-color: #f4f4f4;
+}
+
+.swiperController {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 2vw;
+}
+
+.tabsController {
+  display: flex;
+  gap: 2.1vw;
+
+  li {
+    font-family: Manrope, sans-serif;
+    font-size: 1.4vw;
+    font-weight: 500;
+    line-height: 1.4vw;
+    color: rgba(26, 26, 26, 0.1);
+  }
+}
+
+.tabsController {
+  display: flex;
+  gap: 20px;
+}
+
+.tabItem {
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.tabItem:hover {
+  text-decoration: underline;
+}
+
+.activeTab {
+  font-family: Playfair !important;
+  font-size: 1.6vw !important;
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.6vw !important;
+  color: black !important;
+}
+
+.swiperController {
+  h2 {
+    color: #000000;
+    margin-bottom: 2vw;
+
+    span:nth-child(1) {
+      font-family: Playfair display;
+      font-size: 2.7vw;
+      font-style: italic;
+      font-weight: 400;
+      line-height: 2.7vw;
+    }
+
+    span:nth-child(2) {
+      display: block;
+      margin-top: -0.3vw;
+      font-family: Manrope;
+      font-size: 2.7vw;
+      font-weight: 500;
+      line-height: 2.7vw;
+      text-indent: 5.5vw;
+    }
+  }
+}
+
+.clear {
+  margin-top: 5vw;
+  display: flex;
+  align-items: center;
+  gap: 0.6vw;
+
+  svg {
+    width: 1.2vw;
+    height: 1.2vw;
+    stroke: var(--primary);
+  }
+
+  span {
+    font-family: Manrope;
+    font-weight: 500;
+    font-size: 0.9vw;
+    line-height: 1.2vw;
+    letter-spacing: 0%;
+    color: var(--primary);
+  }
+}

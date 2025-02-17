@@ -1,12 +1,17 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { togglePreference } from "./wishlistSlice";
 
+interface BonusHistoryItem {
+  type: string;
+}
+
 // Оновлюємо інтерфейс UserData
 interface UserMeta {
   preferences: number[];
   birthday?: string;
   bonus?: string;
   phone?: string;
+  bonus_history?: BonusHistoryItem[];
 }
 
 interface UserData {

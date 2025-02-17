@@ -1,7 +1,6 @@
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchProducts } from "../../store/slices/productsSlice";
-import { RootState, AppDispatch } from "../../store/index";
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/index";
 import { ProductItem } from "../ProductItem/ProductItem";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -22,16 +21,11 @@ export const ProductList = ({
   defaultCategory = "Новинки",
   children,
 }: ProductListProps) => {
-  const dispatch = useDispatch<AppDispatch>();
   const [activeTab, setActiveTab] = useState(defaultCategory);
 
   const { items: products = [] } = useSelector(
     (state: RootState) => state.products
   );
-
-  useEffect(() => {
-    dispatch(fetchProducts());
-  }, [dispatch]);
 
   const filterProducts = (
     products: ProductInfo[],

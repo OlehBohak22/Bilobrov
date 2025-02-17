@@ -3,6 +3,8 @@ import { useState } from "react";
 import { Layout } from "../../components/Layout/Layout";
 import { MainAccountTab } from "../../components/MainAccountTab/MainAccountTab";
 import { UpdateInfoTab } from "../../components/UpdateInfoTab/UpdateInfoTab";
+import { WishListTab } from "../../components/WishListTab/WishListTab";
+import { BonusTab } from "../../components/BonusTab/BonusTab";
 
 const categories = [
   {
@@ -55,11 +57,11 @@ export const AccountPage = () => {
       case "main":
         return <MainAccountTab setTab={setActiveTab} />;
       case "bonus":
-        return <p>Інформація про бонуси</p>;
+        return <BonusTab />;
       case "order":
         return <p>Інформація про замовлення</p>;
       case "wishlist":
-        return <p>Інформація про список побажань</p>;
+        return <WishListTab />;
       case "contact":
         return <UpdateInfoTab />;
       case "password":

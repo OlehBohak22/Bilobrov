@@ -15,7 +15,7 @@ const initialState: WishlistState = {
 // 🔥 Асинхронна дія для зміни вподобань через API
 export const togglePreference = createAsyncThunk<
   number[], // Очікуваний тип повернених даних (масив вподобань)
-  { token: string; preference: number } // Аргумент (token + productId)
+  { token: string; preference: number[] | number } // Аргумент (token + productId)
 >(
   "wishlist/togglePreference",
   async ({ token, preference }, { rejectWithValue }) => {
@@ -60,7 +60,7 @@ const wishlistSlice = createSlice({
       })
       .addCase(togglePreference.fulfilled, (state, action) => {
         state.loading = false;
-        state.preferences = action.payload; // Оновлюємо масив вподобань
+        state.preferences = action.payload;
       })
       .addCase(togglePreference.rejected, (state, action) => {
         state.loading = false;

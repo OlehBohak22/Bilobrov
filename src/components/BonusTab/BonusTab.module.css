@@ -1,0 +1,63 @@
+.bonusContainer {
+  img {
+    width: 30vw;
+  }
+}
+
+.bonusQty {
+  display: flex;
+  align-items: center;
+  gap: 1.6vw;
+  margin-bottom: 2vw;
+
+  svg {
+    width: 6.2vw;
+    height: 6.2vw;
+  }
+
+  p {
+    font-family: Manrope;
+    font-weight: 700;
+    font-size: 0.9vw;
+    line-height: 1.4vw;
+    letter-spacing: 0%;
+  }
+
+  .qty {
+    font-family: Playfair Display;
+    font-weight: 600;
+    font-style: italic;
+    font-size: 3.2vw;
+    line-height: 2.5vw;
+  }
+
+  .text {
+    font-family: Playfair Display;
+    font-weight: 600;
+    font-style: italic;
+    font-size: 1.2vw;
+  }
+}
+
+.flex {
+  display: flex;
+  gap: 2vw;
+}
+
+.bonusTransactionList {
+  h4 {
+    font-family: Manrope;
+    font-weight: 700;
+    font-size: 0.9vw;
+    line-height: 1.4vw;
+    margin-bottom: 1.2vw;
+  }
+
+  ul {
+    padding: 1.2vw;
+    background-color: rgba(249, 247, 248, 1);
+
+    li {
+    }
+  }
+}
