@@ -1,6 +1,10 @@
 import s from "./HeaderUserSettings.module.css";
 
-export const HeaderUserSettings = () => {
+interface HeaderProps {
+  openRegister: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export const HeaderUserSettings: React.FC<HeaderProps> = ({ openRegister }) => {
   return (
     <div className={s.userSettings}>
       <button>
@@ -22,7 +26,7 @@ export const HeaderUserSettings = () => {
         </svg>
       </button>
 
-      <button>
+      <button onClick={() => openRegister(true)}>
         <svg
           width="24"
           height="24"

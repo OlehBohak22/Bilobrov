@@ -6,14 +6,12 @@ import s from "./WishListBtn.module.css";
 
 interface WishlistButtonProps {
   productId: number;
-  token: string;
 }
 
-const WishlistButton: React.FC<WishlistButtonProps> = ({
-  productId,
-  token,
-}) => {
+const WishlistButton: React.FC<WishlistButtonProps> = ({ productId }) => {
   const dispatch = useDispatch();
+
+  const { token } = useSelector((state: RootState) => state.user); // Вибираємо стан авторизації
 
   // БЕРЕМО preferences ЗАВДЯКИ user.meta.preferences
   const preferences = useSelector(

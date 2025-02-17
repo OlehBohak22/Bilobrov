@@ -4,7 +4,11 @@ import { HeaderUserSettings } from "../HeaderUserSettings/HeaderUserSettings";
 import { Link, NavLink } from "react-router";
 import { useLocation } from "react-router";
 
-export const Header = () => {
+interface HeaderProps {
+  openRegister: () => void;
+}
+
+export const Header: React.FC<HeaderProps> = ({ openRegister }) => {
   const location = useLocation();
 
   return (
@@ -59,7 +63,7 @@ export const Header = () => {
             </div>
           </Link>
 
-          <HeaderUserSettings />
+          <HeaderUserSettings openRegister={openRegister} />
         </div>
 
         <div className={s.headerBottomLine}>

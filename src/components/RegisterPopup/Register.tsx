@@ -4,9 +4,10 @@ import { registerUser } from "../../store/actions/userActions";
 import { AppDispatch } from "../../store/index";
 import { RootState } from "../../store"; // Імпортуємо RootState для useSelector
 import styles from "./Register.module.css"; // Імпортуємо стилі
-import { useEffect } from "react";
 
-const RegisterModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
+export const RegisterModal: React.FC<{
+  onClose: () => void;
+}> = ({ onClose }) => {
   const dispatch = useDispatch<AppDispatch>();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -124,25 +125,3 @@ const RegisterModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     </div>
   );
 };
-
-const Register: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const { user } = useSelector((state: RootState) => state.user); // Вибираємо стан авторизації
-
-  useEffect(() => {
-    if (user) {
-      setIsOpen(false);
-    }
-  }, [user]);
-
-  return (
-    <div className={styles.registerContainer}>
-      <button onClick={() => setIsOpen(true)} className={styles.openBtn}>
-        Відкрити реєстрацію
-      </button>
-      {isOpen && <RegisterModal onClose={() => setIsOpen(false)} />}
-    </div>
-  );
-};
-
-export default Register;
