@@ -7,7 +7,7 @@ interface HeaderProps {
 export const HeaderUserSettings: React.FC<HeaderProps> = ({ openRegister }) => {
   return (
     <div className={s.userSettings}>
-      <button>
+      {/* <button>
         <span>Укр</span>
         <svg
           width="20"
@@ -24,7 +24,7 @@ export const HeaderUserSettings: React.FC<HeaderProps> = ({ openRegister }) => {
             strokeLinejoin="round"
           />
         </svg>
-      </button>
+      </button> */}
 
       <button onClick={() => openRegister(true)}>
         <svg

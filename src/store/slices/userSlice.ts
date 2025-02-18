@@ -3,6 +3,9 @@ import { togglePreference } from "./wishlistSlice";
 
 interface BonusHistoryItem {
   type: string;
+  icon: string;
+  time: string;
+  value: number;
 }
 
 // Оновлюємо інтерфейс UserData
@@ -17,7 +20,8 @@ interface UserMeta {
 interface UserData {
   id: number;
   email: string;
-  first_name: string;
+  name: string;
+  secondName: string;
   meta: UserMeta; // Додано поле meta
 }
 

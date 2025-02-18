@@ -4,6 +4,8 @@ import * as Yup from "yup";
 import s from "./Form.module.css";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { updateUserInfo } from "../../store/actions/userActions";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 
 // Визначаємо схему валідації за допомогою Yup
 const validationSchema = Yup.object({
@@ -19,7 +21,7 @@ const validationSchema = Yup.object({
   phone: Yup.string()
     .required("Номер телефону є обов'язковим")
     .matches(/^\+?\d{10,15}$/, "Введіть правильний номер телефону"),
-  email: Yup.string().email("Невірна пошта").required("Пошта є обов'язковою"),
+  email: Yup.string().email("Невірна пошта"), // Email не є обов'язковим
 });
 
 interface FormValues {
@@ -33,23 +35,31 @@ interface FormValues {
 export const UpdateForm: React.FC = () => {
   const dispatch = useAppDispatch();
 
-  const handleSubmit = async (
-    values: FormValues,
-    { resetForm }: { resetForm: () => void }
-  ) => {
-    const userData = {
-      first_name: values.name,
-      last_name: values.secondName,
-      email: values.email,
-      phone: values.phone,
-      birthday: values.birthday,
+  const user = useSelector((state: RootState) => state.user?.user);
+
+  const handleSubmit = async (values: FormValues) => {
+    const userData: {
+      name: string;
+      secondName: string;
+      phone: string;
+      birthday: string;
+      email?: string;
+    } = {
+      name: values.name || "", // Гарантуємо, що значення є
+      secondName: values.secondName || "",
+      phone: values.phone || "",
+      birthday: values.birthday || "",
     };
+
+    if (values.email && values.email !== user?.email) {
+      userData.email = values.email; // Додаємо email тільки якщо він змінився
+    }
 
     try {
       await dispatch(updateUserInfo(userData));
-      resetForm(); // Скидаємо форму після успішної відправки
+
+      console.log(userData);
     } catch (error) {
-      // Можна додати обробку помилок тут
       console.log(error);
     }
   };
@@ -58,11 +68,11 @@ export const UpdateForm: React.FC = () => {
     <div className={s.form}>
       <Formik
         initialValues={{
-          name: "",
-          secondName: "",
-          birthday: "",
-          phone: "",
-          email: "",
+          name: user?.name || "",
+          secondName: user?.secondName || "",
+          birthday: user?.meta?.birthday || "",
+          phone: user?.meta?.phone || "",
+          email: user?.email || "",
         }}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
@@ -157,9 +167,24 @@ export const UpdateForm: React.FC = () => {
             </div>
           </div>
 
-          <div>
-            <button type="submit">Відправити</button>
-          </div>
+          <button className={s.btn} type="submit">
+            Зберегти зміни
+            <svg
+              width="25"
+              height="24"
+              viewBox="0 0 25 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g clipPath="url(#clip0_1834_9386)">
+                <path d="M17.9177 5L16.8487 6.05572L21.6059 10.7535H0.5V12.2465H21.6059L16.8487 16.9443L17.9177 18L24.5 11.5L17.9177 5Z" />
+              </g>
+              <defs>
+                <clipPath id="clip0_1834_9386">
+                  <rect width="24" height="24" transform="translate(0.5)" />
+                </clipPath>
+              </defs>
+            </svg>
+          </button>
         </Form>
       </Formik>
     </div>

@@ -68,3 +68,42 @@
     }
   }
 }
+
+.btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5vw;
+  font-family: Manrope;
+  font-weight: 700;
+  font-size: 0.8vw;
+  line-height: 0.8vw;
+  color: rgba(117, 117, 117, 1);
+  padding: 1vw 2.2vw;
+  background-color: rgba(249, 247, 248, 1);
+  transition: color 0.3s, background 0.3s;
+
+  svg {
+    width: 1.25vw;
+    height: 1.25vw;
+    fill: rgba(117, 117, 117, 1);
+    transition: fill 0.3s;
+  }
+}
+
+.btn:hover {
+  color: #ffffff;
+  background-color: var(--primary);
+
+  svg {
+    fill: #ffffff;
+  }
+}
+
+.btn:focus {
+  background-color: rgba(255, 196, 58, 1);
+  color: black;
+
+  svg {
+    fill: black;
+  }
+}

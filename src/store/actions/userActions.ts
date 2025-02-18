@@ -49,7 +49,6 @@ export const checkUserSession = () => async (dispatch: AppDispatch) => {
 
       // Диспатчимо інформацію про користувача
       dispatch(setUserFromToken({ token, user: userResponse.data }));
-      console.log(userResponse.data);
     } catch (error) {
       console.error("Помилка перевірки сесії:", error);
     }
@@ -137,11 +136,11 @@ export const loginUser =
 
 export const updateUserInfo =
   (userData: {
-    first_name: string;
-    last_name: string;
-    email: string;
+    name: string;
+    secondName: string;
     phone: string;
     birthday: string;
+    email?: string;
   }) =>
   async (dispatch: AppDispatch, getState: any) => {
     try {
@@ -164,8 +163,8 @@ export const updateUserInfo =
       // Оновлюємо дані користувача
       const updatedUser = {
         ...currentUser,
-        first_name: userData.first_name,
-        last_name: userData.last_name,
+        name: userData.name,
+        secondName: userData.secondName,
         email: userData.email, // Додаємо email, якщо він змінюється
         meta: {
           ...currentUser.meta, // Залишаємо всі попередні мета-дані
@@ -174,16 +173,8 @@ export const updateUserInfo =
         },
       };
 
-      // Диспатчимо оновлені дані користувача
       dispatch(updateUserSuccess(updatedUser));
 
-      // const userResponse = await axiosInstance.get("/responses/v1/user_info", {
-      //   headers: { Authorization: `Bearer ${token}` },
-      // });
-
-      // console.log(userResponse);
-
-      // Якщо змінився email, оновлюємо токен
       if (userData.email !== currentUser.email && response.data.token) {
         localStorage.setItem("token", response.data.token);
       }
