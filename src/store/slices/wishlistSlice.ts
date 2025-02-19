@@ -51,6 +51,12 @@ const wishlistSlice = createSlice({
     setWishlist: (state, action: PayloadAction<number[]>) => {
       state.preferences = action.payload;
     },
+
+    removeFromWishlist: (state, action: PayloadAction<number>) => {
+      state.preferences = state.preferences.filter(
+        (id) => id !== action.payload
+      );
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -69,5 +75,5 @@ const wishlistSlice = createSlice({
   },
 });
 
-export const { setWishlist } = wishlistSlice.actions;
+export const { setWishlist, removeFromWishlist } = wishlistSlice.actions;
 export default wishlistSlice.reducer;

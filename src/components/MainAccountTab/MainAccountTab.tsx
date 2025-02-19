@@ -159,7 +159,7 @@ export const MainAccountTab: React.FC<MainAccountTabProps> = ({ setTab }) => {
   return (
     <div className={s.tab}>
       <h2>
-        {user?.name ? <span>{vocativeCase(user.name)},</span> : "Красуне"}
+        {user?.name ? <span>{vocativeCase(user.name)},</span> : ""}
         <span>вітаємо!</span>
       </h2>
 

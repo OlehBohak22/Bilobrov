@@ -1,4 +1,4 @@
-import { Route, Routes, useNavigate } from "react-router-dom"; // Додаємо useNavigate
+import { Route, Routes, useNavigate, useLocation } from "react-router-dom";
 import "./App.css";
 import { Header } from "./components/Header/Header";
 import { HomePage } from "./Pages/HomePage/HomePage";
@@ -15,12 +15,17 @@ import { useSelector } from "react-redux";
 import { RegisterModal } from "./components/RegisterPopup/Register";
 import { RootState } from "./store/index";
 import { fetchProducts } from "./store/slices/productsSlice";
+import { WishListPopup } from "./components/WishListPopup/WishListPopup";
+import { LoadingBar } from "./components/LoadingBar/LoadingBar"; // Додаємо LoadingBar
 
 function App() {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate(); // Додаємо useNavigate
+  const navigate = useNavigate();
+  const location = useLocation();
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
-  const { user } = useSelector((state: RootState) => state.user); // Вибираємо стан авторизації
+  const [isWishList, setIsWishList] = useState(false);
+  const [loading, setLoading] = useState(false); // Додаємо стейт для смужки
+  const { user } = useSelector((state: RootState) => state.user);
 
   useEffect(() => {
     dispatch(checkUserSession());
@@ -33,22 +38,45 @@ function App() {
     }
   }, [user]);
 
-  // Оновлюємо логіку відкриття реєстрації
+  useEffect(() => {
+    setLoading(true);
+    const timeout = setTimeout(() => setLoading(false), 800); // Імітуємо завантаження
+    return () => clearTimeout(timeout);
+  }, [location.pathname]); // Виконується при зміні URL
+
   const handleOpenRegister = () => {
     if (user) {
-      navigate("/account"); // Якщо користувач авторизований, редіректимо
+      navigate("/account");
     } else {
-      setIsRegisterOpen(true); // Інакше відкриваємо реєстраційний попап
+      setIsRegisterOpen(true);
     }
   };
 
+  const handleOpenWishList = () => {
+    if (user) {
+      setIsWishList(true);
+    } else {
+      setIsRegisterOpen(true);
+    }
+  };
+
+  // Якщо loading === true, показуємо лише LoadingBar
+  if (loading) {
+    return <LoadingBar loading={loading} />;
+  }
+
+  // Видаляємо умовний рендеринг LoadingBar
   return (
     <>
-      <Header openRegister={handleOpenRegister} />{" "}
-      {/* Передаємо оновлену функцію */}
+      <LoadingBar loading={loading} /> {/* Завжди рендеримо LoadingBar */}
+      <Header
+        openRegister={handleOpenRegister}
+        openWishList={handleOpenWishList}
+      />
       {isRegisterOpen && (
         <RegisterModal onClose={() => setIsRegisterOpen(false)} />
       )}
+      {isWishList && <WishListPopup onClose={() => setIsWishList(false)} />}
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/about" element={<AboutPage />} />

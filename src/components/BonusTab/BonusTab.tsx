@@ -76,7 +76,159 @@ export const BonusTab = () => {
               {user.bonus_history.map((item, index) => (
                 <li key={index}>
                   <div className={s.transactionInfo}>
-                    <div className={s.icon}></div>
+                    <div className={s.icon}>
+                      <img src={item.icon} alt={item.type} />
+                    </div>
+
+                    <div className={s.transactionType}>
+                      <p>{item.type}</p>
+                      <span>{item.time.slice(0, item.time.indexOf(" "))}</span>
+                    </div>
+                  </div>
+
+                  <div
+                    className={s.transactionValue}
+                    style={{
+                      color: String(item.value).startsWith("-")
+                        ? "black"
+                        : "#38B558",
+                    }}
+                  >
+                    {item.value} бонусів
+                  </div>
+                </li>
+              ))}
+              {user.bonus_history.map((item, index) => (
+                <li key={index}>
+                  <div className={s.transactionInfo}>
+                    <div className={s.icon}>
+                      <img src={item.icon} alt={item.type} />
+                    </div>
+
+                    <div className={s.transactionType}>
+                      <p>{item.type}</p>
+                      <span>{item.time.slice(0, item.time.indexOf(" "))}</span>
+                    </div>
+                  </div>
+
+                  <div
+                    className={s.transactionValue}
+                    style={{
+                      color: String(item.value).startsWith("-")
+                        ? "black"
+                        : "#38B558",
+                    }}
+                  >
+                    {item.value} бонусів
+                  </div>
+                </li>
+              ))}
+              {user.bonus_history.map((item, index) => (
+                <li key={index}>
+                  <div className={s.transactionInfo}>
+                    <div className={s.icon}>
+                      <img src={item.icon} alt={item.type} />
+                    </div>
+
+                    <div className={s.transactionType}>
+                      <p>{item.type}</p>
+                      <span>{item.time.slice(0, item.time.indexOf(" "))}</span>
+                    </div>
+                  </div>
+
+                  <div
+                    className={s.transactionValue}
+                    style={{
+                      color: String(item.value).startsWith("-")
+                        ? "black"
+                        : "#38B558",
+                    }}
+                  >
+                    {item.value} бонусів
+                  </div>
+                </li>
+              ))}
+              {user.bonus_history.map((item, index) => (
+                <li key={index}>
+                  <div className={s.transactionInfo}>
+                    <div className={s.icon}>
+                      <img src={item.icon} alt={item.type} />
+                    </div>
+
+                    <div className={s.transactionType}>
+                      <p>{item.type}</p>
+                      <span>{item.time.slice(0, item.time.indexOf(" "))}</span>
+                    </div>
+                  </div>
+
+                  <div
+                    className={s.transactionValue}
+                    style={{
+                      color: String(item.value).startsWith("-")
+                        ? "black"
+                        : "#38B558",
+                    }}
+                  >
+                    {item.value} бонусів
+                  </div>
+                </li>
+              ))}
+              {user.bonus_history.map((item, index) => (
+                <li key={index}>
+                  <div className={s.transactionInfo}>
+                    <div className={s.icon}>
+                      <img src={item.icon} alt={item.type} />
+                    </div>
+
+                    <div className={s.transactionType}>
+                      <p>{item.type}</p>
+                      <span>{item.time.slice(0, item.time.indexOf(" "))}</span>
+                    </div>
+                  </div>
+
+                  <div
+                    className={s.transactionValue}
+                    style={{
+                      color: String(item.value).startsWith("-")
+                        ? "black"
+                        : "#38B558",
+                    }}
+                  >
+                    {item.value} бонусів
+                  </div>
+                </li>
+              ))}
+              {user.bonus_history.map((item, index) => (
+                <li key={index}>
+                  <div className={s.transactionInfo}>
+                    <div className={s.icon}>
+                      <img src={item.icon} alt={item.type} />
+                    </div>
+
+                    <div className={s.transactionType}>
+                      <p>{item.type}</p>
+                      <span>{item.time.slice(0, item.time.indexOf(" "))}</span>
+                    </div>
+                  </div>
+
+                  <div
+                    className={s.transactionValue}
+                    style={{
+                      color: String(item.value).startsWith("-")
+                        ? "black"
+                        : "#38B558",
+                    }}
+                  >
+                    {item.value} бонусів
+                  </div>
+                </li>
+              ))}
+              {user.bonus_history.map((item, index) => (
+                <li key={index}>
+                  <div className={s.transactionInfo}>
+                    <div className={s.icon}>
+                      <img src={item.icon} alt={item.type} />
+                    </div>
 
                     <div className={s.transactionType}>
                       <p>{item.type}</p>

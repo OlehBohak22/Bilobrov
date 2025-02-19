@@ -1,0 +1,215 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  z-index: 9999999;
+}
+
+.modal {
+  position: relative;
+  background: white;
+  height: 100%;
+  width: 38%;
+  display: flex;
+  flex-direction: column;
+  padding: 2vw;
+  padding-right: 0;
+}
+
+.modal::before {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 1px;
+  transform: translateX(-100%);
+  width: 11.7vw;
+  height: 100%;
+  background-image: url(/images/popup-side-img.avif);
+  background-size: cover;
+  border: none;
+}
+
+.closeBtn {
+  color: white;
+  position: absolute;
+  top: 2vw;
+  right: 2vw;
+
+  svg {
+    width: 2.7vw;
+    height: 2.7vw;
+    stroke: black;
+  }
+}
+
+.list {
+  overflow: auto;
+  width: 100%;
+
+  li:not(:last-child) {
+    margin-bottom: 1vw;
+  }
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 1vw;
+  width: 100%;
+
+  .img {
+    width: 8.8vw;
+    background-color: rgba(246, 246, 246, 1);
+  }
+
+  .markersBlock {
+    display: flex;
+    gap: 0.4vw;
+
+    .bestMarker {
+      background-color: rgba(255, 196, 58, 1);
+      color: var(--primary);
+      padding: 0.4vw 0.8vw;
+      text-transform: uppercase;
+      font-family: Raleway;
+      font-size: 0.6vw;
+      font-weight: 800;
+      line-height: 0.7vw;
+      letter-spacing: 0.01em;
+
+      span {
+        display: block;
+      }
+    }
+
+    .topMarker,
+    .newMarker {
+      padding: 0.4vw 0;
+      width: 3vw;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(254, 228, 229, 1);
+      font-family: Raleway;
+      font-size: 0.6vw;
+      font-weight: 800;
+      line-height: 0.7vw;
+      letter-spacing: 0.01em;
+      color: var(--primary);
+    }
+
+    .saleMarker {
+      /* font-family: Raleway, sans-serif; */
+      font-size: 0.6vw;
+      font-weight: 800;
+      line-height: 0.6vw;
+      letter-spacing: 0.01em;
+      color: #ffffff;
+      background-color: var(--primary);
+      width: 3vw;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}
+
+.productBrand {
+  font-family: Manrope, sans-serif;
+  font-size: 0.7vw;
+  font-weight: 600;
+  line-height: 0.7vw;
+  letter-spacing: 0.12em;
+  margin-bottom: 0.4vw;
+}
+
+.productName {
+  font-family: Manrope, sans-serif;
+  font-size: 0.9vw;
+  font-weight: 600;
+  line-height: 1.3vw;
+  margin-bottom: 0.4vw;
+}
+
+.currency {
+  font-family: Manrope, sans-serif;
+  font-size: 0.9vw;
+  font-weight: 500;
+  line-height: 0.9vw;
+  margin-right: 0.2vw;
+}
+
+.salePrice {
+  font-family: Manrope, sans-serif;
+  font-size: 0.9vw;
+  font-weight: 600;
+  line-height: 0.9vw;
+  margin-right: 0.2vw;
+}
+
+.regularPrice {
+  font-family: Manrope, sans-serif;
+  font-size: 0.8vw;
+  font-weight: 500;
+  line-height: 0.8vw;
+  letter-spacing: -0.01em;
+  text-decoration: line-through;
+  color: rgba(167, 169, 170, 1);
+}
+
+.red {
+  color: var(--primary); /* зміна кольору тексту на червоний */
+}
+
+.code {
+  font-family: Manrope;
+  font-weight: 500;
+  font-size: 0.6vw;
+  line-height: 0.8vw;
+  display: flex;
+
+  p {
+    margin-right: 0.2vw;
+    color: rgba(26, 26, 26, 0.267);
+  }
+
+  span {
+    color: rgba(26, 26, 26, 0.527);
+  }
+}
+
+.shortDesc {
+  font-family: Manrope, sans-serif;
+  font-size: 0.8vw;
+  font-weight: 600;
+  line-height: 1.1vw;
+  color: rgba(26, 26, 26, 0.4);
+  margin-bottom: 0.8vw;
+}
+
+.clear {
+  display: flex;
+  align-items: center;
+  gap: 0.2vw;
+
+  svg {
+    width: 0.8vw;
+    height: 0.8vw;
+    stroke: var(--primary);
+  }
+
+  span {
+    font-family: Manrope;
+    font-weight: 500;
+    font-size: 0.7vw;
+    line-height: 0.9vw;
+    letter-spacing: 0%;
+    color: var(--primary);
+  }
+}

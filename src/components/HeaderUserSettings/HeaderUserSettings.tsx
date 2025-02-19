@@ -2,9 +2,13 @@ import s from "./HeaderUserSettings.module.css";
 
 interface HeaderProps {
   openRegister: React.Dispatch<React.SetStateAction<boolean>>;
+  openWishList: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const HeaderUserSettings: React.FC<HeaderProps> = ({ openRegister }) => {
+export const HeaderUserSettings: React.FC<HeaderProps> = ({
+  openRegister,
+  openWishList,
+}) => {
   return (
     <div className={s.userSettings}>
       {/* <button>
@@ -44,7 +48,7 @@ export const HeaderUserSettings: React.FC<HeaderProps> = ({ openRegister }) => {
         </svg>
       </button>
 
-      <button>
+      <button onClick={() => openWishList(true)}>
         <svg
           width="24"
           height="24"

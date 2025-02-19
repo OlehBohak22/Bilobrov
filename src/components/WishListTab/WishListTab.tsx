@@ -104,27 +104,33 @@ export const WishListTab = () => {
         ))}
       </Swiper>
 
-      <button className={s.clear} onClick={handleClearWishlist}>
-        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M4.11719 6.45117H19.8784L18.461 21.2503H5.53458L4.11719 6.45117Z"
-            strokeWidth="1.6"
-            strokeLinecap="square"
-          />
-          <path
-            d="M12 11.3638L12 16.3366"
-            strokeWidth="1.6"
-            strokeLinecap="square"
-          />
-          <path
-            d="M16.4758 5.99734L15.4071 2.75H8.59217L7.52344 5.99734"
-            strokeWidth="1.6"
-            strokeLinecap="square"
-          />
-        </svg>
+      {(wishlistProducts.length !== 0 && (
+        <button className={s.clear} onClick={handleClearWishlist}>
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M4.11719 6.45117H19.8784L18.461 21.2503H5.53458L4.11719 6.45117Z"
+              strokeWidth="1.6"
+              strokeLinecap="square"
+            />
+            <path
+              d="M12 11.3638L12 16.3366"
+              strokeWidth="1.6"
+              strokeLinecap="square"
+            />
+            <path
+              d="M16.4758 5.99734L15.4071 2.75H8.59217L7.52344 5.99734"
+              strokeWidth="1.6"
+              strokeLinecap="square"
+            />
+          </svg>
 
-        <span>Видалити все</span>
-      </button>
+          <span>Видалити все</span>
+        </button>
+      )) || <p>Список бажань порожній</p>}
     </div>
   );
 };

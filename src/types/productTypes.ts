@@ -7,6 +7,7 @@ interface Category {
 
 export interface ProductInfo {
   id: number; // Додано, якщо потрібно
+  sku: string;
   name: string;
   key: string;
   short_description?: string;

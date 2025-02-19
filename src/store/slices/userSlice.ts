@@ -97,11 +97,22 @@ const userSlice = createSlice({
       state.loading = true;
       state.error = null;
     },
-    updateUserSuccess: (state, action: PayloadAction<UserData>) => {
-      state.user = action.payload;
+    updateUserSuccess: (state, action: PayloadAction<Partial<UserData>>) => {
+      if (state.user) {
+        state.user = {
+          ...state.user,
+          ...action.payload,
+          email: action.payload.email ?? state.user.email, // Якщо email немає в payload, залишаємо старий
+          meta: {
+            ...state.user.meta,
+            ...action.payload.meta,
+          },
+        };
+      }
       state.loading = false;
       state.error = null;
     },
+
     updateUserFailure: (state, action: PayloadAction<string>) => {
       state.loading = false;
       state.error = action.payload;

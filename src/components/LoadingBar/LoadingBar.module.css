@@ -1,0 +1,14 @@
+.loadingBar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 4px;
+  width: 0%;
+  background-color: var(--primary);
+  transition: width 0.7s ease-in-out;
+  z-index: 1000;
+}
+
+.active {
+  width: 100%;
+}

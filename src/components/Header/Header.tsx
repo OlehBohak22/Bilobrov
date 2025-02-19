@@ -6,9 +6,13 @@ import { useLocation } from "react-router";
 
 interface HeaderProps {
   openRegister: () => void;
+  openWishList: () => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ openRegister }) => {
+export const Header: React.FC<HeaderProps> = ({
+  openRegister,
+  openWishList,
+}) => {
   const location = useLocation();
 
   return (
@@ -63,7 +67,10 @@ export const Header: React.FC<HeaderProps> = ({ openRegister }) => {
             </div>
           </Link>
 
-          <HeaderUserSettings openRegister={openRegister} />
+          <HeaderUserSettings
+            openRegister={openRegister}
+            openWishList={openWishList}
+          />
         </div>
 
         <div className={s.headerBottomLine}>
