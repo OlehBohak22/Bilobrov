@@ -12,6 +12,18 @@
   z-index: 9999999;
 }
 
+.modal::-webkit-scrollbar {
+  width: 0.2vw;
+}
+.modal::-webkit-scrollbar-track {
+  width: 1vw;
+  background-color: rgba(254, 228, 229, 1);
+}
+.modal::-webkit-scrollbar-thumb {
+  width: 1vw;
+  background-color: var(--primary);
+}
+
 /* Вікно модалки */
 .modal {
   position: relative;
@@ -22,6 +34,7 @@
   justify-content: center;
   flex-direction: column;
   padding: 0 8.3vw;
+  overflow-y: scroll;
 
   img {
     width: 9.7vw;
@@ -59,18 +72,6 @@
   }
 }
 
-.modal::before {
-  position: absolute;
-  content: "";
-  left: 1px;
-  transform: translateX(-100%);
-  width: 11.7vw;
-  height: 100%;
-  background-image: url(/images/popup-side-img.avif);
-  background-size: cover;
-  border: none;
-}
-
 /* Форма */
 .form {
   padding-top: 2vw;
@@ -84,6 +85,10 @@
     line-height: 1vw;
     letter-spacing: 0%;
     margin-bottom: 0.6vw;
+
+    span {
+      color: var(--primary);
+    }
   }
 }
 
@@ -108,6 +113,12 @@
   font-size: 14px;
 }
 
+.before {
+  /* background-image: url(/images/popup-side-img.avif); */
+  width: 10.4vw;
+  height: 100%;
+}
+
 /* Кнопки */
 .registerBtn {
   display: block;
@@ -120,7 +131,9 @@
   gap: 0.8vw;
   padding: 1vw 0;
   text-align: center;
-  transition: background 0.3s;
+  transition: 0.3s;
+  margin-bottom: 1.2vw;
+  text-transform: uppercase;
 
   span {
     font-family: Manrope, sans-serif;
@@ -128,7 +141,7 @@
     font-weight: 600;
     line-height: 0.8vw;
     text-transform: uppercase;
-    transition: color 0.3s;
+    transition: color 0.5s;
   }
 
   svg {
@@ -141,6 +154,7 @@
 
 .registerBtn:hover {
   background: #ffc43a;
+  color: black;
 
   svg {
     fill: black;
@@ -160,7 +174,14 @@
   svg {
     width: 2.7vw;
     height: 2.7vw;
-    stroke: black;
+    stroke: rgb(0, 0, 0);
+    transition: stroke 0.3s;
+  }
+}
+
+.closeBtn:hover {
+  svg {
+    stroke: var(--primary);
   }
 }
 
@@ -171,4 +192,16 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
+}
+
+.controller {
+  font-family: Manrope;
+  font-weight: 700;
+  font-size: 0.9vw;
+  line-height: 1.2vw;
+
+  button {
+    color: var(--primary);
+    text-decoration: underline;
+  }
 }

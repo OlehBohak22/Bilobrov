@@ -2,6 +2,38 @@
   display: flex;
 
   button {
+    position: relative;
     padding: 0.7vw;
+  }
+
+  svg {
+    width: 1.2vw;
+    height: 1.2vw;
+    stroke: #ffffff;
+  }
+
+  button:hover {
+    svg {
+      stroke: var(--primary) !important;
+    }
+  }
+
+  .qty {
+    position: absolute;
+    top: 0.3vw;
+    right: 0.1vw;
+    background-color: rgb(255, 255, 255);
+    color: #000000;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 1vw;
+    height: 1vw;
+    font-family: Manrope;
+    font-weight: 600;
+    font-size: 0.6vw;
+    line-height: 0.6vw;
+    transition: 0.3s;
   }
 }

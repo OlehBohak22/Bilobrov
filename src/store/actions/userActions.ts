@@ -22,7 +22,9 @@ const consumerSecret = "cs_f9430f1ca298c36b0001d95521253a5b1deb2fc5";
 // Створюємо інстанс Axios із заголовками
 const axiosInstance = axios.create({
   baseURL: API_URL,
+  withCredentials: true, // Передаємо cookies
   headers: {
+    // "X-WP-Nonce": window.wcSettings?.nonce || "", // Додаємо nonce
     Authorization: "Basic " + btoa(`${consumerKey}:${consumerSecret}`),
   },
 });
@@ -42,12 +44,10 @@ export const checkUserSession = () => async (dispatch: AppDispatch) => {
   const token = getTokenFromLocalStorage();
   if (token) {
     try {
-      // Якщо токен є, отримаємо інформацію про користувача
       const userResponse = await axiosInstance.get("/responses/v1/user_info", {
         headers: { Authorization: `Bearer ${token}` },
       });
-
-      // Диспатчимо інформацію про користувача
+      console.log(userResponse.data);
       dispatch(setUserFromToken({ token, user: userResponse.data }));
     } catch (error) {
       console.error("Помилка перевірки сесії:", error);
@@ -55,8 +55,6 @@ export const checkUserSession = () => async (dispatch: AppDispatch) => {
   }
 };
 
-// Реєстрація користувача
-// Реєстрація користувача
 export const registerUser =
   (email: string, password: string, name: string) =>
   async (dispatch: AppDispatch) => {
@@ -81,17 +79,11 @@ export const registerUser =
 
       const { token } = tokenResponse.data;
 
-      // Зберігаємо токен в localStorage
       localStorage.setItem("token", token);
 
-      // Диспатчимо успішну реєстрацію
       dispatch(registerSuccess({ token, user: response.data }));
 
-      // Тепер виконуємо авторизацію автоматично
-      // Власне, це виклик функції loginUser, щоб одразу авторизувати користувача
-      dispatch(
-        loginUser(email, password) // Замість того, щоб викликати окрему авторизацію, ми просто викликаємо loginUser
-      );
+      dispatch(loginUser(email, password));
     } catch (error) {
       const axiosError = error as AxiosError<ErrorResponse>;
       dispatch(

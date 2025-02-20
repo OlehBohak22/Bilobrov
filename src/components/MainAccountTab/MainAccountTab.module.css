@@ -50,6 +50,12 @@
       position: relative;
       flex-basis: calc((100% - 2 * 0.6vw) / 3);
       cursor: pointer;
+      min-height: 25vh;
+      overflow: hidden;
+
+      img {
+        transition: transform 0.3s;
+      }
 
       p {
         position: absolute;
@@ -63,12 +69,23 @@
         display: flex;
         align-items: center;
         gap: 0.6vw;
+        transition: gap 0.3s;
 
         svg {
           width: 1.6vw;
           height: 1.6vw;
           stroke: black;
         }
+      }
+    }
+
+    li:hover {
+      img {
+        transform: scale(1.1);
+      }
+
+      p {
+        gap: 1vw;
       }
     }
   }

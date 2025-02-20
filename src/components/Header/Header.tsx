@@ -7,11 +7,13 @@ import { useLocation } from "react-router";
 interface HeaderProps {
   openRegister: () => void;
   openWishList: () => void;
+  openCart: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
   openRegister,
   openWishList,
+  openCart,
 }) => {
   const location = useLocation();
 
@@ -42,7 +44,7 @@ export const Header: React.FC<HeaderProps> = ({
                 />
               </svg>
 
-              <span>Меню</span>
+              <p>Меню</p>
             </button>
           </div>
 
@@ -70,6 +72,7 @@ export const Header: React.FC<HeaderProps> = ({
           <HeaderUserSettings
             openRegister={openRegister}
             openWishList={openWishList}
+            openCart={openCart}
           />
         </div>
 

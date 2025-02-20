@@ -7,6 +7,8 @@ import categoryReducer from "./slices/categorySlice";
 import faqReducer from "./slices/faqSlice";
 import contactReducer from "./slices/contactSlice";
 import wishlistReducer from "./slices/wishlistSlice";
+import resetPasswordReducer from "./slices/resetPasswordSlice";
+import cartReducer from "./slices/cartSlice";
 
 export const store = configureStore({
   reducer: {
@@ -18,6 +20,8 @@ export const store = configureStore({
     faq: faqReducer,
     contact: contactReducer,
     wishlist: wishlistReducer,
+    resetPassword: resetPasswordReducer,
+    cart: cartReducer,
   },
 });
 

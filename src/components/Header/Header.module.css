@@ -8,6 +8,7 @@
   z-index: 9999999;
 
   a,
+  p,
   span {
     transition: color 0.3s;
   }
@@ -22,6 +23,16 @@
   background-color: #ffffff;
 }
 
+.header.hovered span,
+.header:hover span {
+  background-color: black;
+  color: #ffffff !important;
+}
+.header.hovered p,
+.header:hover p {
+  color: #000000 !important;
+}
+
 .header:hover a,
 .header.hovered a,
 .header:hover span,
@@ -29,8 +40,8 @@
   color: black;
 }
 
-.header:hover path,
-.header.hovered path {
+.header:hover svg,
+.header.hovered svg {
   stroke: rgb(0, 0, 0);
 }
 

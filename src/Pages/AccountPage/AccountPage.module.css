@@ -5,6 +5,7 @@
 .container {
   display: flex;
   gap: 5.2vw;
+  /* overflow: hidden; */
 }
 
 .tabsMenu {

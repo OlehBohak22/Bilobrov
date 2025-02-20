@@ -31,6 +31,16 @@
   opacity: 1;
 }
 
+.wishList:has(.active):hover::before {
+  display: none;
+}
+
 .wishList:hover svg {
   fill: var(--primary);
+}
+
+.wishList:has(.active) {
+  outline: 1px solid var(--primary);
+  outline-offset: 0.6vw;
+  border-radius: 50%;
 }

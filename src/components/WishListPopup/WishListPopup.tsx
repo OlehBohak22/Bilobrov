@@ -46,7 +46,7 @@ const WishListProductItem: React.FC<ProductItemProps> = ({ info, token }) => {
         <img src={info.images[0]?.src} alt={info.images[0]?.alt || info.name} />
       </div>
 
-      <div className="w-[23vw]">
+      <div className={s.div}>
         <div className="flex gap-[0.8vw] items-center mb-[0.6vw]">
           <div>
             <div className={s.markersBlock}>
@@ -146,6 +146,8 @@ const WishListProductItem: React.FC<ProductItemProps> = ({ info, token }) => {
   );
 };
 
+import { motion } from "framer-motion";
+
 export const WishListPopup: React.FC<{
   onClose: () => void;
 }> = ({ onClose }) => {
@@ -165,28 +167,52 @@ export const WishListPopup: React.FC<{
 
   return (
     <div className={s.modalOverlay}>
-      <div className={s.modal}>
-        <button onClick={onClose} className={s.closeBtn}>
-          <svg
-            viewBox="0 0 52 52"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M39 13L13 39M13 13L39 39"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </button>
+      {/* Анімація першого блоку */}
+      <motion.div
+        className={s.before}
+        initial={{ x: "100%", opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ duration: 0.5, ease: "easeOut", delay: 0.3 }}
+      >
+        <img src="/images/popup-side-img.avif" alt="before" />
+      </motion.div>
+
+      {/* Анімація модального вікна (з затримкою) */}
+      <motion.div
+        className={s.modal}
+        initial={{ x: "50%", opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+      >
+        <div className="flex justify-between items-center mb-[2vw]">
+          <h3 className={s.title}>Список побажань</h3>
+
+          <button onClick={onClose} className={s.closeBtn}>
+            <svg
+              viewBox="0 0 52 52"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M39 13L13 39M13 13L39 39"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </button>
+        </div>
 
         <ul className={s.list}>
           {wishlistProducts.map((product: ProductInfo) => (
-            <WishListProductItem info={product} token={token || ""} />
+            <WishListProductItem
+              key={product.id}
+              info={product}
+              token={token || ""}
+            />
           ))}
         </ul>
-      </div>
+      </motion.div>
     </div>
   );
 };

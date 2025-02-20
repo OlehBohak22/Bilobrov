@@ -14,7 +14,7 @@ export const HomePage = () => {
     <main>
       <HomeHero></HomeHero>
       <ProductList
-        categories={["Без категорії", "Акції", "Новинки", "Бестселлери"]}
+        categories={["Акції", "Новинки", "Бестселлери"]}
         defaultCategory="Новинки"
       />
 

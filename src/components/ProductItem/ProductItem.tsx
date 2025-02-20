@@ -1,7 +1,10 @@
+import React from "react";
 import s from "./ProductItem.module.css";
 import { ProductInfo } from "../../types/productTypes";
 import { StarRating } from "../StarRating/StarRating";
 import WishlistButton from "../WishlistButton/WishlistButton";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { addToCart } from "../../store/slices/cartSlice";
 
 interface ProductItemProps {
   info: ProductInfo;
@@ -21,11 +24,17 @@ const isNewProduct = (dateCreated: string) => {
 };
 
 export const ProductItem: React.FC<ProductItemProps> = ({ info }) => {
-  const brandMeta = info.meta_data.find((item) => item.key === "brands");
+  const dispatch = useAppDispatch();
 
+  const brandMeta = info.meta_data.find((item) => item.key === "brands");
   const brandName = Array.isArray(brandMeta?.value)
     ? brandMeta.value[0]?.name
     : null;
+
+  // Обробник для додавання товару в корзину
+  const handleAddToCart = () => {
+    dispatch(addToCart({ id: info.id, quantity: 1 }));
+  };
 
   return (
     <li className={s.productItem}>
@@ -67,7 +76,11 @@ export const ProductItem: React.FC<ProductItemProps> = ({ info }) => {
 
           <WishlistButton productId={info.id} />
 
-          <div className={s.cart}>
+          <div
+            className={s.cart}
+            onClick={handleAddToCart}
+            title="Додати в корзину"
+          >
             <svg
               viewBox="0 0 22 22"
               fill="none"

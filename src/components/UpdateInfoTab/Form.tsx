@@ -151,7 +151,7 @@ export const UpdateForm: React.FC = () => {
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <g clip-path="url(#clip0_1950_10735)">
+              <g clipPath="url(#clip0_1950_10735)">
                 <path d="M17.9177 5L16.8487 6.05572L21.6059 10.7535H0.5V12.2465H21.6059L16.8487 16.9443L17.9177 18L24.5 11.5L17.9177 5Z" />
               </g>
               <defs>
