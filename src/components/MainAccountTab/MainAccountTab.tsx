@@ -9,7 +9,6 @@ type MainAccountTabProps = {
 const vocativeCase = (name: string): string => {
   const rules: Record<string, string> = {
     а: "о",
-    я: "ю",
     ія: "іє",
     ий: "ю",
     ій: "ю",
@@ -83,19 +82,18 @@ const vocativeCase = (name: string): string => {
     Григорій: "Григорію",
     Остап: "Остапе",
     Рудольф: "Рудольфе",
+    Майкл: "Майкле",
   };
 
-  // Перевіряємо винятки
   if (exceptions[name]) return exceptions[name];
 
-  // Перевіряємо закінчення
   for (const [ending, replacement] of Object.entries(rules)) {
     if (name.endsWith(ending)) {
       return name.slice(0, -ending.length) + replacement;
     }
   }
 
-  return "Красуне"; // Якщо ім’я не знайдене, повертаємо "Красуне"
+  return "Красуне";
 };
 
 const arrow = (

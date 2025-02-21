@@ -17,23 +17,46 @@ export const RegisterModal: React.FC<{ onClose: () => void }> = ({
 
   const { loading, error } = useSelector((state: RootState) => state.user);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // const handleDispatch = (action: any) =>
+  //   new Promise((resolve, reject) => {
+  //     dispatch(action)
+  //       .then((result: any) => {
+  //         if (result.error) {
+  //           reject(result.error);
+  //         } else {
+  //           resolve(result.payload);
+  //         }
+  //       })
+  //       .catch(reject);
+  //   });
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (isRegister) {
-      if (email && password && firstName) {
-        dispatch(registerUser(email, password, firstName));
-        setTimeout(() => onClose(), 700); // Затримка перед закриттям
-      } else {
+      if (!email || !password || !firstName) {
         alert("Будь ласка, заповніть усі поля");
+        return;
+      }
+
+      try {
+        await dispatch(registerUser(email, password, firstName));
+        onClose();
+      } catch (error: any) {
+        alert("Помилка реєстрації: " + error);
       }
     } else {
       if (!email || !password) {
         alert("Будь ласка, заповніть усі поля");
         return;
       }
-      dispatch(loginUser(email, password));
-      setTimeout(() => onClose(), 700); // Затримка перед закриттям
+
+      try {
+        await dispatch(loginUser(email, password));
+        onClose();
+      } catch (error: any) {
+        alert("Помилка входу: " + error);
+      }
     }
   };
 

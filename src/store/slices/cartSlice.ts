@@ -25,34 +25,78 @@ const initialState: CartState = {
   error: null,
 };
 
-const getNonce = () => (window as any)?.wcSettings?.nonce || "";
+export const getNonce = async (): Promise<string> => {
+  const auth = btoa(
+    "ck_f6e14983147c7a65ff3dd554625c6ae3069dbd5b:cs_f9430f1ca298c36b0001d95521253a5b1deb2fc5"
+  ); // Замінити на реальні креденшіали
+  try {
+    const response = await axios.get<{ nonce: string }>(
+      "https://bilobrov.projection-learn.website/wp-json/responses/v1/nonce",
+      {
+        headers: {
+          Authorization: `Basic ${auth}`,
+        },
+      }
+    );
+    return response.data.nonce;
+  } catch (error) {
+    console.error("Error fetching nonce:", error);
+    throw new Error("Failed to fetch nonce");
+  }
+};
 
 export const addToCart = createAsyncThunk<
   CartItem,
   { id: number; quantity: number }
 >("cart/addToCart", async ({ id, quantity }, { rejectWithValue }) => {
   try {
-    const nonce = getNonce();
+    const nonce = await getNonce();
+
+    console.log(nonce);
 
     const response = await axios.post<CartItem>(
       `${BASE_URL}/items`,
       { id, quantity },
+
       {
         withCredentials: true,
         headers: {
           "X-WC-Store-API-Nonce": nonce,
+          "Content-Type": "application/json",
         },
       }
     );
-    console.log(window.wcSettings);
 
-    console.log(response.data);
     return response.data;
   } catch (error: any) {
-    console.log(error.response?.data);
+    console.log(error.response.data);
     return rejectWithValue(error.response?.data || error.message);
   }
 });
+
+// export const addToCart = createAsyncThunk<
+//   CartItem,
+//   { id: number; quantity: number }
+// >("cart/addToCart", async ({ id, quantity }, { rejectWithValue }) => {
+//   try {
+//     // const nonce = await getNonce();
+//     // console.log(nonce);
+
+//     const response = await axios.get<CartItem>(`${BASE_URL}`, {
+//       params: { id, quantity }, // ✅ ПРАВИЛЬНИЙ СПОСІБ ПЕРЕДАЧІ ПАРАМЕТРІВ
+//       // withCredentials: true,
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//     });
+
+//     return response.data;
+//   } catch (error: any) {
+//     console.log(error.response.data);
+
+//     return rejectWithValue(error.response?.data || error.message);
+//   }
+// });
 
 // Видалення конкретного товару
 export const removeFromCart = createAsyncThunk<string, string>(
