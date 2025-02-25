@@ -1,0 +1,44 @@
+.content {
+  width: 100%;
+}
+
+.ratingBlock {
+  display: flex;
+  align-items: center;
+  gap: 0.5vw;
+  margin-bottom: 2.1vw;
+
+  span {
+    font-family: Manrope;
+    font-weight: 600;
+    font-size: 0.8vw;
+    line-height: 1vw;
+    color: #1a1a1a65;
+  }
+}
+
+.productBrand {
+  font-family: Manrope;
+  font-weight: 600;
+  font-size: 0.8vw;
+  line-height: 0.8vw;
+  letter-spacing: 0.1vw;
+  margin-bottom: 0.8vw;
+}
+
+.productName {
+  margin-bottom: 1.2vw;
+  font-family: Manrope;
+  font-weight: 600;
+  font-size: 1.6vw;
+  line-height: 2.1vw;
+}
+
+.shortDesc {
+  font-family: Manrope;
+  font-weight: 600;
+  font-size: 0.8vw;
+  line-height: 0.9vw;
+  color: #1a1a1a65;
+  margin-bottom: 2.1vw;
+}

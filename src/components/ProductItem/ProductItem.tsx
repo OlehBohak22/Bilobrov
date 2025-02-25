@@ -5,6 +5,7 @@ import { StarRating } from "../StarRating/StarRating";
 import WishlistButton from "../WishlistButton/WishlistButton";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { addToCart } from "../../store/slices/cartSlice";
+import { Link } from "react-router";
 
 interface ProductItemProps {
   info: ProductInfo;
@@ -38,6 +39,7 @@ export const ProductItem: React.FC<ProductItemProps> = ({ info }) => {
 
   return (
     <li className={s.productItem}>
+      <Link to={`product/${info.id}`} />
       <div>
         <div className={s.productImage}>
           <div className={s.markersBlock}>

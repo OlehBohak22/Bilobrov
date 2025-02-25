@@ -65,6 +65,8 @@ export const ProductList = ({
 
   const filteredProducts = filterProducts(products, activeTab);
 
+  console.log(filteredProducts);
+
   return (
     <div className={s.section}>
       <Layout>

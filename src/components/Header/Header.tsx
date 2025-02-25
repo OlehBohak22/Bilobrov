@@ -20,6 +20,7 @@ export const Header: React.FC<HeaderProps> = ({
   return (
     <header
       className={`${s.header} ${
+        location.pathname.startsWith("/product/") ||
         ["/about", "/account", "/support"].includes(location.pathname)
           ? s.hovered
           : ""

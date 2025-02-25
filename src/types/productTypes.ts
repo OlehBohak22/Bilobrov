@@ -12,6 +12,7 @@ export interface ProductInfo {
   key: string;
   short_description?: string;
   categories: Category[];
+  variations: number[];
   price: string;
   featured: boolean;
   regular_price: "";

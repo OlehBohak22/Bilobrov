@@ -22,6 +22,22 @@ export const fetchProducts = createAsyncThunk(
     if (!response.ok) {
       throw new Error("Failed to fetch products");
     }
+
+    return await response.json();
+  }
+);
+
+// Асинхронний екшн для отримання одного продукту за ID
+export const fetchProductById = createAsyncThunk(
+  "products/fetchProductById",
+  async (productId: number) => {
+    const response = await fetch(`${API_URL}products/${productId}`, {
+      method: "GET",
+      headers: headers,
+    });
+    if (!response.ok) {
+      throw new Error("Failed to fetch product");
+    }
     return await response.json();
   }
 );
@@ -32,6 +48,7 @@ const productSlice = createSlice({
   initialState: {
     items: [],
     loading: false,
+    currentProduct: null,
     error: null,
   },
   reducers: {},
@@ -49,6 +66,21 @@ const productSlice = createSlice({
         state.loading = false;
         // state.error = action.error.message;
       });
+
+    // fetchProductById
+    builder.addCase(fetchProductById.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+      state.currentProduct = null;
+    });
+    builder.addCase(fetchProductById.fulfilled, (state, action) => {
+      state.loading = false;
+      state.currentProduct = action.payload;
+    });
+    builder.addCase(fetchProductById.rejected, (state) => {
+      state.loading = false;
+      // state.error = action.error.message; // За потреби розкоментуйте
+    });
   },
 });
 

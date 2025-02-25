@@ -18,6 +18,7 @@ import { fetchProducts } from "./store/slices/productsSlice";
 import { WishListPopup } from "./components/WishListPopup/WishListPopup";
 import { LoadingBar } from "./components/LoadingBar/LoadingBar"; // Додаємо LoadingBar
 import { CartPopup } from "./components/CartPopup/CartPopup";
+import { ProductPage } from "./Pages/ProductPage/ProductPage";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -111,6 +112,7 @@ function App() {
         <Route path="/support" element={<ClientsSupportPage />} />
         <Route path="/bilobrov-club" element={<BonusPage />} />
         <Route path="/account" element={<AccountPage />} />
+        <Route path="/product/:id" element={<ProductPage />} />
       </Routes>
       <Footer />
       <LoginForm />
