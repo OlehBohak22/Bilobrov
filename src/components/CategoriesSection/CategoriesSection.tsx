@@ -20,18 +20,15 @@ export const CategoriesSection: React.FC<CategoriesSectionProps> = ({
 }) => {
   const dispatch = useDispatch<AppDispatch>();
 
-  // Отримуємо дані з Redux
   const { categories, loading, error } = useSelector(
     (state: RootState) => state.categories
   );
 
-  // Фільтруємо підкатегорії за допомогою мемоізованого селектора
   const subcategories = useSelector((state: RootState) =>
     selectSubcategories(parentId)(state)
   );
 
   useEffect(() => {
-    // Якщо категорії ще не завантажено, викликаємо fetchCategories
     if (categories.length === 0) {
       dispatch(fetchCategories());
     }

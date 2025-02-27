@@ -30,14 +30,6 @@ function App() {
   const [loading, setLoading] = useState(false); // Додаємо стейт для смужки
   const { user } = useSelector((state: RootState) => state.user);
 
-  // const getNonce = (): string | null => {
-  //   return (window as any)?.wcSettings?.nonce || null;
-  // };
-
-  useEffect(() => {
-    console.log("WooCommerce Nonce:", (window as any)?.wcSettings?.nonce);
-  }, []);
-
   useEffect(() => {
     dispatch(checkUserSession());
     dispatch(fetchProducts());
@@ -112,7 +104,10 @@ function App() {
         <Route path="/support" element={<ClientsSupportPage />} />
         <Route path="/bilobrov-club" element={<BonusPage />} />
         <Route path="/account" element={<AccountPage />} />
-        <Route path="/product/:id" element={<ProductPage />} />
+        <Route
+          path="/product/:id"
+          element={<ProductPage openRegister={handleOpenRegister} />}
+        />
       </Routes>
       <Footer />
       <LoginForm />

@@ -1,8 +1,11 @@
 .slider {
   position: relative;
   width: 47.5vw;
+  height: 47.5vw;
   display: flex;
   gap: 0.8vw;
+  position: sticky;
+  top: 2vw;
 }
 
 .slider-main {

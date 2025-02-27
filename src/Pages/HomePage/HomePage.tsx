@@ -27,7 +27,7 @@ export const HomePage = () => {
         </h2>
       </ProductList>
 
-      <CategoriesSection parentId={48}>
+      <CategoriesSection parentId={113}>
         <h2>
           <span>Догляд</span>
           <span>за обличчям</span>

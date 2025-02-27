@@ -42,3 +42,271 @@
   color: #1a1a1a65;
   margin-bottom: 2.1vw;
 }
+
+.currency {
+  font-family: Manrope, sans-serif;
+  font-size: 1.8vw;
+  font-weight: 500;
+  line-height: 1.8vw;
+  margin-right: 0.6vw;
+}
+
+.salePrice {
+  font-family: Manrope, sans-serif;
+  font-size: 1.8vw;
+  font-weight: 600;
+  line-height: 1.8vw;
+  margin-right: 0.2vw;
+}
+
+.regularPrice {
+  font-family: Manrope, sans-serif;
+  font-size: 1.2vw;
+  font-weight: 500;
+  line-height: 1.2vw;
+  letter-spacing: -0.01em;
+  text-decoration: line-through;
+  color: rgba(167, 169, 170, 1);
+}
+
+.red {
+  color: var(--primary); /* зміна кольору тексту на червоний */
+}
+
+.auth {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin-bottom: 2.1vw;
+
+  span,
+  p {
+    font-family: Manrope;
+    font-weight: 500;
+    font-size: 0.8vw;
+    line-height: 0.9vw;
+    transition: color 0.3s;
+  }
+
+  span {
+    text-decoration: underline;
+  }
+
+  svg {
+    width: 1.2vw;
+    height: 1.2vw;
+    stroke: black;
+    margin-right: 0.2vw;
+    transition: stroke 0.3s;
+  }
+}
+
+.auth:hover {
+  color: var(--primary);
+
+  svg {
+    stroke: var(--primary);
+  }
+}
+
+.orderController {
+  display: flex;
+  gap: 0.6vw;
+  margin-bottom: 1.2vw;
+
+  .qty {
+    background-color: #f6f6f6;
+    display: flex;
+    flex-shrink: 0;
+
+    button {
+      width: 3.1vw;
+      height: 3.1vw;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 2vw;
+
+      svg {
+        width: 0.8vw;
+        height: 0.8vw;
+      }
+    }
+
+    button:hover {
+      background-color: #00000011;
+    }
+
+    span {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Manrope;
+      font-weight: 500;
+      font-size: 0.8vw;
+      line-height: 0.8vw;
+      width: 2vw;
+    }
+  }
+
+  .cart {
+    text-align: center;
+    width: 100%;
+    background-color: var(--primary);
+    color: white;
+    font-family: Manrope;
+    font-weight: 700;
+    font-size: 0.8vw;
+    line-height: 0.8vw;
+    letter-spacing: 0.1vw;
+    transition: 0.3s;
+  }
+
+  .cart:hover {
+    background-color: #ffc43a;
+    color: black;
+  }
+
+  .wishList {
+    width: 3.1vw;
+    height: 3.1vw;
+    background-color: #f6f6f6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    transition: background 0.3s;
+
+    svg {
+      fill: black;
+      width: 1.2vw;
+      height: 1.2vw;
+      transition: fill 0.3s;
+    }
+  }
+
+  .wishList:hover {
+    background-color: var(--primary);
+
+    svg {
+      fill: white;
+    }
+  }
+}
+
+.isAvailable {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2.1vw;
+
+  .available {
+    p {
+      display: flex;
+      align-items: center;
+      gap: 0.3vw;
+      font-family: Manrope;
+      font-weight: 500;
+      font-size: 0.7vw;
+      line-height: 0.8vw;
+      letter-spacing: 0.03vw;
+
+      svg {
+        width: 0.7vw;
+        fill: black;
+        height: 0.7vw;
+      }
+    }
+  }
+
+  .code {
+    font-family: Manrope;
+    font-weight: 500;
+    font-size: 0.7vw;
+    line-height: 0.8vw;
+    display: flex;
+
+    p {
+      margin-right: 0.2vw;
+      color: rgba(26, 26, 26, 0.4);
+    }
+
+    span {
+      color: rgba(26, 26, 26, 1);
+    }
+  }
+}
+
+.consultation {
+  display: flex;
+  align-items: center;
+  gap: 1vw;
+  margin-bottom: 2.1vw;
+  cursor: pointer;
+  width: fit-content;
+}
+
+.questionCircle {
+  width: fit-content;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 5.4vw;
+  height: 5.4vw;
+
+  .icon {
+    /* position: absolute; */
+    width: 1.6vw;
+    height: 1.6vw;
+    stroke: black;
+  }
+}
+
+.circle {
+  width: 5.4vw;
+  height: 5.4vw;
+  position: absolute;
+  fill: black;
+  animation: rotate-back 1s ease-in-out forwards;
+}
+
+.consultation:hover .circle {
+  animation: rotate 3s ease-in-out infinite;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotate-back {
+  0% {
+    transform: rotate(360deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.text {
+  p {
+    font-family: Manrope;
+    font-weight: 500;
+    font-size: 0.8vw;
+    line-height: 0.8vw;
+    letter-spacing: 0.1vw;
+    margin-bottom: 0.6vw;
+    color: #757575;
+  }
+  span {
+    font-family: Manrope;
+    font-weight: 500;
+    font-size: 1vw;
+    line-height: 0.8vw;
+    letter-spacing: 0.1vw;
+  }
+}

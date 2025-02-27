@@ -2,11 +2,16 @@ import React, { useState } from "react";
 import "./ProductSlider.css";
 
 interface ProductSliderProps {
-  images: string[];
+  images: string[]; // масив з URL-адрес зображень
 }
 
 export const ProductSlider: React.FC<ProductSliderProps> = ({ images }) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
+
+  // Перевірка на випадок порожнього масиву images
+  if (!images || images.length === 0) {
+    return <div>No images available</div>; // Якщо немає зображень, вивести відповідне повідомлення
+  }
 
   const prevSlide = () => {
     setCurrentIndex((prevIndex) =>

@@ -28,9 +28,14 @@ const WishListProductItem: React.FC<ProductItemProps> = ({ info, token }) => {
 
   const brandMeta = info.meta_data.find((item) => item.key === "brands");
 
-  const brandName = Array.isArray(brandMeta?.value)
-    ? brandMeta.value[0]?.name
-    : null;
+  const brandName =
+    Array.isArray(brandMeta?.value) &&
+    brandMeta.value.length > 0 &&
+    typeof brandMeta.value[0] === "object"
+      ? (brandMeta.value[0] as { name: string }).name
+      : typeof brandMeta?.value === "string"
+      ? brandMeta.value
+      : null;
 
   const loading = useSelector((state: RootState) => state.wishlist.loading);
 

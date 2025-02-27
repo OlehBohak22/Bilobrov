@@ -3,6 +3,7 @@
   top: 1.2vw;
   right: 1.2vw;
   cursor: pointer;
+  z-index: 2;
 
   svg {
     fill: black;

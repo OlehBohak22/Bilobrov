@@ -28,9 +28,15 @@ export const ProductItem: React.FC<ProductItemProps> = ({ info }) => {
   const dispatch = useAppDispatch();
 
   const brandMeta = info.meta_data.find((item) => item.key === "brands");
-  const brandName = Array.isArray(brandMeta?.value)
-    ? brandMeta.value[0]?.name
-    : null;
+
+  const brandName =
+    Array.isArray(brandMeta?.value) &&
+    brandMeta.value.length > 0 &&
+    typeof brandMeta.value[0] === "object"
+      ? (brandMeta.value[0] as { name: string }).name
+      : typeof brandMeta?.value === "string"
+      ? brandMeta.value
+      : null;
 
   // Обробник для додавання товару в корзину
   const handleAddToCart = () => {
@@ -39,7 +45,7 @@ export const ProductItem: React.FC<ProductItemProps> = ({ info }) => {
 
   return (
     <li className={s.productItem}>
-      <Link to={`product/${info.id}`} />
+      <Link className={s.link} to={`product/${info.id}`} />
       <div>
         <div className={s.productImage}>
           <div className={s.markersBlock}>
