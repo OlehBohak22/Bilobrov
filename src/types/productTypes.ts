@@ -23,8 +23,8 @@ export interface ProductInfo {
   total_sales: number;
   sale_price: string;
   date_created: string;
-  images: { src: string; alt: string }[]; // Масив зображень
-  image: { src: string; alt: string }; // Окреме зображення, яке приходить в payload
+  images: { src: string; alt: string; id: number }[]; // Масив зображень
+  image: { src: string; alt: string; id: number }; // Окреме зображення, яке приходить в payload
   purchasable: boolean;
   meta_data: {
     key: string;

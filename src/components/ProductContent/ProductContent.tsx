@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import s from "./ProductContent.module.css";
 import { ProductInfo } from "../../types/productTypes";
 import { StarRating } from "../StarRating/StarRating";
@@ -8,36 +8,117 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { ProductPageAccordion } from "../ProductPageAccordion/ProductPageAccordion";
 
+interface VariationAttribute {
+  id: number;
+  name: string;
+  slug: string;
+  option: string;
+}
+
+interface Variation {
+  id: number;
+  slug: string;
+  attributes: VariationAttribute[];
+}
+
 interface ProductItemProps {
   info: ProductInfo;
   openRegister: () => void;
+  variations: Variation[];
 }
 
 export const ProductContent: React.FC<ProductItemProps> = ({
   info,
   openRegister,
+  variations,
 }) => {
+  const [selectedColor, setSelectedColor] = useState<string | null>(null);
+  const [selectedVolume, setSelectedVolume] = useState<string | null>(null);
   const [selectedVariation, setSelectedVariation] = useState<number | null>(
-    info.variations.length > 0 ? Number(info.variations[0]) : null
+    null
   );
 
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (variations.length > 0) {
+      const firstVariation = variations[0]; // Беремо першу варіацію
+
+      const colorAttr = firstVariation.attributes.find(
+        (a) => a.slug === "pa_color"
+      );
+      const volumeAttr = firstVariation.attributes.find(
+        (a) => a.slug === "pa_volume"
+      );
+
+      if (colorAttr && volumeAttr) {
+        setSelectedColor(colorAttr.option);
+        setSelectedVolume(volumeAttr.option);
+        setSelectedVariation(firstVariation.id);
+
+        dispatch(
+          fetchVariationById({
+            productId: info.id,
+            variationId: firstVariation.id,
+          })
+        );
+      }
+    }
+  }, [variations, dispatch, info.id]);
+
+  useEffect(() => {
+    if (selectedColor && selectedVolume) {
+      const matchedVariation = variations.find(
+        (v) =>
+          v.attributes.some(
+            (attr) => attr.slug === "pa_color" && attr.option === selectedColor
+          ) &&
+          v.attributes.some(
+            (attr) =>
+              attr.slug === "pa_volume" && attr.option === selectedVolume
+          )
+      );
+
+      if (matchedVariation && matchedVariation.id !== selectedVariation) {
+        setSelectedVariation(matchedVariation.id);
+        dispatch(
+          fetchVariationById({
+            productId: info.id,
+            variationId: matchedVariation.id,
+          })
+        );
+      }
+    }
+  }, [
+    selectedColor,
+    selectedVolume,
+    variations,
+    dispatch,
+    info.id,
+    selectedVariation,
+  ]);
+
+  const colorOptions = [
+    ...new Set(
+      variations.flatMap((v) =>
+        v.attributes.filter((a) => a.slug === "pa_color").map((a) => a.option)
+      )
+    ),
+  ];
+
+  const volumeOptions = [
+    ...new Set(
+      variations.flatMap((v) =>
+        v.attributes.filter((a) => a.slug === "pa_volume").map((a) => a.option)
+      )
+    ),
+  ];
 
   const user = useSelector((state: RootState) => state.user?.user);
 
   const handleAuth = () => {
     if (!user) {
       openRegister();
-    }
-  };
-
-  const handleVariationChange = (
-    event: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    const variationId = Number(event.target.value);
-    if (variationId !== selectedVariation) {
-      setSelectedVariation(variationId);
-      dispatch(fetchVariationById({ productId: info.id, variationId }));
     }
   };
 
@@ -98,25 +179,35 @@ export const ProductContent: React.FC<ProductItemProps> = ({
         <>{info.short_description}</>
       )}
 
-      {info.variations.length > 0 && (
-        <div className={s.variationSelect}>
-          <label htmlFor="variation">Вибір варіанту</label>
-          <select
-            id="variation"
-            value={selectedVariation ?? ""}
-            onChange={handleVariationChange}
-          >
-            <option value="" disabled>
-              Оберіть варіант
+      <div>
+        <select
+          id="color"
+          value={selectedColor ?? ""}
+          onChange={(e) => setSelectedColor(e.target.value)}
+        >
+          {colorOptions.map((color) => (
+            <option key={color} value={color}>
+              {color}
             </option>
-            {info.variations.map((variationId) => (
-              <option key={variationId} value={variationId}>
-                Варіант {variationId}
-              </option>
-            ))}
-          </select>
-        </div>
-      )}
+          ))}
+        </select>
+
+        {/* Вибір об'єму */}
+        <select
+          id="volume"
+          value={selectedVolume ?? ""}
+          onChange={(e) => setSelectedVolume(e.target.value)}
+        >
+          {volumeOptions.map((volume) => (
+            <option key={volume} value={volume}>
+              {volume}
+            </option>
+          ))}
+        </select>
+
+        {/* Інформація про вибрану варіацію */}
+        {selectedVariation && <p>Вибрана варіація: {selectedVariation}</p>}
+      </div>
 
       <div className="flex mb-[1vw]">
         {info.sale_price && info.sale_price !== "0" ? (

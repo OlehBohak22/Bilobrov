@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import {
   fetchProductById,
+  fetchProductVariations,
   fetchReviews,
 } from "../../store/slices/productsSlice";
 import { ProductSlider } from "../../components/ProductSlider/ProductSlider";
@@ -10,14 +11,20 @@ import { useParams } from "react-router-dom";
 import { Layout } from "../../components/Layout/Layout";
 import s from "./ProductPage.module.css";
 import { ProductContent } from "../../components/ProductContent/ProductContent";
+import { ReviewsList } from "../../components/ReviewsList/ReviewsList";
+import { ProductList } from "../../components/ProductList/ProductList";
 
 interface HeaderProps {
   openRegister: () => void;
+  openReview: () => void;
 }
 
-export const ProductPage: React.FC<HeaderProps> = ({ openRegister }) => {
+export const ProductPage: React.FC<HeaderProps> = ({
+  openRegister,
+  openReview,
+}) => {
   const dispatch = useAppDispatch();
-  const { currentProduct, loading, error, reviews } = useSelector(
+  const { currentProduct, loading, error, reviews, variations } = useSelector(
     (state: any) => state.products
   );
 
@@ -28,7 +35,7 @@ export const ProductPage: React.FC<HeaderProps> = ({ openRegister }) => {
     (item: { product_id: any }) => item.product_id == id
   );
 
-  console.log(currentReviews);
+  // console.log(currentProduct);
 
   useEffect(() => {
     if (id) {
@@ -36,8 +43,11 @@ export const ProductPage: React.FC<HeaderProps> = ({ openRegister }) => {
       const productIdNumber = parseInt(id, 10);
       dispatch(fetchProductById(productIdNumber));
       dispatch(fetchReviews());
+      dispatch(fetchProductVariations(+id));
     }
   }, [dispatch, id]);
+
+  // console.log(variations);
 
   if (loading) {
     return <div>Loading product...</div>;
@@ -57,7 +67,25 @@ export const ProductPage: React.FC<HeaderProps> = ({ openRegister }) => {
     <main className={s.page}>
       <Layout className="flex gap-[5vw]">
         <ProductSlider images={productImages} />
-        <ProductContent openRegister={openRegister} info={currentProduct} />
+        <ProductContent
+          openRegister={openRegister}
+          info={currentProduct}
+          variations={variations}
+        />
+      </Layout>
+
+      <ProductList
+        categories={["Новинки, Бестселлери"]}
+        defaultCategory="Новинки"
+      >
+        <h2>
+          <span>Схожі</span>
+          <span>товари</span>
+        </h2>
+      </ProductList>
+
+      <Layout>
+        <ReviewsList openReview={openReview} reviews={currentReviews} />
       </Layout>
     </main>
   );

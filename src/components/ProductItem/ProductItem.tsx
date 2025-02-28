@@ -45,8 +45,8 @@ export const ProductItem: React.FC<ProductItemProps> = ({ info }) => {
 
   return (
     <li className={s.productItem}>
-      <Link className={s.link} to={`product/${info.id}`} />
-      <div>
+      <Link className={s.link} to={`/product/${info.id}`} />
+      <div className={s.block}>
         <div className={s.productImage}>
           <div className={s.markersBlock}>
             {info.featured && (

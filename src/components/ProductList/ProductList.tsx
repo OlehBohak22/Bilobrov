@@ -65,8 +65,6 @@ export const ProductList = ({
 
   const filteredProducts = filterProducts(products, activeTab);
 
-  console.log(filteredProducts);
-
   return (
     <div className={s.section}>
       <Layout>
@@ -145,7 +143,7 @@ export const ProductList = ({
           className={s.productListSwiper}
         >
           {filteredProducts.map((product: ProductInfo) => (
-            <SwiperSlide key={product.id}>
+            <SwiperSlide className="h-auto!" key={product.id}>
               <ProductItem info={product} />
             </SwiperSlide>
           ))}

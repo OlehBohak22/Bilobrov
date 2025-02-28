@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./ProductSlider.css";
 
 interface ProductSliderProps {
@@ -7,6 +7,10 @@ interface ProductSliderProps {
 
 export const ProductSlider: React.FC<ProductSliderProps> = ({ images }) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
+
+  useEffect(() => {
+    setCurrentIndex(0); // Кожен раз, коли масив images змінюється, активуємо перший слайд
+  }, [images]);
 
   // Перевірка на випадок порожнього масиву images
   if (!images || images.length === 0) {

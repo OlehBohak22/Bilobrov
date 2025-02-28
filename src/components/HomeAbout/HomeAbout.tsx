@@ -16,7 +16,7 @@ export const HomeAbout = () => {
           зробити красу доступною для всіх!”
         </p>
 
-        <Link className={s.brandLink} to="">
+        <Link className={s.brandLink} to="/about">
           <span>Детальніше про нас</span>
           <svg
             className={s.arrow}

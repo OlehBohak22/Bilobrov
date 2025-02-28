@@ -16,6 +16,8 @@ interface ProductState {
   loading: boolean;
   currentProduct: ProductInfo | null;
   reviews: any[];
+
+  variations: ProductInfo[];
   error: string | null;
 }
 
@@ -24,6 +26,7 @@ const initialState: ProductState = {
   loading: false,
   currentProduct: null,
   reviews: [],
+  variations: [],
   error: null,
 };
 
@@ -45,6 +48,20 @@ export const fetchProductById = createAsyncThunk<ProductInfo, number>(
   "products/fetchProductById",
   async (productId) => {
     const response = await fetch(`${API_URL}products/${productId}`, {
+      method: "GET",
+      headers: headers,
+    });
+    if (!response.ok) {
+      throw new Error("Failed to fetch product");
+    }
+    return await response.json();
+  }
+);
+
+export const fetchProductVariations = createAsyncThunk<ProductInfo[], number>(
+  "products/fetchProductVariations",
+  async (productId) => {
+    const response = await fetch(`${API_URL}products/${productId}/variations`, {
       method: "GET",
       headers: headers,
     });
@@ -99,9 +116,6 @@ const productSlice = createSlice({
       .addCase(fetchProducts.fulfilled, (state, action) => {
         state.loading = false;
         state.items = action.payload;
-      })
-      .addCase(fetchProducts.rejected, (state) => {
-        state.loading = false;
       });
 
     builder.addCase(fetchVariationById.fulfilled, (state, action) => {
@@ -112,8 +126,16 @@ const productSlice = createSlice({
           price: action.payload.price,
           sale_price: action.payload.sale_price,
           regular_price: action.payload.regular_price,
-          images: action.payload.image ? [action.payload.image] : [],
+          images: action.payload.image
+            ? [
+                action.payload.image,
+                ...state.currentProduct.images.filter(
+                  (img) => img.id !== state.currentProduct?.images[0]?.id
+                ),
+              ]
+            : state.currentProduct.images,
           sku: action.payload.sku,
+          attributes: action.payload.attributes,
         };
       }
     });
@@ -140,6 +162,18 @@ const productSlice = createSlice({
       state.reviews = action.payload;
     });
     builder.addCase(fetchReviews.rejected, (state) => {
+      state.loading = false;
+    });
+
+    builder.addCase(fetchProductVariations.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+    builder.addCase(fetchProductVariations.fulfilled, (state, action) => {
+      state.loading = false;
+      state.variations = action.payload;
+    });
+    builder.addCase(fetchProductVariations.rejected, (state) => {
       state.loading = false;
     });
   },

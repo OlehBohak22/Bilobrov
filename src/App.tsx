@@ -19,6 +19,7 @@ import { WishListPopup } from "./components/WishListPopup/WishListPopup";
 import { LoadingBar } from "./components/LoadingBar/LoadingBar"; // Додаємо LoadingBar
 import { CartPopup } from "./components/CartPopup/CartPopup";
 import { ProductPage } from "./Pages/ProductPage/ProductPage";
+import { ReviewPopup } from "./components/ReviewPopup/ReviewPopup";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -27,7 +28,8 @@ function App() {
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
   const [isWishList, setIsWishList] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const [loading, setLoading] = useState(false); // Додаємо стейт для смужки
+  const [isReview, setIsReview] = useState(false);
+  const [loading, setLoading] = useState(true); // Додаємо стейт для смужки
   const { user } = useSelector((state: RootState) => state.user);
 
   useEffect(() => {
@@ -74,10 +76,15 @@ function App() {
     }
   };
 
+  const handleOpenReview = () => {
+    setIsReview(true);
+  };
+
   const handleCloseModals = () => {
     setIsRegisterOpen(false);
     setIsWishList(false);
     setIsCartOpen(false);
+    setIsReview(false);
     document.body.style.overflow = "visible";
   };
 
@@ -98,6 +105,7 @@ function App() {
       {isRegisterOpen && <RegisterModal onClose={handleCloseModals} />}
       {isWishList && <WishListPopup onClose={handleCloseModals} />}
       {isCartOpen && <CartPopup onClose={handleCloseModals} />}
+      {isReview && <ReviewPopup onClose={handleCloseModals} />}
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/about" element={<AboutPage />} />
@@ -106,7 +114,12 @@ function App() {
         <Route path="/account" element={<AccountPage />} />
         <Route
           path="/product/:id"
-          element={<ProductPage openRegister={handleOpenRegister} />}
+          element={
+            <ProductPage
+              openReview={handleOpenReview}
+              openRegister={handleOpenRegister}
+            />
+          }
         />
       </Routes>
       <Footer />
