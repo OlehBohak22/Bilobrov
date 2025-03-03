@@ -33,7 +33,8 @@ img {
   opacity: 0;
 }
 
-input {
+input,
+textarea {
   border: none !important;
   outline: none !important;
 }

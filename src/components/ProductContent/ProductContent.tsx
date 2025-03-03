@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import s from "./ProductContent.module.css";
 import { ProductInfo } from "../../types/productTypes";
-import { StarRating } from "../StarRating/StarRating";
+import { StarRatingRed } from "../StarRating/StarRating";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { fetchVariationById } from "../../store/slices/productsSlice";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { ProductPageAccordion } from "../ProductPageAccordion/ProductPageAccordion";
+import Select from "react-select";
+import { StylesConfig } from "react-select";
 
 interface VariationAttribute {
   id: number;
@@ -114,6 +116,11 @@ export const ProductContent: React.FC<ProductItemProps> = ({
     ),
   ];
 
+  const colorOptionsList = colorOptions.map((color) => ({
+    value: color,
+    label: color,
+  }));
+
   const user = useSelector((state: RootState) => state.user?.user);
 
   const handleAuth = () => {
@@ -159,10 +166,51 @@ export const ProductContent: React.FC<ProductItemProps> = ({
     contraindication,
   };
 
+  const customStyles: StylesConfig<any, false> = {
+    control: (provided, state) => ({
+      ...provided,
+      backgroundColor: "white",
+      borderColor: state.isFocused ? "black" : "black",
+      borderBottomWidth: "2px",
+      borderRadius: "0",
+      borderTop: "none",
+      borderRight: "none",
+      borderLeft: "none",
+      padding: "0",
+      boxShadow: state.isFocused
+        ? "0px 5px 12px 0px rgba(26, 26, 26, 0.1)"
+        : "none",
+      "&:hover": {
+        borderColor: "black",
+      },
+      "&:active": {
+        backgroundColor: "white", // Прибираємо синій фон при натисканні
+      },
+    }),
+    option: (provided, state) => ({
+      ...provided,
+      backgroundColor: state.isSelected ? "white" : "white",
+      color: state.isSelected ? "black" : "black",
+      padding: "10px",
+      cursor: "pointer",
+      "&:hover": {
+        color: "rgba(102, 102, 102, 1)",
+      },
+    }),
+    menu: (provided) => ({
+      ...provided,
+      borderRadius: "0",
+    }),
+
+    indicatorSeparator: () => ({
+      display: "none", // Прибирає лінію між текстом і стрілкою
+    }),
+  };
+
   return (
     <div className={s.content}>
       <div className={s.ratingBlock}>
-        <StarRating rating={info.average_rating} />
+        <StarRatingRed rating={info.average_rating} />
         <span>{info.rating_count} відгуків</span>
       </div>
 
@@ -180,32 +228,41 @@ export const ProductContent: React.FC<ProductItemProps> = ({
       )}
 
       <div>
-        <select
-          id="color"
-          value={selectedColor ?? ""}
-          onChange={(e) => setSelectedColor(e.target.value)}
-        >
-          {colorOptions.map((color) => (
-            <option key={color} value={color}>
-              {color}
-            </option>
-          ))}
-        </select>
+        <Select
+          options={colorOptionsList}
+          value={colorOptionsList.find((c) => c.value === selectedColor)}
+          onChange={(option) => setSelectedColor(option.value)}
+          className={s.color}
+          styles={customStyles}
+        />
 
-        {/* Вибір об'єму */}
-        <select
-          id="volume"
-          value={selectedVolume ?? ""}
-          onChange={(e) => setSelectedVolume(e.target.value)}
-        >
-          {volumeOptions.map((volume) => (
-            <option key={volume} value={volume}>
-              {volume}
-            </option>
-          ))}
-        </select>
+        <div className={s.volume}>
+          <p>ОБ'ЄМ</p>
+          <div className="flex gap-[0.4vw]">
+            {volumeOptions.map((volume) => (
+              <label
+                key={volume}
+                className={` border  cursor-pointer transition 
+          ${
+            selectedVolume === volume
+              ? "border-black bg-white"
+              : "border-gray-300 bg-white"
+          }`}
+              >
+                <input
+                  type="radio"
+                  name="volume"
+                  value={volume}
+                  checked={selectedVolume === volume}
+                  onChange={() => setSelectedVolume(volume)}
+                  className="hidden"
+                />
+                {volume}ml
+              </label>
+            ))}
+          </div>
+        </div>
 
-        {/* Інформація про вибрану варіацію */}
         {selectedVariation && <p>Вибрана варіація: {selectedVariation}</p>}
       </div>
 

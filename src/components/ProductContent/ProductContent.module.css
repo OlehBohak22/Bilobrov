@@ -310,3 +310,37 @@
     letter-spacing: 0.1vw;
   }
 }
+
+.colorOptions {
+  appearance: none;
+  display: block;
+  border-bottom: 2px solid black;
+  width: 20vw;
+}
+
+.volume {
+  margin-bottom: 2.1vw;
+
+  p {
+    font-family: Manrope;
+    font-weight: 600;
+    font-size: 0.8vw;
+    line-height: 0.7vw;
+    letter-spacing: 0.1vw;
+    margin-bottom: 0.8vw;
+  }
+
+  label {
+    font-family: Manrope;
+    font-weight: 600;
+    font-size: 0.7vw;
+    line-height: 0.7vw;
+    letter-spacing: 2%;
+    text-align: center;
+    padding: 0.8vw 0.7vw;
+  }
+}
+
+.color {
+  margin-bottom: 2.1vw;
+}
