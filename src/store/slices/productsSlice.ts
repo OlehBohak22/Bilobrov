@@ -16,9 +16,10 @@ interface ProductState {
   loading: boolean;
   currentProduct: ProductInfo | null;
   reviews: any[];
-
   variations: ProductInfo[];
   error: string | null;
+  reviewMessage: string | null; // Повідомлення для відгуку
+  reviewError: string | null; // Помилка для відгуку
 }
 
 const initialState: ProductState = {
@@ -28,7 +29,52 @@ const initialState: ProductState = {
   reviews: [],
   variations: [],
   error: null,
+  reviewMessage: null,
+  reviewError: null,
 };
+
+// Асинхронна операція для додавання відгуку
+export const addReview = createAsyncThunk(
+  "products/addReview",
+  async (
+    reviewData: {
+      product_id: number;
+      review: string;
+      rating: number;
+      review_images: [];
+      token?: string;
+      name?: string;
+      email?: string;
+    },
+    { rejectWithValue }
+  ) => {
+    const { token, ...reviewPayload } = reviewData;
+
+    try {
+      const response = await fetch(
+        "https://bilobrov.projection-learn.website/wp-json/responses/v1/add-review",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token ? `Bearer ${token}` : "",
+          },
+          body: JSON.stringify(reviewPayload),
+        }
+      );
+
+      const data = await response.json();
+      if (!response.ok) {
+        console.log(data.message);
+        throw new Error(data.message || "Помилка при додаванні відгуку");
+      }
+
+      return data;
+    } catch (error: any) {
+      return rejectWithValue(error.message || "Не вдалося відправити відгук");
+    }
+  }
+);
 
 export const fetchProducts = createAsyncThunk<ProductInfo[]>(
   "products/fetchProducts",
@@ -106,7 +152,12 @@ export const fetchReviews = createAsyncThunk(
 const productSlice = createSlice({
   name: "products",
   initialState,
-  reducers: {},
+  reducers: {
+    resetReviewState: (state) => {
+      state.reviewMessage = null;
+      state.reviewError = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchProducts.pending, (state) => {
@@ -130,7 +181,7 @@ const productSlice = createSlice({
             ? [
                 action.payload.image,
                 ...state.currentProduct.images.filter(
-                  (img) => img.id !== state.currentProduct?.images[0]?.id
+                  (img) => img.id !== action.payload.image.id
                 ),
               ]
             : state.currentProduct.images,
@@ -176,6 +227,21 @@ const productSlice = createSlice({
     builder.addCase(fetchProductVariations.rejected, (state) => {
       state.loading = false;
     });
+
+    builder
+      .addCase(addReview.pending, (state) => {
+        state.loading = true;
+        state.reviewMessage = null;
+        state.reviewError = null;
+      })
+      .addCase(addReview.fulfilled, (state, action) => {
+        state.loading = false;
+        state.reviewMessage = action.payload.message;
+      })
+      .addCase(addReview.rejected, (state, action) => {
+        state.loading = false;
+        state.reviewError = action.payload as string;
+      });
   },
 });
 

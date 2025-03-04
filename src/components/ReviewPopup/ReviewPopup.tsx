@@ -4,15 +4,18 @@ import { Formik, Field, Form, FormikHelpers } from "formik";
 import { RootState } from "../../store";
 import { FaStar } from "react-icons/fa"; // Не забудьте імпортувати зірки!
 import s from "./ReviewPopup.module.css";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { addReview } from "../../store/slices/productsSlice";
 
 // Тип для значень форми
 interface ReviewFormValues {
+  product_id: number;
   name: string;
-  phone: string;
+  email: string;
   review: string;
   isAuthenticated: boolean;
   rating: number;
-  images: string[];
+  review_images: [];
 }
 
 // Тип для компонентів, що приймають setFieldValue та values
@@ -24,20 +27,23 @@ interface ImageUploadProps {
 const ImageUpload: React.FC<ImageUploadProps> = ({ setFieldValue, values }) => {
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(event.target.files ?? []);
-    const newImages = files.map((file) => URL.createObjectURL(file));
+    const newreview_images = files.map((file) => URL.createObjectURL(file));
 
-    setFieldValue("images", [...values.images, ...newImages]);
+    setFieldValue("review_images", [
+      ...values.review_images,
+      ...newreview_images,
+    ]);
   };
 
   const handleRemoveImage = (image: string) => {
     setFieldValue(
-      "images",
-      values.images.filter((img) => img !== image)
+      "review_images",
+      values.review_images.filter((img) => img !== image)
     );
   };
 
   return (
-    <div className="mb-4">
+    <div>
       <input
         type="file"
         placeholder="delete"
@@ -48,7 +54,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ setFieldValue, values }) => {
       />
 
       <div className="flex gap-[0.6vw] mb-[1vw]">
-        {values.images.map((img, index) => (
+        {values.review_images.map((img, index) => (
           <div key={index} className="relative">
             <img
               src={img}
@@ -99,14 +105,17 @@ const StarRating: React.FC<StarRatingProps> = ({ setFieldValue, values }) => {
     </div>
   );
 };
-
 interface CartPopupProps {
   onClose: () => void;
+  product_id: number;
 }
 
-export const ReviewPopup: React.FC<CartPopupProps> = ({ onClose }) => {
+export const ReviewPopup: React.FC<CartPopupProps> = ({
+  onClose,
+  product_id,
+}) => {
   const user = useSelector((state: RootState) => state.user.user);
-
+  const dispatch = useAppDispatch();
   const [charCount, setCharCount] = useState(0);
   const maxLength = 150;
 
@@ -119,24 +128,25 @@ export const ReviewPopup: React.FC<CartPopupProps> = ({ onClose }) => {
     setFieldValue("review", value); // Оновлюємо значення review у Formik
   };
 
+  console.log(product_id);
+
   const initialValues: ReviewFormValues = {
+    product_id,
     name: "",
-    phone: "",
+    email: "",
     review: "",
     isAuthenticated: !!user, // Якщо є користувач, то він авторизований
     rating: 0,
-    images: [],
+    review_images: [],
   };
 
   const handleSubmit = (
     values: ReviewFormValues,
     { resetForm }: FormikHelpers<ReviewFormValues>
   ) => {
-    // Логіка для відправки відгуку
     console.log(values);
-    // Закриваємо попап після відправки
+    dispatch(addReview(values));
     onClose();
-    // Якщо хочете очистити форму після відправки
     resetForm();
   };
 
@@ -166,21 +176,21 @@ export const ReviewPopup: React.FC<CartPopupProps> = ({ onClose }) => {
             <Form className={s.form}>
               {!initialValues.isAuthenticated && (
                 <>
-                  <div>
+                  <div className="mb-[0.7vw]">
                     <label htmlFor="name">
                       Ім'я<span>*</span>
                     </label>
                     <Field id="name" name="name" placeholder="Твоє імʼя" />
                   </div>
 
-                  <div>
-                    <label htmlFor="phone">
+                  <div className="mb-[2vw]">
+                    <label htmlFor="email">
                       Номер телефону<span>*</span>
                     </label>
                     <Field
-                      id="phone"
-                      name="phone"
-                      type="phone"
+                      id="email"
+                      name="email"
+                      type="email"
                       placeholder="Твій номер телефону"
                     />
                   </div>

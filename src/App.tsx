@@ -32,6 +32,8 @@ function App() {
   const [loading, setLoading] = useState(true); // Додаємо стейт для смужки
   const { user } = useSelector((state: RootState) => state.user);
 
+  const { currentProduct } = useSelector((state: any) => state.products);
+
   useEffect(() => {
     dispatch(checkUserSession());
     dispatch(fetchProducts());
@@ -105,7 +107,12 @@ function App() {
       {isRegisterOpen && <RegisterModal onClose={handleCloseModals} />}
       {isWishList && <WishListPopup onClose={handleCloseModals} />}
       {isCartOpen && <CartPopup onClose={handleCloseModals} />}
-      {isReview && <ReviewPopup onClose={handleCloseModals} />}
+      {isReview && (
+        <ReviewPopup
+          onClose={handleCloseModals}
+          product_id={currentProduct?.id}
+        />
+      )}
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/about" element={<AboutPage />} />

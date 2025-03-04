@@ -34,92 +34,78 @@ export const ProductContent: React.FC<ProductItemProps> = ({
   openRegister,
   variations,
 }) => {
-  const [selectedColor, setSelectedColor] = useState<string | null>(null);
-  const [selectedVolume, setSelectedVolume] = useState<string | null>(null);
   const [selectedVariation, setSelectedVariation] = useState<number | null>(
     null
   );
 
   const dispatch = useAppDispatch();
 
+  const uniqueAttributes = [
+    ...new Map(
+      variations.flatMap((v) =>
+        v.attributes.map((a) => [a.slug, { slug: a.slug, name: a.name }])
+      )
+    ).values(),
+  ];
+
+  uniqueAttributes.sort((a) => (a.slug === "pa_color" ? -1 : 1));
+
+  const [selectedAttributes, setSelectedAttributes] = useState<{
+    [key: string]: string | null;
+  }>({});
+
   useEffect(() => {
     if (variations.length > 0) {
-      const firstVariation = variations[0]; // Беремо першу варіацію
+      const firstVariation = variations[0];
+      const initialAttributes: { [key: string]: string } = {};
 
-      const colorAttr = firstVariation.attributes.find(
-        (a) => a.slug === "pa_color"
+      firstVariation.attributes.forEach((attr) => {
+        initialAttributes[attr.slug] = attr.option;
+      });
+
+      setSelectedAttributes(initialAttributes);
+      setSelectedVariation(firstVariation.id);
+
+      dispatch(
+        fetchVariationById({
+          productId: info.id,
+          variationId: firstVariation.id,
+        })
       );
-      const volumeAttr = firstVariation.attributes.find(
-        (a) => a.slug === "pa_volume"
-      );
-
-      if (colorAttr && volumeAttr) {
-        setSelectedColor(colorAttr.option);
-        setSelectedVolume(volumeAttr.option);
-        setSelectedVariation(firstVariation.id);
-
-        dispatch(
-          fetchVariationById({
-            productId: info.id,
-            variationId: firstVariation.id,
-          })
-        );
-      }
     }
   }, [variations, dispatch, info.id]);
 
   useEffect(() => {
-    if (selectedColor && selectedVolume) {
-      const matchedVariation = variations.find(
-        (v) =>
+    if (Object.keys(selectedAttributes).length > 0) {
+      const matchedVariation = variations.find((v) =>
+        Object.entries(selectedAttributes).every(([key, value]) =>
           v.attributes.some(
-            (attr) => attr.slug === "pa_color" && attr.option === selectedColor
-          ) &&
-          v.attributes.some(
-            (attr) =>
-              attr.slug === "pa_volume" && attr.option === selectedVolume
+            (attr) => attr.slug === key && attr.option === value
           )
+        )
       );
 
-      if (matchedVariation && matchedVariation.id !== selectedVariation) {
-        setSelectedVariation(matchedVariation.id);
-        dispatch(
-          fetchVariationById({
-            productId: info.id,
-            variationId: matchedVariation.id,
-          })
-        );
+      if (matchedVariation) {
+        if (matchedVariation.id !== selectedVariation) {
+          setSelectedVariation(matchedVariation.id);
+          dispatch(
+            fetchVariationById({
+              productId: info.id,
+              variationId: matchedVariation.id,
+            })
+          );
+        }
+      } else {
+        // Якщо немає такої комбінації, можемо прибрати останній обраний атрибут
+        const newAttributes = { ...selectedAttributes };
+        const lastSelectedKey = Object.keys(newAttributes).pop();
+        if (lastSelectedKey) {
+          delete newAttributes[lastSelectedKey];
+          setSelectedAttributes(newAttributes);
+        }
       }
     }
-  }, [
-    selectedColor,
-    selectedVolume,
-    variations,
-    dispatch,
-    info.id,
-    selectedVariation,
-  ]);
-
-  const colorOptions = [
-    ...new Set(
-      variations.flatMap((v) =>
-        v.attributes.filter((a) => a.slug === "pa_color").map((a) => a.option)
-      )
-    ),
-  ];
-
-  const volumeOptions = [
-    ...new Set(
-      variations.flatMap((v) =>
-        v.attributes.filter((a) => a.slug === "pa_volume").map((a) => a.option)
-      )
-    ),
-  ];
-
-  const colorOptionsList = colorOptions.map((color) => ({
-    value: color,
-    label: color,
-  }));
+  }, [selectedAttributes, variations, dispatch, info.id, selectedVariation]);
 
   const user = useSelector((state: RootState) => state.user?.user);
 
@@ -207,6 +193,8 @@ export const ProductContent: React.FC<ProductItemProps> = ({
     }),
   };
 
+  if (!info.attributes) return <p>Loading...</p>; // Або інший заглушковий контент
+
   return (
     <div className={s.content}>
       <div className={s.ratingBlock}>
@@ -228,40 +216,109 @@ export const ProductContent: React.FC<ProductItemProps> = ({
       )}
 
       <div>
-        <Select
-          options={colorOptionsList}
-          value={colorOptionsList.find((c) => c.value === selectedColor)}
-          onChange={(option) => setSelectedColor(option.value)}
-          className={s.color}
-          styles={customStyles}
-        />
+        {uniqueAttributes.map((attribute) => {
+          // Отримуємо всі можливі варіанти значень для поточного атрибута
+          const options = [
+            ...new Set(
+              variations.flatMap((v) =>
+                v.attributes
+                  .filter((a) => a.slug === attribute.slug)
+                  .map((a) => a.option)
+              )
+            ),
+          ];
 
-        <div className={s.volume}>
-          <p>ОБ'ЄМ</p>
-          <div className="flex gap-[0.4vw]">
-            {volumeOptions.map((volume) => (
-              <label
-                key={volume}
-                className={` border  cursor-pointer transition 
-          ${
-            selectedVolume === volume
-              ? "border-black bg-white"
-              : "border-gray-300 bg-white"
-          }`}
-              >
-                <input
-                  type="radio"
-                  name="volume"
-                  value={volume}
-                  checked={selectedVolume === volume}
-                  onChange={() => setSelectedVolume(volume)}
-                  className="hidden"
-                />
-                {volume}ml
-              </label>
-            ))}
-          </div>
-        </div>
+          // Фільтруємо лише ті варіанти, які існують разом із вибраними атрибутами
+          const optionsList = options.map((option) => {
+            const isValid = variations.some((variation) => {
+              // Перевіряємо, чи всі вибрані атрибути є в цій варіації
+              const matchesSelected = Object.entries(selectedAttributes).every(
+                ([selectedSlug, selectedOption]) => {
+                  if (selectedSlug === attribute.slug) return true; // Пропускаємо поточний атрибут
+                  return variation.attributes.some(
+                    (attr) =>
+                      attr.slug === selectedSlug &&
+                      attr.option === selectedOption
+                  );
+                }
+              );
+
+              // Перевіряємо, чи ця варіація має поточний варіант `option`
+              const hasOption = variation.attributes.some(
+                (attr) => attr.slug === attribute.slug && attr.option === option
+              );
+
+              return matchesSelected && hasOption;
+            });
+
+            return {
+              value: option,
+              label: option,
+              isDisabled: !isValid, // Додаємо дізейбл для неіснуючих комбінацій
+            };
+          });
+
+          return (
+            <div key={attribute.slug} className={s.attribute}>
+              <p className={s.title}>{attribute.name}</p>
+
+              {attribute.slug === "pa_color" ? (
+                // Відображаємо Select для кольорів
+                <div className="mb-[2.1vw]">
+                  <Select
+                    options={optionsList}
+                    value={optionsList.find(
+                      (opt) => opt.value === selectedAttributes[attribute.slug]
+                    )}
+                    onChange={(option) =>
+                      setSelectedAttributes((prev) => ({
+                        ...prev,
+                        [attribute.slug]: option.value,
+                      }))
+                    }
+                    className={s.select}
+                    styles={customStyles}
+                  />
+                </div>
+              ) : (
+                // Відображаємо Radio-кнопки для всіх інших атрибутів
+                <div className={s.volume}>
+                  {optionsList.map((opt) => (
+                    <label
+                      key={opt.value}
+                      className={`border cursor-pointer transition
+                ${
+                  selectedAttributes[attribute.slug] === opt.value
+                    ? "border-black"
+                    : "border-gray-300"
+                }
+                ${opt.isDisabled ? "opacity-50 cursor-not-allowed" : ""}
+              `}
+                    >
+                      <input
+                        type="radio"
+                        className="hidden"
+                        name={attribute.slug}
+                        value={opt.value}
+                        checked={
+                          selectedAttributes[attribute.slug] === opt.value
+                        }
+                        onChange={() =>
+                          setSelectedAttributes((prev) => ({
+                            ...prev,
+                            [attribute.slug]: opt.value,
+                          }))
+                        }
+                        disabled={opt.isDisabled}
+                      />
+                      {opt.label}
+                    </label>
+                  ))}
+                </div>
+              )}
+            </div>
+          );
+        })}
 
         {selectedVariation && <p>Вибрана варіація: {selectedVariation}</p>}
       </div>
