@@ -6,6 +6,8 @@ import WishlistButton from "../WishlistButton/WishlistButton";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { addToCart } from "../../store/slices/cartSlice";
 import { Link } from "react-router";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 
 interface ProductItemProps {
   info: ProductInfo;
@@ -27,6 +29,10 @@ const isNewProduct = (dateCreated: string) => {
 export const ProductItem: React.FC<ProductItemProps> = ({ info }) => {
   const dispatch = useAppDispatch();
 
+  console.log(info);
+
+  const token = useSelector((state: RootState) => state.user.token);
+
   const brandMeta = info.meta_data.find((item) => item.key === "brands");
 
   const brandName =
@@ -38,9 +44,17 @@ export const ProductItem: React.FC<ProductItemProps> = ({ info }) => {
       ? brandMeta.value
       : null;
 
-  // Обробник для додавання товару в корзину
   const handleAddToCart = () => {
-    dispatch(addToCart({ id: info.id, quantity: 1 }));
+    dispatch(
+      addToCart({
+        product: {
+          id: info.id,
+          quantity: 1,
+          variation_id: info.variations?.[0] || 0,
+        },
+        token,
+      })
+    );
   };
 
   return (

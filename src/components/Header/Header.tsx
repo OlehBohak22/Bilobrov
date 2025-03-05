@@ -8,12 +8,14 @@ interface HeaderProps {
   openRegister: () => void;
   openWishList: () => void;
   openCart: () => void;
+  openMenu: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
   openRegister,
   openWishList,
   openCart,
+  openMenu,
 }) => {
   const location = useLocation();
 
@@ -21,7 +23,9 @@ export const Header: React.FC<HeaderProps> = ({
     <header
       className={`${s.header} ${
         location.pathname.startsWith("/product/") ||
-        ["/about", "/account", "/support"].includes(location.pathname)
+        ["/about", "/account", "/support", "/certificate"].includes(
+          location.pathname
+        )
           ? s.hovered
           : ""
       }`}
@@ -29,7 +33,7 @@ export const Header: React.FC<HeaderProps> = ({
       <Layout>
         <div className={s.headerTopLine}>
           <div>
-            <button className={s.menuBtn}>
+            <button onClick={() => openMenu()} className={s.menuBtn}>
               <svg
                 width="24"
                 height="24"
@@ -105,7 +109,7 @@ export const Header: React.FC<HeaderProps> = ({
                 <NavLink to="/">Вітаміни</NavLink>
               </li>
               <li>
-                <NavLink to="/">Подарункові сертифікати</NavLink>
+                <NavLink to="/certificate">Подарункові сертифікати</NavLink>
               </li>
               <li>
                 <NavLink to="/about">Про нас</NavLink>

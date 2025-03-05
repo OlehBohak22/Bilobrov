@@ -7,6 +7,7 @@ interface ReviewerType {
   reviewer: string;
   rating: number;
   review: string;
+  review_images: [];
 }
 
 interface ReviewsListPropType {
@@ -88,6 +89,7 @@ export const ReviewsList: FC<ReviewsListPropType> = ({
             reviewerName={item.reviewer}
             reviewerRating={item.rating}
             review={item.review}
+            images={item.review_images}
           />
         ))}
       </ul>

@@ -1,0 +1,61 @@
+/* Затемнення фону */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  z-index: 9999999;
+}
+
+.modal::-webkit-scrollbar {
+  width: 0.2vw;
+}
+.modal::-webkit-scrollbar-track {
+  width: 1vw;
+  background-color: rgba(254, 228, 229, 1);
+}
+.modal::-webkit-scrollbar-thumb {
+  width: 1vw;
+  background-color: var(--primary);
+}
+
+/* Вікно модалки */
+.modal {
+  position: relative;
+  background: white;
+  height: 100%;
+  width: 23.4vw;
+  padding: 2vw;
+  overflow-y: scroll;
+}
+
+.menuHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  p {
+    font-family: Playfair Display;
+    font-weight: 600;
+    font-style: italic;
+    font-size: 2.1vw;
+    line-height: 2.9vw;
+  }
+
+  svg {
+    width: 2.7vw;
+    height: 2.7vw;
+    stroke: black;
+    transition: stroke 0.3s;
+  }
+
+  button:hover {
+    svg {
+      stroke: var(--primary);
+    }
+  }
+}

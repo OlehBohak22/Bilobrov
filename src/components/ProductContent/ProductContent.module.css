@@ -348,3 +348,16 @@
 .color {
   margin-bottom: 2.1vw;
 }
+
+.select {
+  margin-bottom: 2.1vw;
+  width: 23vw;
+
+  * {
+    font-family: Manrope;
+    font-weight: 700;
+    font-size: 0.7vw;
+    line-height: 0.7vw;
+    letter-spacing: 0.01vw;
+  }
+}

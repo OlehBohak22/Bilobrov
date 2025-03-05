@@ -21,4 +21,14 @@
       line-height: 1.3vw;
     }
   }
+
+  .iamgeList {
+    display: flex;
+    gap: 0.6vw;
+    margin-bottom: 0.8vw;
+
+    li {
+      width: 4.1vw;
+    }
+  }
 }

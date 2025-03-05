@@ -37,33 +37,27 @@ const initialState: ProductState = {
 export const addReview = createAsyncThunk(
   "products/addReview",
   async (
-    reviewData: {
-      product_id: number;
-      review: string;
-      rating: number;
-      review_images: [];
-      token?: string;
-      name?: string;
-      email?: string;
+    {
+      formData,
+      headers = {},
+    }: {
+      formData: FormData;
+      headers: { [key: string]: string };
     },
     { rejectWithValue }
   ) => {
-    const { token, ...reviewPayload } = reviewData;
-
     try {
       const response = await fetch(
         "https://bilobrov.projection-learn.website/wp-json/responses/v1/add-review",
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: token ? `Bearer ${token}` : "",
-          },
-          body: JSON.stringify(reviewPayload),
+          headers,
+          body: formData,
         }
       );
 
       const data = await response.json();
+
       if (!response.ok) {
         console.log(data.message);
         throw new Error(data.message || "Помилка при додаванні відгуку");

@@ -15,12 +15,14 @@ interface VariationAttribute {
   name: string;
   slug: string;
   option: string;
+  image: string;
 }
 
 interface Variation {
   id: number;
   slug: string;
   attributes: VariationAttribute[];
+  image: { src: string };
 }
 
 interface ProductItemProps {
@@ -42,9 +44,14 @@ export const ProductContent: React.FC<ProductItemProps> = ({
 
   const uniqueAttributes = [
     ...new Map(
-      variations.flatMap((v) =>
-        v.attributes.map((a) => [a.slug, { slug: a.slug, name: a.name }])
-      )
+      variations.flatMap((v) => {
+        // Беремо зображення з варіації для всіх атрибутів цієї варіації
+        const image = v.image?.src || ""; // або за замовчуванням порожній рядок
+        return v.attributes.map((a) => [
+          a.slug,
+          { slug: a.slug, name: a.name, image: image }, // Прив'язуємо зображення до атрибута варіації
+        ]);
+      })
     ).values(),
   ];
 
@@ -176,9 +183,9 @@ export const ProductContent: React.FC<ProductItemProps> = ({
     option: (provided, state) => ({
       ...provided,
       backgroundColor: state.isSelected ? "white" : "white",
-      color: state.isSelected ? "black" : "black",
+      color: state.isDisabled ? "#cbd5e1" : "#000000", // сірий колір для неактивних
+      cursor: state.isDisabled ? "not-allowed" : "pointer",
       padding: "10px",
-      cursor: "pointer",
       "&:hover": {
         color: "rgba(102, 102, 102, 1)",
       },
@@ -251,9 +258,19 @@ export const ProductContent: React.FC<ProductItemProps> = ({
               return matchesSelected && hasOption;
             });
 
+            // Знаходимо правильне зображення для варіанту
+            const optionImage = variations
+              .filter((v) =>
+                v.attributes.some(
+                  (a) => a.slug === attribute.slug && a.option === option
+                )
+              )
+              .map((v) => v.image?.src)[0]; // Беремо зображення першої варіації, що підходить
+
             return {
               value: option,
               label: option,
+              image: optionImage, // Додаємо правильне зображення для варіанту
               isDisabled: !isValid, // Додаємо дізейбл для неіснуючих комбінацій
             };
           });
@@ -264,9 +281,24 @@ export const ProductContent: React.FC<ProductItemProps> = ({
 
               {attribute.slug === "pa_color" ? (
                 // Відображаємо Select для кольорів
-                <div className="mb-[2.1vw]">
+                <div className={s.select}>
                   <Select
-                    options={optionsList}
+                    options={optionsList.map((opt, index) => ({
+                      ...opt,
+                      label: (
+                        <div className="flex items-center">
+                          {opt.image && (
+                            <img
+                              src={opt.image}
+                              alt={opt.label}
+                              className="w-6 h-6 mr-2"
+                            />
+                          )}
+
+                          {` 00${++index}, ${opt.label}`}
+                        </div>
+                      ),
+                    }))}
                     value={optionsList.find(
                       (opt) => opt.value === selectedAttributes[attribute.slug]
                     )}
@@ -292,8 +324,7 @@ export const ProductContent: React.FC<ProductItemProps> = ({
                     ? "border-black"
                     : "border-gray-300"
                 }
-                ${opt.isDisabled ? "opacity-50 cursor-not-allowed" : ""}
-              `}
+                ${opt.isDisabled ? "opacity-50 cursor-not-allowed" : ""}`}
                     >
                       <input
                         type="radio"
@@ -311,7 +342,7 @@ export const ProductContent: React.FC<ProductItemProps> = ({
                         }
                         disabled={opt.isDisabled}
                       />
-                      {opt.label}
+                      <div className="flex items-center">{opt.label}</div>
                     </label>
                   ))}
                 </div>

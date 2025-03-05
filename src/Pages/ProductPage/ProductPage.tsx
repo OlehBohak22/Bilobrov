@@ -28,7 +28,7 @@ export const ProductPage: React.FC<HeaderProps> = ({
     (state: any) => state.products
   );
 
-  console.log(variations);
+  // console.log(variations);
 
   // Використовуємо useParams, щоб дістати ID з URL
   const { id } = useParams(); // Припустимо, що у вашому Route шлях: <Route path="/product/:id" element={<ProductPage />} />
@@ -36,6 +36,8 @@ export const ProductPage: React.FC<HeaderProps> = ({
   const currentReviews = reviews.filter(
     (item: { product_id: any }) => item.product_id == id
   );
+
+  console.log(reviews);
 
   // console.log(currentProduct);
 
@@ -68,7 +70,7 @@ export const ProductPage: React.FC<HeaderProps> = ({
   return (
     <main className={s.page}>
       <Layout className="flex gap-[5vw]">
-        <ProductSlider images={productImages} />
+        <ProductSlider images={productImages} info={currentProduct} />
         <ProductContent
           openRegister={openRegister}
           info={currentProduct}

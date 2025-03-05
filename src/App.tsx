@@ -20,12 +20,15 @@ import { LoadingBar } from "./components/LoadingBar/LoadingBar"; // Додаєм
 import { CartPopup } from "./components/CartPopup/CartPopup";
 import { ProductPage } from "./Pages/ProductPage/ProductPage";
 import { ReviewPopup } from "./components/ReviewPopup/ReviewPopup";
+import { MenuPopup } from "./components/MenuPopup/MenuPopup";
+import { CertificatePage } from "./Pages/CertificatePage/CertificatePage";
 
 function App() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isWishList, setIsWishList] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isReview, setIsReview] = useState(false);
@@ -87,6 +90,7 @@ function App() {
     setIsWishList(false);
     setIsCartOpen(false);
     setIsReview(false);
+    setIsMenuOpen(false);
     document.body.style.overflow = "visible";
   };
 
@@ -103,10 +107,12 @@ function App() {
         openRegister={handleOpenRegister}
         openWishList={handleOpenWishList}
         openCart={handleOpenCart}
+        openMenu={() => setIsMenuOpen(true)}
       />
       {isRegisterOpen && <RegisterModal onClose={handleCloseModals} />}
       {isWishList && <WishListPopup onClose={handleCloseModals} />}
       {isCartOpen && <CartPopup onClose={handleCloseModals} />}
+      {isMenuOpen && <MenuPopup onClose={handleCloseModals} />}
       {isReview && (
         <ReviewPopup
           onClose={handleCloseModals}
@@ -118,6 +124,7 @@ function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/support" element={<ClientsSupportPage />} />
         <Route path="/bilobrov-club" element={<BonusPage />} />
+        <Route path="/certificate" element={<CertificatePage />} />
         <Route path="/account" element={<AccountPage />} />
         <Route
           path="/product/:id"

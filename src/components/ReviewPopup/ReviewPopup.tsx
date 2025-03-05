@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { Formik, Field, Form, FormikHelpers } from "formik";
+import { Formik, Field, Form } from "formik";
 import { RootState } from "../../store";
-import { FaStar } from "react-icons/fa"; // Не забудьте імпортувати зірки!
+import { FaStar } from "react-icons/fa";
 import s from "./ReviewPopup.module.css";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { addReview } from "../../store/slices/productsSlice";
+import { Link } from "react-router";
 
-// Тип для значень форми
 interface ReviewFormValues {
   product_id: number;
   name: string;
@@ -15,10 +15,9 @@ interface ReviewFormValues {
   review: string;
   isAuthenticated: boolean;
   rating: number;
-  review_images: [];
+  review_images: File[];
 }
 
-// Тип для компонентів, що приймають setFieldValue та values
 interface ImageUploadProps {
   setFieldValue: (field: string, value: any) => void;
   values: ReviewFormValues;
@@ -27,18 +26,13 @@ interface ImageUploadProps {
 const ImageUpload: React.FC<ImageUploadProps> = ({ setFieldValue, values }) => {
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(event.target.files ?? []);
-    const newreview_images = files.map((file) => URL.createObjectURL(file));
-
-    setFieldValue("review_images", [
-      ...values.review_images,
-      ...newreview_images,
-    ]);
+    setFieldValue("review_images", [...values.review_images, ...files]);
   };
 
-  const handleRemoveImage = (image: string) => {
+  const handleRemoveImage = (index: number) => {
     setFieldValue(
       "review_images",
-      values.review_images.filter((img) => img !== image)
+      values.review_images.filter((_, i) => i !== index)
     );
   };
 
@@ -46,24 +40,22 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ setFieldValue, values }) => {
     <div>
       <input
         type="file"
-        placeholder="delete"
         id="file-upload"
         multiple
         onChange={handleFileChange}
         className={s.dn}
       />
-
-      <div className="flex gap-[0.6vw] mb-[1vw]">
-        {values.review_images.map((img, index) => (
+      <div className="flex gap-2 mb-4">
+        {values.review_images.map((file, index) => (
           <div key={index} className="relative">
             <img
-              src={img}
+              src={URL.createObjectURL(file)}
               alt="uploaded"
-              className="w-[4.1vw] h-[4.1vw] object-cover"
+              className="w-16 h-16 object-cover"
             />
             <button
               type="button"
-              onClick={() => handleRemoveImage(img)}
+              onClick={() => handleRemoveImage(index)}
               className="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full p-1"
             >
               ✕
@@ -71,7 +63,6 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ setFieldValue, values }) => {
           </div>
         ))}
       </div>
-
       <label htmlFor="file-upload" className={s.customFileUpload}>
         Прикріпити фотографію
         <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -105,6 +96,7 @@ const StarRating: React.FC<StarRatingProps> = ({ setFieldValue, values }) => {
     </div>
   );
 };
+
 interface CartPopupProps {
   onClose: () => void;
   product_id: number;
@@ -114,47 +106,75 @@ export const ReviewPopup: React.FC<CartPopupProps> = ({
   onClose,
   product_id,
 }) => {
-  const user = useSelector((state: RootState) => state.user.user);
+  const user = useSelector((state: RootState) => state.user.token);
   const dispatch = useAppDispatch();
   const [charCount, setCharCount] = useState(0);
+  const [isSubmitted, setIsSubmitted] = useState(false); // Стан для показу подяки
   const maxLength = 150;
+  const [error, setError] = useState<string | null>(null); // Стан для зберігання помилки
 
   const handleChange = (
     e: React.ChangeEvent<HTMLTextAreaElement>,
     setFieldValue: (field: string, value: any) => void
   ) => {
     const { value } = e.target;
-    setCharCount(value.length); // Оновлюємо кількість символів
-    setFieldValue("review", value); // Оновлюємо значення review у Formik
+    setCharCount(value.length);
+    setFieldValue("review", value);
   };
-
-  console.log(product_id);
 
   const initialValues: ReviewFormValues = {
     product_id,
     name: "",
     email: "",
     review: "",
-    isAuthenticated: !!user, // Якщо є користувач, то він авторизований
+    isAuthenticated: !!user,
     rating: 0,
     review_images: [],
   };
 
-  const handleSubmit = (
-    values: ReviewFormValues,
-    { resetForm }: FormikHelpers<ReviewFormValues>
-  ) => {
-    console.log(values);
-    dispatch(addReview(values));
-    onClose();
-    resetForm();
+  const handleSubmit = async (values: ReviewFormValues) => {
+    const formData = new FormData();
+
+    formData.append("product_id", String(values.product_id));
+    formData.append("review", values.review);
+    formData.append("rating", String(values.rating));
+
+    values.review_images.forEach((file) => {
+      formData.append("review_images[]", file);
+    });
+
+    let headers: { [key: string]: string } = {};
+
+    if (user) {
+      headers = {
+        Authorization: `Bearer ${user}`,
+      };
+    } else {
+      formData.append("name", values.name);
+      formData.append("email", values.email);
+
+      if (!values.name || !values.email) {
+        setError("Не вказано ім'я або email");
+        return;
+      }
+    }
+
+    try {
+      await dispatch(addReview({ formData, headers }));
+      setIsSubmitted(true); // Оновлюємо стан на "відправлено"
+      setError(null); // Скидаємо помилку після успішної відправки
+    } catch (err: any) {
+      setError(err.message || "Щось пішло не так");
+    }
   };
 
   return (
     <div className={s.popupOverlay} onClick={onClose}>
       <div className={s.popupContent} onClick={(e) => e.stopPropagation()}>
         <div className={s.popupHeader}>
-          <h2 className={s.popupTitle}>Залишити відгук</h2>
+          <h2 className={s.popupTitle}>
+            {isSubmitted ? "" : "Залишити відгук"}
+          </h2>
           <button className={s.closeButton} onClick={onClose}>
             <svg
               viewBox="0 0 52 52"
@@ -171,67 +191,97 @@ export const ReviewPopup: React.FC<CartPopupProps> = ({
           </button>
         </div>
 
-        <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-          {({ setFieldValue, values }) => (
-            <Form className={s.form}>
-              {!initialValues.isAuthenticated && (
-                <>
-                  <div className="mb-[0.7vw]">
-                    <label htmlFor="name">
-                      Ім'я<span>*</span>
-                    </label>
-                    <Field id="name" name="name" placeholder="Твоє імʼя" />
-                  </div>
+        {!isSubmitted ? (
+          <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+            {({ setFieldValue, values }) => (
+              <Form className={s.form}>
+                {!initialValues.isAuthenticated && (
+                  <>
+                    <div className="mb-[0.7vw]">
+                      <label htmlFor="name">
+                        Ім'я<span>*</span>
+                      </label>
+                      <Field id="name" name="name" placeholder="Твоє імʼя" />
+                    </div>
 
-                  <div className="mb-[2vw]">
-                    <label htmlFor="email">
-                      Номер телефону<span>*</span>
-                    </label>
-                    <Field
-                      id="email"
-                      name="email"
-                      type="email"
-                      placeholder="Твій номер телефону"
+                    <div className="mb-[2vw]">
+                      <label htmlFor="email">
+                        Номер телефону<span>*</span>
+                      </label>
+                      <Field
+                        id="email"
+                        name="email"
+                        type="email"
+                        placeholder="Твій номер телефону"
+                      />
+                    </div>
+                  </>
+                )}
+
+                <div className="mb-[1vw]">
+                  <label htmlFor="review">Відгук для публікації</label>
+                  <Field
+                    as="textarea"
+                    id="review"
+                    name="review"
+                    placeholder="Текст відгуку"
+                    onChange={(e: any) => handleChange(e, setFieldValue)}
+                    value={values.review}
+                  />
+                  <div className={s.length}>
+                    {charCount}/{maxLength}
+                  </div>
+                </div>
+
+                <div className={s.reviewAttributes}>
+                  <div>
+                    <ImageUpload
+                      setFieldValue={setFieldValue}
+                      values={values}
                     />
                   </div>
-                </>
-              )}
 
-              <div className="mb-[1vw]">
-                <label htmlFor="review">Відгук для публікації</label>
-                <Field
-                  as="textarea"
-                  id="review"
-                  name="review"
-                  placeholder="Текст відгуку"
-                  onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
-                    handleChange(e, setFieldValue)
-                  } // Викликаємо handleChange з setFieldValue
-                  value={values.review} // Забезпечуємо синхронізацію значення
-                />
-                <div className={s.length}>
-                  {charCount}/{maxLength}
-                </div>
-              </div>
-
-              <div className={s.reviewAttributes}>
-                <div>
-                  <ImageUpload setFieldValue={setFieldValue} values={values} />
+                  <div>
+                    <StarRating setFieldValue={setFieldValue} values={values} />
+                  </div>
                 </div>
 
                 <div>
-                  <StarRating setFieldValue={setFieldValue} values={values} />
+                  <button type="submit" className={s.submitButton}>
+                    Відправити відгук
+                  </button>
+                  {error && <div className="text-red-500">{error}</div>}{" "}
+                  {/* Виведення помилки */}
                 </div>
-              </div>
+              </Form>
+            )}
+          </Formik>
+        ) : (
+          <div className={s.thanksContent}>
+            <svg
+              viewBox="0 0 56 56"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect width="56" height="56" rx="28" fill="#D63D44" />
+              <path
+                d="M25 27L27 29L31.5 24.5M27.9932 21.1358C25.9938 18.7984 22.6597 18.1696 20.1547 20.31C17.6496 22.4504 17.297 26.029 19.2642 28.5604C20.7501 30.4724 24.9713 34.311 26.948 36.0749C27.3114 36.3991 27.4931 36.5613 27.7058 36.6251C27.8905 36.6805 28.0958 36.6805 28.2805 36.6251C28.4932 36.5613 28.6749 36.3991 29.0383 36.0749C31.015 34.311 35.2362 30.4724 36.7221 28.5604C38.6893 26.029 38.3797 22.4279 35.8316 20.31C33.2835 18.1922 29.9925 18.7984 27.9932 21.1358Z"
+                stroke="white"
+                stroke-Width="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
 
-              <div>
-                <button type="submit" className={s.submitButton}>
-                  Відправити відгук
-                </button>
-              </div>
-            </Form>
-          )}
-        </Formik>
+            <p>Дякуємо за відгук! </p>
+
+            <h3>Ваш відгук успішно опубліковано!</h3>
+
+            <Link onClick={onClose} to="/">
+              повернутися на головну
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );
