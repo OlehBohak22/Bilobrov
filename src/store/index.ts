@@ -9,6 +9,7 @@ import contactReducer from "./slices/contactSlice";
 import wishlistReducer from "./slices/wishlistSlice";
 import resetPasswordReducer from "./slices/resetPasswordSlice";
 import cartReducer from "./slices/cartSlice";
+import popupReducer from "./slices/popupSlice";
 
 export const store = configureStore({
   reducer: {
@@ -22,6 +23,7 @@ export const store = configureStore({
     wishlist: wishlistReducer,
     resetPassword: resetPasswordReducer,
     cart: cartReducer,
+    popup: popupReducer,
   },
 });
 

@@ -202,6 +202,8 @@ export const ProductContent: React.FC<ProductItemProps> = ({
 
   if (!info.attributes) return <p>Loading...</p>; // Або інший заглушковий контент
 
+  console.log(info);
+
   return (
     <div className={s.content}>
       <div className={s.ratingBlock}>

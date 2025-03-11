@@ -8,13 +8,21 @@ interface Category {
 export interface ProductInfo {
   id: number;
   sku: string;
+  slug: string;
   name: string;
   key: string;
+  variation_id: number;
   description: string;
+  quantity: number;
   short_description?: string;
   categories: Category[];
   variations: number[];
-  attributes: { name: string; options: string[] }[]; // Додано правильний тип для options
+  attributes: {
+    name: string;
+    options: string[];
+    slug: string;
+    option: string;
+  }[]; // Додано правильний тип для options
   price: string;
   featured: boolean;
   regular_price: string;

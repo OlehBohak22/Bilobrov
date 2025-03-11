@@ -132,7 +132,7 @@ export const fetchVariationById = createAsyncThunk<
 export const fetchReviews = createAsyncThunk(
   "products/fetchReviews",
   async () => {
-    const response = await fetch(`${API_URL}products/reviews`, {
+    const response = await fetch(`${API_URL}products/reviews?per_page=15`, {
       method: "GET",
       headers: headers,
     });

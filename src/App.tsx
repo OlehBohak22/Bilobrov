@@ -22,6 +22,7 @@ import { ProductPage } from "./Pages/ProductPage/ProductPage";
 import { ReviewPopup } from "./components/ReviewPopup/ReviewPopup";
 import { MenuPopup } from "./components/MenuPopup/MenuPopup";
 import { CertificatePage } from "./Pages/CertificatePage/CertificatePage";
+import { CartInitializer } from "./components/CartInitializer";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -50,7 +51,7 @@ function App() {
 
   useEffect(() => {
     setLoading(true);
-    const timeout = setTimeout(() => setLoading(false), 800); // Імітуємо завантаження
+    const timeout = setTimeout(() => setLoading(false), 1000); // Імітуємо завантаження
     return () => clearTimeout(timeout);
   }, [location.pathname]); // Виконується при зміні URL
 
@@ -73,12 +74,7 @@ function App() {
   };
 
   const handleOpenCart = () => {
-    if (user) {
-      setIsCartOpen(true);
-    } else {
-      setIsRegisterOpen(true);
-      document.body.style.overflow = "hidden";
-    }
+    setIsCartOpen(true);
   };
 
   const handleOpenReview = () => {
@@ -103,6 +99,7 @@ function App() {
   return (
     <>
       <LoadingBar loading={loading} /> {/* Завжди рендеримо LoadingBar */}
+      <CartInitializer />
       <Header
         openRegister={handleOpenRegister}
         openWishList={handleOpenWishList}

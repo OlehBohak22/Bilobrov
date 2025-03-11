@@ -17,6 +17,8 @@ export const HeaderUserSettings: React.FC<HeaderProps> = ({
     (state: RootState) => state.user?.user?.meta?.preferences || []
   );
 
+  const cart = useSelector((state: RootState) => state.cart || []);
+
   return (
     <div className={s.userSettings}>
       {/* <button>
@@ -71,6 +73,7 @@ export const HeaderUserSettings: React.FC<HeaderProps> = ({
             strokeLinejoin="round"
           />
         </svg>
+        <span className={s.qty}>{cart.items.length}</span>
       </button>
     </div>
   );

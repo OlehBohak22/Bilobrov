@@ -10,7 +10,10 @@ interface ProductItemProps {
   token: string;
 }
 
-const WishListProductItem: React.FC<ProductItemProps> = ({ info, token }) => {
+export const WishListProductItem: React.FC<ProductItemProps> = ({
+  info,
+  token,
+}) => {
   const dispatch = useDispatch();
 
   const isNewProduct = (dateCreated: string) => {

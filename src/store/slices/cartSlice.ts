@@ -70,6 +70,7 @@ export const removeFromCart = createAsyncThunk<
   { product: Product; token: string | null }
 >("cart/removeFromCart", async ({ product, token }, { rejectWithValue }) => {
   try {
+    // Якщо немає токена, працюємо з локальним кошиком
     if (!token) {
       const localCart = getLocalCart().filter(
         (item) =>
@@ -81,10 +82,19 @@ export const removeFromCart = createAsyncThunk<
       saveLocalCart(localCart);
       return localCart;
     }
+
+    // Видалення через API
     const { data } = await axios.delete<{ cart: Product[] }>(API_URL, {
-      data: { product },
+      data: {
+        product: {
+          id: product.id,
+          quantity: product.quantity,
+          variation_id: product.variation_id || 0, // Додаємо варіацію як 0, якщо вона не вказана
+        },
+      },
       headers: { Authorization: `Bearer ${token}` },
     });
+
     return data.cart;
   } catch (error: any) {
     return rejectWithValue(error.response?.data || error.message);
@@ -137,6 +147,7 @@ const cartSlice = createSlice({
           state.items = action.payload;
         }
       )
+
       .addCase(mergeCart.fulfilled, (state) => {
         state.status = "succeeded";
       })
