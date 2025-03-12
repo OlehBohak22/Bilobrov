@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import s from "./ClientsSupportPage.module.css";
 import { Layout } from "../../components/Layout/Layout";
 import { ReturnTab } from "../../components/ReturnTab/ReturnTab";
@@ -36,7 +37,6 @@ const categories = [
       },
     ],
   },
-
   {
     title: "Програма лояльності",
     tabs: [
@@ -47,7 +47,6 @@ const categories = [
       },
     ],
   },
-
   {
     title: "Юридична інформація",
     tabs: [
@@ -66,7 +65,20 @@ const categories = [
 ];
 
 export const ClientsSupportPage = () => {
-  const [activeTab, setActiveTab] = useState("return");
+  const { hash } = useLocation(); // Отримуємо хеш з URL
+  const [activeTab, setActiveTab] = useState(
+    hash ? hash.substring(1) : "return"
+  ); // Встановлюємо активний таб на основі хеша
+
+  useEffect(() => {
+    if (hash) {
+      setActiveTab(hash.substring(1)); // Оновлюємо активний таб при зміні хеша
+    }
+  }, [hash]);
+
+  const handleTabClick = (id: string) => {
+    setActiveTab(id);
+  };
 
   const renderContent = () => {
     switch (activeTab) {
@@ -99,23 +111,32 @@ export const ClientsSupportPage = () => {
             <div key={category.title} className={s.category}>
               <h3 className={s.categoryTitle}>{category.title}</h3>
               {category.tabs.map((tab) => (
-                <button
+                <a
                   key={tab.id}
+                  href={`#${tab.id}`} // Використовуємо якорі для переходу до відповідного контенту
                   className={`${s.tabButton} ${
                     activeTab === tab.id ? s.active : ""
                   }`}
-                  onClick={() => setActiveTab(tab.id)}
+                  onClick={() => handleTabClick(tab.id)} // Обробник для скролінгу до секції
                 >
                   <svg>
                     <use href={tab.icon}></use>
                   </svg>
                   {tab.label}
-                </button>
+                </a>
               ))}
             </div>
           ))}
         </div>
-        <div className={s.tabsContent}>{renderContent()}</div>
+        <div className={s.tabsContent}>
+          {categories.map((category) =>
+            category.tabs.map((tab) => (
+              <div key={tab.id} id={tab.id} className={s.tabContentSection}>
+                {activeTab === tab.id && renderContent()}
+              </div>
+            ))
+          )}
+        </div>
       </Layout>
     </div>
   );

@@ -29,7 +29,7 @@
   background: white;
   height: 100%;
   width: 23.4vw;
-  padding: 2vw;
+  /* padding: 2vw; */
   overflow-y: scroll;
 }
 
@@ -37,6 +37,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 2.2vw;
+  padding: 2vw 2vw 0 2vw;
 
   p {
     font-family: Playfair Display;
@@ -57,5 +59,130 @@
     svg {
       stroke: var(--primary);
     }
+  }
+}
+
+.asideTop {
+  padding: 0 2vw 2vw 2vw;
+
+  li {
+    a {
+      color: black;
+      font-family: Manrope;
+      font-weight: 700;
+      font-size: 1vw;
+      line-height: 100%;
+      letter-spacing: 0.01vw;
+      transition: color 0.3s;
+    }
+
+    div {
+      color: black;
+      font-family: Manrope;
+      font-weight: 700;
+      font-size: 1vw;
+      line-height: 100%;
+      letter-spacing: 0.01vw;
+      transition: color 0.3s;
+      cursor: pointer;
+    }
+
+    div:hover {
+      svg {
+        stroke: rgb(0, 0, 0);
+      }
+    }
+
+    a:hover {
+      color: var(--primary);
+    }
+  }
+
+  li:not(:last-child) {
+    margin-bottom: 1.6vw;
+  }
+}
+
+.asideBottom {
+  padding: 2vw;
+  /* height: 100%; */
+  width: 100%;
+  background-color: var(--primary);
+
+  li {
+    a {
+      font-family: Manrope;
+      font-weight: 500;
+      font-size: 0.8vw;
+      transition: color 0.3s;
+
+      line-height: 100%;
+    }
+
+    a:hover {
+      color: rgba(255, 196, 58, 1);
+    }
+  }
+
+  li:not(:last-child) {
+    margin-bottom: 1.6vw;
+  }
+}
+
+.asideTop {
+  list-style-type: none;
+}
+
+.asideTop > li {
+  /* position: relative; */
+}
+
+.subMenu {
+  display: block;
+  list-style-type: none;
+  padding: 0;
+  opacity: 0;
+  margin-top: 1vw;
+  transition: opacity 0.3s ease; /* Плавний перехід для opacity */
+
+  li {
+    a {
+      font-family: Manrope;
+      font-weight: 500;
+      font-size: 0.8vw;
+      transition: color 0.3s;
+
+      line-height: 100%;
+    }
+  }
+
+  li:not(:last-child) {
+    margin-bottom: 1vw;
+  }
+}
+
+.asideTop > li > a {
+  cursor: pointer;
+}
+
+.toggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: color 0.3s;
+
+  svg {
+    width: 1.2vw;
+    height: 1.2vw;
+    stroke: #212121;
+    transition: 0.3s;
+  }
+}
+
+.toggle.active {
+  color: var(--primary);
+  svg {
+    transform: rotate(180deg);
+    stroke: var(--primary);
   }
 }

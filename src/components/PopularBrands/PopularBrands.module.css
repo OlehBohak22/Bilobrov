@@ -65,6 +65,7 @@
 }
 
 .brandItem {
+  width: 7vw;
   h4 {
     text-transform: uppercase;
     font-family: Manrope;

@@ -7,7 +7,6 @@ import { AboutPage } from "./Pages/AboutPage/AboutPage";
 import { ClientsSupportPage } from "./Pages/ClientsSupportPage/ClientsSupportPage";
 import { BonusPage } from "./Pages/BonusPage/BonusPage";
 import { AccountPage } from "./Pages/AccountPage/AccountPage";
-import { LoginForm } from "./components/Login";
 import { checkUserSession } from "./store/actions/userActions";
 import { useAppDispatch } from "./hooks/useAppDispatch";
 import { useState, useEffect } from "react";
@@ -23,6 +22,8 @@ import { ReviewPopup } from "./components/ReviewPopup/ReviewPopup";
 import { MenuPopup } from "./components/MenuPopup/MenuPopup";
 import { CertificatePage } from "./Pages/CertificatePage/CertificatePage";
 import { CartInitializer } from "./components/CartInitializer";
+import { fetchMenus } from "./store/slices/menuSlice";
+import { CatalogPage } from "./Pages/CatalogPage/CatalogPage";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -41,6 +42,7 @@ function App() {
   useEffect(() => {
     dispatch(checkUserSession());
     dispatch(fetchProducts());
+    dispatch(fetchMenus());
   }, [dispatch]);
 
   useEffect(() => {
@@ -123,6 +125,8 @@ function App() {
         <Route path="/bilobrov-club" element={<BonusPage />} />
         <Route path="/certificate" element={<CertificatePage />} />
         <Route path="/account" element={<AccountPage />} />
+        <Route path="/catalog/:categorySlug" element={<CatalogPage />} />
+        <Route path="/catalog" element={<CatalogPage />} />
         <Route
           path="/product/:id"
           element={
@@ -134,7 +138,6 @@ function App() {
         />
       </Routes>
       <Footer />
-      <LoginForm />
     </>
   );
 }

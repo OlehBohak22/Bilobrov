@@ -1,0 +1,13 @@
+.page {
+  padding-top: 10vw;
+}
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7vw;
+
+  li {
+    flex-basis: calc((100% - 4 * 0.7vw) / 5);
+  }
+}

@@ -70,19 +70,31 @@ export const addReview = createAsyncThunk(
   }
 );
 
-export const fetchProducts = createAsyncThunk<ProductInfo[]>(
-  "products/fetchProducts",
-  async () => {
-    const response = await fetch(`${API_URL}products`, {
+export const fetchProducts = createAsyncThunk<
+  ProductInfo[],
+  string | undefined,
+  { rejectValue: string }
+>("products/fetchProducts", async (categorySlug, { rejectWithValue }) => {
+  try {
+    const url = categorySlug
+      ? `${API_URL}products?category=${categorySlug}`
+      : `${API_URL}products`;
+
+    const response = await fetch(url, {
       method: "GET",
       headers: headers,
     });
+
     if (!response.ok) {
-      throw new Error("Failed to fetch products");
+      throw new Error("Помилка при завантаженні товарів");
     }
+
     return await response.json();
+  } catch (error) {
+    console.log(error);
+    return rejectWithValue("Не вдалося отримати товари");
   }
-);
+});
 
 export const fetchProductById = createAsyncThunk<ProductInfo, number>(
   "products/fetchProductById",

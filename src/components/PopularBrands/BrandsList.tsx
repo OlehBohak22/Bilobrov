@@ -17,6 +17,8 @@ const BrandsList = () => {
   // Додаємо тип для useSelector
   const { items } = useSelector((state: RootState) => state.brands);
 
+  console.log(items);
+
   useEffect(() => {
     dispatch(fetchBrands()); // Викликаємо асинхронну дію для завантаження брендів
   }, [dispatch]);
@@ -33,22 +35,13 @@ const BrandsList = () => {
           <Swiper
             className={s.swiper}
             modules={[Navigation]}
-            slidesPerView={7}
+            slidesPerView="auto"
+            spaceBetween={15}
             navigation={{
               prevEl: `.${s.prevButton}`,
               nextEl: `.${s.nextButton}`,
             }}
           >
-            {items.map((brand) => (
-              <SwiperSlide className={s.brandItem} key={brand.id}>
-                <div className={s.brandImageCircle}>
-                  <div className="overflow-hidden rounded-full w-[6.5vw] h-[6.5vw]">
-                    <img src={brand.image} alt={brand.name} />
-                  </div>
-                </div>
-                <h4>{brand.name}</h4>
-              </SwiperSlide>
-            ))}
             {items.map((brand) => (
               <SwiperSlide className={s.brandItem} key={brand.id}>
                 <div className={s.brandImageCircle}>
