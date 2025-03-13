@@ -47,5 +47,6 @@
 
 .sliderContainer {
   background-color: var(--primary);
+  position: relative;
   min-height: 80vh;
 }

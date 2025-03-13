@@ -1,6 +1,11 @@
 import s from "./CartProductItem.module.css"; // Імпортуємо стилі
 import { ProductInfo } from "../../types/productTypes";
-import { addToCart, removeFromCart } from "../../store/slices/cartSlice";
+import {
+  addToCart,
+  fetchCart,
+  removeAllFromCart,
+  removeFromCart,
+} from "../../store/slices/cartSlice";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { useState } from "react";
 
@@ -81,22 +86,19 @@ export const CartProductItem: React.FC<ProductItemProps> = ({
     );
   };
 
-  const handleRemoveAll = () => {
+  const handleRemoveAll = async () => {
     if (!info) return;
 
-    const variation_id = variation || 0; // Якщо варіація не вказана, додаємо 0
-
-    // Видаляємо товар з кошика, враховуючи варіацію
-    dispatch(
-      removeFromCart({
-        product: {
-          id: info.id,
-          quantity: info.quantity, // Тільки кількість
-          variation_id, // Тільки варіація
-        },
+    await dispatch(
+      removeAllFromCart({
+        productId: info.id,
+        variationId: variation || 0,
+        quantity: info.quantity, // Додаємо потрібну кількість
         token,
       })
     );
+
+    dispatch(fetchCart(token));
   };
 
   return (

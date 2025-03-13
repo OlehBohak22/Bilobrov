@@ -132,6 +132,10 @@
   cursor: pointer;
 }
 
+.inCart {
+  opacity: 1;
+}
+
 .wishList {
   position: absolute;
   top: 1.2vw;

@@ -29,6 +29,11 @@ export const ProductItem: React.FC<ProductItemProps> = ({ info }) => {
   const dispatch = useAppDispatch();
   const token = useSelector((state: RootState) => state.user.token);
 
+  const cart = useSelector((state: RootState) => state.cart.items);
+
+  // Перевірка наявності товару у кошику (булеве значення)
+  const isInCart = cart.some((item) => item.id === info.id);
+
   const [isPopupOpen, setPopupOpen] = useState(false); // Стан для відкриття попапу
 
   const brandMeta = info.meta_data.find((item) => item.key === "brands");
@@ -98,7 +103,7 @@ export const ProductItem: React.FC<ProductItemProps> = ({ info }) => {
             <WishlistButton productId={info.id} />
 
             <div
-              className={s.cart}
+              className={`${s.cart} ${isInCart && s.inCart}`}
               onClick={handleAddToCart}
               title="Додати в корзину"
             >
@@ -136,6 +141,8 @@ export const ProductItem: React.FC<ProductItemProps> = ({ info }) => {
               </svg>
             </div>
           </div>
+
+          <p>{info.id}</p>
 
           {brandName && <p className={s.productBrand}>{brandName}</p>}
           <p className={s.productName}>{info.name}</p>

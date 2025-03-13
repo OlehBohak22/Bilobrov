@@ -281,7 +281,7 @@ export const ProductContent: React.FC<ProductItemProps> = ({
             <div key={attribute.slug} className={s.attribute}>
               <p className={s.title}>{attribute.name}</p>
 
-              {attribute.slug === "pa_color" ? (
+              {attribute.slug === "pa_kolir" ? (
                 // Відображаємо Select для кольорів
                 <div className={s.select}>
                   <Select

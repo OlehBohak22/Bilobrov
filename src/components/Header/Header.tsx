@@ -1,8 +1,11 @@
 import { Layout } from "../Layout/Layout";
 import s from "./Header.module.css";
 import { HeaderUserSettings } from "../HeaderUserSettings/HeaderUserSettings";
-import { Link, NavLink } from "react-router";
+import { Link } from "react-router";
 import { useLocation } from "react-router";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
+import { buildMenuTree } from "../../utils/buildMenuTree";
 
 interface HeaderProps {
   openRegister: () => void;
@@ -19,6 +22,12 @@ export const Header: React.FC<HeaderProps> = ({
 }) => {
   const location = useLocation();
 
+  const menu = useSelector(
+    (state: RootState) => state.menu.mainMenu?.items || []
+  );
+
+  const menuTree = buildMenuTree(menu);
+
   return (
     <header
       className={`${s.header} ${
@@ -30,6 +39,7 @@ export const Header: React.FC<HeaderProps> = ({
           : ""
       }`}
     >
+      <div className={s.overlay}></div>
       <Layout>
         <div className={s.headerTopLine}>
           <div>
@@ -83,37 +93,46 @@ export const Header: React.FC<HeaderProps> = ({
 
         <div className={s.headerBottomLine}>
           <nav>
-            <ul>
-              <li>
-                <NavLink to="/">Акції</NavLink>
-              </li>
-              <li>
-                <NavLink to="/">Новинки</NavLink>
-              </li>
-              <li>
-                <NavLink to="/">Бренди</NavLink>
-              </li>
-              <li>
-                <NavLink to="/">Обличчя</NavLink>
-              </li>
-              <li>
-                <NavLink to="/">Волосся</NavLink>
-              </li>
-              <li>
-                <NavLink to="/">Тіло</NavLink>
-              </li>
-              <li>
-                <NavLink to="/">Декоративна косметика</NavLink>
-              </li>
-              <li>
-                <NavLink to="/">Вітаміни</NavLink>
-              </li>
-              <li>
-                <NavLink to="/certificate">Подарункові сертифікати</NavLink>
-              </li>
-              <li>
-                <NavLink to="/about">Про нас</NavLink>
-              </li>
+            <ul className={s.navMenu}>
+              {menuTree.map((item) => {
+                let modifiedUrl = item.url.replace(/\/$/, "");
+                if (modifiedUrl.endsWith("support")) {
+                  modifiedUrl = "support";
+                } else {
+                  const supportMatch = modifiedUrl.match(/support\/(.+)$/);
+                  if (supportMatch) {
+                    modifiedUrl = `support${supportMatch[1]}`;
+                  }
+                }
+
+                return (
+                  <li className={s.menuItem} key={item.id}>
+                    <Link to={modifiedUrl}>{item.title}</Link>
+                    {item.children.length > 0 && (
+                      <ul className={s.subMenu}>
+                        {item.children.map((child) => {
+                          let modifiedChildUrl = child.url.replace(/\/$/, "");
+                          if (modifiedChildUrl.endsWith("support")) {
+                            modifiedChildUrl = "support";
+                          } else {
+                            const childSupportMatch =
+                              modifiedChildUrl.match(/support\/(.+)$/);
+                            if (childSupportMatch) {
+                              modifiedChildUrl = `support#${childSupportMatch[1]}`;
+                            }
+                          }
+
+                          return (
+                            <li key={child.id}>
+                              <Link to={modifiedChildUrl}>{child.title}</Link>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    )}
+                  </li>
+                );
+              })}
             </ul>
           </nav>
         </div>

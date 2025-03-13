@@ -24,6 +24,7 @@ import { CertificatePage } from "./Pages/CertificatePage/CertificatePage";
 import { CartInitializer } from "./components/CartInitializer";
 import { fetchMenus } from "./store/slices/menuSlice";
 import { CatalogPage } from "./Pages/CatalogPage/CatalogPage";
+import { BrandsPage } from "./Pages/BrandsPage/BrandsPage";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -50,12 +51,6 @@ function App() {
       setIsRegisterOpen(false);
     }
   }, [user]);
-
-  useEffect(() => {
-    setLoading(true);
-    const timeout = setTimeout(() => setLoading(false), 1000); // Імітуємо завантаження
-    return () => clearTimeout(timeout);
-  }, [location.pathname]); // Виконується при зміні URL
 
   const handleOpenRegister = () => {
     if (user) {
@@ -92,6 +87,14 @@ function App() {
     document.body.style.overflow = "visible";
   };
 
+  useEffect(() => {
+    setLoading(true);
+    handleCloseModals();
+
+    const timeout = setTimeout(() => setLoading(false), 1000); // Імітуємо завантаження
+    return () => clearTimeout(timeout);
+  }, [location.pathname]); // Виконується при зміні URL
+
   // Якщо loading === true, показуємо лише LoadingBar
   if (loading) {
     return <LoadingBar loading={loading} />;
@@ -127,6 +130,8 @@ function App() {
         <Route path="/account" element={<AccountPage />} />
         <Route path="/catalog/:categorySlug" element={<CatalogPage />} />
         <Route path="/catalog" element={<CatalogPage />} />
+        <Route path="/brendy" element={<BrandsPage />} />
+
         <Route
           path="/product/:id"
           element={

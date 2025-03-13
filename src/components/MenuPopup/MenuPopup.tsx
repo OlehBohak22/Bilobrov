@@ -2,8 +2,8 @@ import { motion } from "framer-motion";
 import s from "./MenuPopup.module.css";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
-import { MenuItem } from "../../store/slices/menuSlice";
 import { useState } from "react";
+import { buildMenuTree } from "../../utils/buildMenuTree";
 
 export const MenuPopup: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const asideTopMenu = useSelector(
@@ -19,30 +19,6 @@ export const MenuPopup: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const asideBottomMemu = useSelector(
     (state: RootState) => state.menu.asideBottomMenu?.items || []
   );
-
-  const buildMenuTree = (menuItems: MenuItem[]) => {
-    const menuMap: { [key: string]: MenuItem & { children: MenuItem[] } } = {}; // Використовуємо string для ключів
-
-    // Створюємо об'єкти для кожного елемента та додаємо поле `children`
-    menuItems.forEach((item) => {
-      menuMap[item.id] = { ...item, children: [] };
-    });
-
-    // Формуємо дерево меню
-    const tree: (MenuItem & { children: MenuItem[] })[] = [];
-    menuItems.forEach((item) => {
-      // Приводимо item.parent_id до типу string і використовуємо його як ключ
-      const parentId = item.parent_id.toString();
-
-      if (parentId !== "0" && menuMap[parentId]) {
-        menuMap[parentId].children.push(menuMap[item.id]);
-      } else {
-        tree.push(menuMap[item.id]);
-      }
-    });
-
-    return tree;
-  };
 
   const asideBottomMenuTree = buildMenuTree(asideBottomMemu);
   const asideTopMenuTree = buildMenuTree(asideTopMenu);

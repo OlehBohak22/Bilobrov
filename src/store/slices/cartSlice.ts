@@ -72,13 +72,18 @@ export const removeFromCart = createAsyncThunk<
   try {
     // Якщо немає токена, працюємо з локальним кошиком
     if (!token) {
-      const localCart = getLocalCart().filter(
-        (item) =>
-          !(
+      const localCart = getLocalCart()
+        .map((item) => {
+          if (
             item.id === product.id &&
             item.variation_id === (product.variation_id || 0)
-          )
-      );
+          ) {
+            return { ...item, quantity: item.quantity - 1 }; // Зменшуємо кількість
+          }
+          return item;
+        })
+        .filter((item) => item.quantity > 0); // Видаляємо лише якщо кількість стала 0
+
       saveLocalCart(localCart);
       return localCart;
     }
@@ -100,6 +105,49 @@ export const removeFromCart = createAsyncThunk<
     return rejectWithValue(error.response?.data || error.message);
   }
 });
+
+export const removeAllFromCart = createAsyncThunk<
+  Product[], // Повертає оновлений кошик
+  {
+    productId: number;
+    variationId?: number;
+    quantity: number;
+    token: string | null;
+  }
+>(
+  "cart/removeAllFromCart",
+  async (
+    { productId, variationId = 0, token, quantity },
+    { rejectWithValue }
+  ) => {
+    try {
+      if (!token) {
+        // Локальне видалення всіх товарів із цим `id` та `variation_id`
+        const localCart = getLocalCart().filter(
+          (item) =>
+            !(item.id === productId && item.variation_id === variationId)
+        );
+        saveLocalCart(localCart);
+        return localCart;
+      }
+
+      // Запит на сервер для видалення всіх товарів цього `id` і `variation_id`
+      const { data } = await axios.delete<{ cart: Product[] }>(API_URL, {
+        data: {
+          product: {
+            id: productId,
+            quantity, // Максимальна кількість, щоб видалити всі
+            variation_id: variationId, // Враховуємо варіацію
+          },
+        },
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      return data.cart;
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data || error.message);
+    }
+  }
+);
 
 export const mergeCart = createAsyncThunk<void, string>(
   "cart/mergeCart",

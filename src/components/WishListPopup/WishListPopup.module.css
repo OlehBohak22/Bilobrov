@@ -6,7 +6,7 @@
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
   display: flex;
-  justify-content: end;
+  justify-content: center;
   align-items: center;
   z-index: 9999999;
 }
@@ -14,12 +14,12 @@
 .modal {
   position: relative;
   background: white;
-  height: 100%;
-  width: 40%;
+  /* height: 90%; */
+  max-width: 80%;
+  max-height: 90%;
   display: flex;
   flex-direction: column;
-  padding: 2vw;
-  overflow-y: auto;
+  padding: 2.7vw;
 }
 
 .before {
@@ -37,33 +37,146 @@
 }
 
 .closeBtn {
+  position: absolute;
   color: white;
-  top: 2vw;
-  right: 2vw;
+  top: -0.5vw;
+  right: -4vw;
 
   svg {
     width: 2.7vw;
     height: 2.7vw;
-    stroke: black;
+    stroke: rgb(255, 255, 255);
   }
 }
 
 .list {
   width: 100%;
+  display: flex;
 
   li:not(:last-child) {
     margin-bottom: 1vw;
   }
 }
 
-.modal::-webkit-scrollbar {
-  width: 0.2vw;
+.navigationContainer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
-.modal::-webkit-scrollbar-track {
-  width: 1vw;
-  background-color: rgba(254, 228, 229, 1);
+
+.slide {
+  width: auto !important; /* Або вказати конкретну ширину, наприклад 200px */
+  max-width: 16vw;
 }
-.modal::-webkit-scrollbar-thumb {
-  width: 1vw;
-  background-color: var(--primary);
+
+.prevButton,
+.nextButton {
+  display: block;
+  background-color: #fff;
+  padding: 1vw;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 16px;
+  color: #333;
+  transition: background-color 0.3s ease;
+
+  svg {
+    fill: black;
+    width: 1.2vw;
+  }
+}
+
+.prevButton:hover,
+.nextButton:hover {
+  background-color: #f4f4f4;
+}
+
+.swiperController {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tabsController {
+  display: flex;
+  gap: 2.1vw;
+
+  li {
+    font-family: Manrope, sans-serif;
+    font-size: 1.4vw;
+    font-weight: 500;
+    line-height: 1.4vw;
+    color: rgba(26, 26, 26, 0.1);
+  }
+}
+
+.tabsController {
+  display: flex;
+  gap: 20px;
+}
+
+.tabItem {
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.tabItem:hover {
+  text-decoration: underline;
+}
+
+.activeTab {
+  font-family: Playfair !important;
+  font-size: 1.6vw !important;
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.6vw !important;
+  color: black !important;
+}
+
+.swiperController {
+  h2 {
+    color: #000000;
+    margin-bottom: 2vw;
+
+    span:nth-child(1) {
+      font-family: Playfair display;
+      font-size: 2.7vw;
+      font-style: italic;
+      font-weight: 400;
+      line-height: 2.7vw;
+    }
+
+    span:nth-child(2) {
+      display: block;
+      margin-top: -0.3vw;
+      font-family: Manrope;
+      font-size: 2.7vw;
+      font-weight: 500;
+      line-height: 2.7vw;
+      text-indent: 5.5vw;
+    }
+  }
+}
+
+.clear {
+  margin-top: 2vw;
+  display: flex;
+  align-items: center;
+  gap: 0.6vw;
+
+  svg {
+    width: 1.2vw;
+    height: 1.2vw;
+    stroke: var(--primary);
+  }
+
+  span {
+    font-family: Manrope;
+    font-weight: 500;
+    font-size: 0.9vw;
+    line-height: 1.2vw;
+    letter-spacing: 0%;
+    color: var(--primary);
+  }
 }

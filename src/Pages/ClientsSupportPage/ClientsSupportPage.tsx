@@ -21,7 +21,7 @@ const categories = [
         icon: "/icons/support-icons.svg#icon-payment",
       },
       {
-        id: "return",
+        id: "obmin-ta-povernennya",
         label: "Обмін та повернення",
         icon: "/icons/support-icons.svg#icon-return",
       },
@@ -67,7 +67,7 @@ const categories = [
 export const ClientsSupportPage = () => {
   const { hash } = useLocation(); // Отримуємо хеш з URL
   const [activeTab, setActiveTab] = useState(
-    hash ? hash.substring(1) : "return"
+    hash ? hash.substring(1) : "obmin-ta-povernennya"
   ); // Встановлюємо активний таб на основі хеша
 
   useEffect(() => {
@@ -86,7 +86,7 @@ export const ClientsSupportPage = () => {
         return <p>Інформація про умови доставки...</p>;
       case "payment":
         return <p>Інформація про умови оплати...</p>;
-      case "return":
+      case "obmin-ta-povernennya":
         return <ReturnTab />;
       case "faq":
         return <FaqTab />;

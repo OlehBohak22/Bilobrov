@@ -2,128 +2,132 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import s from "./WishListPopup.module.css"; // Імпортуємо стилі
 import { ProductInfo } from "../../types/productTypes";
-import { useDispatch } from "react-redux";
 import { togglePreference } from "../../store/slices/wishlistSlice";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/pagination";
+import { Navigation } from "swiper/modules";
+import { motion } from "framer-motion";
+import { ProductItem } from "../ProductItem/ProductItem";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
 
-interface ProductItemProps {
-  info: ProductInfo;
-  token: string;
-}
+export const WishListPopup: React.FC<{
+  onClose: () => void;
+}> = ({ onClose }) => {
+  const dispatch = useAppDispatch();
 
-export const WishListProductItem: React.FC<ProductItemProps> = ({
-  info,
-  token,
-}) => {
-  const dispatch = useDispatch();
+  const token = useSelector((state: RootState) => state.user?.token);
 
-  const isNewProduct = (dateCreated: string) => {
-    if (!dateCreated) return false;
-
-    const createdDate = new Date(dateCreated);
-    const today = new Date();
-
-    const daysDiff = Math.floor(
-      (today.getTime() - createdDate.getTime()) / (1000 * 60 * 60 * 24)
-    );
-
-    return daysDiff <= 14;
-  };
-
-  const brandMeta = info.meta_data.find((item) => item.key === "brands");
-
-  const brandName =
-    Array.isArray(brandMeta?.value) &&
-    brandMeta.value.length > 0 &&
-    typeof brandMeta.value[0] === "object"
-      ? (brandMeta.value[0] as { name: string }).name
-      : typeof brandMeta?.value === "string"
-      ? brandMeta.value
-      : null;
-
-  const loading = useSelector((state: RootState) => state.wishlist.loading);
-
-  const handleToggle = () => {
-    if (!loading && token) {
-      dispatch(togglePreference({ token, preference: info.id }) as any);
+  const handleClearWishlist = () => {
+    if (token) {
+      dispatch(togglePreference({ token, preference: [] })); // Очищаємо вподобання
     }
   };
 
+  const wishlist = useSelector(
+    (state: RootState) => state.user.user?.meta.preferences || []
+  );
+
+  // Отримуємо всі товари (припустимо, що вони є у `products` в Redux)
+  const products: ProductInfo[] = useSelector(
+    (state: RootState) => state.products.items
+  );
+
+  const wishlistProducts = products.filter((product) =>
+    wishlist.includes(product.id)
+  );
   return (
-    <li className={s.item}>
-      <div className={s.img}>
-        <img src={info.images[0]?.src} alt={info.images[0]?.alt || info.name} />
-      </div>
-
-      <div className={s.div}>
-        <div className="flex gap-[0.8vw] items-center mb-[0.6vw]">
-          <div>
-            <div className={s.markersBlock}>
-              {info.featured && (
-                <div className={s.bestMarker}>
-                  <span>bilobrov'S</span>
-                  <span>BEST</span>
-                </div>
-              )}
-
-              <div className={s.topMarker}>TOP</div>
-
-              {isNewProduct(info.date_created) && (
-                <div className={s.newMarker}>NEW</div>
-              )}
-
-              {info.sale_price &&
-                info.sale_price !== "0" &&
-                info.regular_price &&
-                info.regular_price !== "0" && (
-                  <div className={s.saleMarker}>
-                    -
-                    {Math.round(
-                      (1 -
-                        Number(info.sale_price) / Number(info.regular_price)) *
-                        100
-                    )}
-                    %
-                  </div>
-                )}
-            </div>
-          </div>
-
-          <div className={s.code}>
-            <p>Код товару: </p> <span> {info.sku}</span>
+    <div className={s.modalOverlay}>
+      <motion.div
+        className={s.modal}
+        initial={{ x: "50%", opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+      >
+        <div className={s.swiperController}>
+          <h2>
+            <span>Список</span>
+            <span>побажань</span>
+          </h2>
+          <div className={s.navigationContainer}>
+            <button className={s.prevButton}>
+              <svg
+                viewBox="0 0 25 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g clipPath="url(#clip0_480_5408)">
+                  <path d="M7.08228 5L8.15132 6.05572L3.39413 10.7535L24.5 10.7535V12.2465L3.39413 12.2465L8.15132 16.9443L7.08228 18L0.5 11.5L7.08228 5Z" />
+                </g>
+                <defs>
+                  <clipPath id="clip0_480_5408">
+                    <rect
+                      width="24"
+                      height="24"
+                      fill="white"
+                      transform="matrix(-1 0 0 1 24.5 0)"
+                    />
+                  </clipPath>
+                </defs>
+              </svg>
+            </button>
+            <button className={s.nextButton}>
+              <svg
+                viewBox="0 0 25 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g clipPath="url(#clip0_480_5411)">
+                  <path d="M17.9177 5L16.8487 6.05572L21.6059 10.7535H0.5V12.2465H21.6059L16.8487 16.9443L17.9177 18L24.5 11.5L17.9177 5Z" />
+                </g>
+                <defs>
+                  <clipPath id="clip0_480_5411">
+                    <rect
+                      width="24"
+                      height="24"
+                      fill="white"
+                      transform="translate(0.5)"
+                    />
+                  </clipPath>
+                </defs>
+              </svg>
+            </button>
           </div>
         </div>
-        {brandName && <p className={s.productBrand}>{brandName}</p>}
+        <button onClick={onClose} className={s.closeBtn}>
+          <svg
+            viewBox="0 0 52 52"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M39 13L13 39M13 13L39 39"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </button>
 
-        <p className={s.productName}>{info.name}</p>
+        <Swiper
+          modules={[Navigation]}
+          spaceBetween={20}
+          slidesPerView={"auto"}
+          navigation={{
+            prevEl: `.${s.prevButton}`,
+            nextEl: `.${s.nextButton}`,
+          }}
+          className={s.productListSwiper}
+        >
+          {wishlistProducts.map((product: ProductInfo) => (
+            <SwiperSlide className={s.slide} key={product.id}>
+              <ProductItem info={product} />
+            </SwiperSlide>
+          ))}
+        </Swiper>
 
-        {typeof info.short_description === "string" ? (
-          <p
-            className={s.shortDesc}
-            dangerouslySetInnerHTML={{ __html: info.short_description }}
-          />
-        ) : (
-          <>{info.short_description}</>
-        )}
-
-        <div className="flex items-center justify-between">
-          <div>
-            {info.sale_price && info.sale_price !== "0" ? (
-              <>
-                <span className={`${s.currency} ${s.red}`}>₴</span>
-                <span className={`${s.salePrice} ${s.red}`}>
-                  {info.sale_price}
-                </span>
-                <span className={s.regularPrice}>{info.regular_price}</span>
-              </>
-            ) : (
-              <>
-                <span className={s.currency}>₴</span>
-                <span className={s.salePrice}>{info.price}</span>
-              </>
-            )}
-          </div>
-
-          <button className={s.clear} onClick={handleToggle}>
+        {(wishlistProducts.length !== 0 && (
+          <button className={s.clear} onClick={handleClearWishlist}>
             <svg
               viewBox="0 0 24 24"
               fill="none"
@@ -146,80 +150,9 @@ export const WishListProductItem: React.FC<ProductItemProps> = ({
               />
             </svg>
 
-            <span>Видалити</span>
+            <span>Видалити все</span>
           </button>
-        </div>
-      </div>
-    </li>
-  );
-};
-
-import { motion } from "framer-motion";
-
-export const WishListPopup: React.FC<{
-  onClose: () => void;
-}> = ({ onClose }) => {
-  const wishlist = useSelector(
-    (state: RootState) => state.user?.user?.meta?.preferences || []
-  );
-
-  const products: ProductInfo[] = useSelector(
-    (state: RootState) => state.products.items
-  );
-
-  const wishlistProducts = products.filter((product) =>
-    wishlist.includes(product.id)
-  );
-
-  const token = useSelector((state: RootState) => state.user.token);
-
-  return (
-    <div className={s.modalOverlay}>
-      {/* Анімація першого блоку */}
-      <motion.div
-        className={s.before}
-        initial={{ x: "100%", opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        transition={{ duration: 0.5, ease: "easeOut", delay: 0.3 }}
-      >
-        <img src="/images/popup-side-img.avif" alt="before" />
-      </motion.div>
-
-      {/* Анімація модального вікна (з затримкою) */}
-      <motion.div
-        className={s.modal}
-        initial={{ x: "50%", opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
-      >
-        <div className="flex justify-between items-center mb-[2vw]">
-          <h3 className={s.title}>Список побажань</h3>
-
-          <button onClick={onClose} className={s.closeBtn}>
-            <svg
-              viewBox="0 0 52 52"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M39 13L13 39M13 13L39 39"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </button>
-        </div>
-
-        <ul className={s.list}>
-          {wishlistProducts.map((product: ProductInfo) => (
-            <WishListProductItem
-              key={product.id}
-              info={product}
-              token={token || ""}
-            />
-          ))}
-        </ul>
+        )) || <p>Список бажань порожній</p>}
       </motion.div>
     </div>
   );
