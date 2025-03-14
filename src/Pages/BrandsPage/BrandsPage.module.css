@@ -1,0 +1,145 @@
+.page {
+  padding-top: 15vw;
+  padding-bottom: 8.3vw;
+
+  h1 {
+    text-align: center;
+    font-family: Playfair Display;
+    font-weight: 600;
+    font-style: italic;
+    font-size: 3.2vw;
+    line-height: 100%;
+    margin-bottom: 1.6vw;
+  }
+
+  .qty {
+    display: block;
+    text-align: center;
+    font-family: Manrope;
+    font-weight: 600;
+    font-size: 0.8vw;
+    line-height: 100%;
+    letter-spacing: 0.1vw;
+    color: rgb(155, 155, 155);
+    margin-bottom: 2.7vw;
+  }
+
+  .alphabetNav {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 2.7vw;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+
+    a {
+      background-color: rgba(249, 247, 248, 1);
+      font-family: Manrope;
+      font-weight: 600;
+      font-size: 0.8vw;
+      line-height: 100%;
+      letter-spacing: 0.1vw;
+      text-transform: uppercase;
+      width: 2.5vw;
+      height: 2.5vw;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: black;
+      transition: 0.3s;
+    }
+
+    a:hover {
+      background-color: var(--primary);
+      color: #ffffff;
+    }
+
+    .disabled {
+      color: rgb(145, 145, 145);
+      pointer-events: none;
+    }
+  }
+
+  a {
+  }
+
+  .brandsList {
+    /* background-color: blueviolet; */
+    h2 {
+      font-family: Playfair Display;
+      font-weight: 600;
+      font-style: italic;
+      font-size: 2vw;
+      line-height: 100%;
+      margin-bottom: 2vw;
+    }
+
+    .letterGroup {
+      padding: 2.7vw 0;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+  }
+}
+
+.brandItems {
+  display: flex;
+  align-items: center;
+  gap: 1.7vw;
+}
+
+.brandItem {
+  padding: 0.5vw;
+  width: fit-content;
+  overflow: hidden;
+  h4 {
+    text-transform: uppercase;
+    font-family: Manrope;
+    font-size: 0.9vw;
+    font-weight: 600;
+    line-height: 1.2vw;
+    letter-spacing: 0.09em;
+    color: #ffffff;
+    text-align: center;
+  }
+
+  img {
+    transform: scale(0.7);
+    transition: transform 0.3s;
+  }
+
+  .brandImageCircle {
+    position: relative;
+    margin: 0 auto;
+    width: 6.5vw;
+    height: 6.5vw;
+    background-color: rgba(232, 232, 232, 1);
+    border-radius: 50%;
+    margin-bottom: 1vw;
+  }
+
+  .brandImageCircle::before {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    content: "";
+    width: 110%;
+    height: 110%;
+    border: 2px solid rgba(249, 247, 248, 1);
+    border-radius: 50%;
+    transform: translateX(-50%) translateY(-50%);
+  }
+
+  span {
+    text-align: center;
+    display: block;
+    font-family: Manrope;
+    font-weight: 600;
+    font-size: 0.9vw;
+    line-height: 100%;
+    letter-spacing: 0.07vw;
+    text-align: center;
+    text-transform: uppercase;
+  }
+}
+
+.brandItem:hover img {
+  transform: scale(1);
+}

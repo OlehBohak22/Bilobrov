@@ -13,6 +13,7 @@ headers.set(
 
 interface ProductState {
   items: ProductInfo[];
+  certificates: ProductInfo[];
   loading: boolean;
   currentProduct: ProductInfo | null;
   reviews: any[];
@@ -24,6 +25,7 @@ interface ProductState {
 
 const initialState: ProductState = {
   items: [],
+  certificates: [],
   loading: false,
   currentProduct: null,
   reviews: [],
@@ -172,7 +174,14 @@ const productSlice = createSlice({
       })
       .addCase(fetchProducts.fulfilled, (state, action) => {
         state.loading = false;
-        state.items = action.payload;
+
+        state.items = action.payload.filter(
+          (product: any) => product.catalog_visibility == "visible"
+        );
+
+        state.certificates = action.payload.filter(
+          (item: any) => item.categories[0]?.slug === "category-20"
+        );
       });
 
     builder.addCase(fetchVariationById.fulfilled, (state, action) => {

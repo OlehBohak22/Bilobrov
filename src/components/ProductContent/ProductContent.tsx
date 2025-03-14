@@ -40,6 +40,8 @@ export const ProductContent: React.FC<ProductItemProps> = ({
     null
   );
 
+  console.log(info);
+
   const dispatch = useAppDispatch();
 
   const uniqueAttributes = [

@@ -32,14 +32,19 @@ export const Header: React.FC<HeaderProps> = ({
     <header
       className={`${s.header} ${
         location.pathname.startsWith("/product/") ||
-        ["/about", "/account", "/support", "/certificate", "/catalog"].includes(
-          location.pathname
-        )
+        [
+          "/about",
+          "/account",
+          "/support",
+          "/certificate",
+          "/catalog",
+          "/brendy",
+        ].includes(location.pathname)
           ? s.hovered
           : ""
       }`}
     >
-      <div className={s.overlay}></div>
+      <div className={s.freeDelivery}>♥ Безкоштовна доставка по Україні! ♥</div>
       <Layout>
         <div className={s.headerTopLine}>
           <div>
@@ -98,6 +103,12 @@ export const Header: React.FC<HeaderProps> = ({
                 let modifiedUrl = item.url.replace(/\/$/, "");
                 if (modifiedUrl.endsWith("support")) {
                   modifiedUrl = "support";
+                } else if (modifiedUrl.endsWith("brendy")) {
+                  modifiedUrl = "brendy";
+                } else if (modifiedUrl.endsWith("about")) {
+                  modifiedUrl = "about";
+                } else if (modifiedUrl.endsWith("certificate")) {
+                  modifiedUrl = "certificate";
                 } else {
                   const supportMatch = modifiedUrl.match(/support\/(.+)$/);
                   if (supportMatch) {

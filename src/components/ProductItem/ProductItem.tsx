@@ -13,6 +13,7 @@ import { VariationsPopup } from "../VariationCartPopup/VariationCartPopup";
 
 interface ProductItemProps {
   info: ProductInfo;
+  withoutRating?: boolean;
 }
 
 const isNewProduct = (dateCreated: string) => {
@@ -25,9 +26,14 @@ const isNewProduct = (dateCreated: string) => {
   return daysDiff <= 14;
 };
 
-export const ProductItem: React.FC<ProductItemProps> = ({ info }) => {
+export const ProductItem: React.FC<ProductItemProps> = ({
+  info,
+  withoutRating,
+}) => {
   const dispatch = useAppDispatch();
   const token = useSelector((state: RootState) => state.user.token);
+
+  // console.log(info);
 
   const cart = useSelector((state: RootState) => state.cart.items);
 
@@ -65,7 +71,7 @@ export const ProductItem: React.FC<ProductItemProps> = ({ info }) => {
 
   return (
     <>
-      <li className={s.productItem}>
+      <li key={info.id} className={s.productItem}>
         <Link className={s.link} to={`/product/${info.id}`} />
         <div className={s.block}>
           <div className={s.productImage}>
@@ -142,8 +148,6 @@ export const ProductItem: React.FC<ProductItemProps> = ({ info }) => {
             </div>
           </div>
 
-          <p>{info.id}</p>
-
           {brandName && <p className={s.productBrand}>{brandName}</p>}
           <p className={s.productName}>{info.name}</p>
           {typeof info.short_description === "string" ? (
@@ -155,10 +159,12 @@ export const ProductItem: React.FC<ProductItemProps> = ({ info }) => {
             <>{info.short_description}</>
           )}
 
-          <div className={s.ratingBlock}>
-            <StarRating rating={info.average_rating} />
-            <span>({info.rating_count})</span>
-          </div>
+          {!withoutRating && (
+            <div className={s.ratingBlock}>
+              <StarRating rating={info.average_rating} />
+              <span>({info.rating_count})</span>
+            </div>
+          )}
         </div>
 
         <div>

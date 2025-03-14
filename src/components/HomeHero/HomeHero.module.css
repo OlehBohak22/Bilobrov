@@ -31,12 +31,29 @@
     width: fit-content;
     gap: 0.8vw;
     padding: 1vw 3.7vw;
+    transition: 0.3s;
 
     span {
       font-family: Manrope, sans-serif;
       font-size: 0.8vw;
       font-weight: 600;
       line-height: 0.8vw;
+    }
+
+    svg {
+      width: 1.2vw;
+      height: 1.2vw;
+      fill: black;
+      transition: fill 0.3s;
+    }
+  }
+
+  a:hover {
+    background-color: rgba(255, 196, 58, 1);
+    color: var(--primary);
+
+    svg {
+      fill: var(--primary);
     }
   }
 }

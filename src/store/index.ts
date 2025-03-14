@@ -11,6 +11,7 @@ import resetPasswordReducer from "./slices/resetPasswordSlice";
 import cartReducer from "./slices/cartSlice";
 import popupReducer from "./slices/popupSlice";
 import menuReducer from "./slices/menuSlice";
+import filtersReducer from "./slices/filterSlice";
 
 export const store = configureStore({
   reducer: {
@@ -26,6 +27,7 @@ export const store = configureStore({
     cart: cartReducer,
     popup: popupReducer,
     menu: menuReducer,
+    filters: filtersReducer,
   },
 });
 

@@ -18,6 +18,19 @@
   }
 }
 
+.freeDelivery {
+  text-align: center;
+  font-family: Manrope;
+  font-weight: 700;
+  font-size: 0.6vw;
+  line-height: 137%;
+  font-variant-numeric-figure: lining-nums;
+  font-variant-numeric-spacing: proportional-nums;
+  color: rgba(214, 61, 68, 1);
+  background-color: rgba(254, 228, 229, 1);
+  padding: 0.4vw 0;
+}
+
 .header:hover,
 .header.hovered {
   background-color: #ffffff;

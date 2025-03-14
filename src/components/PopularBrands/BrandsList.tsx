@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { fetchBrands } from "../../store/slices/popularBrandsSlice";
 import type { RootState } from "../../store";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { Layout } from "../Layout/Layout";
@@ -17,11 +16,7 @@ const BrandsList = () => {
   // Додаємо тип для useSelector
   const { items } = useSelector((state: RootState) => state.brands);
 
-  console.log(items);
-
-  useEffect(() => {
-    dispatch(fetchBrands()); // Викликаємо асинхронну дію для завантаження брендів
-  }, [dispatch]);
+  useEffect(() => {}, [dispatch]);
 
   return (
     <section className={s.section}>
@@ -46,7 +41,7 @@ const BrandsList = () => {
               <SwiperSlide className={s.brandItem} key={brand.id}>
                 <div className={s.brandImageCircle}>
                   <div className="overflow-hidden rounded-full w-[6.5vw] h-[6.5vw]">
-                    <img src={brand.image} alt={brand.name} />
+                    <img src={brand.popular_product.image} alt={brand.name} />
                   </div>
                 </div>
                 <h4>{brand.name}</h4>
@@ -56,7 +51,7 @@ const BrandsList = () => {
         </div>
 
         <div className={s.bottomController}>
-          <Link className={s.brandLink} to="">
+          <Link className={s.brandLink} to="/brendy">
             <span>Всі бренди</span>
             <svg
               className={s.svg}

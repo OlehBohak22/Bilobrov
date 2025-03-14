@@ -2,6 +2,10 @@
   --primary: rgba(214, 61, 68, 1);
 }
 
+body {
+  scroll-behavior: smooth;
+}
+
 *,
 ::after,
 ::before {

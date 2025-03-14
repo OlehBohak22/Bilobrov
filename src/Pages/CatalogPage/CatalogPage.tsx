@@ -1,22 +1,16 @@
-import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Layout } from "../../components/Layout/Layout";
 import s from "./CatalogPage.module.css";
-import { RootState, AppDispatch } from "../../store";
-import { fetchProducts } from "../../store/slices/productsSlice";
+import { RootState } from "../../store";
 import { ProductItem } from "../../components/ProductItem/ProductItem";
+import Filters from "../../components/FilterPopup/FilterPopup";
 
 export const CatalogPage = () => {
   const { categorySlug } = useParams<{ categorySlug?: string }>();
-  const dispatch = useDispatch<AppDispatch>();
 
-  useEffect(() => {
-    dispatch(fetchProducts(categorySlug || ""));
-  }, [dispatch, categorySlug]);
-
-  const { items: products = [], loading } = useSelector(
-    (state: RootState) => state.products
+  const { products, loading } = useSelector(
+    (state: RootState) => state.filters
   );
 
   return (
@@ -25,6 +19,8 @@ export const CatalogPage = () => {
         <div className={s.categoryHeader}>
           <h1>{categorySlug ? `Категорія: ${categorySlug}` : "Всі товари"}</h1>
         </div>
+
+        <Filters />
 
         {loading ? (
           <p>Завантаження...</p>

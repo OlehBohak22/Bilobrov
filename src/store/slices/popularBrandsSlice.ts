@@ -19,6 +19,7 @@ interface Brand {
   description: string;
   link: string;
   image: string;
+  popular_product: { image: string };
 }
 
 interface BrandsState {

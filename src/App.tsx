@@ -25,6 +25,7 @@ import { CartInitializer } from "./components/CartInitializer";
 import { fetchMenus } from "./store/slices/menuSlice";
 import { CatalogPage } from "./Pages/CatalogPage/CatalogPage";
 import { BrandsPage } from "./Pages/BrandsPage/BrandsPage";
+import { fetchBrands } from "./store/slices/popularBrandsSlice";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -44,6 +45,7 @@ function App() {
     dispatch(checkUserSession());
     dispatch(fetchProducts());
     dispatch(fetchMenus());
+    dispatch(fetchBrands()); // Викликаємо асинхронну дію для завантаження брендів
   }, [dispatch]);
 
   useEffect(() => {

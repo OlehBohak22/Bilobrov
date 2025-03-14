@@ -55,17 +55,12 @@ export const HomeHero = () => {
                   <a href={banner.input_link}>
                     <span>Детальніше</span>
                     <svg
-                      width="25"
-                      height="24"
                       viewBox="0 0 25 24"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       <g clipPath="url(#clip0_691_3833)">
-                        <path
-                          d="M17.9177 5L16.8487 6.05572L21.6059 10.7535H0.5V12.2465H21.6059L16.8487 16.9443L17.9177 18L24.5 11.5L17.9177 5Z"
-                          fill="black"
-                        />
+                        <path d="M17.9177 5L16.8487 6.05572L21.6059 10.7535H0.5V12.2465H21.6059L16.8487 16.9443L17.9177 18L24.5 11.5L17.9177 5Z" />
                       </g>
                       <defs>
                         <clipPath id="clip0_691_3833">
