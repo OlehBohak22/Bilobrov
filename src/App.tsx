@@ -130,7 +130,7 @@ function App() {
         <Route path="/bilobrov-club" element={<BonusPage />} />
         <Route path="/certificate" element={<CertificatePage />} />
         <Route path="/account" element={<AccountPage />} />
-        <Route path="/catalog/:categorySlug" element={<CatalogPage />} />
+        <Route path="/catalog/:slug" element={<CatalogPage />} />
         <Route path="/catalog" element={<CatalogPage />} />
         <Route path="/brendy" element={<BrandsPage />} />
 

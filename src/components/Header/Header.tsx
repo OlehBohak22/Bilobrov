@@ -32,6 +32,7 @@ export const Header: React.FC<HeaderProps> = ({
     <header
       className={`${s.header} ${
         location.pathname.startsWith("/product/") ||
+        location.pathname.startsWith("/catalog/") ||
         [
           "/about",
           "/account",
@@ -101,6 +102,7 @@ export const Header: React.FC<HeaderProps> = ({
             <ul className={s.navMenu}>
               {menuTree.map((item) => {
                 let modifiedUrl = item.url.replace(/\/$/, "");
+
                 if (modifiedUrl.endsWith("support")) {
                   modifiedUrl = "support";
                 } else if (modifiedUrl.endsWith("brendy")) {
@@ -114,6 +116,15 @@ export const Header: React.FC<HeaderProps> = ({
                   if (supportMatch) {
                     modifiedUrl = `support${supportMatch[1]}`;
                   }
+                }
+
+                // Додаємо перевірку для product-category/{id}
+                const categoryMatch = modifiedUrl.match(
+                  /product-category\/([^\/]+)$/
+                );
+
+                if (categoryMatch) {
+                  modifiedUrl = `/catalog/${categoryMatch[1]}`;
                 }
 
                 return (
@@ -131,6 +142,14 @@ export const Header: React.FC<HeaderProps> = ({
                             if (childSupportMatch) {
                               modifiedChildUrl = `support#${childSupportMatch[1]}`;
                             }
+                          }
+
+                          // Додаємо перевірку для product-category/{id} у дочірніх елементах
+                          const childCategoryMatch = modifiedUrl.match(
+                            /product-category\/([^\/]+)$/
+                          );
+                          if (childCategoryMatch) {
+                            modifiedChildUrl = `/category/${childCategoryMatch[1]}`;
                           }
 
                           return (

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import s from "./AccountPage.module.css";
 import { Layout } from "../../components/Layout/Layout";
 import { MainAccountTab } from "../../components/MainAccountTab/MainAccountTab";
@@ -200,16 +200,27 @@ const categories = [
 ];
 
 export const AccountPage = () => {
-  const [activeTab, setActiveTab] = useState("main");
-  const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const wishlist = useSelector(
     (state: RootState) => state.user?.user?.meta?.preferences || []
   );
-
   const user = useSelector((state: RootState) => state.user.user);
+
+  const [activeTab, setActiveTab] = useState<string>(
+    window.location.hash.replace("#", "") || "main"
+  );
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      setActiveTab(window.location.hash.replace("#", "") || "main");
+    };
+
+    window.addEventListener("hashchange", handleHashChange);
+    return () => window.removeEventListener("hashchange", handleHashChange);
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -221,9 +232,10 @@ export const AccountPage = () => {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-    }, 500); // Імітація затримки
+    }, 500); // Імітація завантаження
 
     setActiveTab(tabId);
+    window.location.hash = tabId;
   };
 
   const renderContent = () => {

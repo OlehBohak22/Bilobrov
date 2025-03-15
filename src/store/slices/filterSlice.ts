@@ -9,7 +9,7 @@ interface FiltersState {
   maxPrice: number;
   onSale: boolean;
   inStock: boolean;
-  categories: number[];
+  categories: string[]; // Масив слагів
   attributes: string[];
   attributeTerms: string[];
   products: any[];
@@ -18,10 +18,10 @@ interface FiltersState {
 
 const initialState: FiltersState = {
   minPrice: 100,
-  maxPrice: 500,
+  maxPrice: 1500,
   onSale: false,
-  inStock: false,
-  categories: [],
+  inStock: true,
+  categories: [], // Тепер масив слагів
   attributes: [],
   attributeTerms: [],
   products: [],
@@ -39,13 +39,13 @@ export const fetchProducts = createAsyncThunk(
       max_price: state.filters.maxPrice,
       on_sale: state.filters.onSale,
       stock_status: state.filters.inStock ? "instock" : "outofstock",
-      category: state.filters.categories.join(","),
+      category: state.filters.categories.join(","), // Використовуємо `category_slug`
       attribute: state.filters.attributes.join(","),
       attribute_term: state.filters.attributeTerms.join("|"),
     };
 
     const queryString = new URLSearchParams(params as any).toString();
-    const url = `https://bilobrov.projection-learn.website/wp-json/wc/v3/products?${queryString}`;
+    const url = `https://bilobrov.projection-learn.website/wp-json/wc/v3/products?${queryString}&per_page=100`;
 
     try {
       const response = await axios.get(url, {
@@ -78,8 +78,8 @@ const filtersSlice = createSlice({
     setInStock: (state, action: PayloadAction<boolean>) => {
       state.inStock = action.payload;
     },
-    setCategories: (state, action: PayloadAction<number[]>) => {
-      state.categories = action.payload;
+    setCategories: (state, action: PayloadAction<string[]>) => {
+      state.categories = action.payload; // Зберігаємо масив слагів
     },
     setAttributes: (state, action: PayloadAction<string[]>) => {
       state.attributes = action.payload;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import {
@@ -10,20 +10,35 @@ import {
   fetchProducts,
 } from "../../store/slices/filterSlice";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { useParams } from "react-router";
 
 const Filters: React.FC = () => {
   const dispatch = useAppDispatch();
   const { minPrice, maxPrice, onSale, inStock, categories, loading } =
     useSelector((state: RootState) => state.filters);
 
-  console.log(categories);
+  const { slug } = useParams();
 
-  const handleCategoryChange = (id: number) => {
+  const allCategories = useSelector(
+    (state: RootState) => state.categories.categories
+  );
+  const category = allCategories.find((cat) => cat.slug === slug);
+  const categoryId = category ? category.id.toString() : null;
+
+  // Записуємо категорію лише якщо її ще немає в списку
+  useEffect(() => {
+    if (categoryId && !categories.includes(categoryId)) {
+      dispatch(setCategories([categoryId]));
+      dispatch(fetchProducts());
+    }
+  }, [categoryId, categories, dispatch]);
+
+  const handleCategoryChange = (categoryId: string) => {
     dispatch(
       setCategories(
-        categories.includes(id)
-          ? categories.filter((cat) => cat !== id)
-          : [...categories, id]
+        categories.includes(categoryId)
+          ? categories.filter((cat) => cat !== categoryId)
+          : [...categories, categoryId]
       )
     );
   };
@@ -64,7 +79,7 @@ const Filters: React.FC = () => {
         <input
           type="range"
           min="100"
-          max="500"
+          max="10000"
           value={maxPrice}
           onChange={(e) => dispatch(setMaxPrice(Number(e.target.value)))}
         />
@@ -72,22 +87,17 @@ const Filters: React.FC = () => {
 
       <div className="filter-section">
         <label>Категорії:</label>
-        <label>
-          <input
-            type="checkbox"
-            checked={categories.includes(22)}
-            onChange={() => handleCategoryChange(22)}
-          />
-          Очищення
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            checked={categories.includes(30)}
-            onChange={() => handleCategoryChange(30)}
-          />
-          Сироватки
-        </label>
+
+        {allCategories.map((cat) => (
+          <label key={cat.id}>
+            <input
+              type="checkbox"
+              checked={categories.includes(cat.id.toString())}
+              onChange={() => handleCategoryChange(cat.id.toString())}
+            />
+            {cat.name}
+          </label>
+        ))}
       </div>
 
       <button onClick={() => dispatch(fetchProducts())} disabled={loading}>

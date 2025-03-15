@@ -80,7 +80,7 @@ export const fetchProducts = createAsyncThunk<
   try {
     const url = categorySlug
       ? `${API_URL}products?category=${categorySlug}`
-      : `${API_URL}products`;
+      : `${API_URL}products?per-page=10000000000000000000000000000000`;
 
     const response = await fetch(url, {
       method: "GET",
@@ -180,7 +180,7 @@ const productSlice = createSlice({
         );
 
         state.certificates = action.payload.filter(
-          (item: any) => item.categories[0]?.slug === "category-20"
+          (item: any) => item.categories[0]?.slug === "certificate"
         );
       });
 
