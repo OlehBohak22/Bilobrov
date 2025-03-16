@@ -26,6 +26,8 @@ import { fetchMenus } from "./store/slices/menuSlice";
 import { CatalogPage } from "./Pages/CatalogPage/CatalogPage";
 import { BrandsPage } from "./Pages/BrandsPage/BrandsPage";
 import { fetchBrands } from "./store/slices/popularBrandsSlice";
+import { fetchCategories } from "./store/slices/categorySlice";
+import Filters from "./components/FilterPopup/FilterPopup";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -36,6 +38,7 @@ function App() {
   const [isWishList, setIsWishList] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isReview, setIsReview] = useState(false);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [loading, setLoading] = useState(true); // Додаємо стейт для смужки
   const { user } = useSelector((state: RootState) => state.user);
 
@@ -43,7 +46,8 @@ function App() {
 
   useEffect(() => {
     dispatch(checkUserSession());
-    dispatch(fetchProducts());
+    dispatch(fetchProducts({}));
+    dispatch(fetchCategories());
     dispatch(fetchMenus());
     dispatch(fetchBrands()); // Викликаємо асинхронну дію для завантаження брендів
   }, [dispatch]);
@@ -84,6 +88,7 @@ function App() {
     setIsRegisterOpen(false);
     setIsWishList(false);
     setIsCartOpen(false);
+    setIsFilterOpen(false);
     setIsReview(false);
     setIsMenuOpen(false);
     document.body.style.overflow = "visible";
@@ -116,7 +121,16 @@ function App() {
       {isRegisterOpen && <RegisterModal onClose={handleCloseModals} />}
       {isWishList && <WishListPopup onClose={handleCloseModals} />}
       {isCartOpen && <CartPopup onClose={handleCloseModals} />}
-      {isMenuOpen && <MenuPopup onClose={handleCloseModals} />}
+      {isFilterOpen && <Filters onClose={handleCloseModals} />}
+      {isMenuOpen && (
+        <MenuPopup
+          openPopup={() => {
+            handleOpenRegister();
+            setIsMenuOpen(false);
+          }}
+          onClose={handleCloseModals}
+        />
+      )}
       {isReview && (
         <ReviewPopup
           onClose={handleCloseModals}
@@ -128,10 +142,19 @@ function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/support" element={<ClientsSupportPage />} />
         <Route path="/bilobrov-club" element={<BonusPage />} />
-        <Route path="/certificate" element={<CertificatePage />} />
+        <Route
+          path="/podarunkovi-sertyfikaty-20"
+          element={<CertificatePage />}
+        />
         <Route path="/account" element={<AccountPage />} />
-        <Route path="/catalog/:slug" element={<CatalogPage />} />
-        <Route path="/catalog" element={<CatalogPage />} />
+        <Route
+          path="/catalog/:slug"
+          element={<CatalogPage openFilter={() => setIsFilterOpen(true)} />}
+        />
+        <Route
+          path="/catalog"
+          element={<CatalogPage openFilter={() => setIsFilterOpen(true)} />}
+        />
         <Route path="/brendy" element={<BrandsPage />} />
 
         <Route

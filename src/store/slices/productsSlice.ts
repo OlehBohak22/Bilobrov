@@ -74,29 +74,38 @@ export const addReview = createAsyncThunk(
 
 export const fetchProducts = createAsyncThunk<
   ProductInfo[],
-  string | undefined,
+  { categorySlug?: string; queryParams?: string }, // Тут параметри в об'єкті
   { rejectValue: string }
->("products/fetchProducts", async (categorySlug, { rejectWithValue }) => {
-  try {
-    const url = categorySlug
-      ? `${API_URL}products?category=${categorySlug}`
-      : `${API_URL}products?per-page=10000000000000000000000000000000`;
+>(
+  "products/fetchProducts",
+  async ({ categorySlug, queryParams }, { rejectWithValue }) => {
+    try {
+      let url = `${API_URL}products`;
 
-    const response = await fetch(url, {
-      method: "GET",
-      headers: headers,
-    });
+      if (categorySlug) {
+        url += `?category=${categorySlug}`;
+      }
 
-    if (!response.ok) {
-      throw new Error("Помилка при завантаженні товарів");
+      if (queryParams) {
+        url += categorySlug ? `&${queryParams}` : `?${queryParams}`;
+      }
+
+      const response = await fetch(url, {
+        method: "GET",
+        headers: headers,
+      });
+
+      if (!response.ok) {
+        throw new Error("Помилка при завантаженні товарів");
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.error(error);
+      return rejectWithValue("Не вдалося отримати товари");
     }
-
-    return await response.json();
-  } catch (error) {
-    console.log(error);
-    return rejectWithValue("Не вдалося отримати товари");
   }
-});
+);
 
 export const fetchProductById = createAsyncThunk<ProductInfo, number>(
   "products/fetchProductById",
@@ -180,7 +189,8 @@ const productSlice = createSlice({
         );
 
         state.certificates = action.payload.filter(
-          (item: any) => item.categories[0]?.slug === "certificate"
+          (item: any) =>
+            item.categories[0]?.slug === "podarunkovi-sertyfikaty-20"
         );
       });
 

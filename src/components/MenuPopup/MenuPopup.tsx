@@ -4,8 +4,12 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { useState } from "react";
 import { buildMenuTree } from "../../utils/buildMenuTree";
+import { Link } from "react-router";
 
-export const MenuPopup: React.FC<{ onClose: () => void }> = ({ onClose }) => {
+export const MenuPopup: React.FC<{
+  onClose: () => void;
+  openPopup: () => void;
+}> = ({ onClose, openPopup }) => {
   const asideTopMenu = useSelector(
     (state: RootState) => state.menu.asideTopMenu?.items || []
   );
@@ -49,7 +53,7 @@ export const MenuPopup: React.FC<{ onClose: () => void }> = ({ onClose }) => {
           </button>
         </div>
 
-        <ul className={s.asideTop}>
+        {/* <ul className={s.asideTop}>
           {asideTopMenuTree.map((item) => (
             <li key={item.id}>
               {item.children.length > 0 ? (
@@ -97,6 +101,111 @@ export const MenuPopup: React.FC<{ onClose: () => void }> = ({ onClose }) => {
               )}
             </li>
           ))}
+        </ul> */}
+
+        <ul className={s.asideTop}>
+          {asideTopMenuTree.map((item) => {
+            let modifiedUrl = item.url.replace(/\/$/, "");
+
+            if (modifiedUrl.endsWith("support")) {
+              modifiedUrl = "support";
+            } else if (modifiedUrl.endsWith("brendy")) {
+              modifiedUrl = "brendy";
+            } else if (modifiedUrl.endsWith("about")) {
+              modifiedUrl = "about";
+            } else if (modifiedUrl.endsWith("my-account")) {
+              modifiedUrl = "account";
+            } else if (modifiedUrl.endsWith("podarunkovi-sertyfikaty-20")) {
+              modifiedUrl = "podarunkovi-sertyfikaty-20";
+            } else {
+              const supportMatch = modifiedUrl.match(/support\/(.+)$/);
+              if (supportMatch) {
+                modifiedUrl = `support${supportMatch[1]}`;
+              }
+            }
+
+            const categoryMatch = modifiedUrl.match(
+              /product-category\/([^/]+)$/
+            );
+
+            if (categoryMatch) {
+              modifiedUrl = `/catalog/${categoryMatch[1]}`;
+            }
+
+            return (
+              <li className={s.menuItem} key={item.id}>
+                {item.children.length > 0 ? (
+                  <div
+                    className={`${s.toggle} ${
+                      openMenu === item.id && s.active
+                    }`}
+                    onClick={() => toggleSubMenu(item.id)}
+                  >
+                    {item.title}
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <g opacity="0.4">
+                        <path
+                          d="M19 8.5L12 15.5L5 8.5"
+                          strokeWidth="2"
+                          strokeLinecap="square"
+                        />
+                      </g>
+                    </svg>
+                  </div>
+                ) : modifiedUrl === "account" ? (
+                  <button onClick={openPopup} className={s.accountButton}>
+                    {item.title}
+                  </button>
+                ) : (
+                  <Link to={modifiedUrl}>{item.title}</Link>
+                )}
+
+                {item.children.length > 0 && openMenu === item.id && (
+                  <motion.ul
+                    className={s.subMenu}
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{
+                      height: openMenu === item.id ? "auto" : 0,
+                      opacity: openMenu === item.id ? 1 : 0,
+                    }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    style={{ overflow: "hidden" }}
+                  >
+                    {item.children.map((child) => {
+                      let modifiedChildUrl = child.url.replace(/\/$/, "");
+                      if (modifiedChildUrl.endsWith("support")) {
+                        modifiedChildUrl = "support/";
+                      } else {
+                        const childSupportMatch =
+                          modifiedChildUrl.match(/support\/(.+)$/);
+                        if (childSupportMatch) {
+                          modifiedChildUrl = `support#${childSupportMatch[1]}`;
+                        }
+                      }
+
+                      const childCategoryMatch = modifiedChildUrl.match(
+                        /product-category\/([^/]+)$/
+                      );
+                      if (childCategoryMatch) {
+                        modifiedChildUrl = `/category/${childCategoryMatch[1]}`;
+                      }
+
+                      return (
+                        <li key={child.id}>
+                          <Link to={modifiedChildUrl}>{child.title}</Link>
+                        </li>
+                      );
+                    })}
+                  </motion.ul>
+                )}
+              </li>
+            );
+          })}
         </ul>
 
         <ul className={s.asideBottom}>

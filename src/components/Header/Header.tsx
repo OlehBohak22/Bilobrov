@@ -37,7 +37,7 @@ export const Header: React.FC<HeaderProps> = ({
           "/about",
           "/account",
           "/support",
-          "/certificate",
+          "/podarunkovi-sertyfikaty-20",
           "/catalog",
           "/brendy",
         ].includes(location.pathname)
@@ -109,8 +109,8 @@ export const Header: React.FC<HeaderProps> = ({
                   modifiedUrl = "brendy";
                 } else if (modifiedUrl.endsWith("about")) {
                   modifiedUrl = "about";
-                } else if (modifiedUrl.endsWith("certificate")) {
-                  modifiedUrl = "certificate";
+                } else if (modifiedUrl.endsWith("podarunkovi-sertyfikaty-20")) {
+                  modifiedUrl = "podarunkovi-sertyfikaty-20";
                 } else {
                   const supportMatch = modifiedUrl.match(/support\/(.+)$/);
                   if (supportMatch) {
@@ -120,7 +120,7 @@ export const Header: React.FC<HeaderProps> = ({
 
                 // Додаємо перевірку для product-category/{id}
                 const categoryMatch = modifiedUrl.match(
-                  /product-category\/([^\/]+)$/
+                  /product-category\/([^/]+)$/
                 );
 
                 if (categoryMatch) {
@@ -145,8 +145,8 @@ export const Header: React.FC<HeaderProps> = ({
                           }
 
                           // Додаємо перевірку для product-category/{id} у дочірніх елементах
-                          const childCategoryMatch = modifiedUrl.match(
-                            /product-category\/([^\/]+)$/
+                          const childCategoryMatch = modifiedChildUrl.match(
+                            /product-category\/([^/]+)$/
                           );
                           if (childCategoryMatch) {
                             modifiedChildUrl = `/category/${childCategoryMatch[1]}`;

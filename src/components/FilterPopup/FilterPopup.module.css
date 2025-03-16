@@ -1,0 +1,296 @@
+/* Затемнення фону */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  z-index: 9999999;
+}
+
+/* Вікно модалки */
+.modal {
+  position: relative;
+  background: white;
+  height: 100%;
+  width: 23.4vw;
+  padding: 2vw;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
+}
+
+.modal::-webkit-scrollbar {
+  width: 0.2vw;
+}
+.modal::-webkit-scrollbar-track {
+  width: 1vw;
+  background-color: rgba(254, 228, 229, 1);
+}
+.modal::-webkit-scrollbar-thumb {
+  width: 1vw;
+  background-color: var(--primary);
+}
+
+.menuHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2.2vw;
+
+  p {
+    font-family: Playfair Display;
+    font-weight: 600;
+    font-style: italic;
+    font-size: 2.1vw;
+    line-height: 2.9vw;
+  }
+
+  svg {
+    width: 2.7vw;
+    height: 2.7vw;
+    stroke: black;
+    transition: stroke 0.3s;
+  }
+
+  button:hover {
+    svg {
+      stroke: var(--primary);
+    }
+  }
+}
+
+/* From Uiverse.io by Yaya12085 */
+.switch {
+  position: relative;
+  height: 1.5rem;
+  width: 3rem;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  border-radius: 9999px;
+  background-color: rgba(186, 186, 186, 1);
+  transition: all 0.3s ease;
+}
+
+.switch:checked {
+  background-color: var(--primary);
+}
+
+.switch::before {
+  position: absolute;
+  content: "";
+  left: calc(1.5rem - 1.6rem);
+  top: calc(1.5rem - 1.6rem);
+  display: block;
+  height: 1.6rem;
+  width: 1.6rem;
+  cursor: pointer;
+  border: 1px solid rgba(100, 116, 139, 0.527);
+  border-radius: 9999px;
+  background-color: rgba(255, 255, 255, 1);
+  box-shadow: 0 3px 10px rgba(100, 116, 139, 0.327);
+  transition: all 0.3s ease;
+}
+
+.switch:hover::before {
+  box-shadow: 0 0 0px 8px rgba(0, 0, 0, 0.15);
+}
+
+.switch:checked:hover::before {
+  box-shadow: 0 0 0px 8px rgba(214, 61, 68, 0.2);
+}
+
+.switch:checked:before {
+  transform: translateX(100%);
+  border-color: var(--primary);
+}
+
+.switchController {
+  margin-bottom: 2vw;
+  label {
+    display: flex;
+    align-items: center;
+    gap: 1vw;
+    font-family: Manrope;
+    font-weight: 600;
+    font-size: 0.8vw;
+    line-height: 137%;
+    letter-spacing: -2%;
+  }
+
+  label:not(:last-child) {
+    margin-bottom: 0.8vw;
+  }
+}
+
+.backDrop {
+  label {
+    display: flex;
+    align-items: center;
+    gap: 0.6vw;
+    cursor: pointer;
+    font-family: Manrope;
+    font-weight: 600;
+    font-size: 1vw;
+    line-height: 137%;
+    letter-spacing: 0.01vw;
+    transition: 0.5s;
+  }
+
+  label:hover {
+    color: var(--primary);
+  }
+
+  input {
+    display: block;
+  }
+
+  label:hover svg {
+    transform: rotate(180deg);
+    fill: var(--primary);
+  }
+
+  label:focus svg {
+    transform: rotate(180deg);
+  }
+
+  .list {
+    padding-left: 1.6vw;
+    margin-top: 1vw;
+    label {
+      font-size: 10vw;
+      font-family: Manrope;
+      font-weight: 500;
+      font-size: 0.8vw;
+      line-height: 130%;
+      letter-spacing: 0%;
+    }
+
+    label:not(:last-child) {
+      margin-bottom: 0.8vw;
+    }
+  }
+}
+
+.plus,
+.minus {
+  width: 0.8vw;
+  height: 0.8vw;
+  transition: 0.5s;
+}
+
+.plus {
+  fill: black;
+}
+
+.minus {
+  fill: black;
+}
+
+.qty {
+  font-family: Manrope;
+  font-weight: 600;
+  font-size: 0.6vw;
+  line-height: 100%;
+  letter-spacing: 0.01vw;
+  text-align: center;
+  background-color: rgba(255, 196, 58, 1);
+  color: var(--primary);
+  width: 1vw;
+  height: 1vw;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.active {
+  color: var(--primary);
+}
+
+/* Сховати стандартний чекбокс */
+.hiddenCheckbox {
+  display: none !important;
+}
+
+/* Стилізація контейнера чекбокса */
+.customCheckbox {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+
+/* Стиль для кастомного чекбокса */
+.customCheckbox input:checked + .checkboxLabel::before {
+  content: "";
+  width: 0.9vw;
+  height: 0.9vw;
+  border: 1px solid transparent; /* Зелений колір рамки */
+  background-image: url("/icons/checkMark.jpg");
+  background-size: contain;
+  display: inline-block;
+  margin-right: 10px;
+  transition: background-color 0.3s ease;
+}
+
+/* Стиль для кастомного чекбокса, коли він не вибраний */
+.checkboxLabel::before {
+  content: "";
+  width: 0.9vw;
+  height: 0.9vw;
+  border: 1px solid #ccc; /* Сіра рамка для невибраного чекбокса */
+  border-radius: 0;
+  display: inline-block;
+  margin-right: 10px;
+  transition: background-color 0.3s ease;
+}
+
+/* Стилізація тексту лейбла */
+.checkboxLabel {
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+  position: relative;
+  padding-left: 24px; /* Робимо місце для кастомного чекбокса */
+}
+
+.btn {
+  width: 100%;
+  background-color: var(--primary);
+  padding: 1vw 0;
+  text-transform: uppercase;
+  color: white;
+  font-family: Manrope;
+  font-weight: 700;
+  font-size: 0.8vw;
+  line-height: 100%;
+  letter-spacing: 0.01vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5vw;
+  transition: 0.3s;
+
+  svg {
+    width: 1.2vw;
+    height: 1.2vw;
+    fill: white;
+    transition: 0.3s;
+  }
+}
+
+.btn:hover {
+  background-color: rgba(255, 196, 58, 1);
+  color: black;
+
+  svg {
+    fill: black;
+  }
+}

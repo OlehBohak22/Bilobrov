@@ -13,6 +13,25 @@
   }
 }
 
+.filterController {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.2vw;
+  margin-top: 1.2vw;
+
+  button {
+    font-family: Manrope;
+    font-weight: 700;
+    font-size: 0.8vw;
+    line-height: 0.8vw;
+    letter-spacing: 0.01vw;
+    gap: 0.5vw;
+    display: flex;
+    align-items: center;
+  }
+}
+
 .categoryHeader {
   h1 {
     font-family: Manrope;
@@ -33,5 +52,31 @@
     color: rgba(26, 26, 26, 0.5);
     display: block;
     text-align: center;
+  }
+}
+
+.childCategories {
+  margin-top: 1.6vw;
+  ul {
+    display: flex;
+    justify-content: center;
+    gap: 1.2vw;
+
+    li {
+      font-family: Manrope;
+      font-weight: 500;
+      font-size: 1.2vw;
+      line-height: 100%;
+      color: rgba(26, 26, 26, 0.5);
+    }
+
+    .active {
+      font-family: Playfair Display;
+      color: black;
+    }
+  }
+
+  a {
+    color: black;
   }
 }

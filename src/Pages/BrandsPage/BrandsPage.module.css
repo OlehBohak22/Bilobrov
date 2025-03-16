@@ -101,7 +101,6 @@
   }
 
   img {
-    transform: scale(0.7);
     transition: transform 0.3s;
   }
 
@@ -141,5 +140,5 @@
 }
 
 .brandItem:hover img {
-  transform: scale(1);
+  transform: scale(1.2);
 }
