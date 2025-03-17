@@ -222,6 +222,8 @@ export const MenuPopup: React.FC<{
               modifiedUrl = "account";
             } else if (modifiedUrl.endsWith("podarunkovi-sertyfikaty-20")) {
               modifiedUrl = "podarunkovi-sertyfikaty-20";
+            } else if (modifiedUrl.endsWith("bonusna-systema")) {
+              modifiedUrl = "bilobrov-club";
             } else {
               const supportMatch = modifiedUrl.match(/support\/(.+)$/);
               if (supportMatch) {
