@@ -12,6 +12,7 @@ import { Layout } from "../../components/Layout/Layout";
 import s from "./ProductPage.module.css";
 import { ProductContent } from "../../components/ProductContent/ProductContent";
 import { ReviewsList } from "../../components/ReviewsList/ReviewsList";
+import { ProductList } from "../../components/ProductList/ProductList";
 // import { ProductList } from "../../components/ProductList/ProductList";
 
 interface HeaderProps {
@@ -74,7 +75,7 @@ export const ProductPage: React.FC<HeaderProps> = ({
         />
       </Layout>
 
-      {/* <ProductList
+      <ProductList
         categories={["Акції", "Новинки", "Бестселлери"]}
         defaultCategory="Новинки"
       >
@@ -82,7 +83,7 @@ export const ProductPage: React.FC<HeaderProps> = ({
           <span>Схожі</span>
           <span>товари</span>
         </h2>
-      </ProductList> */}
+      </ProductList>
 
       <Layout>
         <ReviewsList openReview={openReview} reviews={currentReviews} />

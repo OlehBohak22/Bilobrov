@@ -29,13 +29,14 @@
   position: relative;
   max-height: 17.7vw; /* або можете встановити конкретну висоту */
   height: 100%; /* встановлюємо висоту контейнера */
-  width: 100%; /* контейнер займає всю ширину */
+
   overflow: hidden;
   margin-bottom: 0.8vw;
   background-color: rgba(246, 246, 246, 1);
 
   img {
     object-fit: cover;
+    aspect-ratio: 1;
   }
 }
 

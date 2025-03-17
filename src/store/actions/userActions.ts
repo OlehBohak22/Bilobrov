@@ -47,7 +47,6 @@ export const checkUserSession = () => async (dispatch: AppDispatch) => {
       const userResponse = await axiosInstance.get("/responses/v1/user_info", {
         headers: { Authorization: `Bearer ${token}` },
       });
-      console.log(userResponse.data);
       dispatch(setUserFromToken({ token, user: userResponse.data }));
     } catch (error) {
       console.error("Помилка перевірки сесії:", error);

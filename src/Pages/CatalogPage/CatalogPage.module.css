@@ -4,12 +4,11 @@
 }
 
 .list {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
   gap: 0.7vw;
 
   li {
-    flex-basis: calc((100% - 4 * 0.7vw) / 5);
   }
 }
 

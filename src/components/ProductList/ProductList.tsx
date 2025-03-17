@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { RootState } from "../../store/index";
@@ -51,10 +51,17 @@ export const ProductList = ({
     return params.toString();
   }, [activeTab]); // ✅ queryParams змінюється тільки коли змінюється activeTab
 
+  // Використовуємо useRef для збереження попередніх параметрів
+  const previousQueryParamsRef = useRef<string>(queryParams);
+
   useEffect(() => {
-    console.log("🔍 Query Params:", queryParams);
-    dispatch(fetchProducts({ queryParams }));
-  }, [dispatch, queryParams]);
+    // Перевірка, чи потрібно робити запит
+    if (queryParams !== previousQueryParamsRef.current) {
+      console.log("🔍 Query Params:", queryParams);
+      dispatch(fetchProducts({ queryParams }));
+      previousQueryParamsRef.current = queryParams; // Збереження попередніх параметрів
+    }
+  }, [dispatch, queryParams]); // залежність від queryParams, тепер перевіряємо через реф
 
   return (
     <div className={s.section}>

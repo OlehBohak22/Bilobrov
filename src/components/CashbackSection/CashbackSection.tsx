@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import { Layout } from "../Layout/Layout";
 import s from "./CashbackSection.module.css";
 
@@ -16,7 +17,7 @@ export const CashbackSection = () => {
             </p>
           </div>
 
-          <a className={s.details} href="">
+          <Link className={s.details} to="/bilobrov-club">
             <span>Детальніше</span>
             <svg
               width="25"
@@ -39,7 +40,7 @@ export const CashbackSection = () => {
                 </clipPath>
               </defs>
             </svg>
-          </a>
+          </Link>
         </div>
         <div>
           <img src="/images/cashback.jpg" alt="" />
