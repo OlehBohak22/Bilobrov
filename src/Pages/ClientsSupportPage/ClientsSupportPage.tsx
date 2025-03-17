@@ -56,7 +56,7 @@ const categories = [
         icon: "/icons/support-icons.svg#icon-policy",
       },
       {
-        id: "privacy",
+        id: "privacy-policy",
         label: "Політика конфіденційності",
         icon: "/icons/support-icons.svg#icon-policy",
       },
@@ -96,7 +96,7 @@ export const ClientsSupportPage = () => {
         return <p>Інформація про бонусну систему...</p>;
       case "offer":
         return <p>Текст договору оферти...</p>;
-      case "privacy":
+      case "privacy-policy":
         return <p>Політика конфіденційності...</p>;
       default:
         return null;

@@ -37,7 +37,7 @@ const Filters: React.FC<{
     if (categoryId && !categories.includes(categoryId)) {
       console.log("Додаємо категорію:", categoryId);
       dispatch(setCategories([categoryId]));
-      dispatch(fetchProducts());
+      dispatch(fetchProducts({}));
     }
   }, [categoryId, categories, dispatch]);
 
@@ -180,11 +180,10 @@ const Filters: React.FC<{
             )}
           </div>
         </div>
-
         <button
           className={s.btn}
           onClick={() => {
-            dispatch(fetchProducts());
+            dispatch(fetchProducts({}));
             onClose();
           }}
           disabled={loading}

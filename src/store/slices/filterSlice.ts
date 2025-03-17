@@ -28,21 +28,33 @@ const initialState: FiltersState = {
   loading: false,
 };
 
-// Асинхронний екшен для отримання товарів
 export const fetchProducts = createAsyncThunk(
   "filters/fetchProducts",
-  async (_, { getState }) => {
+  async (
+    { isNew, onSale }: { isNew?: boolean; onSale?: boolean } = {},
+    { getState }
+  ) => {
     const state = getState() as { filters: FiltersState };
 
-    const params = {
+    const params: Record<string, string | number | boolean> = {
       min_price: state.filters.minPrice,
       max_price: state.filters.maxPrice,
-      on_sale: state.filters.onSale,
       stock_status: state.filters.inStock ? "instock" : "outofstock",
-      category: state.filters.categories.join(","), // Використовуємо `category_slug`
+      category: state.filters.categories.join(","),
       attribute: state.filters.attributes.join(","),
       attribute_term: state.filters.attributeTerms.join("|"),
     };
+
+    if (isNew) {
+      params["orderby"] = "date";
+      params["order"] = "desc";
+    }
+
+    if (onSale) {
+      params["on_sale"] = true;
+    } else {
+      params["on_sale"] = state.filters.onSale;
+    }
 
     const queryString = new URLSearchParams(params as any).toString();
     const url = `https://bilobrov.projection-learn.website/wp-json/wc/v3/products?${queryString}&per_page=100`;

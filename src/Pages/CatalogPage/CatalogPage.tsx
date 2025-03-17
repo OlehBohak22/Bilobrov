@@ -8,9 +8,9 @@ import { useEffect } from "react";
 import { fetchProducts, setCategories } from "../../store/slices/filterSlice";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 
-export const CatalogPage: React.FC<{
-  openFilter?: () => void;
-}> = ({ openFilter }) => {
+export const CatalogPage: React.FC<{ openFilter?: () => void }> = ({
+  openFilter,
+}) => {
   const { products, loading, categories } = useSelector(
     (state: RootState) => state.filters
   );
@@ -22,32 +22,41 @@ export const CatalogPage: React.FC<{
     (state: RootState) => state.categories.categories
   );
 
-  // Знаходимо поточну категорію
-  const category = allCategories.find((cat) => cat.slug === slug);
-  const categoryName = category ? category.name : "Всі товари";
-
-  // Знаходимо всі дочірні категорії поточної категорії
-  const childCategories = allCategories.filter(
-    (cat) => cat.parent === (category ? category.id : null)
-  );
-
   useEffect(() => {
+    if (slug === "news") {
+      dispatch(fetchProducts({ isNew: true }));
+      return;
+    }
+
+    if (slug === "sales") {
+      dispatch(fetchProducts({ onSale: true })); // Додаємо параметр для акційних товарів
+      return;
+    }
+
+    const category = allCategories.find((cat) => cat.slug === slug);
     if (category) {
       const categoryId = category.id.toString();
       if (!categories.includes(categoryId)) {
         dispatch(setCategories([...categories, categoryId]));
-        dispatch(fetchProducts());
+        dispatch(fetchProducts({}));
       }
     }
-  }, [category, categories, dispatch]);
+  }, [slug, categories, dispatch, allCategories]);
 
-  // Функція для додавання дочірньої категорії
-  const handleCategoryClick = (childId: string) => {
-    if (!categories.includes(childId)) {
-      dispatch(setCategories([...categories, childId]));
-      dispatch(fetchProducts());
-    }
-  };
+  const category = allCategories.find((cat) => cat.slug === slug);
+
+  const categoryName =
+    slug === "news"
+      ? "Новинки"
+      : slug === "sales"
+      ? "Акції"
+      : category
+      ? category.name
+      : "Всі товари";
+
+  const childCategories = allCategories.filter(
+    (cat) => cat.parent === (category ? category.id : null)
+  );
 
   return (
     <main className={s.page}>
@@ -57,8 +66,7 @@ export const CatalogPage: React.FC<{
           <span>{products.length} продукти</span>
         </div>
 
-        {/* Відображаємо дочірні категорії */}
-        {childCategories.length > 0 && (
+        {childCategories.length > 0 && slug !== "news" && (
           <div className={s.childCategories}>
             <ul>
               {childCategories.map((child) => (
@@ -67,7 +75,13 @@ export const CatalogPage: React.FC<{
                     className={
                       categories.includes(child.id.toString()) ? s.active : ""
                     }
-                    onClick={() => handleCategoryClick(child.id.toString())}
+                    onClick={() => {
+                      const childId = child.id.toString();
+                      if (!categories.includes(childId)) {
+                        dispatch(setCategories([...categories, childId]));
+                        dispatch(fetchProducts({}));
+                      }
+                    }}
                   >
                     {child.name}
                   </button>
@@ -95,25 +109,6 @@ export const CatalogPage: React.FC<{
               />
             </svg>
             Фільтри
-          </button>
-
-          <button>
-            За популярністю{" "}
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M6 9L12 15L18 9"
-                stroke="#1A1A1A"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
           </button>
         </div>
 
