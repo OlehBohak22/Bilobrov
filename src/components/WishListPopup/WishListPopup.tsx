@@ -49,50 +49,53 @@ export const WishListPopup: React.FC<{
             <span>Список</span>
             <span>побажань</span>
           </h2>
-          <div className={s.navigationContainer}>
-            <button className={s.prevButton}>
-              <svg
-                viewBox="0 0 25 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <g clipPath="url(#clip0_480_5408)">
-                  <path d="M7.08228 5L8.15132 6.05572L3.39413 10.7535L24.5 10.7535V12.2465L3.39413 12.2465L8.15132 16.9443L7.08228 18L0.5 11.5L7.08228 5Z" />
-                </g>
-                <defs>
-                  <clipPath id="clip0_480_5408">
-                    <rect
-                      width="24"
-                      height="24"
-                      fill="white"
-                      transform="matrix(-1 0 0 1 24.5 0)"
-                    />
-                  </clipPath>
-                </defs>
-              </svg>
-            </button>
-            <button className={s.nextButton}>
-              <svg
-                viewBox="0 0 25 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <g clipPath="url(#clip0_480_5411)">
-                  <path d="M17.9177 5L16.8487 6.05572L21.6059 10.7535H0.5V12.2465H21.6059L16.8487 16.9443L17.9177 18L24.5 11.5L17.9177 5Z" />
-                </g>
-                <defs>
-                  <clipPath id="clip0_480_5411">
-                    <rect
-                      width="24"
-                      height="24"
-                      fill="white"
-                      transform="translate(0.5)"
-                    />
-                  </clipPath>
-                </defs>
-              </svg>
-            </button>
-          </div>
+
+          {wishlistProducts.length > 0 && (
+            <div className={s.navigationContainer}>
+              <button className={s.prevButton}>
+                <svg
+                  viewBox="0 0 25 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g clipPath="url(#clip0_480_5408)">
+                    <path d="M7.08228 5L8.15132 6.05572L3.39413 10.7535L24.5 10.7535V12.2465L3.39413 12.2465L8.15132 16.9443L7.08228 18L0.5 11.5L7.08228 5Z" />
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_480_5408">
+                      <rect
+                        width="24"
+                        height="24"
+                        fill="white"
+                        transform="matrix(-1 0 0 1 24.5 0)"
+                      />
+                    </clipPath>
+                  </defs>
+                </svg>
+              </button>
+              <button className={s.nextButton}>
+                <svg
+                  viewBox="0 0 25 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g clipPath="url(#clip0_480_5411)">
+                    <path d="M17.9177 5L16.8487 6.05572L21.6059 10.7535H0.5V12.2465H21.6059L16.8487 16.9443L17.9177 18L24.5 11.5L17.9177 5Z" />
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_480_5411">
+                      <rect
+                        width="24"
+                        height="24"
+                        fill="white"
+                        transform="translate(0.5)"
+                      />
+                    </clipPath>
+                  </defs>
+                </svg>
+              </button>
+            </div>
+          )}
         </div>
         <button onClick={onClose} className={s.closeBtn}>
           <svg
@@ -157,3 +160,4 @@ export const WishListPopup: React.FC<{
     </div>
   );
 };
+  

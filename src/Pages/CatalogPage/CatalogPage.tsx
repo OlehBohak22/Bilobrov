@@ -14,33 +14,26 @@ export const CatalogPage: React.FC<{ openFilter?: () => void }> = ({
   const { products, loading, categories } = useSelector(
     (state: RootState) => state.filters
   );
-
   const dispatch = useAppDispatch();
   const { slug } = useParams();
-
   const allCategories = useSelector(
     (state: RootState) => state.categories.categories
   );
 
   useEffect(() => {
-    if (slug === "news") {
-      dispatch(fetchProducts({ isNew: true }));
-      return;
-    }
-
-    if (slug === "sales") {
-      dispatch(fetchProducts({ onSale: true })); // Додаємо параметр для акційних товарів
-      return;
-    }
+    const filters: { isNew?: boolean; onSale?: boolean } = {};
+    if (slug === "news") filters.isNew = true;
+    if (slug === "sales") filters.onSale = true;
 
     const category = allCategories.find((cat) => cat.slug === slug);
     if (category) {
       const categoryId = category.id.toString();
       if (!categories.includes(categoryId)) {
         dispatch(setCategories([...categories, categoryId]));
-        dispatch(fetchProducts({}));
       }
     }
+
+    dispatch(fetchProducts(filters));
   }, [slug, categories, dispatch, allCategories]);
 
   const category = allCategories.find((cat) => cat.slug === slug);

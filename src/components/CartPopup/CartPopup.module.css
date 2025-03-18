@@ -67,6 +67,12 @@
   li {
     border: 1px solid rgba(239, 237, 238, 1);
     padding: 0.6vw;
+    height: var(--itemHeight);
+    overflow: hidden;
+
+    img {
+      aspect-ratio: 1;
+    }
   }
 
   li:not(:last-child) {
@@ -74,9 +80,13 @@
   }
 }
 
+:root {
+  --itemHeight: 10vw;
+}
+
 .cartListBox {
   flex-grow: 1;
-  max-height: 21.5vw;
+  max-height: calc(var(--itemHeight) * 2 + 0.4vw);
   overflow-y: auto;
   padding-right: 0.5vw;
 }
@@ -145,6 +155,7 @@
   .totalAmount {
     display: flex;
     justify-content: space-between;
+    margin-bottom: 2vw;
 
     p {
       font-family: Raleway;

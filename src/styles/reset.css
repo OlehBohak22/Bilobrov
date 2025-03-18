@@ -30,7 +30,6 @@ a {
 img {
   max-width: 100%;
   object-fit: cover;
-  height: max-content;
 }
 
 .swiper-button-disabled {
