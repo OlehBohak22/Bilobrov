@@ -11,15 +11,24 @@ import { CustomSelect } from "../../components/CustomSelect/CustomSelect";
 import { Link } from "react-router";
 import { OrderFooter } from "./OrderFooter";
 
+// const CITY_LIST = ["Київ", "Харків", "Львів", "Дніпро", "Одеса"];
+
 export const OrderPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const cart = useSelector((state: RootState) => state.cart.items);
+
+  const { cities } = useSelector((state: RootState) => state.cities);
+  const [selectedCity, setSelectedCity] = useState("");
+
+  console.log(selectedCity);
+
+  // Витягуємо популярні міста
+  const popularCities = cities.map((city) => city.name);
 
   const [register, setRegister] = useState(false);
   const [shipper, setShipper] = useState(true);
 
   const [departmentSelect, setDepartmentSelect] = useState("На відділення");
-  const [secondSelect, setSecondSelect] = useState("Старі Кривотули");
 
   const [step, setStep] = useState(1);
   const [billing, setBilling] = useState({
@@ -27,7 +36,7 @@ export const OrderPage: React.FC = () => {
     last_name: "",
     middle_name: "",
     address_1: "",
-    city: "",
+    city: selectedCity,
     state: "",
     postcode: "",
     country: "UA",
@@ -366,9 +375,9 @@ export const OrderPage: React.FC = () => {
                       </p>
                       <CustomSelect
                         novaIcon={false}
-                        options={["Старі Кривотули", "Нові Кривотули"]}
-                        value={secondSelect}
-                        onChange={setSecondSelect}
+                        options={popularCities} // Випадаючий список
+                        value={selectedCity}
+                        onChange={setSelectedCity}
                       />
                     </div>
                   </div>

@@ -66,3 +66,8 @@
     fill: white;
   }
 }
+
+.optionsList {
+  max-height: 15vw;
+  overflow-y: scroll;
+}

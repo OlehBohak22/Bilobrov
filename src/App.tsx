@@ -29,6 +29,7 @@ import { fetchBrands } from "./store/slices/popularBrandsSlice";
 import { fetchCategories } from "./store/slices/categorySlice";
 import Filters from "./components/FilterPopup/FilterPopup";
 import { OrderPage } from "./Pages/OrderPage/OrderPage";
+import { fetchCities } from "./store/slices/citiesSlice";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -50,6 +51,7 @@ function App() {
     dispatch(fetchProducts({}));
     dispatch(fetchCategories());
     dispatch(fetchMenus());
+    dispatch(fetchCities());
     dispatch(fetchBrands()); // Викликаємо асинхронну дію для завантаження брендів
   }, [dispatch]);
 

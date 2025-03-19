@@ -13,6 +13,7 @@ import popupReducer from "./slices/popupSlice";
 import menuReducer from "./slices/menuSlice";
 import filtersReducer from "./slices/filterSlice";
 import orderReducer from "./slices/orderSlice";
+import citiesReducer from "./slices/citiesSlice";
 
 export const store = configureStore({
   reducer: {
@@ -30,6 +31,7 @@ export const store = configureStore({
     menu: menuReducer,
     filters: filtersReducer,
     order: orderReducer,
+    cities: citiesReducer,
   },
 });
 

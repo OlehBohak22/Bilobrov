@@ -32,7 +32,7 @@ export const CustomSelect: React.FC<CustomSelectProps> = ({
   }, []);
 
   const filteredOptions = options.filter((option) =>
-    option.toLowerCase().includes(search.toLowerCase())
+    option.toLowerCase().startsWith(search.toLowerCase())
   );
 
   return (
@@ -67,7 +67,7 @@ export const CustomSelect: React.FC<CustomSelectProps> = ({
               />
             </svg>
           )}
-          {value}
+          {value || (!novaIcon && "Обери своє місто")}
         </p>
         <svg
           className={`${open && s.rotate}`}
@@ -94,11 +94,11 @@ export const CustomSelect: React.FC<CustomSelectProps> = ({
             />
           )}
 
-          <div>
-            {filteredOptions.map((option) => (
+          <div className={s.optionsList}>
+            {filteredOptions.map((option, index) => (
               <div
                 className={s.selectOption}
-                key={option}
+                key={index}
                 onClick={() => {
                   onChange(option);
                   setOpen(false);

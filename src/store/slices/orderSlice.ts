@@ -46,6 +46,7 @@ interface OrderData {
 
 interface OrderState {
   order: OrderData | null;
+  cities: any;
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
 }
@@ -53,6 +54,7 @@ interface OrderState {
 const initialState: OrderState = {
   order: null,
   status: "idle",
+  cities: null,
   error: null,
 };
 
