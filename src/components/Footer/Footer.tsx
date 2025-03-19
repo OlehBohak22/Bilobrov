@@ -1,3 +1,4 @@
+import { useLocation } from "react-router";
 import { FooterInstList } from "../FooterInstList/FooterInstList";
 import { FooterNavigationBlock } from "../FooterNavigationBlock/FooterNavigationBlock";
 import { Layout } from "../Layout/Layout";
@@ -5,6 +6,12 @@ import { MailingFormBlock } from "../MailingFormBlock/MailingFormBlock";
 import s from "./Footer.module.css";
 
 export const Footer = () => {
+  const location = useLocation();
+
+  if (location.pathname === "/order") {
+    return;
+  }
+
   return (
     <footer className={s.footer}>
       <Layout>

@@ -11,6 +11,7 @@ export interface ProductInfo {
   slug: string;
   name: string;
   key: string;
+  stock_quantity: number;
   variation_id: number;
   description: string;
   quantity: number;

@@ -1,0 +1,99 @@
+.footer {
+  background-color: var(--primary);
+  padding: 3.3vw 0;
+
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .leftBlock {
+    display: flex;
+    align-items: center;
+    gap: 4vw;
+
+    p {
+      font-family: Raleway;
+      font-weight: 500;
+      font-size: 0.8vw;
+      line-height: 100%;
+      margin-bottom: 1.2vw;
+      color: rgba(255, 255, 255, 1);
+    }
+
+    a {
+      font-family: Manrope;
+      font-style: normal;
+      font-weight: 700;
+      font-size: 1.4vw;
+      line-height: 100%;
+      display: block;
+    }
+
+    a:nth-child(1) {
+      margin-bottom: 0.5vw;
+    }
+  }
+}
+
+.tgLink {
+  display: flex !important;
+  align-items: center;
+  gap: 0.5vw;
+  width: fit-content;
+
+  .icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 2.7vw;
+    height: 2.7vw;
+    background-color: rgba(230, 230, 224, 0.1);
+    border-radius: 50%;
+    transition: border-radius 0.3s, background-color 0.3s;
+
+    svg {
+      width: 1.1vw;
+      height: 1.1vw;
+      fill: #ffffff;
+      transition: fill 0.3s;
+    }
+  }
+
+  span {
+    font-family: Manrope, sans-serif;
+    font-size: 1vw;
+    font-weight: 600;
+    line-height: 1.3vw;
+  }
+}
+
+.tgLink:hover {
+  .icon {
+    border-radius: 0;
+    background-color: #ffffff;
+
+    svg {
+      fill: black;
+    }
+  }
+}
+
+.rightBLock {
+  font-family: Raleway;
+  font-weight: 600;
+  font-size: 0.9vw;
+  line-height: 100%;
+
+  display: flex;
+  gap: 1.6vw;
+
+  a {
+    transition: color 0.3s;
+  }
+
+  a:hover {
+    color: rgba(255, 196, 58, 1);
+  }
+}

@@ -12,6 +12,7 @@ import cartReducer from "./slices/cartSlice";
 import popupReducer from "./slices/popupSlice";
 import menuReducer from "./slices/menuSlice";
 import filtersReducer from "./slices/filterSlice";
+import orderReducer from "./slices/orderSlice";
 
 export const store = configureStore({
   reducer: {
@@ -28,6 +29,7 @@ export const store = configureStore({
     popup: popupReducer,
     menu: menuReducer,
     filters: filtersReducer,
+    order: orderReducer,
   },
 });
 

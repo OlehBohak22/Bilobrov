@@ -1,0 +1,68 @@
+.select {
+  position: relative;
+  width: 100%;
+
+  input {
+    width: 100%;
+  }
+}
+
+.selectHead {
+  padding: 0.8vw 0.9vw;
+  border: 1px solid rgba(239, 237, 238, 1);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+
+  p {
+    display: flex;
+    align-items: center;
+    gap: 0.5vw;
+    margin-bottom: 0;
+
+    svg {
+      width: 1.2vw;
+      height: 1.2vw;
+      fill: rgba(237, 28, 36, 1);
+    }
+  }
+
+  svg {
+    width: 1.2vw;
+    height: 1.2vw;
+    transition: transform 0.3s;
+  }
+
+  .rotate {
+    transform: rotate(180deg);
+  }
+}
+
+.selectOption {
+  padding: 0.8vw 0.9vw;
+  cursor: pointer;
+  transition: 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 0.5vw;
+
+  svg {
+    width: 1.2vw;
+    height: 1.2vw;
+    fill: rgba(237, 28, 36, 1);
+    transition: fill 0.3s;
+  }
+}
+
+.selectOption:not(:last-child) {
+  border-bottom: 1px solid rgba(239, 237, 238, 1);
+}
+
+.selectOption:hover {
+  background-color: var(--primary);
+  color: white;
+
+  svg {
+    fill: white;
+  }
+}

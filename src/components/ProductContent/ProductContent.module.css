@@ -162,6 +162,11 @@
     transition: 0.3s;
   }
 
+  .addedInCrt {
+    background-color: #ffc43a;
+    color: black;
+  }
+
   .cart:hover {
     background-color: #ffc43a;
     color: black;

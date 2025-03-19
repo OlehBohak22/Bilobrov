@@ -1,0 +1,113 @@
+.sidePanel {
+  background-color: rgba(252, 252, 252, 1);
+  padding: 2vw;
+
+  .sideHeading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 1.2vw;
+    border-bottom: 1px solid rgba(239, 237, 238, 1);
+    margin-bottom: 1.6vw;
+
+    p {
+      font-family: Raleway;
+      font-weight: 700;
+      font-size: 1vw;
+      line-height: 100%;
+      letter-spacing: -0.01vw;
+      text-transform: uppercase;
+    }
+
+    span {
+      font-family: Manrope;
+      font-weight: 700;
+      font-size: 1.6vw;
+      line-height: 100%;
+      color: var(--primary);
+    }
+  }
+
+  .orderCartList {
+    padding-bottom: 1.6vw;
+    border-bottom: 1px solid rgba(239, 237, 238, 1);
+    margin-bottom: 1.6vw;
+
+    li:not(:last-child) {
+      margin-bottom: 1.2vw;
+    }
+  }
+}
+
+.orderInfo {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  width: 31.2vw;
+
+  .orderDetails {
+    padding-bottom: 1.6vw;
+    border-bottom: 1px solid rgba(239, 237, 238, 1);
+    margin-bottom: 1.6vw;
+
+    p {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: Manrope;
+      font-weight: 600;
+      font-size: 0.8vw;
+      line-height: 137%;
+      letter-spacing: 0.01vw;
+      color: rgb(56, 56, 56);
+
+      span:nth-child(2) {
+        display: flex;
+        align-items: center;
+        gap: 0.2vw;
+        font-family: Manrope;
+        font-weight: 700;
+        font-size: 0.8vw;
+        line-height: 100%;
+        color: rgb(0, 0, 0);
+
+        svg {
+          stroke: #1a1a1a;
+          width: 1vw;
+          height: 1vw;
+        }
+      }
+
+      .discount {
+        color: rgba(117, 117, 117, 1) !important;
+      }
+    }
+
+    P:not(:last-child) {
+      margin-bottom: 0.6vw;
+    }
+  }
+
+  .totalAmount {
+    display: flex;
+    justify-content: space-between;
+
+    p {
+      font-family: Raleway;
+      font-weight: 700;
+      font-size: 1vw;
+      line-height: 100%;
+      letter-spacing: 0.01vw;
+      text-transform: uppercase;
+    }
+
+    span {
+      font-family: Manrope;
+      font-weight: 700;
+      font-size: 1.6vw;
+      line-height: 100%;
+      letter-spacing: 0%;
+      color: var(--primary);
+    }
+  }
+}

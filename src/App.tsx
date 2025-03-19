@@ -28,6 +28,7 @@ import { BrandsPage } from "./Pages/BrandsPage/BrandsPage";
 import { fetchBrands } from "./store/slices/popularBrandsSlice";
 import { fetchCategories } from "./store/slices/categorySlice";
 import Filters from "./components/FilterPopup/FilterPopup";
+import { OrderPage } from "./Pages/OrderPage/OrderPage";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -156,6 +157,7 @@ function App() {
           element={<CatalogPage openFilter={() => setIsFilterOpen(true)} />}
         />
         <Route path="/brendy" element={<BrandsPage />} />
+        <Route path="/order" element={<OrderPage />} />
 
         <Route
           path="/product/:id"

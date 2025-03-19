@@ -7,7 +7,6 @@ import {
   removeFromCart,
 } from "../../store/slices/cartSlice";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
-import { useState } from "react";
 
 interface ProductItemProps {
   info: ProductInfo;
@@ -48,31 +47,21 @@ export const CartProductItem: React.FC<ProductItemProps> = ({
       ? brandMeta.value
       : null;
 
-  const [quantity, setQuantity] = useState(info.quantity || 1);
-
   const handleDecrease = () => {
-    if (quantity > 1) {
-      const newQuantity = quantity - 1; // Зменшуємо кількість на одиницю
-      setQuantity(newQuantity); // Зміна локального стану
-
-      // Видаляємо одиницю товару з кошика, враховуючи варіацію
-      dispatch(
-        removeFromCart({
-          product: {
-            id: info.id,
-            quantity: 1, // Видаляємо одну одиницю товару
-            variation_id: variation || 0, // Використовуємо ID варіації, якщо вона є
-          },
-          token,
-        })
-      );
-    }
+    // Видаляємо одиницю товару з кошика, враховуючи варіацію
+    dispatch(
+      removeFromCart({
+        product: {
+          id: info.id,
+          quantity: 1, // Видаляємо одну одиницю товару
+          variation_id: variation || 0, // Використовуємо ID варіації, якщо вона є
+        },
+        token,
+      })
+    );
   };
 
   const handleIncrease = () => {
-    const newQuantity = quantity + 1; // Збільшуємо кількість на одиницю
-    setQuantity(newQuantity); // Зміна локального стану
-
     // Додаємо одиницю товару до кошика, враховуючи варіацію
     dispatch(
       addToCart({
@@ -93,7 +82,7 @@ export const CartProductItem: React.FC<ProductItemProps> = ({
       removeAllFromCart({
         productId: info.id,
         variationId: variation || 0,
-        quantity: info.quantity, // Додаємо потрібну кількість
+        quantity: info.quantity, // Використовуємо поточний локальний `quantity`
         token,
       })
     );
@@ -108,37 +97,40 @@ export const CartProductItem: React.FC<ProductItemProps> = ({
       </div>
 
       <div className={s.div}>
-        <div className="flex gap-[0.8vw] items-center mb-[0.6vw]">
+        <div className="flex  items-center mb-[0.6vw]">
           <div>
-            <div className={s.markersBlock}>
-              {info.featured && (
-                <div className={s.bestMarker}>
-                  <span>bilobrov'S</span>
-                  <span>BEST</span>
-                </div>
-              )}
-
-              <div className={s.topMarker}>TOP</div>
-
-              {isNewProduct(info.date_created) && (
-                <div className={s.newMarker}>NEW</div>
-              )}
-
-              {info.sale_price &&
-                info.sale_price !== "0" &&
-                info.regular_price &&
-                info.regular_price !== "0" && (
-                  <div className={s.saleMarker}>
-                    -
-                    {Math.round(
-                      (1 -
-                        Number(info.sale_price) / Number(info.regular_price)) *
-                        100
-                    )}
-                    %
+            {optional && (
+              <div className={s.markersBlock}>
+                {info.featured && (
+                  <div className={s.bestMarker}>
+                    <span>bilobrov'S</span>
+                    <span>BEST</span>
                   </div>
                 )}
-            </div>
+
+                <div className={s.topMarker}>TOP</div>
+
+                {isNewProduct(info.date_created) && (
+                  <div className={s.newMarker}>NEW</div>
+                )}
+
+                {info.sale_price &&
+                  info.sale_price !== "0" &&
+                  info.regular_price &&
+                  info.regular_price !== "0" && (
+                    <div className={s.saleMarker}>
+                      -
+                      {Math.round(
+                        (1 -
+                          Number(info.sale_price) /
+                            Number(info.regular_price)) *
+                          100
+                      )}
+                      %
+                    </div>
+                  )}
+              </div>
+            )}
           </div>
 
           <div className={s.code}>
@@ -187,7 +179,7 @@ export const CartProductItem: React.FC<ProductItemProps> = ({
                   </svg>
                 </button>
 
-                <span>{quantity}</span>
+                <span>{info.quantity}</span>
 
                 <button onClick={handleIncrease}>
                   <svg

@@ -88,9 +88,11 @@
 }
 
 .headerLogo {
-  .svg {
-    width: 10vw;
-  }
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10.1vw;
+  height: 1.4vw;
 
   path {
     fill: #ffffff;
@@ -185,6 +187,10 @@
       padding: 1.2vw;
     }
   }
+}
+
+.dn {
+  display: none;
 }
 
 .headerBottomLine::before,

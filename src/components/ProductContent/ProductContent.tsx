@@ -9,6 +9,7 @@ import { RootState } from "../../store";
 import { ProductPageAccordion } from "../ProductPageAccordion/ProductPageAccordion";
 import Select from "react-select";
 import { StylesConfig } from "react-select";
+import { addToCart } from "../../store/slices/cartSlice";
 
 interface VariationAttribute {
   id: number;
@@ -36,9 +37,36 @@ export const ProductContent: React.FC<ProductItemProps> = ({
   openRegister,
   variations,
 }) => {
+  const { token } = useSelector((state: RootState) => state.user);
+
+  const { items } = useSelector((state: RootState) => state.cart);
+
+  const inCart = items.some((item) => item.id === info.id);
+
   const [selectedVariation, setSelectedVariation] = useState<number | null>(
     null
   );
+
+  const stockQuantity = info.stock_quantity;
+
+  console.log(stockQuantity);
+
+  const [quantity, setQuantity] = useState(1);
+
+  const handleAddToCart = () => {
+    dispatch(
+      addToCart({
+        product: {
+          id: info.id,
+          quantity,
+          variation_id: selectedVariation || info.variations?.[0],
+        },
+        token,
+      })
+    );
+
+    setQuantity(1);
+  };
 
   const dispatch = useAppDispatch();
 
@@ -415,7 +443,13 @@ export const ProductContent: React.FC<ProductItemProps> = ({
 
       <div className={s.orderController}>
         <div className={s.qty}>
-          <button>
+          <button
+            onClick={() => {
+              if (quantity > 1) {
+                setQuantity((prev) => Math.max(1, prev - 1));
+              }
+            }}
+          >
             <svg
               viewBox="0 0 16 16"
               fill="none"
@@ -424,8 +458,14 @@ export const ProductContent: React.FC<ProductItemProps> = ({
               <path d="M16 7.3335H0V8.66683H16V7.3335Z" fill="#1A1A1A" />
             </svg>
           </button>
-          <span>1</span>
-          <button>
+          <span>{quantity}</span>
+          <button
+            onClick={() => {
+              if (quantity < stockQuantity) {
+                setQuantity((prev) => Math.min(stockQuantity, prev + 1));
+              }
+            }}
+          >
             <svg
               viewBox="0 0 16 16"
               fill="none"
@@ -446,7 +486,12 @@ export const ProductContent: React.FC<ProductItemProps> = ({
           </button>
         </div>
 
-        <button className={s.cart}>ДОДАТИ В КОШИК</button>
+        <button
+          onClick={handleAddToCart}
+          className={`${s.cart} ${inCart && s.addedInCrt}`}
+        >
+          {inCart ? "ДОДАНО В КОШИК" : " ДОДАТИ В КОШИК"}
+        </button>
 
         <button className={s.wishList}>
           <svg

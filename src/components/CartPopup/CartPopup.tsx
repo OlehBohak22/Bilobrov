@@ -1,9 +1,10 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "../../store"; // Переконайся, що шлях правильний
+import { RootState } from "../../store";
 import s from "./CartPopup.module.css";
 import { ProductInfo } from "../../types/productTypes";
 import { CartProductItem } from "../CartProductItem/CartProductItem";
+import { useNavigate } from "react-router";
 
 interface CartPopupProps {
   onClose: () => void;
@@ -13,15 +14,17 @@ export const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
   const cartItems = useSelector((state: RootState) => state.cart.items);
   const products = useSelector((state: RootState) => state.products.items);
   const token = useSelector((state: RootState) => state.user.token);
+
+  const navigate = useNavigate();
+
   const cart = cartItems
     .map((cartItem) => {
       const product = products.find((p) => p.id === cartItem.id);
 
       if (product) {
-        // Призначаємо variation без пошуку
         return {
           ...product,
-          variation: cartItem.variation_id, // Прямо передаємо ID варіації
+          variation: cartItem.variation_id,
           quantity: cartItem.quantity,
         };
       }
@@ -33,13 +36,11 @@ export const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
         item !== null
     );
 
-  // Розрахунок загальної суми замовлення
   const totalAmount = cart.reduce(
     (sum, item) => sum + Number(item.price || 0) * item.quantity,
     0
   );
 
-  // Розрахунок суми знижки
   const discount = cart.reduce((sum, item) => {
     if (item.sale_price && item.regular_price) {
       const itemDiscount =
@@ -48,6 +49,11 @@ export const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
     }
     return sum;
   }, 0);
+
+  const regularPrice = cart.reduce(
+    (sum, item) => sum + Number(item.regular_price || 0) * item.quantity,
+    0
+  );
 
   return (
     <div className={s.popupOverlay} onClick={onClose}>
@@ -91,7 +97,7 @@ export const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
               <div className={s.orderDetails}>
                 <p>
                   <span>Сума замовлення:</span>
-                  <span>{totalAmount} ₴</span>
+                  <span>{regularPrice} ₴</span>
                 </p>
                 <p>
                   <span>Сума знижки:</span>
@@ -123,7 +129,7 @@ export const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
             </div>
 
             <div className={s.btnBlock}>
-              <button>
+              <button onClick={() => navigate("/order")}>
                 Оформити замовлення
                 <svg
                   viewBox="0 0 24 24"

@@ -13,6 +13,7 @@
   .markersBlock {
     display: flex;
     gap: 0.4vw;
+    margin-right: 0.8vw;
 
     .bestMarker {
       background-color: rgba(255, 196, 58, 1);
