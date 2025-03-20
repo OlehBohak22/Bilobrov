@@ -108,10 +108,10 @@ export const ReviewPopup: React.FC<CartPopupProps> = ({
 }) => {
   const user = useSelector((state: RootState) => state.user.token);
   const dispatch = useAppDispatch();
-  const [charCount, setCharCount] = useState(0);
   const [isSubmitted, setIsSubmitted] = useState(false); // Стан для показу подяки
-  const maxLength = 150;
   const [error, setError] = useState<string | null>(null); // Стан для зберігання помилки
+  const maxLength = 150;
+  const [charCount, setCharCount] = useState(0);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLTextAreaElement>,

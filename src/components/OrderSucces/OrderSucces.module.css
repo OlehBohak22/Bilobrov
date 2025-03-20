@@ -1,0 +1,236 @@
+.succesCard {
+  position: relative;
+  margin: 0 auto;
+  width: 42.5vw;
+  background-color: rgba(252, 252, 252, 1);
+  padding: 3.1vw;
+  margin-top: 16vw;
+  margin-bottom: 10vw;
+}
+
+.succesCard::before {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translateY(-100%);
+  content: "";
+  background-image: url(/images/order-succes-image.avif);
+  background-size: cover;
+  width: 100%;
+  height: 10.7vw;
+}
+
+.succesTitle {
+  text-align: center;
+  margin-bottom: 2.5vw;
+
+  svg {
+    width: 2.9vw;
+    height: 2.9vw;
+    margin: 0 auto;
+    margin-bottom: 1.2vw;
+  }
+
+  p {
+    font-family: Manrope;
+    font-weight: 700;
+    font-size: 0.9vw;
+    line-height: 100%;
+    margin-bottom: 0.6vw;
+  }
+
+  h3 {
+    margin-bottom: 2.7vw;
+
+    span {
+      display: block;
+    }
+
+    span:nth-child(1) {
+      font-family: Playfair, serif;
+      font-weight: 400;
+      font-style: italic;
+      font-size: 2.7vw;
+      line-height: 100%;
+      margin-bottom: -0.2vw;
+    }
+    span:nth-child(2) {
+      font-family: Manrope;
+      font-weight: 500;
+      font-size: 2.1vw;
+      line-height: 100%;
+      text-indent: 5vw;
+    }
+  }
+
+  span {
+    text-align: center;
+    display: block;
+    margin: 0 auto;
+    width: fit-content;
+    font-family: Manrope;
+    font-weight: 600;
+    font-size: 1vw;
+    line-height: 100%;
+  }
+}
+
+.imageList {
+  display: flex;
+  justify-content: center;
+  gap: 0.8vw;
+  margin-bottom: 2.5vw;
+
+  li {
+    position: relative;
+    aspect-ratio: 1;
+    overflow: hidden;
+    img {
+      width: 7.6vw;
+    }
+
+    span {
+      position: absolute;
+      bottom: 0.5vw;
+      right: 0.5vw;
+      font-family: Manrope;
+      font-weight: 600;
+      font-size: 0.6vw;
+      line-height: 100%;
+
+      width: 1.6vw;
+      height: 1.6vw;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: rgba(255, 196, 58, 1);
+      color: var(--primary);
+      border-radius: 50%;
+    }
+  }
+}
+
+.orderInfo {
+  padding-bottom: 2.5vw;
+  border-bottom: 1px solid rgba(239, 237, 238, 1);
+  margin-bottom: 2.5vw;
+
+  div:not(:last-child) {
+    margin-bottom: 1.6vw;
+  }
+
+  div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    span {
+      font-family: Manrope;
+      font-weight: 600;
+      font-size: 0.8vw;
+      line-height: 137%;
+      letter-spacing: -0.01vw;
+      color: rgba(26, 26, 26, 0.7);
+    }
+
+    p {
+      font-family: Manrope;
+      font-weight: 700;
+      font-size: 0.9vw;
+      line-height: 140%;
+      letter-spacing: -0.01vw;
+      max-width: 20vw;
+      text-align: right;
+    }
+  }
+}
+
+.orderAmount {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  width: auto;
+
+  .orderDetails {
+    margin-bottom: 1.6vw;
+
+    p {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: Manrope;
+      font-weight: 600;
+      font-size: 0.8vw;
+      line-height: 137%;
+      letter-spacing: 0.01vw;
+      color: rgba(26, 26, 26, 0.7);
+
+      span:nth-child(2) {
+        display: flex;
+        align-items: center;
+        gap: 0.2vw;
+        font-family: Manrope;
+        font-weight: 700;
+        font-size: 0.8vw;
+        line-height: 100%;
+        color: rgb(0, 0, 0);
+
+        svg {
+          stroke: #1a1a1a;
+          width: 1vw;
+          height: 1vw;
+        }
+      }
+
+      .discount {
+        color: rgba(117, 117, 117, 1) !important;
+      }
+    }
+
+    P:not(:last-child) {
+      margin-bottom: 0.6vw;
+    }
+  }
+
+  .totalAmount {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2.5vw;
+
+    p {
+      font-family: Raleway;
+      font-weight: 700;
+      font-size: 1vw;
+      line-height: 100%;
+      letter-spacing: 0.01vw;
+      text-transform: uppercase;
+    }
+
+    span {
+      font-family: Manrope;
+      font-weight: 700;
+      font-size: 1.6vw;
+      line-height: 100%;
+      letter-spacing: 0%;
+      color: var(--primary);
+    }
+  }
+}
+
+.homeBackLink {
+  background-color: var(--primary);
+  padding: 1.1vw;
+  display: block;
+  text-align: center;
+  font-family: Manrope;
+  font-weight: 700;
+  font-size: 0.8vw;
+  line-height: 100%;
+  letter-spacing: -0.01vw;
+  transition: 0.3s;
+}
+
+.homeBackLink:hover {
+  background-color: rgba(255, 196, 58, 1);
+  color: black;
+}

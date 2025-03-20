@@ -4,10 +4,11 @@ import axios from "axios";
 const consumerKey = "ck_f6e14983147c7a65ff3dd554625c6ae3069dbd5b";
 const consumerSecret = "cs_f9430f1ca298c36b0001d95521253a5b1deb2fc5";
 
-interface OrderData {
+export interface OrderData {
   payment_method: string;
   payment_method_title: string;
   set_paid: boolean;
+  number?: string;
   billing: {
     first_name: string;
     last_name: string;
@@ -36,6 +37,7 @@ interface OrderData {
     product_id: number;
     quantity: number;
     variation_id?: number;
+    image?: { src: string }; // змінили тип на об'єкт з полем src
   }[];
   shipping_lines: {
     method_id: string;

@@ -2,6 +2,8 @@ import React, { useState, useRef, useEffect } from "react";
 import s from "./CustomSelect.module.css";
 
 interface CustomSelectProps {
+  isStreet?: boolean;
+  isWarehouses?: boolean;
   novaIcon: boolean;
   options: string[];
   value: string;
@@ -9,6 +11,8 @@ interface CustomSelectProps {
 }
 
 export const CustomSelect: React.FC<CustomSelectProps> = ({
+  isStreet,
+  isWarehouses,
   novaIcon,
   options,
   value,
@@ -67,7 +71,10 @@ export const CustomSelect: React.FC<CustomSelectProps> = ({
               />
             </svg>
           )}
-          {value || (!novaIcon && "Обери своє місто")}
+          {value ||
+            (isWarehouses && "Оберіть відділення") ||
+            (isStreet && "Оберіть вулицю") ||
+            (!novaIcon && "Обери своє місто")}
         </p>
         <svg
           className={`${open && s.rotate}`}
@@ -84,7 +91,7 @@ export const CustomSelect: React.FC<CustomSelectProps> = ({
         </svg>
       </div>
       {open && (
-        <div className="absolute left-0 w-full bg-white mt-1 shadow-lg">
+        <div className="absolute z-10 left-0 w-full bg-white mt-1 shadow-lg">
           {!novaIcon && (
             <input
               type="text"

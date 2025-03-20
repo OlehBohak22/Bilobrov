@@ -22,9 +22,15 @@ export const fetchCities = createAsyncThunk(
   }
 );
 
+interface warehouse {
+  name: string;
+}
+
 // 🛠 Оновлений інтерфейс City (з великої літери)
 interface City {
   name: string;
+  warehouses: warehouse[];
+  streets: string[];
 }
 
 interface CitiesState {
