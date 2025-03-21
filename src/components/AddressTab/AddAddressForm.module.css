@@ -1,0 +1,184 @@
+.heading {
+  display: flex;
+  justify-content: space-between;
+  background-color: rgba(249, 247, 248, 1);
+  padding: 0.8vw 1.2vw;
+  margin-bottom: 1.6vw;
+
+  p {
+    font-family: Manrope;
+    font-weight: 600;
+    font-size: 1vw;
+    line-height: 135%;
+  }
+
+  svg {
+    width: 1.2vw;
+    height: 1.2vw;
+    stroke: black;
+    transition: stroke 0.3s;
+    cursor: pointer;
+  }
+
+  svg:hover {
+    stroke: var(--primary);
+  }
+}
+
+.inputContainer {
+  display: flex;
+  gap: 1.6vw;
+  padding-bottom: 1.6vw;
+  border-bottom: 1px solid rgba(239, 237, 238, 1);
+  margin-bottom: 1.6vw;
+
+  label {
+    display: block;
+    flex: 1;
+    font-family: Manrope;
+    font-weight: 500;
+    font-size: 0.8vw;
+    line-height: 130%;
+    letter-spacing: 0%;
+
+    span {
+      color: var(--primary);
+    }
+  }
+
+  input {
+    width: 100%;
+    font-family: Manrope;
+    font-weight: 500;
+    font-size: 0.9vw;
+    line-height: 140%;
+    padding: 0.8vw;
+    border: 1px solid rgba(239, 237, 238, 1) !important;
+    margin-top: 0.6vw;
+  }
+}
+
+.addressIndo {
+  display: flex;
+  gap: 0.8vw;
+}
+
+.textArea {
+  width: 100%;
+  border-bottom: 1px solid rgba(239, 237, 238, 1);
+  padding-bottom: 1.6vw;
+  margin-bottom: 1.6vw;
+
+  label {
+    display: block;
+    font-family: Manrope;
+    font-weight: 500;
+    font-size: 0.8vw;
+    line-height: 130%;
+  }
+
+  textarea::placeholder {
+    color: rgba(209, 207, 208, 1);
+  }
+
+  textarea {
+    width: 100%;
+    display: block;
+    border: 1px solid rgba(239, 237, 238, 1) !important;
+    padding: 0.8vw 0.9vw;
+    resize: none;
+    margin-top: 0.5vw;
+    font-family: Manrope;
+    font-weight: 500;
+    font-size: 0.9vw;
+    line-height: 140%;
+    letter-spacing: 0%;
+    height: 10vw;
+  }
+
+  .characterCount {
+    margin-left: auto;
+    margin-top: 0.5vw;
+    width: fit-content;
+    font-family: Manrope;
+    font-weight: 500;
+    font-size: 0.7vw;
+    line-height: 130%;
+    color: rgba(117, 117, 117, 1);
+  }
+}
+
+.selectContainer {
+  flex: 1;
+  p {
+    font-family: Manrope;
+    font-weight: 500;
+    font-size: 0.8vw;
+    line-height: 130%;
+    letter-spacing: 0%;
+    margin-bottom: 0.6vw;
+
+    span {
+      color: var(--primary);
+    }
+  }
+}
+
+.mapSelect {
+  background-color: var(--primary);
+  color: white;
+  width: 37%;
+  font-family: Manrope;
+  font-weight: 700;
+  font-size: 0.8vw;
+  line-height: 100%;
+  letter-spacing: -2%;
+  vertical-align: middle;
+  text-transform: uppercase;
+  padding: 1.1vw 0;
+  transition: 0.3s;
+}
+
+.mapSelect:hover {
+  background-color: rgba(255, 196, 58, 1);
+  color: var(--primary);
+}
+
+.submitBtn {
+  font-family: Manrope;
+  font-weight: 700;
+  font-size: 0.8vw;
+  line-height: 0.8vw;
+  color: rgba(117, 117, 117, 1);
+  padding: 1vw 2.2vw;
+  background-color: rgba(249, 247, 248, 1);
+  display: flex;
+  align-items: center;
+  gap: 0.5vw;
+  transition: 0.3s;
+
+  svg {
+    width: 1.2vw;
+    height: 1.2vw;
+    fill: #757575;
+    transition: fill 0.3s;
+  }
+}
+
+.submitBtn:hover {
+  color: #ffffff;
+  background-color: var(--primary);
+
+  svg {
+    fill: #ffffff;
+  }
+}
+
+.submitBtn:focus {
+  background-color: rgba(255, 196, 58, 1);
+  color: black;
+
+  svg {
+    fill: black;
+  }
+}

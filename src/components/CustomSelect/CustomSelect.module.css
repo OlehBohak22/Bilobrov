@@ -19,6 +19,10 @@
     align-items: center;
     gap: 0.5vw;
     margin-bottom: 0;
+    font-family: Manrope;
+    font-weight: 500;
+    font-size: 0.9vw;
+    line-height: 140%;
 
     svg {
       width: 1.2vw;

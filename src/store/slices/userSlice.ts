@@ -8,6 +8,37 @@ interface BonusHistoryItem {
   value: number;
 }
 
+interface address {
+  id: number;
+  city: string;
+  entrance: string;
+  apartment: string;
+  house: string;
+  street: string;
+  last_name: string;
+  middle_name: string;
+  first_name: string;
+}
+
+interface Product {
+  brand: string;
+  image: string;
+  name: string;
+  price: string;
+  quantity: number;
+  short_description: string;
+  sku: string;
+}
+
+export interface Order {
+  id: number;
+  status: string;
+  order_id: number;
+  status_date: string;
+  grand_total: number;
+  products: Product[];
+}
+
 // Оновлюємо інтерфейс UserData
 interface UserMeta {
   preferences: number[];
@@ -15,9 +46,11 @@ interface UserMeta {
   bonus?: string;
   phone?: string;
   bonus_history?: BonusHistoryItem[];
+  address: address[];
+  orders: Order[];
 }
 
-interface UserData {
+export interface UserData {
   id: number;
   email: string;
   name: string;

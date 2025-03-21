@@ -74,38 +74,27 @@ export const addReview = createAsyncThunk(
 
 export const fetchProducts = createAsyncThunk<
   ProductInfo[],
-  { categorySlug?: string; queryParams?: string }, // Тут параметри в об'єкті
+  void, // Видалено параметри
   { rejectValue: string }
->(
-  "products/fetchProducts",
-  async ({ categorySlug, queryParams }, { rejectWithValue }) => {
-    try {
-      let url = `${API_URL}products`;
+>("products/fetchProducts", async (_, { rejectWithValue }) => {
+  try {
+    const url = `${API_URL}products?per_page=100`; // Тільки базовий URL без фільтрів
 
-      if (categorySlug) {
-        url += `?category=${categorySlug}`;
-      }
+    const response = await fetch(url, {
+      method: "GET",
+      headers: headers,
+    });
 
-      if (queryParams) {
-        url += categorySlug ? `&${queryParams}` : `?${queryParams}`;
-      }
-
-      const response = await fetch(url, {
-        method: "GET",
-        headers: headers,
-      });
-
-      if (!response.ok) {
-        throw new Error("Помилка при завантаженні товарів");
-      }
-
-      return await response.json();
-    } catch (error) {
-      console.error(error);
-      return rejectWithValue("Не вдалося отримати товари");
+    if (!response.ok) {
+      throw new Error("Помилка при завантаженні товарів");
     }
+
+    return await response.json();
+  } catch (error) {
+    console.error(error);
+    return rejectWithValue("Не вдалося отримати товари");
   }
-);
+});
 
 export const fetchProductById = createAsyncThunk<ProductInfo, number>(
   "products/fetchProductById",

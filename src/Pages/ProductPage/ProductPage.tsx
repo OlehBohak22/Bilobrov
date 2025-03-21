@@ -29,9 +29,6 @@ export const ProductPage: React.FC<HeaderProps> = ({
     (state: any) => state.products
   );
 
-  // console.log(variations);
-
-  // Використовуємо useParams, щоб дістати ID з URL
   const { id } = useParams(); // Припустимо, що у вашому Route шлях: <Route path="/product/:id" element={<ProductPage />} />
 
   const currentReviews = reviews.filter(
@@ -47,8 +44,6 @@ export const ProductPage: React.FC<HeaderProps> = ({
       dispatch(fetchProductVariations(+id));
     }
   }, [dispatch, id]);
-
-  // console.log(variations);
 
   if (loading) {
     return <div>Loading product...</div>;
@@ -75,10 +70,7 @@ export const ProductPage: React.FC<HeaderProps> = ({
         />
       </Layout>
 
-      <ProductList
-        categories={["Акції", "Новинки", "Бестселлери"]}
-        defaultCategory="Новинки"
-      >
+      <ProductList categories={["Новинки"]} defaultCategory="Новинки">
         <h2>
           <span>Схожі</span>
           <span>товари</span>

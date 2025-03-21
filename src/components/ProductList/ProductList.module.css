@@ -13,12 +13,13 @@
 
 .navigationContainer {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
+  margin-bottom: 2vw;
 }
 
-.prevButton,
-.nextButton {
+.prevBtn,
+.nextBtn {
   display: block;
   background-color: #fff;
   padding: 1vw;
@@ -32,20 +33,23 @@
   svg {
     fill: black;
     width: 1.2vw;
+    transition: fill 0.3s;
   }
 }
 
-.prevButton:hover,
-.nextButton:hover {
-  background-color: #f4f4f4;
+.prevBtn:hover,
+.nextBtn:hover {
+  background-color: var(--primary);
+
+  svg {
+    fill: white;
+  }
 }
 
 .swiperController {
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  margin-bottom: 2vw;
 }
 
 .tabsController {

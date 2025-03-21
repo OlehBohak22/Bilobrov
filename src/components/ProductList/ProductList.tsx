@@ -1,7 +1,5 @@
-import { useState, useEffect, useMemo, useRef } from "react";
-import { useSelector } from "react-redux";
+import { useState, useEffect, useRef, ReactNode } from "react";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
-import { RootState } from "../../store/index";
 import { fetchProducts } from "../../store/slices/productsSlice"; // API-запит
 import { ProductItem } from "../ProductItem/ProductItem";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -11,77 +9,115 @@ import { Navigation } from "swiper/modules";
 import s from "./ProductList.module.css";
 import { ProductInfo } from "../../types/productTypes";
 import { Layout } from "../Layout/Layout";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 
 interface ProductListProps {
-  categories: string[];
-  defaultCategory?: string;
-  children?: React.ReactNode;
+  categories?: string[]; // categories можуть бути відсутні
+  defaultCategory?: string; // параметр для категорії за замовчуванням
+  children?: ReactNode;
 }
 
 export const ProductList = ({
-  categories,
+  categories = [], // Якщо categories немає, це буде порожній масив
   defaultCategory = "Новинки",
   children,
 }: ProductListProps) => {
   const dispatch = useAppDispatch();
-  const [activeTab, setActiveTab] = useState(defaultCategory);
 
-  const { items: products = [] } = useSelector(
-    (state: RootState) => state.products
-  );
+  // Ініціалізація активної категорії
+  const activeCategory = defaultCategory;
+  const [activeTab, setActiveTab] = useState(activeCategory);
 
-  const queryParams = useMemo(() => {
-    const params = new URLSearchParams();
-
-    switch (activeTab) {
-      case "Новинки":
-        params.append("orderby", "date");
-        params.append("order", "desc");
-        break;
-      case "Бестселлери":
-        params.append("orderby", "popularity");
-        break;
-      case "Акції":
-        params.append("on_sale", "true");
-        params.append("orderby", "date");
-        params.append("order", "desc");
-        break;
-    }
-
-    return params.toString();
-  }, [activeTab]); // ✅ queryParams змінюється тільки коли змінюється activeTab
-
-  // Використовуємо useRef для збереження попередніх параметрів
-  const previousQueryParamsRef = useRef<string>(queryParams);
+  const products = useSelector((state: RootState) => state.products.items);
 
   useEffect(() => {
-    // Перевірка, чи потрібно робити запит
-    if (queryParams !== previousQueryParamsRef.current) {
-      console.log("🔍 Query Params:", queryParams);
-      dispatch(fetchProducts({ queryParams }));
-      previousQueryParamsRef.current = queryParams; // Збереження попередніх параметрів
+    console.log("Fetching products...");
+    if (!products.length) {
+      dispatch(fetchProducts());
     }
-  }, [dispatch, queryParams]); // залежність від queryParams, тепер перевіряємо через реф
+  }, [dispatch, products.length]);
+
+  const prevButtonRef = useRef<HTMLDivElement | null>(null);
+  const nextButtonRef = useRef<HTMLDivElement | null>(null);
 
   return (
     <div className={s.section}>
       <Layout>
-        <div className={s.swiperController}>
-          {children || (
-            <ul className={s.tabsController}>
-              {categories.map((tab) => (
-                <li
-                  key={tab}
-                  className={`${s.tabItem} ${
-                    activeTab === tab ? s.activeTab : ""
-                  }`}
-                  onClick={() => setActiveTab(tab)}
-                >
-                  {tab}
-                </li>
-              ))}
-            </ul>
-          )}
+        <div className={s.navigationContainer}>
+          <div className={s.swiperController}>
+            {children || (
+              <ul className={s.tabsController}>
+                {(categories.length ? categories : [defaultCategory]).map(
+                  (tab) => (
+                    <li
+                      key={tab}
+                      className={`${s.tabItem} ${
+                        activeTab === tab ? s.activeTab : ""
+                      }`}
+                      onClick={() => setActiveTab(tab)} // Тепер можемо змінювати tab
+                      style={{
+                        cursor: categories.length ? "pointer" : "default",
+                      }}
+                    >
+                      {tab}
+                    </li>
+                  )
+                )}
+              </ul>
+            )}
+          </div>
+
+          <div className="flex">
+            <div
+              ref={prevButtonRef}
+              className={`${s.prevBtn} ${s.navigationButton}`}
+            >
+              <svg
+                viewBox="0 0 25 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g clipPath="url(#clip0_480_5408)">
+                  <path d="M7.08228 5L8.15132 6.05572L3.39413 10.7535L24.5 10.7535V12.2465L3.39413 12.2465L8.15132 16.9443L7.08228 18L0.5 11.5L7.08228 5Z" />
+                </g>
+                <defs>
+                  <clipPath id="clip0_480_5408">
+                    <rect
+                      width="24"
+                      height="24"
+                      fill="white"
+                      transform="matrix(-1 0 0 1 24.5 0)"
+                    />
+                  </clipPath>
+                </defs>
+              </svg>
+            </div>
+            <div
+              ref={nextButtonRef}
+              className={`${s.nextBtn} ${s.navigationButton}`}
+            >
+              <svg
+                viewBox="0 0 25 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g clipPath="url(#clip0_480_5411)">
+                  <path d="M17.9177 5L16.8487 6.05572L21.6059 10.7535H0.5V12.2465H21.6059L16.8487 16.9443L17.9177 18L24.5 11.5L17.9177 5Z" />
+                </g>
+                <defs>
+                  <clipPath id="clip0_480_5411">
+                    <rect
+                      width="24"
+                      height="24"
+                      fill="white"
+                      transform="translate(0.5)"
+                    />
+                  </clipPath>
+                </defs>
+              </svg>
+            </div>
+          </div>
         </div>
 
         <Swiper
@@ -89,8 +125,8 @@ export const ProductList = ({
           spaceBetween={20}
           slidesPerView={5}
           navigation={{
-            prevEl: `.${s.prevButton}`,
-            nextEl: `.${s.nextButton}`,
+            prevEl: prevButtonRef.current,
+            nextEl: nextButtonRef.current,
           }}
           className={s.productListSwiper}
         >

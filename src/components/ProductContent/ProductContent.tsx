@@ -49,8 +49,6 @@ export const ProductContent: React.FC<ProductItemProps> = ({
 
   const stockQuantity = info.stock_quantity;
 
-  console.log(stockQuantity);
-
   const [quantity, setQuantity] = useState(1);
 
   const handleAddToCart = () => {

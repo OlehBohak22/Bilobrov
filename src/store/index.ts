@@ -14,6 +14,7 @@ import menuReducer from "./slices/menuSlice";
 import filtersReducer from "./slices/filterSlice";
 import orderReducer from "./slices/orderSlice";
 import citiesReducer from "./slices/citiesSlice";
+import addressReducer from "./slices/addressSlice";
 
 export const store = configureStore({
   reducer: {
@@ -32,6 +33,7 @@ export const store = configureStore({
     filters: filtersReducer,
     order: orderReducer,
     cities: citiesReducer,
+    address: addressReducer,
   },
 });
 

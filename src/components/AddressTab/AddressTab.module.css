@@ -1,0 +1,134 @@
+.noneAddress {
+  transform: translateY(3vw);
+  p {
+    font-family: Manrope;
+    font-weight: 500;
+    font-size: 0.9vw;
+    line-height: 125%;
+    letter-spacing: 0%;
+    text-align: center;
+    color: #757575;
+    margin-bottom: 2vw;
+  }
+
+  img {
+    width: 6.3vw;
+    height: 5.9vw;
+    margin: 0 auto;
+  }
+}
+
+.tab {
+  .heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2vw;
+
+    h3 {
+      span:nth-child(1) {
+        font-family: Playfair Display;
+        font-weight: 400;
+        font-style: italic;
+        font-size: 2.7vw;
+        line-height: 100%;
+        letter-spacing: 0%;
+      }
+      span:nth-child(2) {
+        font-family: Manrope;
+        font-weight: 500;
+        font-size: 2.7vw;
+        line-height: 100%;
+        text-indent: 2vw;
+      }
+
+      span {
+        display: block;
+      }
+    }
+
+    button {
+      padding: 1.1vw 5vw;
+      display: flex;
+      align-items: center;
+      border: 1px solid rgba(26, 26, 26, 0.2);
+      font-family: Manrope;
+      font-weight: 600;
+      font-size: 0.8vw;
+      line-height: 0.8vw;
+      text-transform: uppercase;
+      transition: background 0.3s, color 0.3s;
+
+      gap: 0.6vw;
+
+      svg {
+        width: 0.8vw;
+        height: 0.8vw;
+        fill: black;
+        transition: fill 0.3s;
+      }
+    }
+
+    button:hover {
+      background-color: black;
+      color: white;
+
+      svg {
+        fill: white;
+      }
+    }
+  }
+
+  .addressList {
+    margin-bottom: 1.6vw;
+
+    li {
+      padding: 1.2vw;
+      background-color: rgba(249, 247, 248, 1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      svg {
+        width: 1.2vw;
+        height: 1.2vw;
+        stroke: black;
+        transition: 0.3s;
+      }
+
+      .delete:hover {
+        svg {
+          stroke: var(--primary);
+        }
+      }
+    }
+
+    li:not(:last-child) {
+      margin-bottom: 1.6vw;
+    }
+
+    .infoBlock {
+      display: flex;
+      align-items: center;
+      gap: 1.2vw;
+
+      span {
+        font-family: Manrope;
+        font-weight: 700;
+        font-size: 0.8vw;
+        line-height: 0.8vw;
+        letter-spacing: 0%;
+      }
+
+      p {
+        font-family: Manrope;
+        font-weight: 500;
+        font-size: 0.9vw;
+        line-height: 140%;
+      }
+    }
+  }
+
+  .addressInfo {
+  }
+}

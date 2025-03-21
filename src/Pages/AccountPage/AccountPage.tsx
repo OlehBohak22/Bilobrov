@@ -11,6 +11,8 @@ import { useNavigate } from "react-router";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { ResetPasswordTab } from "../../components/ResetPasswordTab/ResetPasswordTab";
+import { AddressTab } from "../../components/AddressTab/AddressTab";
+import { OrdersTab } from "../../components/OrdersTab/OrdersTab";
 
 const categories = [
   {
@@ -247,7 +249,7 @@ export const AccountPage = () => {
       case "bonus":
         return <BonusTab />;
       case "order":
-        return <p>Інформація про замовлення</p>;
+        return <OrdersTab />;
       case "wishlist":
         return <WishListTab />;
       case "contact":
@@ -255,7 +257,7 @@ export const AccountPage = () => {
       case "password":
         return <ResetPasswordTab />;
       case "address":
-        return <p>Адреса</p>;
+        return <AddressTab user={user} />;
       default:
         return null;
     }
