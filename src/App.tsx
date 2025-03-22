@@ -48,7 +48,7 @@ function App() {
 
   useEffect(() => {
     dispatch(checkUserSession());
-    dispatch(fetchProducts({}));
+    dispatch(fetchProducts());
     dispatch(fetchCategories());
     dispatch(fetchMenus());
     // dispatch(fetchCities());
