@@ -57,7 +57,7 @@ export const fetchProducts = createAsyncThunk(
     }
 
     const queryString = new URLSearchParams(params as any).toString();
-    const url = `https://bilobrov.projection-learn.website/wp-json/wc/v3/products?${queryString}&per_page=100`;
+    const url = `https://bilobrov.projection-learn.website/wp-json/wc/v3/products?${queryString}?per_page=10`;
 
     try {
       const response = await axios.get(url, {
