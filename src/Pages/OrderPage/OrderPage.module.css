@@ -277,12 +277,15 @@
 .selectContainer {
   width: 100%;
 
+  input {
+    max-width: 100%;
+  }
+
   p {
     font-family: Manrope;
     font-weight: 500;
     font-size: 0.8vw;
     line-height: 130%;
-    margin-bottom: 0.6vw;
 
     span {
       color: var(--primary);

@@ -8,6 +8,8 @@ export interface OrderData {
   payment_method: string;
   payment_method_title: string;
   set_paid: boolean;
+
+  customer_id?: number;
   number?: string;
   billing: {
     first_name: string;

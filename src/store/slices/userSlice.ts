@@ -21,16 +21,24 @@ interface address {
 }
 
 interface Product {
+  id: number;
   brand: string;
   image: string;
   name: string;
-  price: string;
+  price: number;
   quantity: number;
   short_description: string;
   sku: string;
 }
 
 export interface Order {
+  shipping_type: string;
+  shipping_address: string;
+  customer_name: string;
+  customer_phone: string;
+  shipping_cost: number;
+  discount_total: number;
+  total_price: number;
   id: number;
   status: string;
   order_id: number;
@@ -51,7 +59,7 @@ interface UserMeta {
 }
 
 export interface UserData {
-  id: number;
+  ID: number;
   email: string;
   name: string;
   secondName: string;

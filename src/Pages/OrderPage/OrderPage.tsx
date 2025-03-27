@@ -25,6 +25,13 @@ export const OrderPage: React.FC = () => {
   const [entrance, setEntrance] = useState("");
   const [apartment, setApartment] = useState("");
 
+  const userData = useSelector((state: RootState) => state.user.user);
+
+  if (userData) {
+    const { ID } = userData;
+    console.log(ID);
+  }
+
   const handleHouseChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setHouse(e.target.value); // Оновлюємо будинок
   };
@@ -133,6 +140,7 @@ export const OrderPage: React.FC = () => {
       payment_method_title:
         paymentMethod === "cod" ? " Online payment" : "Cash on delivery",
       set_paid: true,
+      customer_id: userData ? userData.ID : 0, // Якщо userData немає, ставимо 0
       billing,
       shipping,
       line_items: cart.map((item) => ({
