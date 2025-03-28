@@ -5,7 +5,11 @@ import s from "./CatalogPage.module.css";
 import { RootState } from "../../store";
 import { ProductItem } from "../../components/ProductItem/ProductItem";
 import { useEffect } from "react";
-import { fetchProducts, setCategories } from "../../store/slices/filterSlice";
+import {
+  fetchProducts,
+  setBrands,
+  setCategories,
+} from "../../store/slices/filterSlice";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 
 export const CatalogPage: React.FC<{ openFilter?: () => void }> = ({
@@ -14,29 +18,58 @@ export const CatalogPage: React.FC<{ openFilter?: () => void }> = ({
   const { products, loading, categories } = useSelector(
     (state: RootState) => state.filters
   );
+
   const dispatch = useAppDispatch();
-  const { slug } = useParams();
+  const { slug, parentSlug, childSlug } = useParams();
+
+  console.log(slug, parentSlug, childSlug);
+
   const allCategories = useSelector(
     (state: RootState) => state.categories.categories
   );
 
   useEffect(() => {
+    dispatch(setCategories([]));
+    dispatch(setBrands([]));
+
+    dispatch(fetchProducts({}));
+  }, [slug, parentSlug, dispatch]);
+
+  useEffect(() => {
     const filters: { isNew?: boolean; onSale?: boolean } = {};
+
     if (slug === "news") filters.isNew = true;
     if (slug === "sales") filters.onSale = true;
 
-    const category = allCategories.find((cat) => cat.slug === slug);
-    if (category) {
-      const categoryId = category.id.toString();
-      if (!categories.includes(categoryId)) {
-        dispatch(setCategories([...categories, categoryId]));
+    // Якщо є parentSlug та childSlug, то обираємо відповідну категорію
+    let categoryId = null;
+    if (parentSlug && childSlug) {
+      const parentCategory = allCategories.find(
+        (cat) => cat.slug === parentSlug
+      );
+      const childCategory = allCategories.find(
+        (cat) => cat.slug === childSlug && cat.parent === parentCategory?.id
+      );
+      if (childCategory) {
+        categoryId = childCategory.id.toString();
       }
+    } else if (slug) {
+      // Якщо тільки slug
+      const category = allCategories.find((cat) => cat.slug === slug);
+      if (category) categoryId = category.id.toString();
+    }
+
+    // Якщо знайдена категорія, додаємо її до фільтрів
+    if (categoryId && !categories.includes(categoryId)) {
+      dispatch(setCategories([...categories, categoryId]));
     }
 
     dispatch(fetchProducts(filters));
-  }, [slug, categories, dispatch, allCategories]);
+  }, [slug, parentSlug, childSlug, categories, dispatch, allCategories]);
 
-  const category = allCategories.find((cat) => cat.slug === slug);
+  const category = allCategories.find(
+    (cat) => cat.slug === slug || cat.slug == parentSlug
+  );
 
   const categoryName =
     slug === "news"
@@ -50,6 +83,8 @@ export const CatalogPage: React.FC<{ openFilter?: () => void }> = ({
   const childCategories = allCategories.filter(
     (cat) => cat.parent === (category ? category.id : null)
   );
+
+  console.log(childCategories);
 
   return (
     <main className={s.page}>
@@ -70,9 +105,16 @@ export const CatalogPage: React.FC<{ openFilter?: () => void }> = ({
                     }
                     onClick={() => {
                       const childId = child.id.toString();
-                      if (!categories.includes(childId)) {
-                        dispatch(setCategories([...categories, childId]));
-                        dispatch(fetchProducts({}));
+                      if (categories.includes(childId)) {
+                        // Якщо категорія вже вибрана, знімаємо вибір
+                        dispatch(
+                          setCategories(
+                            categories.filter((id) => id !== childId)
+                          )
+                        );
+                      } else {
+                        // Вибираємо тільки одну категорію
+                        dispatch(setCategories([childId]));
                       }
                     }}
                   >

@@ -58,6 +58,11 @@
       background-color: rgba(255, 196, 58, 1);
     }
 
+    .completed {
+      background: #38b558;
+      color: white;
+    }
+
     .unknown {
       background-color: rgb(190, 190, 190);
     }

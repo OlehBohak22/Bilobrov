@@ -29,6 +29,8 @@ export const ProductPage: React.FC<HeaderProps> = ({
     (state: any) => state.products
   );
 
+  console.log(currentProduct);
+
   const { id } = useParams(); // Припустимо, що у вашому Route шлях: <Route path="/product/:id" element={<ProductPage />} />
 
   const currentReviews = reviews.filter(

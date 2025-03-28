@@ -129,6 +129,12 @@
   }
 }
 
+.backDropCOntaienr {
+  .backDrop:not(:last-child) {
+    margin-bottom: 1vw;
+  }
+}
+
 .backDrop {
   label {
     display: flex;

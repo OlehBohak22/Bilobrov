@@ -9,6 +9,7 @@ export interface ProductInfo {
   id: number;
   sku: string;
   slug: string;
+  on_sale: boolean;
   name: string;
   key: string;
   stock_quantity: number;

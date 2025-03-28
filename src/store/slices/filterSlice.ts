@@ -9,21 +9,23 @@ interface FiltersState {
   maxPrice: number;
   onSale: boolean;
   inStock: boolean;
-  categories: string[]; // Масив слагів
+  categories: string[];
   attributes: string[];
   attributeTerms: string[];
+  brands: string[]; // Додаємо бренди
   products: any[];
   loading: boolean;
 }
 
 const initialState: FiltersState = {
   minPrice: 100,
-  maxPrice: 1500,
+  maxPrice: 5000,
   onSale: false,
   inStock: true,
-  categories: [], // Тепер масив слагів
+  categories: [],
   attributes: [],
   attributeTerms: [],
+  brands: [], // Ініціалізація брендів
   products: [],
   loading: false,
 };
@@ -40,10 +42,22 @@ export const fetchProducts = createAsyncThunk(
       min_price: state.filters.minPrice,
       max_price: state.filters.maxPrice,
       stock_status: state.filters.inStock ? "instock" : "outofstock",
-      category: state.filters.categories.join(","),
-      attribute: state.filters.attributes.join(","),
-      attribute_term: state.filters.attributeTerms.join("|"),
+      brand: state.filters.brands.join(","), // Бренди
     };
+
+    // Додаємо категорію, якщо вона вибрана
+    if (state.filters.categories.length > 0) {
+      params["category"] = state.filters.categories[0]; // Передаємо тільки одну категорію
+    }
+
+    // Додаємо фільтрацію за атрибутами, якщо вони є
+    if (
+      state.filters.attributes.length > 0 &&
+      state.filters.attributeTerms.length > 0
+    ) {
+      params["attribute"] = state.filters.attributes.join(",");
+      params["attribute_term"] = state.filters.attributeTerms.join("|");
+    }
 
     if (isNew) {
       params["orderby"] = "date";
@@ -57,7 +71,7 @@ export const fetchProducts = createAsyncThunk(
     }
 
     const queryString = new URLSearchParams(params as any).toString();
-    const url = `https://bilobrov.projection-learn.website/wp-json/wc/v3/products?${queryString}?per_page=10`;
+    const url = `https://bilobrov.projection-learn.website/wp-json/wc/v3/products?${queryString}&per_page=100`;
 
     try {
       const response = await axios.get(url, {
@@ -91,13 +105,16 @@ const filtersSlice = createSlice({
       state.inStock = action.payload;
     },
     setCategories: (state, action: PayloadAction<string[]>) => {
-      state.categories = action.payload; // Зберігаємо масив слагів
+      state.categories = action.payload;
     },
     setAttributes: (state, action: PayloadAction<string[]>) => {
       state.attributes = action.payload;
     },
     setAttributeTerms: (state, action: PayloadAction<string[]>) => {
       state.attributeTerms = action.payload;
+    },
+    setBrands: (state, action: PayloadAction<string[]>) => {
+      state.brands = action.payload; // Додаємо зміну брендів
     },
   },
   extraReducers: (builder) => {
@@ -123,6 +140,7 @@ export const {
   setCategories,
   setAttributes,
   setAttributeTerms,
+  setBrands,
 } = filtersSlice.actions;
 
 export default filtersSlice.reducer;

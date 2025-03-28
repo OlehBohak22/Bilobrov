@@ -8,11 +8,13 @@ import {
   setInStock,
   setCategories,
   fetchProducts,
+  setBrands,
 } from "../../store/slices/filterSlice";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { useParams } from "react-router";
 import { motion } from "framer-motion";
 import s from "./FilterPopup.module.css";
+import { RangeInput } from "./RangeInput";
 
 const Filters: React.FC<{
   onClose: () => void;
@@ -21,9 +23,12 @@ const Filters: React.FC<{
   const { minPrice, maxPrice, onSale, inStock, categories, loading } =
     useSelector((state: RootState) => state.filters);
 
-  const [isOpen, setIsOpen] = useState(false); // Стан для відкриття/закриття
+  const brands = useSelector((state: RootState) => state.brands.items);
 
-  // const [openMenu, setOpenMenu] = useState<number | null>(null);
+  console.log(brands);
+
+  const [categoryiIsOpen, setCategoryIsOpen] = useState(false);
+  const [brandsIsOpen, setBrandsIsOpen] = useState(false);
 
   const { slug } = useParams();
 
@@ -47,6 +52,21 @@ const Filters: React.FC<{
         categories.includes(categoryId)
           ? categories.filter((cat) => cat !== categoryId)
           : [...categories, categoryId]
+      )
+    );
+  };
+
+  const selectedBrands = useSelector(
+    (state: RootState) => state.filters.brands
+  );
+  const handleBrandChange = (brand: string) => {
+    console.log(brand);
+
+    dispatch(
+      setBrands(
+        selectedBrands.includes(brand)
+          ? selectedBrands.filter((b) => b !== brand)
+          : [...selectedBrands, brand]
       )
     );
   };
@@ -125,59 +145,107 @@ const Filters: React.FC<{
             </div>
           </div>
 
-          <div className={s.backDrop}>
-            <label
-              className={`${isOpen && s.active}`}
-              onClick={() => setIsOpen(!isOpen)}
-            >
-              {isOpen ? (
-                <svg
-                  className={s.plus}
-                  viewBox="0 0 16 17"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M16 7.83325H0V9.16659H16V7.83325Z" />
-                </svg>
-              ) : (
-                <svg
-                  className={s.minus}
-                  viewBox="0 0 16 17"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <g clip-path="url(#clip0_2926_15592)">
-                    <path d="M16 7.83333H8.66667V0.5H7.33333V7.83333H0V9.16667H7.33333V16.5H8.66667V9.16667H16V7.83333Z" />
-                  </g>
-                  <defs>
-                    <clipPath id="clip0_2926_15592">
-                      <rect
-                        width="16"
-                        height="16"
-                        transform="translate(0 0.5)"
+          <RangeInput rtl={false} />
+
+          <div className={s.backDropCOntaienr}>
+            <div className={s.backDrop}>
+              <label
+                className={`${brandsIsOpen && s.active}`}
+                onClick={() => setBrandsIsOpen(!brandsIsOpen)}
+              >
+                {brandsIsOpen ? (
+                  <svg className={s.plus} viewBox="0 0 16 17" fill="none">
+                    <path d="M16 7.83325H0V9.16659H16V7.83325Z" />
+                  </svg>
+                ) : (
+                  <svg className={s.minus} viewBox="0 0 16 17" fill="none">
+                    <g clipPath="url(#clip0_2926_15592)">
+                      <path d="M16 7.83333H8.66667V0.5H7.33333V7.83333H0V9.16667H7.33333V16.5H8.66667V9.16667H16V7.83333Z" />
+                    </g>
+                    <defs>
+                      <clipPath id="clip0_2926_15592">
+                        <rect
+                          width="16"
+                          height="16"
+                          transform="translate(0 0.5)"
+                        />
+                      </clipPath>
+                    </defs>
+                  </svg>
+                )}
+                Бренди <span className={s.qty}>{brands.length}</span>
+              </label>
+              {brandsIsOpen && (
+                <div className={s.list}>
+                  {brands.map((brand) => (
+                    <label key={brand.id} className={s.customCheckbox}>
+                      <input
+                        type="checkbox"
+                        checked={selectedBrands.includes(brand.id.toString())}
+                        onChange={() => handleBrandChange(brand.id.toString())}
+                        className={s.hiddenCheckbox}
                       />
-                    </clipPath>
-                  </defs>
-                </svg>
+                      <span className={s.checkboxLabel}>{brand.name}</span>
+                    </label>
+                  ))}
+                </div>
               )}
-              Категорії <span className={s.qty}>{allCategories.length}</span>
-            </label>
-            {isOpen && (
-              <div className={s.list}>
-                {allCategories.map((cat) => (
-                  <label key={cat.id} className={s.customCheckbox}>
-                    <input
-                      type="checkbox"
-                      checked={categories.includes(cat.id.toString())}
-                      onChange={() => handleCategoryChange(cat.id.toString())}
-                      className={s.hiddenCheckbox} // Сховаємо стандартний чекбокс
-                    />
-                    <span className={s.checkboxLabel}>{cat.name}</span>{" "}
-                    {/* Стилізуємо саму мітку */}
-                  </label>
-                ))}
-              </div>
-            )}
+            </div>
+
+            <div className={s.backDrop}>
+              <label
+                className={`${categoryiIsOpen && s.active}`}
+                onClick={() => setCategoryIsOpen(!categoryiIsOpen)}
+              >
+                {categoryiIsOpen ? (
+                  <svg
+                    className={s.plus}
+                    viewBox="0 0 16 17"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d="M16 7.83325H0V9.16659H16V7.83325Z" />
+                  </svg>
+                ) : (
+                  <svg
+                    className={s.minus}
+                    viewBox="0 0 16 17"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <g clip-path="url(#clip0_2926_15592)">
+                      <path d="M16 7.83333H8.66667V0.5H7.33333V7.83333H0V9.16667H7.33333V16.5H8.66667V9.16667H16V7.83333Z" />
+                    </g>
+                    <defs>
+                      <clipPath id="clip0_2926_15592">
+                        <rect
+                          width="16"
+                          height="16"
+                          transform="translate(0 0.5)"
+                        />
+                      </clipPath>
+                    </defs>
+                  </svg>
+                )}
+                Категорії <span className={s.qty}>{allCategories.length}</span>
+              </label>
+              {categoryiIsOpen && (
+                <div className={s.list}>
+                  {allCategories.map((cat) => (
+                    <label key={cat.id} className={s.customCheckbox}>
+                      <input
+                        type="checkbox"
+                        checked={categories.includes(cat.id.toString())}
+                        onChange={() => handleCategoryChange(cat.id.toString())}
+                        className={s.hiddenCheckbox} // Сховаємо стандартний чекбокс
+                      />
+                      <span className={s.checkboxLabel}>{cat.name}</span>{" "}
+                      {/* Стилізуємо саму мітку */}
+                    </label>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </div>
         <button

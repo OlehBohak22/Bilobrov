@@ -67,10 +67,18 @@
       font-size: 1.2vw;
       line-height: 100%;
       color: rgba(26, 26, 26, 0.5);
+      transition: 0.3s;
+    }
+
+    li:hover {
+      color: rgba(26, 26, 26, 1);
     }
 
     .active {
       font-family: Playfair Display;
+      font-size: 1.2vw;
+      font-style: italic;
+      font-weight: 600;
       color: black;
     }
   }

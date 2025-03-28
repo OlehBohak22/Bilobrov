@@ -9,8 +9,6 @@ interface OrderTabProp {
 }
 
 export const OrderItem: FC<OrderTabProp> = ({ info }) => {
-  console.log(info);
-
   const [isOpen, setIsOpen] = useState(false);
 
   // const { token } = useSelector((state: RootState) => state.user);
@@ -31,6 +29,11 @@ export const OrderItem: FC<OrderTabProp> = ({ info }) => {
     case "processing":
       STATUS = "Замовлення у дорозі";
       CLASS = "processing";
+      break;
+
+    case "completed":
+      STATUS = "Замовлення вже у вас";
+      CLASS = "completed";
       break;
 
     default:

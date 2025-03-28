@@ -162,6 +162,10 @@
     transition: 0.3s;
   }
 
+  .notAvailable {
+    pointer-events: none;
+  }
+
   .addedInCrt {
     background-color: #ffc43a;
     color: black;

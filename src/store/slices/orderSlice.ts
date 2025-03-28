@@ -8,7 +8,7 @@ export interface OrderData {
   payment_method: string;
   payment_method_title: string;
   set_paid: boolean;
-
+  status: string;
   customer_id?: number;
   number?: string;
   billing: {
@@ -65,6 +65,8 @@ const initialState: OrderState = {
 export const createOrder = createAsyncThunk<OrderData, OrderData>(
   "order/createOrder",
   async (orderData, { rejectWithValue }) => {
+    console.log(orderData);
+
     try {
       const response = await axios.post(
         "https://bilobrov.projection-learn.website/wp-json/wc/v3/orders",

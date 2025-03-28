@@ -486,7 +486,9 @@ export const ProductContent: React.FC<ProductItemProps> = ({
 
         <button
           onClick={handleAddToCart}
-          className={`${s.cart} ${inCart && s.addedInCrt}`}
+          className={`${s.cart} ${inCart && s.addedInCrt} ${
+            info.stock_quantity < 1 && s.notAvailable
+          }`}
         >
           {inCart ? "ДОДАНО В КОШИК" : " ДОДАТИ В КОШИК"}
         </button>
@@ -503,7 +505,7 @@ export const ProductContent: React.FC<ProductItemProps> = ({
       </div>
 
       <div className={s.isAvailable}>
-        {info.purchasable ? (
+        {info.stock_quantity > 0 ? (
           <div className={s.available}>
             <p>
               <svg

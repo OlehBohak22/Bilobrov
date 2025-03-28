@@ -20,7 +20,7 @@ interface ProductListProps {
 
 export const ProductList = ({
   categories = [], // Якщо categories немає, це буде порожній масив
-  defaultCategory = "Новинки",
+  defaultCategory,
   children,
 }: ProductListProps) => {
   const dispatch = useAppDispatch();
@@ -28,15 +28,53 @@ export const ProductList = ({
   // Ініціалізація активної категорії
   const activeCategory = defaultCategory;
   const [activeTab, setActiveTab] = useState(activeCategory);
-
   const products = useSelector((state: RootState) => state.products.items);
+
+  const [filteredProducts, setFilteredProducts] = useState(products);
 
   useEffect(() => {
     console.log("Fetching products...");
+
+    console.log(products);
+
+    if (!products.length) {
+      dispatch(fetchProducts());
+    }
+  }, [dispatch, products, products.length]);
+
+  useEffect(() => {
+    console.log("Fetching products...");
+
     if (!products.length) {
       dispatch(fetchProducts());
     }
   }, [dispatch, products.length]);
+
+  useEffect(() => {
+    // Фільтрація продуктів залежно від активної категорії
+    if (activeTab === "Акції") {
+      setFilteredProducts(
+        products.filter((product) => product.on_sale === true)
+      );
+    } else if (activeTab === "Новинки") {
+      const currentDate = new Date();
+      const filtered = products.filter((product) => {
+        const productDate = new Date(product.date_created); // Поле created_at
+        const timeDifference = currentDate.getTime() - productDate.getTime();
+        const daysDifference = timeDifference / (1000 * 3600 * 24); // Перетворюємо різницю в дні
+        return daysDifference <= 30; // Продукти, додані за останні 30 днів
+      });
+      setFilteredProducts(filtered);
+    } else if (activeTab === "Бестселлери") {
+      const bestsellers = products
+        .filter((product) => product.total_sales > 0) // Фільтруємо продукти, у яких є продажі
+        .sort((a, b) => b.total_sales - a.total_sales); // Сортуємо за кількістю продажів (спадний порядок)
+      setFilteredProducts(bestsellers);
+    } else {
+      // Якщо не Акції, не Новинки, і не Бестселери, фільтруємо за категорією
+      setFilteredProducts(products);
+    }
+  }, [activeTab, products]);
 
   const prevButtonRef = useRef<HTMLDivElement | null>(null);
   const nextButtonRef = useRef<HTMLDivElement | null>(null);
@@ -130,7 +168,7 @@ export const ProductList = ({
           }}
           className={s.productListSwiper}
         >
-          {products.map((product: ProductInfo) => (
+          {filteredProducts.map((product: ProductInfo) => (
             <SwiperSlide className="h-auto!" key={product.id}>
               <ProductItem info={product} />
             </SwiperSlide>

@@ -36,6 +36,32 @@ export const fetchCart = createAsyncThunk<Product[], string | null>(
   }
 );
 
+// Додаємо нову операцію для очищення кошика
+export const clearCart = createAsyncThunk<Product[], string | null>(
+  "cart/clearCart",
+  async (token, { rejectWithValue }) => {
+    try {
+      if (!token) {
+        // Якщо немає токена, просто очищаємо локальний кошик
+        localStorage.removeItem("cart");
+        return [];
+      }
+
+      // Якщо є токен, очищаємо кошик через API
+      await axios.delete(API_URL, {
+        headers: { Authorization: `Bearer ${token}` },
+        data: {
+          product: {}, // Пустий об'єкт для очищення кошика
+        },
+      });
+
+      return []; // Повертаємо порожній масив, оскільки кошик очищений
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data || error.message);
+    }
+  }
+);
+
 export const addToCart = createAsyncThunk<
   Product[],
   { product: Product; token: string | null }
@@ -195,6 +221,10 @@ const cartSlice = createSlice({
           state.items = action.payload;
         }
       )
+
+      .addCase(clearCart.fulfilled, (state) => {
+        state.items = []; // Очищаємо кошик
+      })
 
       .addCase(mergeCart.fulfilled, (state) => {
         state.status = "succeeded";

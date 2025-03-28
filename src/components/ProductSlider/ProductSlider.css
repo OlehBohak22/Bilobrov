@@ -19,6 +19,7 @@
 .slider-image {
   width: 100%;
   display: block;
+  background-color: rgba(246, 246, 246, 1);
 }
 
 .custom-left-nav,

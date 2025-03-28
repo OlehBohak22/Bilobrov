@@ -210,6 +210,8 @@ export const AccountPage = () => {
   );
   const user = useSelector((state: RootState) => state.user.user);
 
+  console.log(user?.meta.orders);
+
   const [activeTab, setActiveTab] = useState<string>(
     window.location.hash.replace("#", "") || "main"
   );
@@ -289,6 +291,10 @@ export const AccountPage = () => {
 
                 {category.id === "wishlist" && (
                   <div className={s.wishLength}>{wishlist.length}</div>
+                )}
+
+                {category.id === "order" && (
+                  <div className={s.wishLength}>{user?.meta.orders.length}</div>
                 )}
               </li>
             ))}

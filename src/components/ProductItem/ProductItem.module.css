@@ -32,7 +32,7 @@
 
   overflow: hidden;
   margin-bottom: 0.8vw;
-  background-color: rgba(246, 246, 246, 1);
+  background: #f6f6f6;
 
   img {
     object-fit: cover;

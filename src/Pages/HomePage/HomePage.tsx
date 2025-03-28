@@ -34,7 +34,7 @@ export const HomePage = () => {
         </h2>
       </CategoriesSection>
 
-      <ProductList categories={["Бестселлери"]} defaultCategory="Бестселлери>">
+      <ProductList categories={["Бестселлери"]} defaultCategory="Бестселлери">
         <h2>
           <span>Хіти</span>
           <span>продажів</span>

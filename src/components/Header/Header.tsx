@@ -91,13 +91,13 @@ export const Header: React.FC<HeaderProps> = ({
             openCart={openCart}
           />
         </div>
-
         <div className={s.headerBottomLine}>
           <nav>
             <ul className={s.navMenu}>
               {menuTree.map((item) => {
                 let modifiedUrl = item.url.replace(/\/$/, "");
 
+                // Обробка виключених категорій
                 if (modifiedUrl.endsWith("support")) {
                   modifiedUrl = "support";
                 } else if (modifiedUrl.endsWith("brendy")) {
@@ -113,7 +113,6 @@ export const Header: React.FC<HeaderProps> = ({
                   }
                 }
 
-                // Додаємо перевірку для product-category/{id}
                 const categoryMatch = modifiedUrl.match(
                   /product-category\/([^/]+)$/
                 );
@@ -128,23 +127,29 @@ export const Header: React.FC<HeaderProps> = ({
                     {item.children.length > 0 && (
                       <ul className={s.subMenu}>
                         {item.children.map((child) => {
-                          let modifiedChildUrl = child.url.replace(/\/$/, "");
-                          if (modifiedChildUrl.endsWith("support")) {
-                            modifiedChildUrl = "support";
-                          } else {
-                            const childSupportMatch =
-                              modifiedChildUrl.match(/support\/(.+)$/);
-                            if (childSupportMatch) {
-                              modifiedChildUrl = `support#${childSupportMatch[1]}`;
-                            }
-                          }
+                          let modifiedChildUrl = child.url.replace(/\/$/, ""); // Видаляємо слеш у кінці
 
-                          // Додаємо перевірку для product-category/{id} у дочірніх елементах
-                          const childCategoryMatch = modifiedChildUrl.match(
-                            /product-category\/([^/]+)$/
-                          );
-                          if (childCategoryMatch) {
-                            modifiedChildUrl = `/category/${childCategoryMatch[1]}`;
+                          // Остання частина URL
+                          const lastPart = modifiedChildUrl.split("/").pop();
+
+                          // Обробка виключених категорій для дочірніх елементів
+                          if (modifiedChildUrl.includes("support")) {
+                            modifiedChildUrl = modifiedChildUrl.endsWith(
+                              "support"
+                            )
+                              ? "support"
+                              : `support#${
+                                  modifiedChildUrl.split("support/")[1]
+                                }`;
+                          } else {
+                            // Перевірка для product-category/{parent}/{child} у дочірніх елементах
+                            const childCategoryMatch = modifiedChildUrl.match(
+                              /product-category\/([^/]+)\/([^/]+)$/
+                            );
+
+                            if (childCategoryMatch) {
+                              modifiedChildUrl = `/catalog/${childCategoryMatch[1]}/${lastPart}`;
+                            }
                           }
 
                           return (

@@ -151,17 +151,29 @@ function App() {
           element={<CertificatePage />}
         />
         <Route path="/account" element={<AccountPage />} />
-        <Route
-          path="/catalog/:slug"
-          element={<CatalogPage openFilter={() => setIsFilterOpen(true)} />}
-        />
-        <Route
-          path="/catalog"
-          element={<CatalogPage openFilter={() => setIsFilterOpen(true)} />}
-        />
         <Route path="/brendy" element={<BrandsPage />} />
         <Route path="/order" element={<OrderPage />} />
 
+        {/* Вкладена структура для каталогу */}
+        <Route
+          path="/catalog"
+          element={<CatalogPage openFilter={() => setIsFilterOpen(true)} />}
+        >
+          <Route
+            index
+            element={<CatalogPage openFilter={() => setIsFilterOpen(true)} />}
+          />
+          <Route
+            path=":slug"
+            element={<CatalogPage openFilter={() => setIsFilterOpen(true)} />}
+          />
+          <Route
+            path=":parentSlug/:childSlug"
+            element={<CatalogPage openFilter={() => setIsFilterOpen(true)} />}
+          />
+        </Route>
+
+        {/* Сторінка товару */}
         <Route
           path="/product/:id"
           element={

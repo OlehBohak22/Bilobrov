@@ -11,6 +11,7 @@ import { CustomSelect } from "../../components/CustomSelect/CustomSelect";
 import { Link } from "react-router";
 import { OrderFooter } from "./OrderFooter";
 import { OrderSucces } from "../../components/OrderSucces/OrderSucces";
+import { clearCart } from "../../store/slices/cartSlice";
 
 // const CITY_LIST = ["Київ", "Харків", "Львів", "Дніпро", "Одеса"];
 
@@ -26,6 +27,9 @@ export const OrderPage: React.FC = () => {
   const [apartment, setApartment] = useState("");
 
   const userData = useSelector((state: RootState) => state.user.user);
+  const { token } = useSelector((state: RootState) => state.user);
+
+  console.log(token);
 
   if (userData) {
     const { ID } = userData;
@@ -138,8 +142,9 @@ export const OrderPage: React.FC = () => {
     const orderData = {
       payment_method: paymentMethod,
       payment_method_title:
-        paymentMethod === "cod" ? " Online payment" : "Cash on delivery",
-      set_paid: true,
+        paymentMethod === "cod" ? "Cash on delivery" : "Online payment",
+      set_paid: paymentMethod !== "cod",
+      status: paymentMethod === "cod" ? "on-hold" : "processing",
       customer_id: userData ? userData.ID : 0, // Якщо userData немає, ставимо 0
       billing,
       shipping,
@@ -170,6 +175,9 @@ export const OrderPage: React.FC = () => {
       // Перевірка результату
       if (createOrder.fulfilled.match(resultAction)) {
         // Якщо запит успішний
+
+        dispatch(clearCart(token));
+
         setOrderSucces(resultAction.payload);
         console.log("Замовлення успішно створено:", resultAction.payload);
       } else {
@@ -567,16 +575,16 @@ export const OrderPage: React.FC = () => {
                         id="cash"
                         type="radio"
                         name="paymentMethod" // Атрибут name для групування
-                        onClick={() => setPaymentMethod("Cash on delivery")}
-                        checked={paymentMethod === "Cash on delivery"} // Встановлюємо як вибраний
+                        onClick={() => setPaymentMethod("online payment")}
+                        checked={paymentMethod === "online payment"} // Встановлюємо як вибраний
                       />
                       <label
                         className={`${
-                          paymentMethod === "Cash on delivery" && s.active
+                          paymentMethod === "online payment" && s.active
                         }`}
                         htmlFor="cash"
                       >
-                        Накладений платіж
+                        Онлайн-оплата WayForPay
                       </label>
                     </div>
 
@@ -592,7 +600,7 @@ export const OrderPage: React.FC = () => {
                         className={`${paymentMethod === "cod" && s.active}`}
                         htmlFor="cod"
                       >
-                        Онлайн-оплата WayForPay
+                        Накладений платіж
                       </label>
                     </div>
                   </div>
