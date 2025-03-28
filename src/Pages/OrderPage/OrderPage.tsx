@@ -29,13 +29,6 @@ export const OrderPage: React.FC = () => {
   const userData = useSelector((state: RootState) => state.user.user);
   const { token } = useSelector((state: RootState) => state.user);
 
-  console.log(token);
-
-  if (userData) {
-    const { ID } = userData;
-    console.log(ID);
-  }
-
   const handleHouseChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setHouse(e.target.value); // Оновлюємо будинок
   };
@@ -137,7 +130,6 @@ export const OrderPage: React.FC = () => {
       title = "оплата";
       break;
   }
-
   const handleOrderSubmit = async () => {
     const orderData = {
       payment_method: paymentMethod,

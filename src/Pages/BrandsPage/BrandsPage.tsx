@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { Layout } from "../../components/Layout/Layout";
 import s from "./BrandsPage.module.css";
 import { RootState } from "../../store";
+import { Link } from "react-router";
 
 export const BrandsPage = () => {
   const brands = useSelector((state: RootState) => state.brands);
@@ -45,7 +46,11 @@ export const BrandsPage = () => {
                 <h2>{letter}</h2>
                 <div className={s.brandItems}>
                   {brands.map((brand) => (
-                    <div key={brand.id} className={s.brandItem}>
+                    <Link
+                      to={`/catalog?brand=${brand.id}`}
+                      key={brand.id}
+                      className={s.brandItem}
+                    >
                       <div className={s.brandImageCircle}>
                         <div className="overflow-hidden rounded-full w-[6.5vw] h-[6.5vw]">
                           <img
@@ -55,7 +60,7 @@ export const BrandsPage = () => {
                         </div>
                       </div>
                       <span>{brand.name}</span>
-                    </div>
+                    </Link>
                   ))}
                 </div>
               </div>

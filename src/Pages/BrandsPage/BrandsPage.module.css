@@ -89,6 +89,8 @@
   padding: 0.5vw;
   width: fit-content;
   overflow: hidden;
+  color: black;
+
   h4 {
     text-transform: uppercase;
     font-family: Manrope;

@@ -1,47 +1,58 @@
-import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useEffect, useMemo, useCallback, useState } from "react";
+import { useLocation, useParams } from "react-router-dom";
+import { useSelector, shallowEqual } from "react-redux";
 import { Layout } from "../../components/Layout/Layout";
 import s from "./CatalogPage.module.css";
 import { RootState } from "../../store";
 import { ProductItem } from "../../components/ProductItem/ProductItem";
-import { useEffect } from "react";
 import {
   fetchProducts,
   setBrands,
   setCategories,
 } from "../../store/slices/filterSlice";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { useNavigate } from "react-router-dom";
+import { Filters } from "../../components/FilterPopup/FilterPopup";
 
-export const CatalogPage: React.FC<{ openFilter?: () => void }> = ({
-  openFilter,
-}) => {
-  const { products, loading, categories } = useSelector(
-    (state: RootState) => state.filters
-  );
+export const CatalogPage = () => {
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const dispatch = useAppDispatch();
   const { slug, parentSlug, childSlug } = useParams();
 
-  console.log(slug, parentSlug, childSlug);
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+
+  // Отримуємо параметр бренду з query
+  const brand = queryParams.get("brand");
+
+  console.log(brand);
+
+  const selectedBrands = useSelector(
+    (state: RootState) => state.filters.brands
+  );
+
+  const { products, loading, categories } = useSelector(
+    (state: RootState) => state.filters,
+    shallowEqual
+  );
 
   const allCategories = useSelector(
-    (state: RootState) => state.categories.categories
+    (state: RootState) => state.categories.categories,
+    shallowEqual
   );
 
   useEffect(() => {
-    dispatch(setCategories([]));
     dispatch(setBrands([]));
-
-    dispatch(fetchProducts({}));
-  }, [slug, parentSlug, dispatch]);
+  }, [childSlug, dispatch]);
 
   useEffect(() => {
-    const filters: { isNew?: boolean; onSale?: boolean } = {};
+    if (categories.length > 0) {
+      dispatch(fetchProducts({ categories })); // ✅ Робимо новий запит тільки якщо є категорії
+    }
+  }, [categories, dispatch]);
 
-    if (slug === "news") filters.isNew = true;
-    if (slug === "sales") filters.onSale = true;
-
-    // Якщо є parentSlug та childSlug, то обираємо відповідну категорію
+  useEffect(() => {
     let categoryId = null;
     if (parentSlug && childSlug) {
       const parentCategory = allCategories.find(
@@ -50,44 +61,70 @@ export const CatalogPage: React.FC<{ openFilter?: () => void }> = ({
       const childCategory = allCategories.find(
         (cat) => cat.slug === childSlug && cat.parent === parentCategory?.id
       );
-      if (childCategory) {
-        categoryId = childCategory.id.toString();
-      }
+      categoryId = childCategory?.id?.toString() || null;
     } else if (slug) {
-      // Якщо тільки slug
-      const category = allCategories.find((cat) => cat.slug === slug);
-      if (category) categoryId = category.id.toString();
+      categoryId =
+        allCategories.find((cat) => cat.slug === slug)?.id?.toString() || null;
     }
 
-    // Якщо знайдена категорія, додаємо її до фільтрів
-    if (categoryId && !categories.includes(categoryId)) {
-      dispatch(setCategories([...categories, categoryId]));
+    if (categoryId && categories[0] !== categoryId) {
+      console.log("Оновлюємо категорію з URL:", categoryId);
+      dispatch(setCategories([categoryId]));
     }
+  }, [slug, parentSlug, childSlug, dispatch, allCategories, categories]); // ✅ Додаємо `categories`
 
-    dispatch(fetchProducts(filters));
-  }, [slug, parentSlug, childSlug, categories, dispatch, allCategories]);
-
-  const category = allCategories.find(
-    (cat) => cat.slug === slug || cat.slug == parentSlug
+  const category = useMemo(
+    () =>
+      allCategories.find((cat) => cat.slug === slug || cat.slug === parentSlug),
+    [slug, parentSlug, allCategories]
   );
 
-  const categoryName =
-    slug === "news"
-      ? "Новинки"
-      : slug === "sales"
-      ? "Акції"
-      : category
-      ? category.name
-      : "Всі товари";
-
-  const childCategories = allCategories.filter(
-    (cat) => cat.parent === (category ? category.id : null)
+  const categoryName = useMemo(
+    () =>
+      slug === "news"
+        ? "Новинки"
+        : slug === "sales"
+        ? "Акції"
+        : category
+        ? category.name
+        : "Всі товари",
+    [slug, category]
   );
 
-  console.log(childCategories);
+  const childCategories = useMemo(
+    () =>
+      allCategories.filter(
+        (cat) => cat.parent === (category ? category.id : null)
+      ),
+    [category, allCategories]
+  );
+
+  const navigate = useNavigate();
+
+  const handleCategoryClick = useCallback(
+    (childId: string, childSlug: string) => {
+      const newParentSlug = parentSlug || slug; // Якщо parentSlug немає, використовуємо slug як parent
+      navigate(`/catalog/${newParentSlug}/${childSlug}`); // ✅ Коректно оновлюємо URL
+
+      if (categories[0] !== childId) {
+        dispatch(setCategories([childId]));
+        dispatch(fetchProducts({ categories: [childId] }));
+      }
+    },
+    [dispatch, categories, navigate, parentSlug, slug]
+  );
+
+  useEffect(() => {
+    if (brand && !selectedBrands.includes(brand)) {
+      dispatch(setBrands([brand]));
+      dispatch(fetchProducts({}));
+    }
+  }, [brand, dispatch, selectedBrands]);
 
   return (
     <main className={s.page}>
+      {isFilterOpen && <Filters onClose={() => setIsFilterOpen(false)} />}
+
       <Layout>
         <div className={s.categoryHeader}>
           <h1>{categoryName}</h1>
@@ -103,20 +140,9 @@ export const CatalogPage: React.FC<{ openFilter?: () => void }> = ({
                     className={
                       categories.includes(child.id.toString()) ? s.active : ""
                     }
-                    onClick={() => {
-                      const childId = child.id.toString();
-                      if (categories.includes(childId)) {
-                        // Якщо категорія вже вибрана, знімаємо вибір
-                        dispatch(
-                          setCategories(
-                            categories.filter((id) => id !== childId)
-                          )
-                        );
-                      } else {
-                        // Вибираємо тільки одну категорію
-                        dispatch(setCategories([childId]));
-                      }
-                    }}
+                    onClick={() =>
+                      handleCategoryClick(child.id.toString(), child.slug)
+                    }
                   >
                     {child.name}
                   </button>
@@ -127,7 +153,7 @@ export const CatalogPage: React.FC<{ openFilter?: () => void }> = ({
         )}
 
         <div className={s.filterController}>
-          <button onClick={openFilter}>
+          <button onClick={() => setIsFilterOpen(true)}>
             <svg
               width="24"
               height="24"

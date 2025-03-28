@@ -19,9 +19,9 @@ interface FiltersState {
 
 const initialState: FiltersState = {
   minPrice: 100,
-  maxPrice: 5000,
+  maxPrice: 10000,
   onSale: false,
-  inStock: true,
+  inStock: false,
   categories: [],
   attributes: [],
   attributeTerms: [],
@@ -33,7 +33,11 @@ const initialState: FiltersState = {
 export const fetchProducts = createAsyncThunk(
   "filters/fetchProducts",
   async (
-    { isNew, onSale }: { isNew?: boolean; onSale?: boolean } = {},
+    {
+      isNew,
+      onSale,
+      categories,
+    }: { isNew?: boolean; onSale?: boolean; categories?: string[] } = {},
     { getState }
   ) => {
     const state = getState() as { filters: FiltersState };
@@ -42,15 +46,15 @@ export const fetchProducts = createAsyncThunk(
       min_price: state.filters.minPrice,
       max_price: state.filters.maxPrice,
       stock_status: state.filters.inStock ? "instock" : "outofstock",
-      brand: state.filters.brands.join(","), // Бренди
+      brand: state.filters.brands.join(","),
     };
 
-    // Додаємо категорію, якщо вона вибрана
-    if (state.filters.categories.length > 0) {
-      params["category"] = state.filters.categories[0]; // Передаємо тільки одну категорію
+    if (categories && categories.length > 0) {
+      params["category"] = categories[0];
+    } else if (state.filters.categories.length > 0) {
+      params["category"] = state.filters.categories[0];
     }
 
-    // Додаємо фільтрацію за атрибутами, якщо вони є
     if (
       state.filters.attributes.length > 0 &&
       state.filters.attributeTerms.length > 0

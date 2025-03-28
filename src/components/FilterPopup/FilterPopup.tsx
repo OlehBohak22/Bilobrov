@@ -16,7 +16,7 @@ import { motion } from "framer-motion";
 import s from "./FilterPopup.module.css";
 import { RangeInput } from "./RangeInput";
 
-const Filters: React.FC<{
+export const Filters: React.FC<{
   onClose: () => void;
 }> = ({ onClose }) => {
   const dispatch = useAppDispatch();
@@ -24,8 +24,6 @@ const Filters: React.FC<{
     useSelector((state: RootState) => state.filters);
 
   const brands = useSelector((state: RootState) => state.brands.items);
-
-  console.log(brands);
 
   const [categoryiIsOpen, setCategoryIsOpen] = useState(false);
   const [brandsIsOpen, setBrandsIsOpen] = useState(false);
@@ -60,8 +58,6 @@ const Filters: React.FC<{
     (state: RootState) => state.filters.brands
   );
   const handleBrandChange = (brand: string) => {
-    console.log(brand);
-
     dispatch(
       setBrands(
         selectedBrands.includes(brand)
@@ -71,6 +67,15 @@ const Filters: React.FC<{
     );
   };
 
+  // Локальні стани для діапазону
+  const [localMinPrice, setLocalMinPrice] = useState(minPrice);
+  const [localMaxPrice, setLocalMaxPrice] = useState(maxPrice);
+
+  useEffect(() => {
+    // Оновлюємо локальний стан при першому рендері або при зміні значень в Redux
+    setLocalMinPrice(minPrice);
+    setLocalMaxPrice(maxPrice);
+  }, [maxPrice, minPrice]);
   return (
     <div className={s.modalOverlay}>
       <motion.div
@@ -121,31 +126,17 @@ const Filters: React.FC<{
           </div>
 
           <div>
-            <label>
-              Ціна: {minPrice} - {maxPrice}
-            </label>
-
             <div className={s.rangeContainer}>
-              <input
-                type="range"
-                min="100"
-                max="10000"
-                value={minPrice}
-                onChange={(e) => dispatch(setMinPrice(Number(e.target.value)))}
-                className={`${s.minPrice} ${s.rangeInput}`}
-              />
-              <input
-                type="range"
-                min="100"
-                max="10000"
-                value={maxPrice}
-                onChange={(e) => dispatch(setMaxPrice(Number(e.target.value)))}
-                className={`${s.maxPrice} ${s.rangeInput}`}
+              <RangeInput
+                min={minPrice}
+                max={maxPrice}
+                onChange={({ min, max }) => {
+                  setLocalMinPrice(min); // Оновлюємо локальний стан для діапазону
+                  setLocalMaxPrice(max); // Оновлюємо локальний стан для діапазону
+                }}
               />
             </div>
           </div>
-
-          <RangeInput rtl={false} />
 
           <div className={s.backDropCOntaienr}>
             <div className={s.backDrop}>
@@ -251,7 +242,10 @@ const Filters: React.FC<{
         <button
           className={s.btn}
           onClick={() => {
+            dispatch(setMinPrice(localMinPrice));
+            dispatch(setMaxPrice(localMaxPrice));
             dispatch(fetchProducts({}));
+
             onClose();
           }}
           disabled={loading}
@@ -271,5 +265,3 @@ const Filters: React.FC<{
     </div>
   );
 };
-
-export default Filters;

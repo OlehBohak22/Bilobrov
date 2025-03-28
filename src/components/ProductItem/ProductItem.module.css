@@ -122,7 +122,7 @@
   border-radius: 50%;
   background-color: var(--primary);
   transition: opacity 0.3s;
-  z-index: 999999999999999999;
+  z-index: 999;
 
   svg {
     width: 1.1vw;

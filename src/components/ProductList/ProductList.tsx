@@ -33,18 +33,12 @@ export const ProductList = ({
   const [filteredProducts, setFilteredProducts] = useState(products);
 
   useEffect(() => {
-    console.log("Fetching products...");
-
-    console.log(products);
-
     if (!products.length) {
       dispatch(fetchProducts());
     }
   }, [dispatch, products, products.length]);
 
   useEffect(() => {
-    console.log("Fetching products...");
-
     if (!products.length) {
       dispatch(fetchProducts());
     }

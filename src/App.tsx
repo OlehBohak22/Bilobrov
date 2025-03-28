@@ -1,4 +1,4 @@
-import { Route, Routes, useNavigate, useLocation } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import "./App.css";
 import { Header } from "./components/Header/Header";
 import { HomePage } from "./Pages/HomePage/HomePage";
@@ -15,7 +15,7 @@ import { RegisterModal } from "./components/RegisterPopup/Register";
 import { RootState } from "./store/index";
 import { fetchProducts } from "./store/slices/productsSlice";
 import { WishListPopup } from "./components/WishListPopup/WishListPopup";
-import { LoadingBar } from "./components/LoadingBar/LoadingBar"; // Додаємо LoadingBar
+// import { LoadingBar } from "./components/LoadingBar/LoadingBar";
 import { CartPopup } from "./components/CartPopup/CartPopup";
 import { ProductPage } from "./Pages/ProductPage/ProductPage";
 import { ReviewPopup } from "./components/ReviewPopup/ReviewPopup";
@@ -27,21 +27,19 @@ import { CatalogPage } from "./Pages/CatalogPage/CatalogPage";
 import { BrandsPage } from "./Pages/BrandsPage/BrandsPage";
 import { fetchBrands } from "./store/slices/popularBrandsSlice";
 import { fetchCategories } from "./store/slices/categorySlice";
-import Filters from "./components/FilterPopup/FilterPopup";
 import { OrderPage } from "./Pages/OrderPage/OrderPage";
 import { fetchCities } from "./store/slices/citiesSlice";
 
 function App() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const location = useLocation();
+  // const location = useLocation();
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isWishList, setIsWishList] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isReview, setIsReview] = useState(false);
-  const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const [loading, setLoading] = useState(true); // Додаємо стейт для смужки
+  // const [loading, setLoading] = useState(true);
   const { user } = useSelector((state: RootState) => state.user);
 
   const { currentProduct } = useSelector((state: any) => state.products);
@@ -92,29 +90,28 @@ function App() {
     setIsRegisterOpen(false);
     setIsWishList(false);
     setIsCartOpen(false);
-    setIsFilterOpen(false);
     setIsReview(false);
     setIsMenuOpen(false);
     document.body.style.overflow = "visible";
   };
 
-  useEffect(() => {
-    setLoading(true);
-    handleCloseModals();
+  // useEffect(() => {
+  //   setLoading(true);
+  //   handleCloseModals();
 
-    const timeout = setTimeout(() => setLoading(false), 1000); // Імітуємо завантаження
-    return () => clearTimeout(timeout);
-  }, [location.pathname]); // Виконується при зміні URL
+  //   const timeout = setTimeout(() => setLoading(false), 1000); // Імітуємо завантаження
+  //   return () => clearTimeout(timeout);
+  // }, [location.pathname]); // Виконується при зміні URL
 
-  // Якщо loading === true, показуємо лише LoadingBar
-  if (loading) {
-    return <LoadingBar loading={loading} />;
-  }
+  // // Якщо loading === true, показуємо лише LoadingBar
+  // if (loading) {
+  //   return <LoadingBar loading={loading} />;
+  // }
 
   // Видаляємо умовний рендеринг LoadingBar
   return (
     <>
-      <LoadingBar loading={loading} /> {/* Завжди рендеримо LoadingBar */}
+      {/* <LoadingBar loading={loading} />  */}
       <CartInitializer />
       <Header
         openRegister={handleOpenRegister}
@@ -125,7 +122,6 @@ function App() {
       {isRegisterOpen && <RegisterModal onClose={handleCloseModals} />}
       {isWishList && <WishListPopup onClose={handleCloseModals} />}
       {isCartOpen && <CartPopup onClose={handleCloseModals} />}
-      {isFilterOpen && <Filters onClose={handleCloseModals} />}
       {isMenuOpen && (
         <MenuPopup
           openPopup={() => {
@@ -154,23 +150,10 @@ function App() {
         <Route path="/brendy" element={<BrandsPage />} />
         <Route path="/order" element={<OrderPage />} />
 
-        {/* Вкладена структура для каталогу */}
-        <Route
-          path="/catalog"
-          element={<CatalogPage openFilter={() => setIsFilterOpen(true)} />}
-        >
-          <Route
-            index
-            element={<CatalogPage openFilter={() => setIsFilterOpen(true)} />}
-          />
-          <Route
-            path=":slug"
-            element={<CatalogPage openFilter={() => setIsFilterOpen(true)} />}
-          />
-          <Route
-            path=":parentSlug/:childSlug"
-            element={<CatalogPage openFilter={() => setIsFilterOpen(true)} />}
-          />
+        <Route path="/catalog" element={<CatalogPage />}>
+          <Route index element={<CatalogPage />} />
+          <Route path=":slug" element={<CatalogPage />} />
+          <Route path=":parentSlug/:childSlug" element={<CatalogPage />} />
         </Route>
 
         {/* Сторінка товару */}
