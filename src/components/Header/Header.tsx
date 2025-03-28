@@ -7,20 +7,6 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { buildMenuTree } from "../../utils/buildMenuTree";
 
-const formatCategoryUrl = (url: string) => {
-  let modifiedUrl = url.replace(/\/$/, "");
-  const lastPart = modifiedUrl.split("/").pop();
-
-  if (modifiedUrl.includes("support")) {
-    return modifiedUrl.endsWith("support")
-      ? "/support"
-      : `/support#${modifiedUrl.split("support/")[1]}`;
-  }
-
-  const match = modifiedUrl.match(/product-category\/([^/]+)\/([^/]+)$/);
-  return match ? `/catalog/${match[1]}/${lastPart}` : modifiedUrl;
-};
-
 interface HeaderProps {
   openRegister: () => void;
   openWishList: () => void;
