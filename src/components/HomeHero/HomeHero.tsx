@@ -1,8 +1,8 @@
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { fetchBanner } from "../../store/slices/bannerSlice";
+// import { fetchBanner } from "../../store/slices/bannerSlice";
 import { RootState } from "../../store";
-import { useAppDispatch } from "../../hooks/useAppDispatch";
+// import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { Swiper, SwiperSlide } from "swiper/react"; // Імпорт компонентів Swiper
 import "swiper/css"; // Базові стилі Swiper
 import "swiper/css/pagination"; // Стилі для пагінації
@@ -12,13 +12,13 @@ import { Pagination, Autoplay } from "swiper/modules";
 import "./HomeHero.css";
 
 export const HomeHero = () => {
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
 
   const { items: banners } = useSelector((state: RootState) => state.banner);
 
-  useEffect(() => {
-    dispatch(fetchBanner());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(fetchBanner());
+  // }, [dispatch]);
 
   return (
     <section className={s.sliderContainer}>

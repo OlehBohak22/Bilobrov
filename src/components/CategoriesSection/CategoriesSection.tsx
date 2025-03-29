@@ -28,6 +28,14 @@ export const CategoriesSection: React.FC<CategoriesSectionProps> = ({
     selectSubcategories(parentId)(state)
   );
 
+  console.log(categories);
+
+  console.log(subcategories);
+
+  const parentSlug = categories.find((item) => item.id === parentId)?.slug;
+
+  console.log(parentSlug);
+
   useEffect(() => {
     if (categories.length === 0) {
       dispatch(fetchCategories());
@@ -47,7 +55,7 @@ export const CategoriesSection: React.FC<CategoriesSectionProps> = ({
       <div className={s.titleContainer}>
         <span className={s.stub}>stuuuuuuuuuuuuuuuuuuuuub</span>
         {children}
-        <Link to="/">
+        <Link to={`/catalog/${parentSlug}`}>
           <span>Перейти до категорії</span>
           <svg
             viewBox="0 0 25 25"
@@ -77,7 +85,7 @@ export const CategoriesSection: React.FC<CategoriesSectionProps> = ({
         <ul className={s.categoriesList}>
           {!reverse && (
             <li className={s.large} key={subcategories[0].id}>
-              <Link to="/">
+              <Link to="/sdgfsdg">
                 <p>{subcategories[0].name}</p>
                 <img src={subcategories[0].image?.src} alt="" />
 
@@ -118,7 +126,7 @@ export const CategoriesSection: React.FC<CategoriesSectionProps> = ({
           <div className={s.subcategoriesContainer}>
             {subcategories.slice(1).map((sub) => (
               <li key={sub.id}>
-                <Link to="/">
+                <Link to={`catalog/${parentSlug}/${sub.slug}`}>
                   <p>{sub.name}</p>
                   {sub.image?.src && <img src={sub.image.src} alt="" />}
                   <div className={s.linkHover}>
@@ -158,7 +166,7 @@ export const CategoriesSection: React.FC<CategoriesSectionProps> = ({
 
           {reverse && (
             <li className={s.large} key={subcategories[0].id}>
-              <Link to="/">
+              <Link to={`/catalog/${parentSlug}/${subcategories[0].slug}`}>
                 <p>{subcategories[0].name}</p>
                 <img src={subcategories[0].image?.src} alt="" />
                 <div className={s.linkHover}>

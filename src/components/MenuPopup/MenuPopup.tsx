@@ -161,7 +161,9 @@ export const MenuPopup: React.FC<{
                     {item.title}
                   </button>
                 ) : (
-                  <Link to={modifiedUrl}>{item.title}</Link>
+                  <Link onClick={onClose} to={modifiedUrl}>
+                    {item.title}
+                  </Link>
                 )}
 
                 {item.children.length > 0 && openMenu === item.id && (
@@ -178,6 +180,9 @@ export const MenuPopup: React.FC<{
                   >
                     {item.children.map((child) => {
                       let modifiedChildUrl = child.url.replace(/\/$/, "");
+
+                      const lastPart = modifiedChildUrl.split("/").pop();
+
                       if (modifiedChildUrl.endsWith("support")) {
                         modifiedChildUrl = "support/";
                       } else {
@@ -189,15 +194,18 @@ export const MenuPopup: React.FC<{
                       }
 
                       const childCategoryMatch = modifiedChildUrl.match(
-                        /product-category\/([^/]+)$/
+                        /product-category\/([^/]+)\/([^/]+)$/
                       );
+
                       if (childCategoryMatch) {
-                        modifiedChildUrl = `/category/${childCategoryMatch[1]}`;
+                        modifiedChildUrl = `/catalog/${childCategoryMatch[1]}/${lastPart}`;
                       }
 
                       return (
                         <li key={child.id}>
-                          <Link to={modifiedChildUrl}>{child.title}</Link>
+                          <Link onClick={onClose} to={modifiedChildUrl}>
+                            {child.title}
+                          </Link>
                         </li>
                       );
                     })}

@@ -3,11 +3,15 @@ import { Layout } from "../../components/Layout/Layout";
 import s from "./BrandsPage.module.css";
 import { RootState } from "../../store";
 import { Link } from "react-router";
+import { Breadcrumbs } from "@mui/material";
 
 export const BrandsPage = () => {
   const brands = useSelector((state: RootState) => state.brands);
 
-  console.log(brands);
+  const breadcrumbs = [
+    { name: "Головна", link: "/" },
+    { name: "Бренди", link: "/brendy" },
+  ];
 
   const groupedBrands = brands.items.reduce(
     (acc: Record<string, any[]>, brand) => {
@@ -23,6 +27,15 @@ export const BrandsPage = () => {
 
   return (
     <main className={s.page}>
+      <Layout>
+        <Breadcrumbs aria-label="breadcrumb" className="breadcrumbs">
+          {breadcrumbs.map((breadcrumb, index) => (
+            <Link key={index} to={breadcrumb.link}>
+              {breadcrumb.name}
+            </Link>
+          ))}
+        </Breadcrumbs>
+      </Layout>
       <section>
         <Layout>
           <h1>Бренди</h1>

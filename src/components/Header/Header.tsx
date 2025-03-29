@@ -142,7 +142,6 @@ export const Header: React.FC<HeaderProps> = ({
                                   modifiedChildUrl.split("support/")[1]
                                 }`;
                           } else {
-                            // Перевірка для product-category/{parent}/{child} у дочірніх елементах
                             const childCategoryMatch = modifiedChildUrl.match(
                               /product-category\/([^/]+)\/([^/]+)$/
                             );

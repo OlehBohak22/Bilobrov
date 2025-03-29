@@ -22,7 +22,7 @@ interface BannerState {
 
 const initialState: BannerState = {
   items: [],
-  loading: false,
+  loading: true,
   error: null,
 };
 

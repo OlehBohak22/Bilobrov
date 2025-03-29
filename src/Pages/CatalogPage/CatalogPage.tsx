@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useCallback, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { useSelector, shallowEqual } from "react-redux";
 import { Layout } from "../../components/Layout/Layout";
 import s from "./CatalogPage.module.css";
@@ -9,10 +9,12 @@ import {
   fetchProducts,
   setBrands,
   setCategories,
+  setOnSale,
 } from "../../store/slices/filterSlice";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { useNavigate } from "react-router-dom";
 import { Filters } from "../../components/FilterPopup/FilterPopup";
+import { Breadcrumbs } from "@mui/material";
 
 export const CatalogPage = () => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -25,8 +27,6 @@ export const CatalogPage = () => {
 
   // Отримуємо параметр бренду з query
   const brand = queryParams.get("brand");
-
-  console.log(brand);
 
   const selectedBrands = useSelector(
     (state: RootState) => state.filters.brands
@@ -53,25 +53,34 @@ export const CatalogPage = () => {
   }, [categories, dispatch]);
 
   useEffect(() => {
-    let categoryId = null;
-    if (parentSlug && childSlug) {
-      const parentCategory = allCategories.find(
-        (cat) => cat.slug === parentSlug
-      );
-      const childCategory = allCategories.find(
-        (cat) => cat.slug === childSlug && cat.parent === parentCategory?.id
-      );
-      categoryId = childCategory?.id?.toString() || null;
-    } else if (slug) {
-      categoryId =
-        allCategories.find((cat) => cat.slug === slug)?.id?.toString() || null;
-    }
+    if (slug === "news") {
+      dispatch(fetchProducts({ isNew: true }));
+      dispatch(setOnSale(false));
+    } else if (slug === "sales") {
+      dispatch(setOnSale(true));
+      dispatch(fetchProducts({ onSale: true }));
+    } else {
+      let categoryId = null;
+      if (parentSlug && childSlug) {
+        const parentCategory = allCategories.find(
+          (cat) => cat.slug === parentSlug
+        );
+        const childCategory = allCategories.find(
+          (cat) => cat.slug === childSlug && cat.parent === parentCategory?.id
+        );
+        categoryId = childCategory?.id?.toString() || null;
+      } else if (slug) {
+        categoryId =
+          allCategories.find((cat) => cat.slug === slug)?.id?.toString() ||
+          null;
+      }
 
-    if (categoryId && categories[0] !== categoryId) {
-      console.log("Оновлюємо категорію з URL:", categoryId);
-      dispatch(setCategories([categoryId]));
+      if (categoryId && categories[0] !== categoryId) {
+        console.log("Оновлюємо категорію з URL:", categoryId);
+        dispatch(setCategories([categoryId]));
+      }
     }
-  }, [slug, parentSlug, childSlug, dispatch, allCategories, categories]); // ✅ Додаємо `categories`
+  }, [slug, parentSlug, childSlug, dispatch, allCategories, categories]);
 
   const category = useMemo(
     () =>
@@ -117,13 +126,41 @@ export const CatalogPage = () => {
   useEffect(() => {
     if (brand && !selectedBrands.includes(brand)) {
       dispatch(setBrands([brand]));
+      dispatch(setCategories([]));
       dispatch(fetchProducts({}));
     }
   }, [brand, dispatch, selectedBrands]);
 
+  const breadcrumbs = [
+    { name: "Головна", link: "/" },
+    { name: categoryName, link: `/catalog/${parentSlug || slug}` },
+  ];
+
+  if (childSlug) {
+    const childCategory = allCategories.find(
+      (cat) => cat.slug === childSlug && cat.parent === category?.id
+    );
+    const childCategoryName = childCategory ? childCategory.name : "Категорія";
+
+    breadcrumbs.push({
+      name: childCategoryName,
+      link: `/catalog/${parentSlug || slug}/${childSlug}`,
+    });
+  }
+
   return (
     <main className={s.page}>
       {isFilterOpen && <Filters onClose={() => setIsFilterOpen(false)} />}
+
+      <Layout>
+        <Breadcrumbs aria-label="breadcrumb" className="breadcrumbs">
+          {breadcrumbs.map((breadcrumb, index) => (
+            <Link key={index} to={breadcrumb.link}>
+              {breadcrumb.name}
+            </Link>
+          ))}
+        </Breadcrumbs>
+      </Layout>
 
       <Layout>
         <div className={s.categoryHeader}>
@@ -174,7 +211,7 @@ export const CatalogPage = () => {
         </div>
 
         {loading ? (
-          <p>Завантаження...</p>
+          <div className={s.loader}></div>
         ) : (
           <ul className={s.list}>
             {products.map((item) => (

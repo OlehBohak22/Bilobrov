@@ -29,6 +29,8 @@ import { fetchBrands } from "./store/slices/popularBrandsSlice";
 import { fetchCategories } from "./store/slices/categorySlice";
 import { OrderPage } from "./Pages/OrderPage/OrderPage";
 import { fetchCities } from "./store/slices/citiesSlice";
+import { fetchBanner } from "./store/slices/bannerSlice";
+import LoadingBar from "./components/LoadingBar/LoadingBar";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -95,6 +97,14 @@ function App() {
     document.body.style.overflow = "visible";
   };
 
+  const { loading } = useSelector((state: RootState) => state.banner);
+
+  useEffect(() => {
+    if (loading) {
+      dispatch(fetchBanner());
+    }
+  }, [dispatch, loading]);
+
   // useEffect(() => {
   //   setLoading(true);
   //   handleCloseModals();
@@ -111,63 +121,68 @@ function App() {
   // Видаляємо умовний рендеринг LoadingBar
   return (
     <>
-      {/* <LoadingBar loading={loading} />  */}
-      <CartInitializer />
-      <Header
-        openRegister={handleOpenRegister}
-        openWishList={handleOpenWishList}
-        openCart={handleOpenCart}
-        openMenu={() => setIsMenuOpen(true)}
-      />
-      {isRegisterOpen && <RegisterModal onClose={handleCloseModals} />}
-      {isWishList && <WishListPopup onClose={handleCloseModals} />}
-      {isCartOpen && <CartPopup onClose={handleCloseModals} />}
-      {isMenuOpen && (
-        <MenuPopup
-          openPopup={() => {
-            handleOpenRegister();
-            setIsMenuOpen(false);
-          }}
-          onClose={handleCloseModals}
-        />
-      )}
-      {isReview && (
-        <ReviewPopup
-          onClose={handleCloseModals}
-          product_id={currentProduct?.id}
-        />
-      )}
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/about" element={<AboutPage />} />
-        <Route path="/support" element={<ClientsSupportPage />} />
-        <Route path="/bilobrov-club" element={<BonusPage />} />
-        <Route
-          path="/podarunkovi-sertyfikaty-20"
-          element={<CertificatePage />}
-        />
-        <Route path="/account" element={<AccountPage />} />
-        <Route path="/brendy" element={<BrandsPage />} />
-        <Route path="/order" element={<OrderPage />} />
-
-        <Route path="/catalog" element={<CatalogPage />}>
-          <Route index element={<CatalogPage />} />
-          <Route path=":slug" element={<CatalogPage />} />
-          <Route path=":parentSlug/:childSlug" element={<CatalogPage />} />
-        </Route>
-
-        {/* Сторінка товару */}
-        <Route
-          path="/product/:id"
-          element={
-            <ProductPage
-              openReview={handleOpenReview}
-              openRegister={handleOpenRegister}
+      {loading ? (
+        <LoadingBar />
+      ) : (
+        <>
+          <CartInitializer />
+          <Header
+            openRegister={handleOpenRegister}
+            openWishList={handleOpenWishList}
+            openCart={handleOpenCart}
+            openMenu={() => setIsMenuOpen(true)}
+          />
+          {isRegisterOpen && <RegisterModal onClose={handleCloseModals} />}
+          {isWishList && <WishListPopup onClose={handleCloseModals} />}
+          {isCartOpen && <CartPopup onClose={handleCloseModals} />}
+          {isMenuOpen && (
+            <MenuPopup
+              openPopup={() => {
+                handleOpenRegister();
+                setIsMenuOpen(false);
+              }}
+              onClose={handleCloseModals}
             />
-          }
-        />
-      </Routes>
-      <Footer />
+          )}
+          {isReview && (
+            <ReviewPopup
+              onClose={handleCloseModals}
+              product_id={currentProduct?.id}
+            />
+          )}
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/support" element={<ClientsSupportPage />} />
+            <Route path="/bilobrov-club" element={<BonusPage />} />
+            <Route
+              path="/podarunkovi-sertyfikaty-20"
+              element={<CertificatePage />}
+            />
+            <Route path="/account" element={<AccountPage />} />
+            <Route path="/brendy" element={<BrandsPage />} />
+            <Route path="/order" element={<OrderPage />} />
+
+            <Route path="/catalog" element={<CatalogPage />}>
+              <Route index element={<CatalogPage />} />
+              <Route path=":slug" element={<CatalogPage />} />
+              <Route path=":parentSlug/:childSlug" element={<CatalogPage />} />
+            </Route>
+
+            {/* Сторінка товару */}
+            <Route
+              path="/product/:slug/:id"
+              element={
+                <ProductPage
+                  openReview={handleOpenReview}
+                  openRegister={handleOpenRegister}
+                />
+              }
+            />
+          </Routes>
+          <Footer />
+        </>
+      )}
     </>
   );
 }

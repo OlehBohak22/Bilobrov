@@ -1,14 +1,37 @@
+/* LoadingBar.css */
 .loadingBar {
   position: fixed;
   top: 0;
   left: 0;
-  height: 4px;
-  width: 0%;
-  background-color: var(--primary);
-  transition: width 0.7s ease-in-out;
-  z-index: 1000;
+  width: 100%;
+  height: 4px; /* Висота смужки */
+  background-color: #f1f1f1;
+  z-index: 9999; /* Щоб смужка була поверх контенту */
 }
 
-.active {
-  width: 100%;
+.loadingBarProgress {
+  height: 100%;
+  background-color: var(--primary); /* Колір прогресу */
+  width: 100%; /* Початковий розмір — повний */
+  animation: loading 2.5s;
+}
+
+@keyframes loading {
+  0% {
+    width: 0;
+  }
+
+  25% {
+    width: 25%;
+  }
+  50% {
+    width: 50%;
+  }
+
+  75% {
+    width: 75%;
+  }
+  100% {
+    width: 100%;
+  }
 }

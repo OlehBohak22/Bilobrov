@@ -72,7 +72,8 @@ export const ProductItem: React.FC<ProductItemProps> = ({
   return (
     <>
       <li key={info.id} className={s.productItem}>
-        <Link className={s.link} to={`/product/${info.id}`} />
+        <Link className={s.link} to={`/product/${info.slug}/${info.id}`} />
+
         <div className={s.block}>
           <div className={s.productImage}>
             <div className={s.markersBlock}>

@@ -1,10 +1,11 @@
-import React from "react";
-import s from "./LoadingBar.module.css";
+import s from "./LoadingBar.module.css"; // Додамо стилі для анімації
 
-interface LoadingBarProps {
-  loading: boolean;
-}
-
-export const LoadingBar: React.FC<LoadingBarProps> = ({ loading }) => {
-  return <div className={`${s.loadingBar} ${loading ? s.active : ""}`} />;
+const LoadingBar = () => {
+  return (
+    <div className={s.loadingBar}>
+      <div className={s.loadingBarProgress}></div>
+    </div>
+  );
 };
+
+export default LoadingBar;

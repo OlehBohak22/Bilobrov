@@ -39,12 +39,14 @@ const BrandsList = () => {
           >
             {items.map((brand) => (
               <SwiperSlide className={s.brandItem} key={brand.id}>
-                <div className={s.brandImageCircle}>
-                  <div className="overflow-hidden rounded-full w-[6.5vw] h-[6.5vw]">
-                    <img src={brand.popular_product.image} alt={brand.name} />
+                <Link to={`/catalog?brand=${brand.id}`}>
+                  <div className={s.brandImageCircle}>
+                    <div className="overflow-hidden rounded-full w-[6.5vw] h-[6.5vw]">
+                      <img src={brand.popular_product.image} alt={brand.name} />
+                    </div>
                   </div>
-                </div>
-                <h4>{brand.name}</h4>
+                  <h4>{brand.name}</h4>
+                </Link>
               </SwiperSlide>
             ))}
           </Swiper>

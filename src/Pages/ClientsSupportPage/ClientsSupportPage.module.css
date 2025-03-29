@@ -1,5 +1,5 @@
-.section {
-  padding: 11.8vw 0 8.3vw 0;
+.page {
+  padding: 3vw 0 8.3vw 0 !important;
 }
 
 .container {
@@ -34,18 +34,19 @@
   align-items: center;
   gap: 0.6vw;
   cursor: pointer;
-  color: #444;
   transition: 0.3s;
+  color: #666;
   font-family: Manrope;
-  font-size: 0.9vw;
-  font-weight: 700;
-  line-height: 1.2vw;
-  letter-spacing: -0.02em;
-  padding: 1.25vw;
-  background-color: #f9f7f8;
+  font-size: 0.8vw;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 137%; /* 21.92px */
+  letter-spacing: -0.01vw;
+  padding: 0.8vw 1.2vw;
+  /* background-color: #f9f7f8; */
 
   svg {
-    fill: var(--primary);
+    stroke: black;
     width: 1.25vw;
     height: 1.25vw;
     transition: fill 0.3s;
@@ -53,11 +54,11 @@
 }
 
 .tabButton:not(:last-child) {
-  margin-bottom: 0.4vw;
+  /* margin-bottom: 0.4vw; */
 }
 
 .tabButton:hover {
-  background-color: #ececec;
+  color: black;
 }
 
 .active {
@@ -66,10 +67,37 @@
   background-color: var(--primary) !important;
 
   svg {
-    fill: #ffffff;
+    stroke: white;
   }
+}
+
+.active:hover {
+  color: white;
 }
 
 .tabsContent {
   flex-grow: 1;
+}
+
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+}
+
+.loader::after {
+  content: "";
+  width: 2vw;
+  height: 2vw;
+  border: 0.2vw solid rgba(0, 0, 0, 0.2);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }

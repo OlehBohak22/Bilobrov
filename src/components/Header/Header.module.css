@@ -35,6 +35,14 @@
 .header.hovered {
   background-color: #ffffff;
 }
+.header.hovered {
+  position: static;
+  transform: none;
+}
+
+.hovered ~ main {
+  padding-top: 0;
+}
 
 .header.hovered span,
 .header:hover span {

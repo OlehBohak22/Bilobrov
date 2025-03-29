@@ -2,3 +2,26 @@
   padding-top: 15vw;
   padding-bottom: 8.3vw;
 }
+
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 20vw;
+}
+
+.loader::after {
+  content: "";
+  width: 15vw;
+  height: 15vw;
+  border: 0.2vw solid rgba(0, 0, 0, 0.2);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
