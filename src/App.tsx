@@ -47,6 +47,13 @@ function App() {
   const { currentProduct } = useSelector((state: any) => state.products);
 
   useEffect(() => {
+    document.body.style.overflow =
+      isRegisterOpen || isWishList || isCartOpen || isMenuOpen
+        ? "hidden"
+        : "visible";
+  }, [isRegisterOpen, isWishList, isCartOpen, isMenuOpen]);
+
+  useEffect(() => {
     dispatch(checkUserSession());
     dispatch(fetchProducts());
     dispatch(fetchCategories());
