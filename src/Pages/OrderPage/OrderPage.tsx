@@ -135,7 +135,7 @@ export const OrderPage: React.FC = () => {
       payment_method: paymentMethod,
       payment_method_title:
         paymentMethod === "cod" ? "Cash on delivery" : "Online payment",
-      set_paid: paymentMethod !== "cod",
+      set_paid: true,
       // status: paymentMethod === "cod" ? "on-hold" : "processing",
       customer_id: userData ? userData.ID : 0, // Якщо userData немає, ставимо 0
       billing,
