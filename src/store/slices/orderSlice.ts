@@ -8,7 +8,7 @@ export interface OrderData {
   payment_method: string;
   payment_method_title: string;
   set_paid: boolean;
-  status: string;
+  // status: string;
   customer_id?: number;
   number?: string;
   billing: {
