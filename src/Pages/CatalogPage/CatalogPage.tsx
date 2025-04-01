@@ -25,7 +25,6 @@ export const CatalogPage = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
 
-  // Отримуємо параметр бренду з query
   const brand = queryParams.get("brand");
 
   const selectedBrands = useSelector(

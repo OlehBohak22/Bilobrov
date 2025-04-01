@@ -77,7 +77,6 @@ export const OrderPage: React.FC = () => {
 
   const [warehouse, setWarehouse] = useState<string>(warehouses[0] || "");
 
-  // Стан для полів адреси
   const [billing, setBilling] = useState({
     first_name: "",
     last_name: "",
@@ -136,8 +135,8 @@ export const OrderPage: React.FC = () => {
       payment_method_title:
         paymentMethod === "cod" ? "Cash on delivery" : "Online payment",
       set_paid: true,
-      // status: paymentMethod === "cod" ? "on-hold" : "processing",
-      customer_id: userData ? userData.ID : 0, // Якщо userData немає, ставимо 0
+      status: paymentMethod === "cod" ? "on-hold" : "processing",
+      customer_id: userData ? userData.ID : 0,
       billing,
       shipping,
       line_items: cart.map((item) => ({
@@ -161,19 +160,14 @@ export const OrderPage: React.FC = () => {
     };
 
     try {
-      // Викликаємо createOrder через dispatch
       const resultAction = await dispatch(createOrder(orderData));
 
-      // Перевірка результату
       if (createOrder.fulfilled.match(resultAction)) {
-        // Якщо запит успішний
-
         dispatch(clearCart(token));
 
         setOrderSucces(resultAction.payload);
         console.log("Замовлення успішно створено:", resultAction.payload);
       } else {
-        // Якщо запит завершився помилкою
         console.error(
           "Помилка при створенні замовлення:",
           resultAction.payload
@@ -181,7 +175,6 @@ export const OrderPage: React.FC = () => {
         alert("Сталася помилка при створенні замовлення. Спробуйте ще раз.");
       }
     } catch (error) {
-      // Помилка при виконанні запиту
       console.error("Сталася помилка при запиті:", error);
       alert("Невідомий збій. Спробуйте ще раз.");
     }
