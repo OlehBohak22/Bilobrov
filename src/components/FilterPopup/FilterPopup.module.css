@@ -265,6 +265,7 @@
   cursor: pointer;
   position: relative;
   padding-left: 24px; /* Робимо місце для кастомного чекбокса */
+  text-transform: capitalize;
 }
 
 .btn {

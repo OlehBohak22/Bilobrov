@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { togglePreference } from "../../store/slices/wishlistSlice";
 import { RootState } from "../../store";
 import s from "./WishListBtn.module.css";
+import { selectUserMetaPreferences } from "../../store/selectors/userSelectors";
 
 interface WishlistButtonProps {
   productId: number;
@@ -14,9 +15,7 @@ const WishlistButton: React.FC<WishlistButtonProps> = ({ productId }) => {
   const { token } = useSelector((state: RootState) => state.user); // Вибираємо стан авторизації
 
   // БЕРЕМО preferences ЗАВДЯКИ user.meta.preferences
-  const preferences = useSelector(
-    (state: RootState) => state.user?.user?.meta?.preferences || []
-  );
+  const preferences = useSelector(selectUserMetaPreferences);
 
   const loading = useSelector((state: RootState) => state.wishlist.loading);
 

@@ -9,7 +9,7 @@ import {
   updateUserStart,
   updateUserSuccess,
   updateUserFailure,
-  setUserFromToken, // нова дія для завантаження користувача по токену
+  setUserFromToken,
 } from "../slices/userSlice";
 import { AppDispatch } from "../index"; // тип для dispatch
 import axios from "axios";
@@ -19,12 +19,10 @@ const API_URL = "https://bilobrov.projection-learn.website/wp-json";
 const consumerKey = "ck_f6e14983147c7a65ff3dd554625c6ae3069dbd5b";
 const consumerSecret = "cs_f9430f1ca298c36b0001d95521253a5b1deb2fc5";
 
-// Створюємо інстанс Axios із заголовками
 const axiosInstance = axios.create({
   baseURL: API_URL,
   withCredentials: true, // Передаємо cookies
   headers: {
-    // "X-WP-Nonce": window.wcSettings?.nonce || "", // Додаємо nonce
     Authorization: "Basic " + btoa(`${consumerKey}:${consumerSecret}`),
   },
 });

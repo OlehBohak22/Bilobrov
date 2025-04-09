@@ -1,9 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { ProductInfo } from "../../types/productTypes";
 
-const API_URL = "https://bilobrov.projection-learn.website/wp-json/wc/v3/";
-const consumerKey = "ck_f6e14983147c7a65ff3dd554625c6ae3069dbd5b";
-const consumerSecret = "cs_f9430f1ca298c36b0001d95521253a5b1deb2fc5";
+export const API_URL =
+  "https://bilobrov.projection-learn.website/wp-json/wc/v3/";
+export const consumerKey = "ck_f6e14983147c7a65ff3dd554625c6ae3069dbd5b";
+export const consumerSecret = "cs_f9430f1ca298c36b0001d95521253a5b1deb2fc5";
 
 const headers = new Headers();
 headers.set(

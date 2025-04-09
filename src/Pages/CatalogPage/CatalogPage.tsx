@@ -1,156 +1,201 @@
-import { useEffect, useMemo, useCallback, useState } from "react";
-import { Link, useLocation, useParams } from "react-router-dom";
-import { useSelector, shallowEqual } from "react-redux";
-import { Layout } from "../../components/Layout/Layout";
-import s from "./CatalogPage.module.css";
+// CatalogPage.tsx
+import React, { useEffect, useMemo, useState } from "react";
+import { useSelector } from "react-redux";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { RootState } from "../../store";
-import { ProductItem } from "../../components/ProductItem/ProductItem";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
 import {
   fetchProducts,
-  setBrands,
-  setCategories,
+  setSort,
+  setSelectedBrands,
+  setSelectedCategories,
+  setMinPrice,
+  setMaxPrice,
   setOnSale,
+  setInStock,
+  fetchAttributes,
 } from "../../store/slices/filterSlice";
-import { useAppDispatch } from "../../hooks/useAppDispatch";
-import { useNavigate } from "react-router-dom";
+import { ProductItem } from "../../components/ProductItem/ProductItem";
 import { Filters } from "../../components/FilterPopup/FilterPopup";
+import s from "./CatalogPage.module.css";
+import { Layout } from "../../components/Layout/Layout";
 import { Breadcrumbs } from "@mui/material";
+import { CustomSortDropdown } from "../../components/DropDown/DropDown";
+import { Category } from "../../types/categoryType";
 
-export const CatalogPage = () => {
+export const CatalogPage: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
-  const dispatch = useAppDispatch();
+  const location = useLocation();
+  const query = new URLSearchParams(location.search);
+
+  const {
+    products,
+    loading,
+    sort,
+    selectedCategories,
+    allCategories,
+    attributes,
+  } = useSelector((state: RootState) => ({
+    products: state.filters.products,
+    loading: state.filters.loading,
+    sort: state.filters.sort,
+    selectedCategories: state.filters.selectedCategories,
+    selectedBrands: state.filters.selectedBrands,
+    allCategories: state.categories.categories,
+    attributes: state.filters.attributes,
+  }));
+
+  console.log(attributes);
+
   const { slug, parentSlug, childSlug } = useParams();
 
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
+  const activeSlug = childSlug || parentSlug || slug;
 
-  const brand = queryParams.get("brand");
-
-  const selectedBrands = useSelector(
-    (state: RootState) => state.filters.brands
-  );
-
-  const { products, loading, categories } = useSelector(
-    (state: RootState) => state.filters,
-    shallowEqual
-  );
-
-  const allCategories = useSelector(
-    (state: RootState) => state.categories.categories,
-    shallowEqual
-  );
-
-  useEffect(() => {
-    dispatch(setBrands([]));
-  }, [childSlug, dispatch]);
-
-  useEffect(() => {
-    if (categories.length > 0) {
-      dispatch(fetchProducts({ categories })); // ✅ Робимо новий запит тільки якщо є категорії
-    }
-  }, [categories, dispatch]);
-
-  useEffect(() => {
-    if (slug === "news") {
-      dispatch(fetchProducts({ isNew: true }));
-      dispatch(setOnSale(false));
-    } else if (slug === "sales") {
-      dispatch(setOnSale(true));
-      dispatch(fetchProducts({ onSale: true }));
-    } else {
-      let categoryId = null;
-      if (parentSlug && childSlug) {
-        const parentCategory = allCategories.find(
-          (cat) => cat.slug === parentSlug
-        );
-        const childCategory = allCategories.find(
-          (cat) => cat.slug === childSlug && cat.parent === parentCategory?.id
-        );
-        categoryId = childCategory?.id?.toString() || null;
-      } else if (slug) {
-        categoryId =
-          allCategories.find((cat) => cat.slug === slug)?.id?.toString() ||
-          null;
-      }
-
-      if (categoryId && categories[0] !== categoryId) {
-        console.log("Оновлюємо категорію з URL:", categoryId);
-        dispatch(setCategories([categoryId]));
-      }
-    }
-  }, [slug, parentSlug, childSlug, dispatch, allCategories, categories]);
-
-  const category = useMemo(
-    () =>
-      allCategories.find((cat) => cat.slug === slug || cat.slug === parentSlug),
-    [slug, parentSlug, allCategories]
-  );
-
-  const categoryName = useMemo(
-    () =>
-      slug === "news"
-        ? "Новинки"
-        : slug === "sales"
-        ? "Акції"
-        : category
-        ? category.name
-        : "Всі товари",
-    [slug, category]
-  );
-
-  const childCategories = useMemo(
-    () =>
-      allCategories.filter(
-        (cat) => cat.parent === (category ? category.id : null)
-      ),
-    [category, allCategories]
-  );
-
-  const navigate = useNavigate();
-
-  const handleCategoryClick = useCallback(
-    (childId: string, childSlug: string) => {
-      const newParentSlug = parentSlug || slug; // Якщо parentSlug немає, використовуємо slug як parent
-      navigate(`/catalog/${newParentSlug}/${childSlug}`); // ✅ Коректно оновлюємо URL
-
-      if (categories[0] !== childId) {
-        dispatch(setCategories([childId]));
-        dispatch(fetchProducts({ categories: [childId] }));
-      }
-    },
-    [dispatch, categories, navigate, parentSlug, slug]
-  );
-
-  useEffect(() => {
-    if (brand && !selectedBrands.includes(brand)) {
-      dispatch(setBrands([brand]));
-      dispatch(setCategories([]));
-      dispatch(fetchProducts({}));
-    }
-  }, [brand, dispatch, selectedBrands]);
-
-  const breadcrumbs = [
-    { name: "Головна", link: "/" },
-    { name: categoryName, link: `/catalog/${parentSlug || slug}` },
-  ];
-
-  if (childSlug) {
-    const childCategory = allCategories.find(
-      (cat) => cat.slug === childSlug && cat.parent === category?.id
+  const childCategory = useMemo(() => {
+    return allCategories.find(
+      (cat) => cat.slug === activeSlug && cat.parent !== 0
     );
-    const childCategoryName = childCategory ? childCategory.name : "Категорія";
+  }, [allCategories, activeSlug]);
 
-    breadcrumbs.push({
-      name: childCategoryName,
-      link: `/catalog/${parentSlug || slug}/${childSlug}`,
+  const parentCategory = useMemo(() => {
+    if (childCategory) {
+      return allCategories.find((c) => c.id === childCategory.parent);
+    }
+    return allCategories.find(
+      (cat) => cat.slug === activeSlug && cat.parent === 0
+    );
+  }, [allCategories, childCategory, activeSlug]);
+
+  const childCategories = useMemo(() => {
+    if (!parentCategory) return [];
+    return allCategories.filter((cat) => cat.parent === parentCategory.id);
+  }, [parentCategory, allCategories]);
+
+  const onTabClick = (categoryId: number, categorySlug: string) => {
+    const currentParams = new URLSearchParams(location.search);
+    currentParams.set("categories", categoryId.toString());
+    navigate({
+      pathname: `/catalog/${categorySlug}`,
+      search: currentParams.toString(),
     });
-  }
+  };
+
+  useEffect(() => {
+    if (isFilterOpen) {
+      // Після відкриття модалки переконайся, що Redux значення актуальні
+      dispatch(setMinPrice(Number(query.get("min")) || 0));
+      dispatch(setMaxPrice(Number(query.get("max")) || 10000));
+    }
+  }, [isFilterOpen]);
+
+  useEffect(() => {
+    dispatch(fetchAttributes());
+    const categoriesFromQuery = query.get("categories");
+    const brandsFromQuery = query.get("brand") || query.get("brands");
+    const slugs = [childSlug || parentSlug || slug].filter(Boolean);
+
+    if (brandsFromQuery && !categoriesFromQuery && !slug) {
+      dispatch(setSelectedCategories([]));
+    } else if (categoriesFromQuery) {
+      dispatch(setSelectedCategories(categoriesFromQuery.split(",")));
+    } else if (slugs.length) {
+      const matchedCategories = slugs
+        .map((s) => allCategories.find((c) => c.slug === s))
+        .filter((c): c is Category => c !== undefined);
+
+      if (matchedCategories.length) {
+        dispatch(
+          setSelectedCategories(matchedCategories.map((c) => c.id.toString()))
+        );
+      }
+    }
+
+    dispatch(setMinPrice(Number(query.get("min")) || 0));
+    dispatch(setMaxPrice(Number(query.get("max")) || 10000));
+    dispatch(setInStock(query.get("stock") === "true"));
+    dispatch(setSelectedBrands(brandsFromQuery?.split(",") || []));
+
+    if (slug === "sales") {
+      dispatch(setOnSale(true));
+    } else {
+      dispatch(setOnSale(query.get("sale") === "true"));
+    }
+
+    const validSortValues = [
+      "popularity",
+      "date",
+      "price_asc",
+      "price_desc",
+      "rating",
+    ] as const;
+    const sortFromQuery = query.get("sort");
+
+    if (slug === "news") {
+      dispatch(setSort("date"));
+    } else if (validSortValues.includes(sortFromQuery as any)) {
+      dispatch(setSort(sortFromQuery as (typeof validSortValues)[number]));
+    } else {
+      dispatch(setSort("popularity"));
+    }
+
+    dispatch(fetchProducts());
+  }, [slug, parentSlug, childSlug, allCategories, location.search]);
+
+  const pageTitle = useMemo(() => {
+    if (slug === "sales") return "Акції";
+    if (slug === "news") return "Новинки";
+
+    if (selectedCategories.length !== 1) {
+      return "Всі товари";
+    }
+
+    const selectedCategory = allCategories.find(
+      (cat) => cat.id.toString() === selectedCategories[0]
+    );
+
+    if (!selectedCategory) return "Всі товари";
+
+    if (selectedCategory.parent !== 0) {
+      const parent = allCategories.find(
+        (cat) => cat.id === selectedCategory.parent
+      );
+      return parent?.name || "Всі товари";
+    }
+
+    return selectedCategory.name;
+  }, [slug, selectedCategories, allCategories]);
+
+  const breadcrumbs = useMemo(() => {
+    const list = [{ name: "Головна", link: "/" }];
+
+    if (!slug) {
+      list.push({ name: "Каталог", link: "/catalog" });
+    } else if (slug === "sales") {
+      list.push({ name: "Акції", link: "/catalog/sales" });
+    } else if (slug === "news") {
+      list.push({ name: "Новинки", link: "/catalog/news" });
+    } else if (parentCategory) {
+      list.push({
+        name: parentCategory.name,
+        link: `/catalog/${parentCategory.slug}`,
+      });
+
+      if (childCategory) {
+        list.push({
+          name: childCategory.name,
+          link: `/catalog/${parentCategory.slug}/${childCategory.slug}`,
+        });
+      }
+    }
+
+    return list;
+  }, [slug, parentCategory, childCategory]);
 
   return (
-    <main className={s.page}>
-      {isFilterOpen && <Filters onClose={() => setIsFilterOpen(false)} />}
-
+    <main>
       <Layout>
         <Breadcrumbs aria-label="breadcrumb" className="breadcrumbs">
           {breadcrumbs.map((breadcrumb, index) => (
@@ -162,26 +207,28 @@ export const CatalogPage = () => {
       </Layout>
 
       <Layout>
+        {isFilterOpen && <Filters onClose={() => setIsFilterOpen(false)} />}
+
         <div className={s.categoryHeader}>
-          <h1>{categoryName}</h1>
+          <h1>{pageTitle}</h1>
+
           <span>{products.length} продукти</span>
         </div>
 
-        {childCategories.length > 0 && slug !== "news" && (
+        {selectedCategories.length === 1 && childCategories.length > 0 && (
           <div className={s.childCategories}>
             <ul>
-              {childCategories.map((child) => (
-                <li key={child.id}>
-                  <button
-                    className={
-                      categories.includes(child.id.toString()) ? s.active : ""
-                    }
-                    onClick={() =>
-                      handleCategoryClick(child.id.toString(), child.slug)
-                    }
-                  >
-                    {child.name}
-                  </button>
+              {childCategories.map((cat) => (
+                <li
+                  key={cat.id}
+                  className={
+                    selectedCategories.includes(cat.id.toString())
+                      ? s.active
+                      : ""
+                  }
+                  onClick={() => onTabClick(cat.id, cat.slug)}
+                >
+                  {cat.name}
                 </li>
               ))}
             </ul>
@@ -191,15 +238,12 @@ export const CatalogPage = () => {
         <div className={s.filterController}>
           <button onClick={() => setIsFilterOpen(true)}>
             <svg
-              width="24"
-              height="24"
               viewBox="0 0 24 24"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
                 d="M6 12H18M3 6H21M9 18H15"
-                stroke="#1A1A1A"
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -207,14 +251,17 @@ export const CatalogPage = () => {
             </svg>
             Фільтри
           </button>
+          <div className={s.sort}>
+            <CustomSortDropdown sort={sort} />
+          </div>
         </div>
 
         {loading ? (
           <div className={s.loader}></div>
         ) : (
           <ul className={s.list}>
-            {products.map((item) => (
-              <ProductItem key={item.id} info={item} />
+            {products.map((product) => (
+              <ProductItem key={product.id} info={product} />
             ))}
           </ul>
         )}

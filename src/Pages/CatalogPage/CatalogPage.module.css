@@ -28,6 +28,22 @@
     gap: 0.5vw;
     display: flex;
     align-items: center;
+    transition: color 0.3s;
+
+    svg {
+      width: 1.2vw;
+      height: 1.2vw;
+      stroke: black;
+      transition: stroke 0.3s;
+    }
+  }
+
+  button:hover {
+    color: var(--primary);
+
+    svg {
+      stroke: var(--primary);
+    }
   }
 }
 
@@ -68,6 +84,7 @@
       line-height: 100%;
       color: rgba(26, 26, 26, 0.5);
       transition: 0.3s;
+      cursor: pointer;
     }
 
     li:hover {
