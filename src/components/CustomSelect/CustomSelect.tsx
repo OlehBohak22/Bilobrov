@@ -8,6 +8,7 @@ interface CustomSelectProps {
   options: string[];
   value: string;
   onChange: (value: string) => void;
+  className?: string;
 }
 
 export const CustomSelect: React.FC<CustomSelectProps> = ({
@@ -17,6 +18,7 @@ export const CustomSelect: React.FC<CustomSelectProps> = ({
   options,
   value,
   onChange,
+  className,
 }) => {
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
@@ -40,7 +42,7 @@ export const CustomSelect: React.FC<CustomSelectProps> = ({
   );
 
   return (
-    <div ref={selectRef} className={s.select}>
+    <div ref={selectRef} className={`${s.select} ${className}`}>
       <div className={s.selectHead} onClick={() => setOpen(!open)}>
         <p>
           {novaIcon && (

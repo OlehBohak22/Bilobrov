@@ -13,8 +13,6 @@ import { OrderFooter } from "./OrderFooter";
 import { OrderSucces } from "../../components/OrderSucces/OrderSucces";
 import { clearCart } from "../../store/slices/cartSlice";
 
-// const CITY_LIST = ["Київ", "Харків", "Львів", "Дніпро", "Одеса"];
-
 export const OrderPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const cart = useSelector((state: RootState) => state.cart.items);
@@ -25,6 +23,44 @@ export const OrderPage: React.FC = () => {
   const [house, setHouse] = useState("");
   const [entrance, setEntrance] = useState("");
   const [apartment, setApartment] = useState("");
+  const [errors, setErrors] = useState<Record<string, boolean>>({});
+
+  const validateStepOne = () => {
+    const newErrors: Record<string, boolean> = {};
+
+    if (!billing.first_name.trim()) newErrors.first_name = true;
+    if (!billing.last_name.trim()) newErrors.last_name = true;
+    if (!billing.middle_name.trim()) newErrors.middle_name = true;
+    if (!billing.phone.trim()) newErrors.phone = true;
+    if (!billing.email.trim()) newErrors.email = true;
+
+    if (!shipper) {
+      if (!shipping.first_name.trim()) newErrors.shipping_first_name = true;
+      if (!shipping.last_name.trim()) newErrors.shipping_last_name = true;
+      if (!shipping.middle_name.trim()) newErrors.shipping_middle_name = true;
+      if (!shipping.phone.trim()) newErrors.shipping_phone = true;
+      if (!shipping.email.trim()) newErrors.shipping_email = true;
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const validateStepTwo = () => {
+    const newErrors: Record<string, boolean> = {};
+
+    if (!selectedCity.trim()) newErrors.city = true;
+
+    if (departmentSelect === "На відділення") {
+      if (!warehouse.trim()) newErrors.warehouse = true;
+    } else if (departmentSelect === "Кур'єр") {
+      if (!selectedStreet.trim()) newErrors.street = true;
+      if (!house.trim()) newErrors.house = true;
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const userData = useSelector((state: RootState) => state.user.user);
   const { token } = useSelector((state: RootState) => state.user);
@@ -77,22 +113,24 @@ export const OrderPage: React.FC = () => {
 
   const [warehouse, setWarehouse] = useState<string>(warehouses[0] || "");
 
+  const { user } = useSelector((state: RootState) => state.user);
+  console.log(user);
+
   const [billing, setBilling] = useState({
-    first_name: "",
-    last_name: "",
+    first_name: user?.name || "",
+    last_name: user?.secondName || "",
     middle_name: "",
     address_1: "",
     city: "",
     state: "",
     postcode: "",
     country: "UA",
-    email: "",
-    phone: "",
+    email: user?.email || "",
+    phone: user?.meta.phone || "",
   });
 
   const [shipping, setShipping] = useState({ ...billing });
 
-  // Оновлюємо адресу при зміні вибору міста, відділення або вулиці
   useEffect(() => {
     setBilling((prev) => ({
       ...prev,
@@ -104,7 +142,6 @@ export const OrderPage: React.FC = () => {
     }));
   }, [selectedCity, selectedStreet, warehouse, departmentSelect, fullAddress]);
 
-  // Якщо shipper активний, оновлюємо shipping
   useEffect(() => {
     if (shipper) {
       setShipping(billing);
@@ -113,7 +150,12 @@ export const OrderPage: React.FC = () => {
 
   const [paymentMethod, setPaymentMethod] = useState("cod");
 
-  const handleNextStep = () => setStep((prev) => prev + 1);
+  const handleNextStep = () => {
+    if (step === 1 && !validateStepOne()) return;
+    if (step === 2 && !validateStepTwo()) return;
+    setStep((prev) => prev + 1);
+  };
+
   const handlePrevStep = () => setStep((prev) => prev - 1);
 
   let title: string = "";
@@ -224,21 +266,16 @@ export const OrderPage: React.FC = () => {
         <Layout>
           <div className={s.navTabs}>
             <button
-              onClick={() => setStep(1)}
               className={`${step === 1 && s.active} ${step > 1 && s.done}`}
             >
               <span>1</span> Контактні дані
             </button>
             <button
-              onClick={() => setStep(2)}
               className={`${step === 2 && s.active} ${step > 2 && s.done}`}
             >
               <span>2</span> Доставка
             </button>
-            <button
-              onClick={() => setStep(3)}
-              className={`${step === 3 && s.active}`}
-            >
+            <button className={`${step === 3 && s.active}`}>
               <span>3</span> Оплата
             </button>
           </div>
@@ -255,6 +292,11 @@ export const OrderPage: React.FC = () => {
                         <label>
                           Ім'я <span>*</span>
                           <input
+                            className={
+                              !billing.first_name.trim() && errors.first_name
+                                ? s.errorInput
+                                : ""
+                            }
                             type="text"
                             placeholder="Твоє імʼя"
                             value={billing.first_name}
@@ -270,6 +312,11 @@ export const OrderPage: React.FC = () => {
                         <label>
                           Прізвищe <span>*</span>
                           <input
+                            className={
+                              !billing.last_name.trim() && errors.last_name
+                                ? s.errorInput
+                                : ""
+                            }
                             type="text"
                             placeholder="Прізвище"
                             value={billing.last_name}
@@ -287,6 +334,11 @@ export const OrderPage: React.FC = () => {
                         <label>
                           По-батькові <span>*</span>
                           <input
+                            className={
+                              !billing.middle_name.trim() && errors.middle_name
+                                ? s.errorInput
+                                : ""
+                            }
                             type="text"
                             placeholder="Твоє імʼя по-батькові"
                             value={billing.middle_name}
@@ -302,11 +354,19 @@ export const OrderPage: React.FC = () => {
                         <label>
                           Номер телефону <span>*</span>
                           <input
+                            className={
+                              !billing.phone.trim() && errors.phone
+                                ? s.errorInput
+                                : ""
+                            }
                             type="text"
                             placeholder="Твій номер телефону"
                             value={billing.phone}
                             onChange={(e) =>
-                              setBilling({ ...billing, phone: e.target.value })
+                              setBilling({
+                                ...billing,
+                                phone: e.target.value,
+                              })
                             }
                           />
                         </label>
@@ -316,11 +376,19 @@ export const OrderPage: React.FC = () => {
                         <label>
                           E-mail <span>*</span>
                           <input
+                            className={
+                              !billing.email.trim() && errors.email
+                                ? s.errorInput
+                                : ""
+                            }
                             type="email"
                             placeholder="Твій e-mail"
                             value={billing.email}
                             onChange={(e) =>
-                              setBilling({ ...billing, email: e.target.value })
+                              setBilling({
+                                ...billing,
+                                email: e.target.value,
+                              })
                             }
                           />
                         </label>
@@ -359,6 +427,12 @@ export const OrderPage: React.FC = () => {
                           <label>
                             Ім'я <span>*</span>
                             <input
+                              className={
+                                !shipping.first_name.trim() &&
+                                errors.shipping_first_name
+                                  ? s.errorInput
+                                  : ""
+                              }
                               type="text"
                               placeholder="Твоє імʼя"
                               value={shipping.first_name}
@@ -374,6 +448,12 @@ export const OrderPage: React.FC = () => {
                           <label>
                             Прізвищe <span>*</span>
                             <input
+                              className={
+                                !shipping.last_name.trim() &&
+                                errors.shipping_last_name
+                                  ? s.errorInput
+                                  : ""
+                              }
                               type="text"
                               placeholder="Прізвище"
                               value={shipping.last_name}
@@ -391,6 +471,12 @@ export const OrderPage: React.FC = () => {
                           <label>
                             По-батькові <span>*</span>
                             <input
+                              className={
+                                !shipping.middle_name.trim() &&
+                                errors.shipping_middle_name
+                                  ? s.errorInput
+                                  : ""
+                              }
                               type="text"
                               placeholder="Твоє імʼя по-батькові"
                               value={shipping.middle_name}
@@ -406,6 +492,11 @@ export const OrderPage: React.FC = () => {
                           <label>
                             Номер телефону <span>*</span>
                             <input
+                              className={
+                                !shipping.phone.trim() && errors.shipping_phone
+                                  ? s.errorInput
+                                  : ""
+                              }
                               type="text"
                               placeholder="Твій номер телефону"
                               value={shipping.phone}
@@ -423,6 +514,11 @@ export const OrderPage: React.FC = () => {
                           <label>
                             E-mail <span>*</span>
                             <input
+                              className={
+                                !shipping.email.trim() && errors.shipping_email
+                                  ? s.errorInput
+                                  : ""
+                              }
                               type="email"
                               placeholder="Твій e-mail"
                               value={shipping.email}
@@ -444,7 +540,7 @@ export const OrderPage: React.FC = () => {
                   <div className={s.inputBox}>
                     <div className={s.inputContainer}>
                       <div className={s.selectContainer}>
-                        <p>
+                        <p className="mb-[0.6vw]">
                           Спосіб доставки <span>*</span>
                         </p>
                         <CustomSelect
@@ -452,11 +548,12 @@ export const OrderPage: React.FC = () => {
                           options={["На відділення", "Кур'єр"]}
                           value={departmentSelect}
                           onChange={setDepartmentSelect}
+                          className={errors.city ? s.errorInput : ""}
                         />
                       </div>
 
                       <div className={s.selectContainer}>
-                        <p>
+                        <p className="mb-[0.6vw]">
                           Місто <span>*</span>
                         </p>
                         <CustomSelect
@@ -464,6 +561,7 @@ export const OrderPage: React.FC = () => {
                           options={allCities} // Випадаючий список
                           value={selectedCity}
                           onChange={setSelectedCity}
+                          className={errors.warehouse ? s.errorInput : ""}
                         />
                       </div>
                     </div>
@@ -471,7 +569,7 @@ export const OrderPage: React.FC = () => {
                     {selectedCity && departmentSelect === "На відділення" ? (
                       <div className={s.inputContainer}>
                         <div className={s.selectContainer}>
-                          <p>
+                          <p className="mb-[0.6vw]">
                             № Відділення <span>*</span>
                           </p>
                           <CustomSelect
@@ -487,7 +585,7 @@ export const OrderPage: React.FC = () => {
                       <div>
                         <div className={s.inputContainer}>
                           <div className={s.selectContainer}>
-                            <p>
+                            <p className="mb-[0.6vw]">
                               Вулиця <span>*</span>
                             </p>
                             <CustomSelect

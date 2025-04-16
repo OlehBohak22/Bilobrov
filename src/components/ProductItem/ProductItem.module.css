@@ -126,6 +126,7 @@
 
   svg {
     width: 1.1vw;
+    stroke: white;
   }
 }
 
@@ -136,6 +137,11 @@
 
 .inCart {
   opacity: 1;
+  /* background-color: rgba(255, 196, 58, 1);
+
+  svg {
+    stroke: black;
+  } */
 }
 
 .wishList {
@@ -238,4 +244,24 @@
   line-height: 1.1vw;
   color: rgba(26, 26, 26, 0.4);
   margin-bottom: 0.8vw;
+}
+
+.miniProductItem {
+  .productImage {
+    max-height: 10.4vw;
+    margin-bottom: 0.6vw;
+  }
+
+  .productBrand {
+    font-size: 0.6vw;
+  }
+
+  .productName {
+    font-size: 0.7vw;
+    line-height: 130%;
+  }
+
+  .shortDesc {
+    font-size: 0.6vw;
+  }
 }

@@ -1,5 +1,5 @@
 // CatalogPage.tsx
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { RootState } from "../../store";
@@ -14,7 +14,10 @@ import {
   setOnSale,
   setInStock,
   fetchAttributes,
+  resetPage,
+  setPage,
 } from "../../store/slices/filterSlice";
+
 import { ProductItem } from "../../components/ProductItem/ProductItem";
 import { Filters } from "../../components/FilterPopup/FilterPopup";
 import s from "./CatalogPage.module.css";
@@ -22,11 +25,13 @@ import { Layout } from "../../components/Layout/Layout";
 import { Breadcrumbs } from "@mui/material";
 import { CustomSortDropdown } from "../../components/DropDown/DropDown";
 import { Category } from "../../types/categoryType";
+import { Pagination } from "../../components/Pagination/Pagination";
 
 export const CatalogPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const productsRef = useRef<HTMLUListElement | null>(null);
 
   const location = useLocation();
   const query = new URLSearchParams(location.search);
@@ -37,7 +42,8 @@ export const CatalogPage: React.FC = () => {
     sort,
     selectedCategories,
     allCategories,
-    attributes,
+    totalCount,
+    page,
   } = useSelector((state: RootState) => ({
     products: state.filters.products,
     loading: state.filters.loading,
@@ -45,10 +51,12 @@ export const CatalogPage: React.FC = () => {
     selectedCategories: state.filters.selectedCategories,
     selectedBrands: state.filters.selectedBrands,
     allCategories: state.categories.categories,
-    attributes: state.filters.attributes,
+    hasMore: state.filters.hasMore,
+    page: state.filters.page,
+    totalCount: state.filters.totalCount,
   }));
 
-  console.log(attributes);
+  const totalPages = Math.ceil(totalCount / 20);
 
   const { slug, parentSlug, childSlug } = useParams();
 
@@ -85,7 +93,6 @@ export const CatalogPage: React.FC = () => {
 
   useEffect(() => {
     if (isFilterOpen) {
-      // Після відкриття модалки переконайся, що Redux значення актуальні
       dispatch(setMinPrice(Number(query.get("min")) || 0));
       dispatch(setMaxPrice(Number(query.get("max")) || 10000));
     }
@@ -142,11 +149,28 @@ export const CatalogPage: React.FC = () => {
     }
 
     dispatch(fetchProducts());
+
+    dispatch(resetPage());
   }, [slug, parentSlug, childSlug, allCategories, location.search]);
+
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, [page]);
+
+  const brands = useSelector((state: RootState) => state.brands);
 
   const pageTitle = useMemo(() => {
     if (slug === "sales") return "Акції";
     if (slug === "news") return "Новинки";
+
+    const brandId = query.get("brand");
+
+    // Витягуємо бренди з Redux
+
+    if (brandId) {
+      const brand = brands.items.find((b) => b.id.toString() === brandId);
+      if (brand) return brand.name;
+    }
 
     if (selectedCategories.length !== 1) {
       return "Всі товари";
@@ -166,7 +190,7 @@ export const CatalogPage: React.FC = () => {
     }
 
     return selectedCategory.name;
-  }, [slug, selectedCategories, allCategories]);
+  }, [slug, selectedCategories, allCategories, query, brands]);
 
   const breadcrumbs = useMemo(() => {
     const list = [{ name: "Головна", link: "/" }];
@@ -195,7 +219,7 @@ export const CatalogPage: React.FC = () => {
   }, [slug, parentCategory, childCategory]);
 
   return (
-    <main>
+    <main className={s.page}>
       <Layout>
         <Breadcrumbs aria-label="breadcrumb" className="breadcrumbs">
           {breadcrumbs.map((breadcrumb, index) => (
@@ -212,7 +236,7 @@ export const CatalogPage: React.FC = () => {
         <div className={s.categoryHeader}>
           <h1>{pageTitle}</h1>
 
-          <span>{products.length} продукти</span>
+          <span>{totalCount} продукти</span>
         </div>
 
         {selectedCategories.length === 1 && childCategories.length > 0 && (
@@ -259,11 +283,28 @@ export const CatalogPage: React.FC = () => {
         {loading ? (
           <div className={s.loader}></div>
         ) : (
-          <ul className={s.list}>
+          <ul ref={productsRef} className={s.list}>
             {products.map((product) => (
               <ProductItem key={product.id} info={product} />
             ))}
           </ul>
+        )}
+
+        {!loading && products.length > 0 && (
+          <Pagination
+            currentPage={page}
+            totalPages={totalPages}
+            onPageChange={(newPage) => {
+              dispatch(setPage(newPage));
+              dispatch(fetchProducts());
+
+              // Скролимо до початку товарів або секції каталогу
+              const catalogTop = document.querySelector(`.${s.list}`);
+              catalogTop?.scrollIntoView({
+                block: "start",
+              });
+            }}
+          />
         )}
       </Layout>
     </main>

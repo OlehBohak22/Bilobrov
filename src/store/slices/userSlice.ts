@@ -9,6 +9,7 @@ interface BonusHistoryItem {
 }
 
 interface address {
+  selected: boolean;
   id: number;
   city: string;
   entrance: string;

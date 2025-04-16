@@ -127,6 +127,43 @@
         line-height: 140%;
       }
     }
+
+    .customCheckbox {
+      display: flex;
+      align-items: center;
+      gap: 0.4vw;
+      cursor: pointer;
+
+      svg {
+        width: 1.2vw;
+
+        height: 1.2vw;
+      }
+
+      span {
+        font-family: Manrope;
+        font-weight: 700;
+        font-size: 0.8vw;
+        line-height: 0.8vw;
+        text-transform: uppercase;
+      }
+    }
+
+    .changeAddress {
+      cursor: pointer;
+
+      svg {
+        stroke: #1a1a1a;
+        width: 1.2vw;
+        height: 1.2vw;
+      }
+    }
+
+    .changeAddress:hover {
+      svg {
+        stroke: var(--primary);
+      }
+    }
   }
 
   .addressInfo {

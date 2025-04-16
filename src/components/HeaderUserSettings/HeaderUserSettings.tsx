@@ -14,7 +14,7 @@ export const HeaderUserSettings: React.FC<HeaderProps> = ({
   openCart,
 }) => {
   const wishlist = useSelector(
-    (state: RootState) => state.user?.user?.meta?.preferences || []
+    (state: RootState) => state.wishlist.preferences
   );
 
   const cart = useSelector((state: RootState) => state.cart || []);
@@ -61,7 +61,7 @@ export const HeaderUserSettings: React.FC<HeaderProps> = ({
           />
         </svg>
 
-        <span className={s.qty}>{wishlist.length}</span>
+        <span className={s.qty}>{wishlist?.length ?? 0}</span>
       </button>
 
       <button onClick={() => openCart(true)}>
@@ -73,7 +73,7 @@ export const HeaderUserSettings: React.FC<HeaderProps> = ({
             strokeLinejoin="round"
           />
         </svg>
-        <span className={s.qty}>{cart.items.length}</span>
+        <span className={s.qty}>{cart?.items?.length ?? 0}</span>
       </button>
     </div>
   );

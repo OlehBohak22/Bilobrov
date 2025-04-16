@@ -122,6 +122,10 @@
   bottom: 0;
 }
 
+.inputContainer > div p {
+  /* margin-bottom: 0.6vw; */
+}
+
 .inputContainer {
   display: flex;
   gap: 1.2vw;
@@ -146,6 +150,15 @@
     border: 1px solid rgba(239, 237, 238, 1) !important;
     margin-top: 0.6vw;
     width: 21vw;
+  }
+
+  .errorInput {
+    border-left-color: red !important;
+    outline: none;
+  }
+
+  .errorInput > div {
+    border-left-color: red !important;
   }
 
   input::placeholder {

@@ -29,19 +29,19 @@ interface Variation {
 interface ProductItemProps {
   info: ProductInfo;
   openRegister: () => void;
+  openCart: () => void;
   variations: Variation[];
+  reviewsQty: number;
 }
 
 export const ProductContent: React.FC<ProductItemProps> = ({
   info,
   openRegister,
+  openCart,
   variations,
+  reviewsQty,
 }) => {
   const { token } = useSelector((state: RootState) => state.user);
-
-  const { items } = useSelector((state: RootState) => state.cart);
-
-  const inCart = items.some((item) => item.id === info.id);
 
   const [selectedVariation, setSelectedVariation] = useState<number | null>(
     null
@@ -63,6 +63,7 @@ export const ProductContent: React.FC<ProductItemProps> = ({
       })
     );
 
+    openCart();
     setQuantity(1);
   };
 
@@ -71,11 +72,10 @@ export const ProductContent: React.FC<ProductItemProps> = ({
   const uniqueAttributes = [
     ...new Map(
       variations.flatMap((v) => {
-        // Беремо зображення з варіації для всіх атрибутів цієї варіації
-        const image = v.image?.src || ""; // або за замовчуванням порожній рядок
+        const image = v.image?.src || "";
         return v.attributes.map((a) => [
           a.slug,
-          { slug: a.slug, name: a.name, image: image }, // Прив'язуємо зображення до атрибута варіації
+          { slug: a.slug, name: a.name, image: image },
         ]);
       })
     ).values(),
@@ -232,7 +232,7 @@ export const ProductContent: React.FC<ProductItemProps> = ({
     <div className={s.content}>
       <div className={s.ratingBlock}>
         <StarRatingRed rating={info.average_rating} />
-        <span>{info.rating_count} відгуків</span>
+        <span>{reviewsQty} відгуків</span>
       </div>
 
       {brandName && <p className={s.productBrand}>{brandName}</p>}
@@ -439,70 +439,67 @@ export const ProductContent: React.FC<ProductItemProps> = ({
         </div>
       )}
 
-      <div className={s.orderController}>
-        <div className={s.qty}>
-          <button
-            onClick={() => {
-              if (quantity > 1) {
-                setQuantity((prev) => Math.max(1, prev - 1));
-              }
-            }}
-          >
-            <svg
-              viewBox="0 0 16 16"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
+      {info.stock_quantity > 0 && (
+        <div className={s.orderController}>
+          <div className={s.qty}>
+            <button
+              onClick={() => {
+                if (quantity > 1) {
+                  setQuantity((prev) => Math.max(1, prev - 1));
+                }
+              }}
             >
-              <path d="M16 7.3335H0V8.66683H16V7.3335Z" fill="#1A1A1A" />
-            </svg>
+              <svg
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M16 7.3335H0V8.66683H16V7.3335Z" fill="#1A1A1A" />
+              </svg>
+            </button>
+            <span>{quantity}</span>
+            <button
+              onClick={() => {
+                if (quantity < stockQuantity) {
+                  setQuantity((prev) => Math.min(stockQuantity, prev + 1));
+                }
+              }}
+            >
+              <svg
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g clip-path="url(#clip0_2202_6051)">
+                  <path
+                    d="M16 7.33333H8.66667V0H7.33333V7.33333H0V8.66667H7.33333V16H8.66667V8.66667H16V7.33333Z"
+                    fill="#1A1A1A"
+                  />
+                </g>
+                <defs>
+                  <clipPath id="clip0_2202_6051">
+                    <rect width="16" height="16" fill="white" />
+                  </clipPath>
+                </defs>
+              </svg>
+            </button>
+          </div>
+
+          <button onClick={handleAddToCart} className={`${s.cart} `}>
+            ДОДАТИ В КОШИК
           </button>
-          <span>{quantity}</span>
-          <button
-            onClick={() => {
-              if (quantity < stockQuantity) {
-                setQuantity((prev) => Math.min(stockQuantity, prev + 1));
-              }
-            }}
-          >
+
+          <button className={s.wishList}>
             <svg
-              viewBox="0 0 16 16"
+              viewBox="0 0 24 24"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <g clip-path="url(#clip0_2202_6051)">
-                <path
-                  d="M16 7.33333H8.66667V0H7.33333V7.33333H0V8.66667H7.33333V16H8.66667V8.66667H16V7.33333Z"
-                  fill="#1A1A1A"
-                />
-              </g>
-              <defs>
-                <clipPath id="clip0_2202_6051">
-                  <rect width="16" height="16" fill="white" />
-                </clipPath>
-              </defs>
+              <path d="M11.3701 21.7964C11.4329 21.8608 11.5081 21.912 11.591 21.947C11.674 21.982 11.7631 22 11.8532 22C11.9432 22 12.0324 21.982 12.1153 21.947C12.1983 21.912 12.2734 21.8608 12.3363 21.7964L21.0161 13.0016C23.2698 10.719 23.2698 7.00337 21.0161 4.71987C19.9214 3.61069 18.4657 3.00001 16.916 3.00001C15.3662 3.00001 13.9114 3.61069 12.8167 4.71897L11.8532 5.69606L10.8897 4.71987C10.3557 4.17416 9.71795 3.74084 9.01393 3.44546C8.30991 3.15009 7.55388 2.99863 6.7904 3.00001C6.02678 2.99856 5.2706 3.14998 4.56642 3.44536C3.86224 3.74074 3.22431 4.17409 2.69023 4.71987C0.436589 7.00337 0.436589 10.719 2.69023 13.0007L11.3701 21.7964ZM3.65556 5.67254C4.0639 5.25547 4.5515 4.92424 5.08969 4.69834C5.62789 4.47244 6.20581 4.35641 6.7895 4.35708C7.97286 4.35708 9.08566 4.82482 9.92253 5.67344L11.3692 7.13908C11.4992 7.26314 11.6721 7.33235 11.8518 7.33235C12.0316 7.33235 12.2044 7.26314 12.3345 7.13908L13.7811 5.67254C14.1898 5.25565 14.6776 4.92455 15.2159 4.69866C15.7542 4.47277 16.3322 4.35664 16.916 4.35708C17.4997 4.35641 18.0776 4.47244 18.6158 4.69834C19.154 4.92424 19.6416 5.25547 20.0499 5.67254C21.7842 7.4304 21.7842 10.2902 20.0499 12.049L11.8532 20.3552L3.65556 12.0481C1.92123 10.2911 1.92123 7.4304 3.65556 5.67254Z" />
             </svg>
           </button>
         </div>
-
-        <button
-          onClick={handleAddToCart}
-          className={`${s.cart} ${inCart && s.addedInCrt} ${
-            info.stock_quantity < 1 && s.notAvailable
-          }`}
-        >
-          {inCart ? "ДОДАНО В КОШИК" : " ДОДАТИ В КОШИК"}
-        </button>
-
-        <button className={s.wishList}>
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path d="M11.3701 21.7964C11.4329 21.8608 11.5081 21.912 11.591 21.947C11.674 21.982 11.7631 22 11.8532 22C11.9432 22 12.0324 21.982 12.1153 21.947C12.1983 21.912 12.2734 21.8608 12.3363 21.7964L21.0161 13.0016C23.2698 10.719 23.2698 7.00337 21.0161 4.71987C19.9214 3.61069 18.4657 3.00001 16.916 3.00001C15.3662 3.00001 13.9114 3.61069 12.8167 4.71897L11.8532 5.69606L10.8897 4.71987C10.3557 4.17416 9.71795 3.74084 9.01393 3.44546C8.30991 3.15009 7.55388 2.99863 6.7904 3.00001C6.02678 2.99856 5.2706 3.14998 4.56642 3.44536C3.86224 3.74074 3.22431 4.17409 2.69023 4.71987C0.436589 7.00337 0.436589 10.719 2.69023 13.0007L11.3701 21.7964ZM3.65556 5.67254C4.0639 5.25547 4.5515 4.92424 5.08969 4.69834C5.62789 4.47244 6.20581 4.35641 6.7895 4.35708C7.97286 4.35708 9.08566 4.82482 9.92253 5.67344L11.3692 7.13908C11.4992 7.26314 11.6721 7.33235 11.8518 7.33235C12.0316 7.33235 12.2044 7.26314 12.3345 7.13908L13.7811 5.67254C14.1898 5.25565 14.6776 4.92455 15.2159 4.69866C15.7542 4.47277 16.3322 4.35664 16.916 4.35708C17.4997 4.35641 18.0776 4.47244 18.6158 4.69834C19.154 4.92424 19.6416 5.25547 20.0499 5.67254C21.7842 7.4304 21.7842 10.2902 20.0499 12.049L11.8532 20.3552L3.65556 12.0481C1.92123 10.2911 1.92123 7.4304 3.65556 5.67254Z" />
-          </svg>
-        </button>
-      </div>
+      )}
 
       <div className={s.isAvailable}>
         {info.stock_quantity > 0 ? (

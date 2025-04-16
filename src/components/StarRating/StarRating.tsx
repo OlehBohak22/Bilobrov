@@ -16,8 +16,8 @@ const HalfStar = () => (
   <svg className="w-[1vw] h-[1.3vw]" viewBox="0 0 24 24">
     <defs>
       <linearGradient id="half" x1="0%" y1="0%" x2="100%" y2="0%">
-        <stop offset="50%" stopColor="black" />
-        <stop offset="50%" stopColor="rgba(26, 26, 26, 0.2)" />
+        <stop offset="50%" stopColor="" />
+        <stop offset="50%" stopColor="rgba(0, 0, 0, 0.1)" />
       </linearGradient>
     </defs>
     <path
@@ -72,13 +72,13 @@ const FullStarRed = () => (
 const HalfStarRed = () => (
   <svg className="w-[1.3vw] h-[1.6vw]" viewBox="0 0 24 24">
     <defs>
-      <linearGradient id="half" x1="0%" y1="0%" x2="100%" y2="0%">
+      <linearGradient id="halfRed" x1="0%" y1="0%" x2="100%" y2="0%">
         <stop offset="50%" stopColor="rgba(214, 61, 68, 1)" />
         <stop offset="50%" stopColor="rgba(26, 26, 26, 0.2)" />
       </linearGradient>
     </defs>
     <path
-      fill="url(#half)"
+      fill="url(#halfRed)"
       d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.86L12 17.77 5.82 21l1.18-6.86-5-4.87 6.91-1.01L12 2z"
     />
   </svg>

@@ -18,20 +18,20 @@ import { Breadcrumbs } from "@mui/material";
 interface HeaderProps {
   openRegister: () => void;
   openReview: () => void;
+  openCart: () => void;
 }
 
 export const ProductPage: React.FC<HeaderProps> = ({
   openRegister,
   openReview,
+  openCart,
 }) => {
   const dispatch = useAppDispatch();
   const { currentProduct, reviews, variations } = useSelector(
     (state: any) => state.products
   );
 
-  console.log(currentProduct);
-
-  const { id } = useParams(); // Припустимо, що у вашому Route шлях: <Route path="/product/:id" element={<ProductPage />} />
+  const { id } = useParams();
 
   const currentReviews = reviews.filter(
     (item: { product_id: any }) => item.product_id == id
@@ -48,11 +48,9 @@ export const ProductPage: React.FC<HeaderProps> = ({
 
   const productImages = currentProduct?.images?.map((img: any) => img.src);
 
-  // Перевірка на кількість категорій
   const categories = currentProduct?.categories || [];
   const breadcrumbs = [
     { name: "Головна", link: "/" },
-    // Якщо є хоча б одна категорія
     ...(categories.length > 0
       ? [
           {
@@ -61,7 +59,6 @@ export const ProductPage: React.FC<HeaderProps> = ({
           },
         ]
       : []),
-    // Якщо є більше ніж 1 категорія
     ...(categories.length > 1
       ? [
           {
@@ -75,6 +72,8 @@ export const ProductPage: React.FC<HeaderProps> = ({
       link: `/product/${currentProduct?.slug}/${currentProduct?.id}`,
     },
   ];
+
+  console.log(currentProduct?.categories);
 
   return (
     <>
@@ -97,10 +96,15 @@ export const ProductPage: React.FC<HeaderProps> = ({
               openRegister={openRegister}
               info={currentProduct}
               variations={variations}
+              reviewsQty={currentReviews.length}
+              openCart={openCart}
             />
           </Layout>
 
-          <ProductList categories={["Новинки"]} defaultCategory="Новинки">
+          <ProductList
+            categories={[currentProduct.categories[0]?.id || "Новинки"]}
+            defaultCategory={currentProduct.categories[0]?.id || "Новинки"}
+          >
             <h2>
               <span>Схожі</span>
               <span>товари</span>

@@ -97,6 +97,34 @@ export const fetchProducts = createAsyncThunk<
   }
 });
 
+export const fetchCartProducts = createAsyncThunk<
+  ProductInfo[],
+  number[], // масив ID продуктів
+  { rejectValue: string }
+>("products/fetchCartProducts", async (productIds, { rejectWithValue }) => {
+  try {
+    if (!productIds.length) return [];
+
+    const url = `${API_URL}products?include=${productIds.join(",")}&per_page=${
+      productIds.length
+    }`;
+
+    const response = await fetch(url, {
+      method: "GET",
+      headers,
+    });
+
+    if (!response.ok) {
+      throw new Error("Помилка при завантаженні товарів для кошика");
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error(error);
+    return rejectWithValue("Не вдалося отримати товари кошика");
+  }
+});
+
 export const fetchProductById = createAsyncThunk<ProductInfo, number>(
   "products/fetchProductById",
   async (productId) => {
@@ -145,7 +173,7 @@ export const fetchVariationById = createAsyncThunk<
 export const fetchReviews = createAsyncThunk(
   "products/fetchReviews",
   async () => {
-    const response = await fetch(`${API_URL}products/reviews?per_page=15`, {
+    const response = await fetch(`${API_URL}products/reviews?per_page=100`, {
       method: "GET",
       headers: headers,
     });

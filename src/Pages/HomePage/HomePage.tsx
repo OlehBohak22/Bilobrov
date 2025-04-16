@@ -27,7 +27,7 @@ export const HomePage = () => {
         </h2>
       </ProductList>
 
-      <CategoriesSection parentId={1160}>
+      <CategoriesSection largePlate="Креми" parentId={1160}>
         <h2>
           <span>Догляд</span>
           <span>за обличчям</span>
@@ -42,7 +42,11 @@ export const HomePage = () => {
       </ProductList>
 
       <div className="mb-[8.3vw]">
-        <CategoriesSection parentId={1161} reverse={true}>
+        <CategoriesSection
+          largePlate="Помада для губ"
+          parentId={1161}
+          reverse={true}
+        >
           <h2>
             <span>Декоративна</span>
             <span>косметика</span>

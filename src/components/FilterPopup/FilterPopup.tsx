@@ -157,7 +157,6 @@ export const Filters: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     navigate({ pathname, search: query.toString() });
 
     setTimeout(() => {
-      console.log("🚀 fetchProducts після застосування фільтрів");
       dispatch(fetchProducts());
     }, 100);
 

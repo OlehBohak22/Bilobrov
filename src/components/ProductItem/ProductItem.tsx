@@ -8,12 +8,13 @@ import { addToCart } from "../../store/slices/cartSlice";
 import { Link } from "react-router";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
-
 import { VariationsPopup } from "../VariationCartPopup/VariationCartPopup";
+import { useGlobalProps } from "../../GlobalPropContext";
 
 interface ProductItemProps {
   info: ProductInfo;
   withoutRating?: boolean;
+  mini?: boolean;
 }
 
 const isNewProduct = (dateCreated: string) => {
@@ -29,18 +30,24 @@ const isNewProduct = (dateCreated: string) => {
 export const ProductItem: React.FC<ProductItemProps> = ({
   info,
   withoutRating,
+  mini,
 }) => {
   const dispatch = useAppDispatch();
   const token = useSelector((state: RootState) => state.user.token);
 
-  // console.log(info);
+  const { openCart } = useGlobalProps();
 
   const cart = useSelector((state: RootState) => state.cart.items);
 
-  // Перевірка наявності товару у кошику (булеве значення)
+  const { reviews } = useSelector((state: any) => state.products);
+
+  const currentReviews = reviews.filter(
+    (item: { product_id: any }) => item.product_id == info.id
+  );
+
   const isInCart = cart.some((item) => item.id === info.id);
 
-  const [isPopupOpen, setPopupOpen] = useState(false); // Стан для відкриття попапу
+  const [isPopupOpen, setPopupOpen] = useState(false);
 
   const brandMeta = info.meta_data.find((item) => item.key === "brands");
   const brandName =
@@ -66,12 +73,16 @@ export const ProductItem: React.FC<ProductItemProps> = ({
           token,
         })
       );
+      openCart();
     }
   };
 
   return (
     <>
-      <li key={info.id} className={s.productItem}>
+      <li
+        key={info.id}
+        className={`${s.productItem} ${mini && s.miniProductItem}`}
+      >
         <Link className={s.link} to={`/product/${info.slug}/${info.id}`} />
 
         <div className={s.block}>
@@ -109,44 +120,42 @@ export const ProductItem: React.FC<ProductItemProps> = ({
             />
             <WishlistButton productId={info.id} />
 
-            <div
-              className={`${s.cart} ${isInCart && s.inCart}`}
-              onClick={handleAddToCart}
-              title="Додати в корзину"
-            >
-              <svg
-                viewBox="0 0 22 22"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
+            {info.stock_quantity > 0 && (
+              <div
+                className={`${s.cart} ${isInCart && s.inCart}`}
+                onClick={handleAddToCart}
+                title="Додати в корзину"
               >
-                <path
-                  d="M13.905 10.0682H13.8646"
-                  stroke="white"
-                  strokeWidth="1.3"
-                  strokeLinecap="square"
-                />
-                <path
-                  d="M8.76728 10.0682H8.72695"
-                  stroke="white"
-                  strokeWidth="1.3"
-                  strokeLinecap="square"
-                />
-                <path
-                  fillRule="evenodd"
-                  clipRule="evenodd"
-                  d="M18.2164 6.29297L19.0309 19.7086L2.9707 19.7086L3.78523 6.29297L18.2164 6.29297Z"
-                  stroke="white"
-                  strokeWidth="1.3"
-                  strokeLinecap="round"
-                />
-                <path
-                  d="M15.1004 6.09956C15.1004 3.99658 13.3956 2.29178 11.2927 2.29178C10.28 2.28749 9.30731 2.68677 8.58972 3.40133C7.87213 4.1159 7.46874 5.08687 7.46875 6.09956"
-                  stroke="white"
-                  strokeWidth="1.3"
-                  strokeLinecap="square"
-                />
-              </svg>
-            </div>
+                <svg
+                  viewBox="0 0 22 22"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M13.905 10.0682H13.8646"
+                    strokeWidth="1.3"
+                    strokeLinecap="square"
+                  />
+                  <path
+                    d="M8.76728 10.0682H8.72695"
+                    strokeWidth="1.3"
+                    strokeLinecap="square"
+                  />
+                  <path
+                    fillRule="evenodd"
+                    clipRule="evenodd"
+                    d="M18.2164 6.29297L19.0309 19.7086L2.9707 19.7086L3.78523 6.29297L18.2164 6.29297Z"
+                    strokeWidth="1.3"
+                    strokeLinecap="round"
+                  />
+                  <path
+                    d="M15.1004 6.09956C15.1004 3.99658 13.3956 2.29178 11.2927 2.29178C10.28 2.28749 9.30731 2.68677 8.58972 3.40133C7.87213 4.1159 7.46874 5.08687 7.46875 6.09956"
+                    strokeWidth="1.3"
+                    strokeLinecap="square"
+                  />
+                </svg>
+              </div>
+            )}
           </div>
 
           {brandName && <p className={s.productBrand}>{brandName}</p>}
@@ -163,7 +172,7 @@ export const ProductItem: React.FC<ProductItemProps> = ({
           {!withoutRating && (
             <div className={s.ratingBlock}>
               <StarRating rating={info.average_rating} />
-              <span>({info.rating_count})</span>
+              <span>({currentReviews.length})</span>
             </div>
           )}
         </div>

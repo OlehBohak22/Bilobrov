@@ -28,6 +28,9 @@ interface ProductState {
   minPrice: number;
   maxPrice: number;
   attributes: ProductAttribute[];
+  page: number; // 🔥 додаємо
+  hasMore: boolean; // 🔥 для контролю закінчення сторінок
+  totalCount: number;
 }
 
 const initialState: ProductState = {
@@ -42,6 +45,9 @@ const initialState: ProductState = {
   minPrice: 0,
   maxPrice: 10000,
   attributes: [],
+  page: 1, // 🔥 додаємо
+  hasMore: true, // 🔥 додаємо
+  totalCount: 0,
 };
 
 export const fetchAttributes = createAsyncThunk(
@@ -74,9 +80,13 @@ export const fetchProducts = createAsyncThunk(
       maxPrice,
       selectedAttributes,
       attributes,
+      page,
     } = state.filters;
 
-    const params = new URLSearchParams({ per_page: "100" });
+    const params = new URLSearchParams({
+      per_page: "20",
+      page: page.toString(),
+    });
 
     const attrEntries = Object.entries(selectedAttributes).filter(
       ([, values]) => values.length > 0
@@ -130,7 +140,6 @@ export const fetchProducts = createAsyncThunk(
     params.set("max_price", maxPrice.toString());
 
     const url = `${API_URL}products?${params.toString()}`;
-    console.log("🔍 fetchProducts URL:", url);
 
     const response = await axios.get(url, {
       headers: {
@@ -138,7 +147,14 @@ export const fetchProducts = createAsyncThunk(
       },
     });
 
-    return response.data;
+    const totalCount = parseInt(response.headers["x-wp-total"]);
+    const totalPages = parseInt(response.headers["x-wp-totalpages"]);
+
+    return {
+      products: response.data,
+      totalCount,
+      totalPages,
+    };
   }
 );
 
@@ -174,6 +190,17 @@ const productSlice = createSlice({
       state.selectedAttributes = action.payload;
     },
 
+    setPage: (state, action: PayloadAction<number>) => {
+      state.page = action.payload;
+    },
+    incrementPage: (state) => {
+      state.page += 1;
+    },
+    resetPage: (state) => {
+      state.page = 1;
+      state.hasMore = true;
+    },
+
     resetFilters: (state) => {
       state.products = [];
       state.loading = false;
@@ -193,21 +220,26 @@ const productSlice = createSlice({
         state.loading = true;
       })
       .addCase(fetchProducts.fulfilled, (state, action) => {
-        let sortedProducts = action.payload;
+        const { products, totalCount } = action.payload;
 
+        let sortedProducts = products;
         if (state.sort === "price_asc") {
-          sortedProducts = [...sortedProducts].sort(
+          sortedProducts = [...products].sort(
             (a, b) => parseFloat(a.price) - parseFloat(b.price)
           );
         } else if (state.sort === "price_desc") {
-          sortedProducts = [...sortedProducts].sort(
+          sortedProducts = [...products].sort(
             (a, b) => parseFloat(b.price) - parseFloat(a.price)
           );
         }
 
-        state.products = sortedProducts;
+        state.products = sortedProducts; // 🔥 Замінюємо завжди
+
+        state.hasMore = sortedProducts.length === 20;
+        state.totalCount = totalCount;
         state.loading = false;
       })
+
       .addCase(fetchProducts.rejected, (state, action) => {
         state.loading = false;
         console.error("❌ fetchProducts rejected:", action.error);
@@ -228,6 +260,9 @@ export const {
   setMaxPrice,
   setSelectedAttributes,
   resetFilters,
+  setPage,
+  incrementPage,
+  resetPage,
 } = productSlice.actions;
 
 export default productSlice.reducer;

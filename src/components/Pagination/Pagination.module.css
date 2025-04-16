@@ -1,0 +1,52 @@
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 3vw;
+  align-items: center;
+
+  .numbers {
+    display: flex;
+    gap: 1.2vw;
+  }
+}
+
+.pageBtn {
+  font-family: Manrope;
+  font-weight: 600;
+  font-size: 0.9vw;
+  line-height: 140%;
+  letter-spacing: -0.01vw;
+  color: rgba(186, 186, 186, 1);
+  cursor: pointer;
+}
+
+.pageBtn:hover {
+  color: #000;
+}
+
+.pageBtn.active {
+  color: #000;
+  font-weight: 600;
+}
+
+.dots {
+  color: #ccc;
+  font-size: 1rem;
+}
+
+.arrow {
+  svg {
+    width: 1.2vw;
+    height: 1.2vw;
+    fill: black;
+  }
+}
+
+.arrow:disabled {
+  color: #ddd;
+  cursor: default;
+
+  svg {
+    fill: white;
+  }
+}

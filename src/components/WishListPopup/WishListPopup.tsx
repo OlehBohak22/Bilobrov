@@ -10,11 +10,23 @@ import { Navigation } from "swiper/modules";
 import { motion } from "framer-motion";
 import { ProductItem } from "../ProductItem/ProductItem";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router";
 
 export const WishListPopup: React.FC<{
   onClose: () => void;
 }> = ({ onClose }) => {
   const dispatch = useAppDispatch();
+  const [hasMounted, setHasMounted] = useState(false);
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    if (hasMounted) {
+      onClose();
+    } else {
+      setHasMounted(true);
+    }
+  }, [pathname]);
 
   const token = useSelector((state: RootState) => state.user?.token);
 
@@ -160,4 +172,3 @@ export const WishListPopup: React.FC<{
     </div>
   );
 };
-  

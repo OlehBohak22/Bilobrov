@@ -1,80 +1,81 @@
 import { useState, useEffect, useRef, ReactNode } from "react";
-import { useAppDispatch } from "../../hooks/useAppDispatch";
-import { fetchProducts } from "../../store/slices/productsSlice"; // API-запит
-import { ProductItem } from "../ProductItem/ProductItem";
+import axios from "axios";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Navigation } from "swiper/modules";
 import s from "./ProductList.module.css";
+import { ProductItem } from "../ProductItem/ProductItem";
 import { ProductInfo } from "../../types/productTypes";
 import { Layout } from "../Layout/Layout";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store";
+import { Loader } from "../Loader/Loader";
+import {
+  API_URL,
+  consumerKey,
+  consumerSecret,
+} from "../../store/slices/productsSlice";
 
 interface ProductListProps {
-  categories?: string[]; // categories можуть бути відсутні
-  defaultCategory?: string; // параметр для категорії за замовчуванням
+  categories?: string[];
+  defaultCategory?: string;
   children?: ReactNode;
+  mini?: boolean;
 }
 
 export const ProductList = ({
-  categories = [], // Якщо categories немає, це буде порожній масив
+  categories = [],
   defaultCategory,
   children,
+  mini,
 }: ProductListProps) => {
-  const dispatch = useAppDispatch();
-
-  // Ініціалізація активної категорії
-  const activeCategory = defaultCategory;
-  const [activeTab, setActiveTab] = useState(activeCategory);
-  const products = useSelector((state: RootState) => state.products.items);
-
-  const [filteredProducts, setFilteredProducts] = useState(products);
-
-  useEffect(() => {
-    if (!products.length) {
-      dispatch(fetchProducts());
-    }
-  }, [dispatch, products, products.length]);
-
-  useEffect(() => {
-    if (!products.length) {
-      dispatch(fetchProducts());
-    }
-  }, [dispatch, products.length]);
-
-  useEffect(() => {
-    // Фільтрація продуктів залежно від активної категорії
-    if (activeTab === "Акції") {
-      setFilteredProducts(
-        products.filter((product) => product.on_sale === true)
-      );
-    } else if (activeTab === "Новинки") {
-      const currentDate = new Date();
-      const filtered = products.filter((product) => {
-        const productDate = new Date(product.date_created); // Поле created_at
-        const timeDifference = currentDate.getTime() - productDate.getTime();
-        const daysDifference = timeDifference / (1000 * 3600 * 24); // Перетворюємо різницю в дні
-        return daysDifference <= 30; // Продукти, додані за останні 30 днів
-      });
-      setFilteredProducts(filtered);
-    } else if (activeTab === "Бестселлери") {
-      const bestsellers = products
-        .filter((product) => product.total_sales > 0) // Фільтруємо продукти, у яких є продажі
-        .sort((a, b) => b.total_sales - a.total_sales); // Сортуємо за кількістю продажів (спадний порядок)
-      setFilteredProducts(bestsellers);
-    } else {
-      // Якщо не Акції, не Новинки, і не Бестселери, фільтруємо за категорією
-      setFilteredProducts(products);
-    }
-  }, [activeTab, products]);
+  const [activeTab, setActiveTab] = useState(defaultCategory);
+  const [products, setProducts] = useState<ProductInfo[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const prevButtonRef = useRef<HTMLDivElement | null>(null);
   const nextButtonRef = useRef<HTMLDivElement | null>(null);
 
+  useEffect(() => {
+    if (!activeTab) return;
+
+    const fetchProducts = async () => {
+      setLoading(true);
+      try {
+        const params = new URLSearchParams({
+          per_page: "10",
+        });
+
+        if (activeTab === "Акції") {
+          params.set("on_sale", "true");
+        } else if (activeTab === "Новинки") {
+          params.set("orderby", "date");
+          params.set("order", "desc");
+        } else if (activeTab === "Бестселлери") {
+          params.set("orderby", "popularity");
+        } else {
+          params.set("category", activeTab); // Можна передавати slug
+        }
+
+        const res = await axios.get(`${API_URL}products?${params.toString()}`, {
+          headers: {
+            Authorization: "Basic " + btoa(`${consumerKey}:${consumerSecret}`),
+          },
+        });
+
+        setProducts(res.data);
+      } catch (error) {
+        console.error("Помилка завантаження товарів:", error);
+        setProducts([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, [activeTab]);
+
   return (
-    <div className={s.section}>
+    <div className={`${s.section} ${mini ? s.mini : ""}`}>
       <Layout>
         <div className={s.navigationContainer}>
           <div className={s.swiperController}>
@@ -87,7 +88,7 @@ export const ProductList = ({
                       className={`${s.tabItem} ${
                         activeTab === tab ? s.activeTab : ""
                       }`}
-                      onClick={() => setActiveTab(tab)} // Тепер можемо змінювати tab
+                      onClick={() => setActiveTab(tab)}
                       style={{
                         cursor: categories.length ? "pointer" : "default",
                       }}
@@ -110,7 +111,7 @@ export const ProductList = ({
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                <g clipPath="url(#clip0_480_5408)">
+                <g clip-path="url(#clip0_480_5408)">
                   <path d="M7.08228 5L8.15132 6.05572L3.39413 10.7535L24.5 10.7535V12.2465L3.39413 12.2465L8.15132 16.9443L7.08228 18L0.5 11.5L7.08228 5Z" />
                 </g>
                 <defs>
@@ -134,7 +135,7 @@ export const ProductList = ({
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                <g clipPath="url(#clip0_480_5411)">
+                <g clip-path="url(#clip0_480_5411)">
                   <path d="M17.9177 5L16.8487 6.05572L21.6059 10.7535H0.5V12.2465H21.6059L16.8487 16.9443L17.9177 18L24.5 11.5L17.9177 5Z" />
                 </g>
                 <defs>
@@ -152,22 +153,26 @@ export const ProductList = ({
           </div>
         </div>
 
-        <Swiper
-          modules={[Navigation]}
-          spaceBetween={20}
-          slidesPerView={5}
-          navigation={{
-            prevEl: prevButtonRef.current,
-            nextEl: nextButtonRef.current,
-          }}
-          className={s.productListSwiper}
-        >
-          {filteredProducts.map((product: ProductInfo) => (
-            <SwiperSlide className="h-auto!" key={product.id}>
-              <ProductItem info={product} />
-            </SwiperSlide>
-          ))}
-        </Swiper>
+        {loading ? (
+          <Loader />
+        ) : (
+          <Swiper
+            modules={[Navigation]}
+            spaceBetween={20}
+            slidesPerView={mini ? 7 : 5}
+            navigation={{
+              prevEl: prevButtonRef.current,
+              nextEl: nextButtonRef.current,
+            }}
+            className={s.productListSwiper}
+          >
+            {products.map((product: ProductInfo) => (
+              <SwiperSlide className="h-auto!" key={product.id}>
+                <ProductItem mini={mini} info={product} />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        )}
       </Layout>
     </div>
   );

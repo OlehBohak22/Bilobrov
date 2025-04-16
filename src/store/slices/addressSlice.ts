@@ -3,7 +3,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 const URL =
   "https://bilobrov.projection-learn.website/wp-json/responses/v1/user_address";
 
-interface Address {
+export interface Address {
   first_name?: string;
   last_name?: string;
   phone?: string;

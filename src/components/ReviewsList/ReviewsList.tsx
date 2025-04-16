@@ -1,7 +1,8 @@
 import { ReviewItem } from "../ReviewItem/ReviewItem";
 import { StarRatingRed } from "../StarRating/StarRating";
 import s from "./ReviewsList.module.css";
-import { FC } from "react";
+import { FC, useState } from "react";
+import { Pagination } from "../Pagination/Pagination";
 
 interface ReviewerType {
   reviewer: string;
@@ -15,11 +16,21 @@ interface ReviewsListPropType {
   openReview: () => void;
 }
 
+const REVIEWS_PER_PAGE = 5;
+
 export const ReviewsList: FC<ReviewsListPropType> = ({
   reviews,
   openReview,
 }) => {
-  // Обчислення середнього значення рейтингу
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const totalPages = Math.ceil(reviews.length / REVIEWS_PER_PAGE);
+
+  const paginatedReviews = reviews.slice(
+    (currentPage - 1) * REVIEWS_PER_PAGE,
+    currentPage * REVIEWS_PER_PAGE
+  );
+
   const averageRating =
     reviews.length > 0
       ? reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length
@@ -83,7 +94,7 @@ export const ReviewsList: FC<ReviewsListPropType> = ({
       </div>
 
       <ul className={s.list}>
-        {reviews.map((item, index) => (
+        {paginatedReviews.map((item, index) => (
           <ReviewItem
             key={index}
             reviewerName={item.reviewer}
@@ -93,6 +104,14 @@ export const ReviewsList: FC<ReviewsListPropType> = ({
           />
         ))}
       </ul>
+
+      {totalPages > 1 && (
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={setCurrentPage}
+        />
+      )}
     </div>
   );
 };

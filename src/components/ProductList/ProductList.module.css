@@ -2,6 +2,16 @@
   padding: 8.3vw 0;
 }
 
+.mini {
+  padding-top: 0;
+  padding-bottom: 0;
+
+  .navigationContainer {
+    margin-bottom: 0.5vw;
+    margin-top: 0.5vw;
+  }
+}
+
 .productList {
   display: flex;
   gap: 0.7vw;
@@ -86,6 +96,16 @@
   font-weight: 500;
   line-height: 1.6vw !important;
   color: black !important;
+}
+
+.mini {
+  h2 {
+    font-family: Manrope;
+    font-weight: 500;
+    font-size: 1.2vw;
+    line-height: 100%;
+    width: auto !important;
+  }
 }
 
 .swiperController h2 {

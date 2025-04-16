@@ -15,10 +15,24 @@
 .popupContent {
   background-color: #fff;
   padding: 1.6vw;
-  min-width: 83.3vw;
+  min-width: 90%;
   max-width: 90%;
-  max-height: 80%;
+  max-height: 90%;
+  min-height: 90%;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+}
+
+.popupContent::-webkit-scrollbar {
+  width: 0.2vw;
+}
+.popupContent::-webkit-scrollbar-track {
+  width: 1vw;
+  background-color: rgba(254, 228, 229, 1);
+}
+.popupContent::-webkit-scrollbar-thumb {
+  width: 1vw;
+  background-color: var(--primary);
 }
 
 .popupHeader {
@@ -234,4 +248,8 @@
       color: white;
     }
   }
+}
+
+.cartProductsSlider {
+  /* transform: scale(0.5); */
 }

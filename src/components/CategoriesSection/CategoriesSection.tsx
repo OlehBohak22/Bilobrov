@@ -6,17 +6,20 @@ import { RootState, AppDispatch } from "../../store";
 import s from "./CategoriesSection.module.css";
 import { Layout } from "../Layout/Layout";
 import { Link } from "react-router";
+import { Loader } from "../Loader/Loader";
 
 interface CategoriesSectionProps {
   parentId: number;
   reverse?: boolean;
   children: React.ReactNode;
+  largePlate: string;
 }
 
 export const CategoriesSection: React.FC<CategoriesSectionProps> = ({
   parentId,
   reverse = false,
   children,
+  largePlate,
 }) => {
   const dispatch = useDispatch<AppDispatch>();
 
@@ -28,13 +31,7 @@ export const CategoriesSection: React.FC<CategoriesSectionProps> = ({
     selectSubcategories(parentId)(state)
   );
 
-  console.log(categories);
-
-  console.log(subcategories);
-
   const parentSlug = categories.find((item) => item.id === parentId)?.slug;
-
-  console.log(parentSlug);
 
   useEffect(() => {
     if (categories.length === 0) {
@@ -42,12 +39,26 @@ export const CategoriesSection: React.FC<CategoriesSectionProps> = ({
     }
   }, [dispatch, categories.length]);
 
+  console.log(subcategories);
+
+  const largeCategory = subcategories.find((item) => item.name === largePlate);
+  const otherCategories = subcategories
+    .filter((item) => item.name !== largePlate)
+    .slice(0, 4);
+
+  console.log(largeCategory);
+  console.log(otherCategories);
+
   if (loading) {
-    return <p>Завантаження категорій...</p>;
+    return <Loader />;
   }
 
   if (error) {
     return <p>Помилка: {error}</p>;
+  }
+
+  if (!largeCategory || !otherCategories) {
+    return null;
   }
 
   return (
@@ -84,10 +95,10 @@ export const CategoriesSection: React.FC<CategoriesSectionProps> = ({
       ) : (
         <ul className={s.categoriesList}>
           {!reverse && (
-            <li className={s.large} key={subcategories[0].id}>
+            <li className={s.large} key={largeCategory.id}>
               <Link to="/sdgfsdg">
-                <p>{subcategories[0].name}</p>
-                <img src={subcategories[0].image?.src} alt="" />
+                <p>{largeCategory.name}</p>
+                <img src={largeCategory.image?.src} alt="" />
 
                 <div className={s.linkHover}>
                   <span>Перейти</span>
@@ -124,7 +135,7 @@ export const CategoriesSection: React.FC<CategoriesSectionProps> = ({
           )}
 
           <div className={s.subcategoriesContainer}>
-            {subcategories.slice(1).map((sub) => (
+            {otherCategories.map((sub) => (
               <li key={sub.id}>
                 <Link to={`catalog/${parentSlug}/${sub.slug}`}>
                   <p>{sub.name}</p>
@@ -165,10 +176,10 @@ export const CategoriesSection: React.FC<CategoriesSectionProps> = ({
           </div>
 
           {reverse && (
-            <li className={s.large} key={subcategories[0].id}>
-              <Link to={`/catalog/${parentSlug}/${subcategories[0].slug}`}>
-                <p>{subcategories[0].name}</p>
-                <img src={subcategories[0].image?.src} alt="" />
+            <li className={s.large} key={largeCategory.id}>
+              <Link to={`/catalog/${parentSlug}/${largeCategory.slug}`}>
+                <p>{largeCategory.name}</p>
+                <img src={largeCategory.image?.src} alt="" />
                 <div className={s.linkHover}>
                   <span>Перейти</span>
                   <svg

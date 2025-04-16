@@ -31,6 +31,8 @@ import { OrderPage } from "./Pages/OrderPage/OrderPage";
 import { fetchCities } from "./store/slices/citiesSlice";
 import { fetchBanner } from "./store/slices/bannerSlice";
 import LoadingBar from "./components/LoadingBar/LoadingBar";
+import {} from "./store/slices/wishlistSlice";
+import { GlobalPropsContext } from "./GlobalPropContext";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -58,9 +60,10 @@ function App() {
     dispatch(fetchProducts());
     dispatch(fetchCategories());
     dispatch(fetchMenus());
+
     dispatch(fetchCities());
 
-    dispatch(fetchBrands()); // Викликаємо асинхронну дію для завантаження брендів
+    dispatch(fetchBrands());
   }, [dispatch]);
 
   useEffect(() => {
@@ -79,12 +82,7 @@ function App() {
   };
 
   const handleOpenWishList = () => {
-    if (user) {
-      setIsWishList(true);
-    } else {
-      setIsRegisterOpen(true);
-      document.body.style.overflow = "hidden";
-    }
+    setIsWishList(true);
   };
 
   const handleOpenCart = () => {
@@ -112,85 +110,81 @@ function App() {
     }
   }, [dispatch, loading]);
 
-  // useEffect(() => {
-  //   setLoading(true);
-  //   handleCloseModals();
-
-  //   const timeout = setTimeout(() => setLoading(false), 1000); // Імітуємо завантаження
-  //   return () => clearTimeout(timeout);
-  // }, [location.pathname]); // Виконується при зміні URL
-
-  // // Якщо loading === true, показуємо лише LoadingBar
-  // if (loading) {
-  //   return <LoadingBar loading={loading} />;
-  // }
-
-  // Видаляємо умовний рендеринг LoadingBar
+  const globalProps = {
+    openCart: handleOpenCart,
+    // інші пропси
+  };
   return (
-    <>
-      {loading ? (
-        <LoadingBar />
-      ) : (
-        <>
-          <CartInitializer />
-          <Header
-            openRegister={handleOpenRegister}
-            openWishList={handleOpenWishList}
-            openCart={handleOpenCart}
-            openMenu={() => setIsMenuOpen(true)}
-          />
-          {isRegisterOpen && <RegisterModal onClose={handleCloseModals} />}
-          {isWishList && <WishListPopup onClose={handleCloseModals} />}
-          {isCartOpen && <CartPopup onClose={handleCloseModals} />}
-          {isMenuOpen && (
-            <MenuPopup
-              openPopup={() => {
-                handleOpenRegister();
-                setIsMenuOpen(false);
-              }}
-              onClose={handleCloseModals}
+    <GlobalPropsContext.Provider value={globalProps}>
+      <>
+        {loading ? (
+          <LoadingBar />
+        ) : (
+          <>
+            <CartInitializer />
+            <Header
+              openRegister={handleOpenRegister}
+              openWishList={handleOpenWishList}
+              openCart={handleOpenCart}
+              openMenu={() => setIsMenuOpen(true)}
             />
-          )}
-          {isReview && (
-            <ReviewPopup
-              onClose={handleCloseModals}
-              product_id={currentProduct?.id}
-            />
-          )}
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/support" element={<ClientsSupportPage />} />
-            <Route path="/bilobrov-club" element={<BonusPage />} />
-            <Route
-              path="/podarunkovi-sertyfikaty-20"
-              element={<CertificatePage />}
-            />
-            <Route path="/account" element={<AccountPage />} />
-            <Route path="/brendy" element={<BrandsPage />} />
-            <Route path="/order" element={<OrderPage />} />
+            {isRegisterOpen && <RegisterModal onClose={handleCloseModals} />}
+            {isWishList && <WishListPopup onClose={handleCloseModals} />}
+            {isCartOpen && <CartPopup onClose={handleCloseModals} />}
+            {isMenuOpen && (
+              <MenuPopup
+                openPopup={() => {
+                  handleOpenRegister();
+                  setIsMenuOpen(false);
+                }}
+                onClose={handleCloseModals}
+              />
+            )}
+            {isReview && (
+              <ReviewPopup
+                onClose={handleCloseModals}
+                product_id={currentProduct?.id}
+              />
+            )}
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/support" element={<ClientsSupportPage />} />
+              <Route path="/bilobrov-club" element={<BonusPage />} />
+              <Route
+                path="/podarunkovi-sertyfikaty-20"
+                element={<CertificatePage />}
+              />
+              <Route path="/account" element={<AccountPage />} />
+              <Route path="/brendy" element={<BrandsPage />} />
+              <Route path="/order" element={<OrderPage />} />
 
-            <Route path="/catalog" element={<CatalogPage />}>
-              <Route index element={<CatalogPage />} />
-              <Route path=":slug" element={<CatalogPage />} />
-              <Route path=":parentSlug/:childSlug" element={<CatalogPage />} />
-            </Route>
-
-            {/* Сторінка товару */}
-            <Route
-              path="/product/:slug/:id"
-              element={
-                <ProductPage
-                  openReview={handleOpenReview}
-                  openRegister={handleOpenRegister}
+              <Route path="/catalog" element={<CatalogPage />}>
+                <Route index element={<CatalogPage />} />
+                <Route path=":slug" element={<CatalogPage />} />
+                <Route
+                  path=":parentSlug/:childSlug"
+                  element={<CatalogPage />}
                 />
-              }
-            />
-          </Routes>
-          <Footer />
-        </>
-      )}
-    </>
+              </Route>
+
+              {/* Сторінка товару */}
+              <Route
+                path="/product/:slug/:id"
+                element={
+                  <ProductPage
+                    openReview={handleOpenReview}
+                    openRegister={handleOpenRegister}
+                    openCart={handleOpenCart}
+                  />
+                }
+              />
+            </Routes>
+            <Footer />
+          </>
+        )}
+      </>
+    </GlobalPropsContext.Provider>
   );
 }
 
