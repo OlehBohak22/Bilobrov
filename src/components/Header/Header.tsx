@@ -104,6 +104,8 @@ export const Header: React.FC<HeaderProps> = ({
                   modifiedUrl = "brendy";
                 } else if (modifiedUrl.endsWith("about")) {
                   modifiedUrl = "about";
+                } else if (modifiedUrl.endsWith("certificate")) {
+                  modifiedUrl = "podarunkovi-sertyfikaty-20";
                 } else if (modifiedUrl.endsWith("podarunkovi-sertyfikaty-20")) {
                   modifiedUrl = "podarunkovi-sertyfikaty-20";
                 } else {

@@ -207,8 +207,7 @@ const productSlice = createSlice({
         );
 
         state.certificates = action.payload.filter(
-          (item: any) =>
-            item.categories[0]?.slug === "podarunkovi-sertyfikaty-20"
+          (item: any) => item.categories[0]?.slug === "certificate"
         );
       });
 

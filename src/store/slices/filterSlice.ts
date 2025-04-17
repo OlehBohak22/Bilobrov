@@ -31,6 +31,7 @@ interface ProductState {
   page: number; // 🔥 додаємо
   hasMore: boolean; // 🔥 для контролю закінчення сторінок
   totalCount: number;
+  certificates: ProductInfo[]; // 🔥 додали
 }
 
 const initialState: ProductState = {
@@ -48,6 +49,7 @@ const initialState: ProductState = {
   page: 1, // 🔥 додаємо
   hasMore: true, // 🔥 додаємо
   totalCount: 0,
+  certificates: [],
 };
 
 export const fetchAttributes = createAsyncThunk(
@@ -61,6 +63,26 @@ export const fetchAttributes = createAsyncThunk(
         },
       }
     );
+
+    return response.data;
+  }
+);
+
+export const fetchCertificates = createAsyncThunk(
+  "filters/fetchCertificates",
+  async () => {
+    const params = new URLSearchParams({
+      per_page: "100", // або більше, якщо треба всі
+      category: "1159", // тут вказуємо слаг категорії!
+    });
+
+    const url = `${API_URL}products?${params.toString()}`;
+
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: "Basic " + btoa(`${consumerKey}:${consumerSecret}`),
+      },
+    });
 
     return response.data;
   }
@@ -246,6 +268,9 @@ const productSlice = createSlice({
       })
       .addCase(fetchAttributes.fulfilled, (state, action) => {
         state.attributes = action.payload;
+      })
+      .addCase(fetchCertificates.fulfilled, (state, action) => {
+        state.certificates = action.payload;
       });
   },
 });

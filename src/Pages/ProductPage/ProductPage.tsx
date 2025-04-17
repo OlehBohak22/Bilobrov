@@ -37,6 +37,8 @@ export const ProductPage: React.FC<HeaderProps> = ({
     (item: { product_id: any }) => item.product_id == id
   );
 
+  console.log(currentProduct);
+
   useEffect(() => {
     if (id) {
       const productIdNumber = parseInt(id, 10);

@@ -122,7 +122,7 @@
   bottom: 0;
 }
 
-.inputContainer > div p {
+.inputContainer > div {
   /* margin-bottom: 0.6vw; */
 }
 
@@ -171,6 +171,129 @@
 
   .inputContainer:not(:last-child) {
     margin-bottom: 1vw;
+  }
+}
+
+.addressList {
+  margin-bottom: 1.6vw;
+
+  .checked {
+    border: 1px solid black;
+  }
+
+  input {
+    display: none;
+  }
+
+  li {
+    padding: 1.2vw;
+    background-color: rgba(249, 247, 248, 1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+
+    svg {
+      width: 1.2vw;
+      height: 1.2vw;
+      stroke: black;
+      transition: 0.3s;
+    }
+
+    .delete:hover {
+      svg {
+        stroke: var(--primary);
+      }
+    }
+  }
+
+  li:not(:last-child) {
+    margin-bottom: 1.6vw;
+  }
+
+  .infoBlock {
+    display: flex;
+    align-items: center;
+    gap: 1.2vw;
+
+    span {
+      font-family: Manrope;
+      font-weight: 700;
+      font-size: 0.8vw;
+      line-height: 0.8vw;
+      letter-spacing: 0%;
+    }
+
+    p {
+      font-family: Manrope;
+      font-weight: 500;
+      font-size: 0.9vw;
+      line-height: 140%;
+    }
+  }
+
+  .customCheckbox {
+    display: flex;
+    align-items: center;
+    gap: 0.4vw;
+    cursor: pointer;
+
+    svg {
+      width: 1.2vw;
+
+      height: 1.2vw;
+    }
+
+    span {
+      font-family: Manrope;
+      font-weight: 700;
+      font-size: 0.8vw;
+      line-height: 0.8vw;
+      text-transform: uppercase;
+    }
+  }
+
+  .changeAddress {
+    cursor: pointer;
+
+    svg {
+      stroke: #1a1a1a;
+      width: 1.2vw;
+      height: 1.2vw;
+    }
+  }
+
+  .changeAddress:hover {
+    svg {
+      stroke: var(--primary);
+    }
+  }
+}
+
+.regularCustomerController {
+  display: flex;
+  align-items: center;
+  gap: 2vw;
+  margin-bottom: 2.7vw;
+
+  div {
+    cursor: pointer;
+  }
+
+  div:not(.active) {
+    font-family: Manrope;
+    font-weight: 500;
+    font-size: 1.4vw;
+    line-height: 100%;
+    letter-spacing: 0%;
+    opacity: 0.3;
+  }
+
+  .active {
+    font-family: Playfair Display;
+    font-weight: 500;
+    font-style: italic;
+    font-size: 1.4vw;
   }
 }
 

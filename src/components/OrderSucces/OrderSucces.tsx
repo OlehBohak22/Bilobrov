@@ -36,8 +36,6 @@ const formattedDate = `${day} ${month} ${year} року`;
 export const OrderSucces: FC<SuccesProps> = ({ data }) => {
   const dispatch = useAppDispatch();
 
-  console.log(data);
-
   const imageArr = data?.line_items.map((item) => {
     return { imageSrc: item?.image?.src, quantity: item.quantity };
   });

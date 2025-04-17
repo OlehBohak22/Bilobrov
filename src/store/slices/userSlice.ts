@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { togglePreference } from "./wishlistSlice";
+import { registerUser, loginUser } from "../actions/userActions";
 
 interface BonusHistoryItem {
   type: string;
@@ -19,6 +20,9 @@ interface address {
   last_name: string;
   middle_name: string;
   first_name: string;
+  delivery_type: string;
+  department: string;
+  phone: string;
 }
 
 interface Product {
@@ -162,11 +166,42 @@ const userSlice = createSlice({
   },
 
   extraReducers: (builder) => {
-    builder.addCase(togglePreference.fulfilled, (state, action) => {
-      if (state.user && state.user.meta) {
-        state.user.meta.preferences = action.payload; // Оновлення вподобань
-      }
-    });
+    builder
+      .addCase(togglePreference.fulfilled, (state, action) => {
+        if (state.user && state.user.meta) {
+          state.user.meta.preferences = action.payload;
+        }
+      })
+
+      // Реєстрація
+      .addCase(registerUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(registerUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.token = action.payload.token;
+        state.user = action.payload.user;
+      })
+      .addCase(registerUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+
+      // Логін
+      .addCase(loginUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(loginUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.token = action.payload.token;
+        state.user = action.payload.user;
+      })
+      .addCase(loginUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      });
   },
 });
 

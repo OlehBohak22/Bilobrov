@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { registerUser, loginUser } from "../../store/actions/userActions";
 import { AppDispatch } from "../../store/index";
 import { RootState } from "../../store";
 import s from "./Register.module.css";
+import { useRef } from "react";
+
 import { motion } from "framer-motion";
 
 export const RegisterModal: React.FC<{ onClose: () => void }> = ({
@@ -15,50 +17,55 @@ export const RegisterModal: React.FC<{ onClose: () => void }> = ({
   const [firstName, setFirstName] = useState("");
   const [isRegister, setIsRegister] = useState(true); // Стан для перемикання між формами
 
-  const { loading, error } = useSelector((state: RootState) => state.user);
+  const modalRef = useRef<HTMLDivElement>(null);
 
-  // const handleDispatch = (action: any) =>
-  //   new Promise((resolve, reject) => {
-  //     dispatch(action)
-  //       .then((result: any) => {
-  //         if (result.error) {
-  //           reject(result.error);
-  //         } else {
-  //           resolve(result.payload);
-  //         }
-  //       })
-  //       .catch(reject);
-  //   });
+  const { loading, error } = useSelector((state: RootState) => state.user);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (isRegister) {
-      if (!email || !password || !firstName) {
-        alert("Будь ласка, заповніть усі поля");
-        return;
-      }
+    if (!email || !password || (isRegister && !firstName)) {
+      // Можна зробити вивід помилки в інтерфейсі замість alert
+      return;
+    }
 
+    if (isRegister) {
       try {
-        await dispatch(registerUser(email, password, firstName));
-        onClose();
-      } catch (error: any) {
-        alert("Помилка реєстрації: " + error);
+        const result = await dispatch(
+          registerUser({ email, password, name: firstName })
+        ).unwrap();
+
+        if (result) {
+          onClose();
+        }
+      } catch (err) {
+        console.error("❌ Реєстрація помилка:", err);
       }
     } else {
-      if (!email || !password) {
-        alert("Будь ласка, заповніть усі поля");
-        return;
-      }
-
       try {
-        await dispatch(loginUser(email, password));
-        onClose();
-      } catch (error: any) {
-        alert("Помилка входу: " + error);
+        await dispatch(loginUser({ email, password })).unwrap();
+      } catch (err) {
+        console.error("❌ Логін помилка:", err);
       }
     }
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        modalRef.current &&
+        !modalRef.current.contains(event.target as Node)
+      ) {
+        onClose(); // Якщо клік був за межами модалки — закриваємо
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [onClose]);
 
   return (
     <div className={s.modalOverlay}>
@@ -71,11 +78,16 @@ export const RegisterModal: React.FC<{ onClose: () => void }> = ({
         <img src="/images/popup-side-img.avif" alt="before" />
       </motion.div>
       <motion.div
+        ref={modalRef}
         initial={{ x: "50%", opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
         className={s.modal}
       >
+        <div>
+          <img src="/images/registration-img.png" alt="" />
+        </div>
+
         <button onClick={onClose} className={s.closeBtn}>
           <svg
             viewBox="0 0 52 52"

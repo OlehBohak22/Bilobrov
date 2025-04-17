@@ -2,14 +2,18 @@ import { motion } from "framer-motion";
 import s from "./MenuPopup.module.css";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { buildMenuTree } from "../../utils/buildMenuTree";
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
 
 export const MenuPopup: React.FC<{
   onClose: () => void;
   openPopup: () => void;
 }> = ({ onClose, openPopup }) => {
+  const [hasMounted, setHasMounted] = useState(false);
+
+  const modalRef = useRef<HTMLDivElement>(null);
+
   const asideTopMenu = useSelector(
     (state: RootState) => state.menu.asideTopMenu?.items || []
   );
@@ -27,6 +31,33 @@ export const MenuPopup: React.FC<{
   const asideBottomMenuTree = buildMenuTree(asideBottomMemu);
   const asideTopMenuTree = buildMenuTree(asideTopMenu);
 
+  const { pathname } = useLocation(); // Отримуємо поточний шлях
+
+  useEffect(() => {
+    if (hasMounted) {
+      onClose();
+    } else {
+      setHasMounted(true);
+    }
+  }, [pathname]);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        modalRef.current &&
+        !modalRef.current.contains(event.target as Node)
+      ) {
+        onClose(); // Якщо клік був за межами модалки — закриваємо
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [onClose]);
+
   return (
     <div className={s.modalOverlay}>
       <motion.div
@@ -34,6 +65,7 @@ export const MenuPopup: React.FC<{
         animate={{ x: 0, opacity: 1 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
         className={s.modal}
+        ref={modalRef}
       >
         <div className={s.menuHeader}>
           <p>Меню</p>
@@ -228,7 +260,7 @@ export const MenuPopup: React.FC<{
               modifiedUrl = "about";
             } else if (modifiedUrl.endsWith("my-account")) {
               modifiedUrl = "account";
-            } else if (modifiedUrl.endsWith("podarunkovi-sertyfikaty-20")) {
+            } else if (modifiedUrl.endsWith("certificate")) {
               modifiedUrl = "podarunkovi-sertyfikaty-20";
             } else if (modifiedUrl.endsWith("bonusna-systema")) {
               modifiedUrl = "bilobrov-club";
@@ -276,7 +308,9 @@ export const MenuPopup: React.FC<{
                     {item.title}
                   </button>
                 ) : (
-                  <Link to={modifiedUrl}>{item.title}</Link>
+                  <Link onClick={onClose} to={modifiedUrl}>
+                    {item.title}
+                  </Link>
                 )}
 
                 {item.children.length > 0 && openMenu === item.id && (
@@ -312,7 +346,9 @@ export const MenuPopup: React.FC<{
 
                       return (
                         <li key={child.id}>
-                          <Link to={modifiedChildUrl}>{child.title}</Link>
+                          <Link onClick={onClose} to={modifiedChildUrl}>
+                            {child.title}
+                          </Link>
                         </li>
                       );
                     })}

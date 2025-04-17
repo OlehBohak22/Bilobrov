@@ -44,7 +44,16 @@ export const BrandsPage = () => {
             {["0-9", ...alphabet].map((char) => (
               <a
                 key={char}
-                href={`#${char}`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  const element = document.getElementById(char);
+                  if (element) {
+                    element.scrollIntoView({
+                      behavior: "smooth",
+                      block: "start",
+                    });
+                  }
+                }}
                 className={`${s.navItem} ${
                   groupedBrands[char] ? "" : s.disabled
                 }`}

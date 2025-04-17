@@ -39,15 +39,10 @@ export const CategoriesSection: React.FC<CategoriesSectionProps> = ({
     }
   }, [dispatch, categories.length]);
 
-  console.log(subcategories);
-
   const largeCategory = subcategories.find((item) => item.name === largePlate);
   const otherCategories = subcategories
     .filter((item) => item.name !== largePlate)
     .slice(0, 4);
-
-  console.log(largeCategory);
-  console.log(otherCategories);
 
   if (loading) {
     return <Loader />;

@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { VariationsPopup } from "../VariationCartPopup/VariationCartPopup";
 import { useGlobalProps } from "../../GlobalPropContext";
+import { truncateHtmlString } from "../../utils/truncateHtmlString";
 
 interface ProductItemProps {
   info: ProductInfo;
@@ -61,7 +62,7 @@ export const ProductItem: React.FC<ProductItemProps> = ({
 
   const handleAddToCart = () => {
     if (info.variations && info.variations.length > 1) {
-      setPopupOpen(true); // Відкриваємо попап для вибору варіації
+      setPopupOpen(true);
     } else {
       dispatch(
         addToCart({
@@ -161,10 +162,9 @@ export const ProductItem: React.FC<ProductItemProps> = ({
           {brandName && <p className={s.productBrand}>{brandName}</p>}
           <p className={s.productName}>{info.name}</p>
           {typeof info.short_description === "string" ? (
-            <p
-              className={s.shortDesc}
-              dangerouslySetInnerHTML={{ __html: info.short_description }}
-            />
+            <p className={s.shortDesc}>
+              {truncateHtmlString(info.short_description, 100)}{" "}
+            </p>
           ) : (
             <>{info.short_description}</>
           )}

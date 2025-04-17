@@ -12,6 +12,7 @@ import { Link } from "react-router";
 import { OrderFooter } from "./OrderFooter";
 import { OrderSucces } from "../../components/OrderSucces/OrderSucces";
 import { clearCart } from "../../store/slices/cartSlice";
+import { AddressPopup } from "../../components/AddressPopup/AddressPopup";
 
 export const OrderPage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -24,6 +25,55 @@ export const OrderPage: React.FC = () => {
   const [entrance, setEntrance] = useState("");
   const [apartment, setApartment] = useState("");
   const [errors, setErrors] = useState<Record<string, boolean>>({});
+  const [addressPopup, setAddressPopup] = useState(false);
+
+  const [selectedAddressId, setSelectedAddressId] = useState<number | null>(
+    null
+  );
+
+  const handleAddressSelect = (addressId: number) => {
+    setSelectedAddressId(addressId);
+
+    const selected = address?.find((addr) => addr.id === addressId);
+
+    if (selected) {
+      let fullAddress = "";
+
+      if (selected.delivery_type === "department") {
+        fullAddress = selected.department || ""; // тут беремо адресу відділення
+      } else {
+        fullAddress = `${selected.street || ""} ${selected.house || ""}${
+          selected.entrance ? `, під'їзд ${selected.entrance}` : ""
+        }${selected.apartment ? `, кв. ${selected.apartment}` : ""}`;
+      }
+
+      setBilling((prev) => ({
+        ...prev,
+        first_name: selected.first_name,
+        last_name: selected.last_name,
+        middle_name: selected.middle_name,
+        city: selected.city,
+        address_1: fullAddress,
+      }));
+
+      setShipping((prev) => ({
+        ...prev,
+        first_name: selected.first_name,
+        last_name: selected.last_name,
+        middle_name: selected.middle_name,
+        phone: selected.phone || user?.meta.phone || "",
+        email: user?.email || "",
+        city: selected.city,
+        address_1: fullAddress,
+      }));
+
+      setSelectedCity(selected.city);
+      setSelectedStreet(selected.street || "");
+      setHouse(selected.house || "");
+      setEntrance(selected.entrance || "");
+      setApartment(selected.apartment || "");
+    }
+  };
 
   const validateStepOne = () => {
     const newErrors: Record<string, boolean> = {};
@@ -49,21 +99,44 @@ export const OrderPage: React.FC = () => {
   const validateStepTwo = () => {
     const newErrors: Record<string, boolean> = {};
 
-    if (!selectedCity.trim()) newErrors.city = true;
+    if (regularCustomer) {
+      if (!selectedAddressId) {
+        newErrors.selectedAddress = true;
+      }
+    } else {
+      if (!selectedCity.trim()) newErrors.city = true;
 
-    if (departmentSelect === "На відділення") {
-      if (!warehouse.trim()) newErrors.warehouse = true;
-    } else if (departmentSelect === "Кур'єр") {
-      if (!selectedStreet.trim()) newErrors.street = true;
-      if (!house.trim()) newErrors.house = true;
+      if (departmentSelect === "На відділення") {
+        if (!warehouse.trim()) newErrors.warehouse = true;
+      } else if (departmentSelect === "Кур'єр") {
+        if (!selectedStreet.trim()) newErrors.street = true;
+        if (!house.trim()) newErrors.house = true;
+      }
     }
 
     setErrors(newErrors);
+
     return Object.keys(newErrors).length === 0;
   };
 
   const userData = useSelector((state: RootState) => state.user.user);
   const { token } = useSelector((state: RootState) => state.user);
+
+  const address = userData?.meta.address;
+
+  useEffect(() => {
+    if (Array.isArray(address) && address.length > 0) {
+      const selected = address.find((addr) => addr.selected) || address[0];
+      setSelectedAddressId(selected.id);
+
+      // Автоматично також заповнити дані в billing і shipping
+      handleAddressSelect(selected.id);
+    }
+  }, [address]);
+
+  const [regularCustomer, setIsRegularCustomer] = useState(
+    token && Array.isArray(address) && address.length > 0 ? true : false
+  );
 
   const handleHouseChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setHouse(e.target.value); // Оновлюємо будинок
@@ -114,7 +187,6 @@ export const OrderPage: React.FC = () => {
   const [warehouse, setWarehouse] = useState<string>(warehouses[0] || "");
 
   const { user } = useSelector((state: RootState) => state.user);
-  console.log(user);
 
   const [billing, setBilling] = useState({
     first_name: user?.name || "",
@@ -172,6 +244,35 @@ export const OrderPage: React.FC = () => {
       break;
   }
   const handleOrderSubmit = async () => {
+    let finalBilling = { ...billing };
+    let finalShipping = { ...shipping };
+
+    // Якщо постійна клієнтка і вибрано збережену адресу
+    if (regularCustomer && selectedAddressId) {
+      const selected = address?.find((addr) => addr.id === selectedAddressId);
+
+      if (selected) {
+        let fullAddress = "";
+
+        if (selected.delivery_type === "department") {
+          fullAddress = selected.department || "";
+        } else {
+          fullAddress = `${selected.street || ""} ${selected.house || ""}${
+            selected.entrance ? `, під'їзд ${selected.entrance}` : ""
+          }${selected.apartment ? `, кв. ${selected.apartment}` : ""}`;
+        }
+
+        finalBilling = {
+          ...finalBilling,
+          address_1: fullAddress,
+        };
+        finalShipping = {
+          ...finalShipping,
+          address_1: fullAddress,
+        };
+      }
+    }
+
     const orderData = {
       payment_method: paymentMethod,
       payment_method_title:
@@ -179,8 +280,8 @@ export const OrderPage: React.FC = () => {
       set_paid: false,
       status: paymentMethod === "cod" ? "on-hold" : "processing",
       customer_id: userData ? userData.ID : 0,
-      billing,
-      shipping,
+      billing: finalBilling,
+      shipping: finalShipping,
       line_items: cart.map((item) => ({
         product_id: item.id,
         quantity: item.quantity,
@@ -201,12 +302,11 @@ export const OrderPage: React.FC = () => {
       ],
     };
 
+    // далі сабміт як у тебе
     try {
       const resultAction = await dispatch(createOrder(orderData));
-
       if (createOrder.fulfilled.match(resultAction)) {
         dispatch(clearCart(token));
-
         setOrderSucces(resultAction.payload);
         console.log("Замовлення успішно створено:", resultAction.payload);
       } else {
@@ -283,6 +383,23 @@ export const OrderPage: React.FC = () => {
           <div className={s.orderAllInfo}>
             <div>
               <div className={s.stepsContainer}>
+                {token && (
+                  <div className={s.regularCustomerController}>
+                    <div
+                      onClick={() => setIsRegularCustomer(false)}
+                      className={`${!regularCustomer ? s.active : ""}`}
+                    >
+                      Замовляю вперше
+                    </div>
+                    <div
+                      onClick={() => setIsRegularCustomer(true)}
+                      className={`${regularCustomer ? s.active : ""}`}
+                    >
+                      Я постійна клієнтка
+                    </div>
+                  </div>
+                )}
+
                 <h2>{title}</h2>
 
                 {step === 1 && (
@@ -406,18 +523,20 @@ export const OrderPage: React.FC = () => {
                         <span className={s.checkboxLabel}>Я отримувач</span>
                       </label>
 
-                      <label className={s.customCheckbox}>
-                        <input
-                          type="checkbox"
-                          checked={register}
-                          onChange={() => setRegister(!register)}
-                          className={s.hiddenCheckbox} // Сховаємо стандартний чекбокс
-                        />
-                        <span className={s.checkboxLabel}>
-                          Зареєструватися на сайті і отримати доступ до
-                          спеціальних бонусів
-                        </span>
-                      </label>
+                      {!token && (
+                        <label className={s.customCheckbox}>
+                          <input
+                            type="checkbox"
+                            checked={register}
+                            onChange={() => setRegister(!register)}
+                            className={s.hiddenCheckbox} // Сховаємо стандартний чекбокс
+                          />
+                          <span className={s.checkboxLabel}>
+                            Зареєструватися на сайті і отримати доступ до
+                            спеціальних бонусів
+                          </span>
+                        </label>
+                      )}
                     </div>
 
                     {!shipper && (
@@ -536,120 +655,187 @@ export const OrderPage: React.FC = () => {
                   </div>
                 )}
 
-                {step === 2 && (
-                  <div className={s.inputBox}>
-                    <div className={s.inputContainer}>
-                      <div className={s.selectContainer}>
-                        <p className="mb-[0.6vw]">
-                          Спосіб доставки <span>*</span>
-                        </p>
-                        <CustomSelect
-                          novaIcon={true}
-                          options={["На відділення", "Кур'єр"]}
-                          value={departmentSelect}
-                          onChange={setDepartmentSelect}
-                          className={errors.city ? s.errorInput : ""}
-                        />
-                      </div>
+                {step === 2 &&
+                  (regularCustomer ? (
+                    <ul className={s.addressList}>
+                      {address?.map((address, index) => (
+                        <li
+                          onClick={() => handleAddressSelect(address.id)}
+                          className={
+                            selectedAddressId == address.id ? s.checked : ""
+                          }
+                          key={address.id || index}
+                        >
+                          <div className={s.infoBlock}>
+                            <span>Адреса #{++index}</span>
 
-                      <div className={s.selectContainer}>
-                        <p className="mb-[0.6vw]">
-                          Місто <span>*</span>
-                        </p>
-                        <CustomSelect
-                          novaIcon={false}
-                          options={allCities} // Випадаючий список
-                          value={selectedCity}
-                          onChange={setSelectedCity}
-                          className={errors.warehouse ? s.errorInput : ""}
-                        />
-                      </div>
-                    </div>
+                            <input
+                              type="radio"
+                              name="selectedAddress"
+                              checked={selectedAddressId === address.id}
+                              onChange={() => handleAddressSelect(address.id)}
+                            />
 
-                    {selectedCity && departmentSelect === "На відділення" ? (
+                            <div className={s.addressInfo}>
+                              <p>
+                                {address.city && `м. ${address.city} `}
+                                {address.street && `вул. ${address.street} `}
+                                {address.house && `буд. ${address.house} `}
+                                {address.entrance &&
+                                  `під'їзд ${address.entrance} `}
+                                {address.apartment &&
+                                  `кв. ${address.apartment} `}
+                              </p>
+
+                              <p>
+                                Одержувач:
+                                {address.last_name && ` ${address.last_name} `}
+                                {address.first_name &&
+                                  ` ${address.first_name} `}
+                                {address.middle_name &&
+                                  ` ${address.middle_name} `}
+                              </p>
+                            </div>
+                          </div>
+
+                          {/* <div>{address.id}</div> */}
+
+                          <div className="flex gap-[0.8vw]">
+                            <div
+                              onClick={() => setAddressPopup(true)}
+                              className={s.changeAddress}
+                            >
+                              <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M11 4.00023H6.8C5.11984 4.00023 4.27976 4.00023 3.63803 4.32721C3.07354 4.61483 2.6146 5.07377 2.32698 5.63826C2 6.27999 2 7.12007 2 8.80023V17.2002C2 18.8804 2 19.7205 2.32698 20.3622C2.6146 20.9267 3.07354 21.3856 3.63803 21.6732C4.27976 22.0002 5.11984 22.0002 6.8 22.0002H15.2C16.8802 22.0002 17.7202 22.0002 18.362 21.6732C18.9265 21.3856 19.3854 20.9267 19.673 20.3622C20 19.7205 20 18.8804 20 17.2002V13.0002M7.99997 16.0002H9.67452C10.1637 16.0002 10.4083 16.0002 10.6385 15.945C10.8425 15.896 11.0376 15.8152 11.2166 15.7055C11.4184 15.5818 11.5914 15.4089 11.9373 15.063L21.5 5.50023C22.3284 4.6718 22.3284 3.32865 21.5 2.50023C20.6716 1.6718 19.3284 1.6718 18.5 2.50022L8.93723 12.063C8.59133 12.4089 8.41838 12.5818 8.29469 12.7837C8.18504 12.9626 8.10423 13.1577 8.05523 13.3618C7.99997 13.5919 7.99997 13.8365 7.99997 14.3257V16.0002Z"
+                                  stroke-width="1.3"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                />
+                              </svg>
+                            </div>
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <div className={s.inputBox}>
                       <div className={s.inputContainer}>
                         <div className={s.selectContainer}>
                           <p className="mb-[0.6vw]">
-                            № Відділення <span>*</span>
+                            Спосіб доставки <span>*</span>
                           </p>
                           <CustomSelect
-                            isWarehouses={true}
+                            novaIcon={true}
+                            options={["На відділення", "Кур'єр"]}
+                            value={departmentSelect}
+                            onChange={setDepartmentSelect}
+                            className={errors.city ? s.errorInput : ""}
+                          />
+                        </div>
+
+                        <div className={s.selectContainer}>
+                          <p className="mb-[0.6vw]">
+                            Місто <span>*</span>
+                          </p>
+                          <CustomSelect
                             novaIcon={false}
-                            options={warehouses}
-                            value={warehouse}
-                            onChange={(value) => setWarehouse(value)} // ✅ value - це рядок
+                            options={allCities} // Випадаючий список
+                            value={selectedCity}
+                            onChange={setSelectedCity}
+                            className={errors.warehouse ? s.errorInput : ""}
                           />
                         </div>
                       </div>
-                    ) : selectedCity && departmentSelect === "Кур'єр" ? (
-                      <div>
+
+                      {selectedCity && departmentSelect === "На відділення" ? (
                         <div className={s.inputContainer}>
                           <div className={s.selectContainer}>
                             <p className="mb-[0.6vw]">
-                              Вулиця <span>*</span>
+                              № Відділення <span>*</span>
                             </p>
                             <CustomSelect
-                              isStreet={true}
-                              isWarehouses={false}
+                              isWarehouses={true}
                               novaIcon={false}
-                              options={streets}
-                              value={selectedStreet.split(",")[0]} // Вибір вулиці
-                              onChange={(value) => setSelectedStreet(value)}
+                              options={warehouses}
+                              value={warehouse}
+                              onChange={(value) => setWarehouse(value)} // ✅ value - це рядок
                             />
                           </div>
+                        </div>
+                      ) : selectedCity && departmentSelect === "Кур'єр" ? (
+                        <div>
+                          <div className={s.inputContainer}>
+                            <div className={s.selectContainer}>
+                              <p className="mb-[0.6vw]">
+                                Вулиця <span>*</span>
+                              </p>
+                              <CustomSelect
+                                isStreet={true}
+                                isWarehouses={false}
+                                novaIcon={false}
+                                options={streets}
+                                value={selectedStreet.split(",")[0]} // Вибір вулиці
+                                onChange={(value) => setSelectedStreet(value)}
+                              />
+                            </div>
 
-                          <div className={s.addressIndo}>
+                            <div className={s.addressIndo}>
+                              <label>
+                                Будинок <span>*</span>
+                                <input
+                                  value={house}
+                                  onChange={handleHouseChange}
+                                  placeholder="№"
+                                  type="text"
+                                />
+                              </label>
+
+                              <label>
+                                Підʼїзд
+                                <input
+                                  value={entrance}
+                                  onChange={handleEntranceChange}
+                                  placeholder="№"
+                                  type="text"
+                                />
+                              </label>
+
+                              <label>
+                                Квартира
+                                <input
+                                  value={apartment}
+                                  onChange={handleApartmentChange}
+                                  placeholder="№"
+                                  type="text"
+                                />
+                              </label>
+                            </div>
+                          </div>
+
+                          <div className={s.textArea}>
                             <label>
-                              Будинок <span>*</span>
-                              <input
-                                value={house}
-                                onChange={handleHouseChange}
-                                placeholder="№"
-                                type="text"
+                              Додаткові інструкції для курʼєра
+                              <textarea
+                                placeholder="Допоможіть курʼєру швидше знайти вас"
+                                value={instructions}
+                                onChange={handleChange}
                               />
                             </label>
-
-                            <label>
-                              Підʼїзд
-                              <input
-                                value={entrance}
-                                onChange={handleEntranceChange}
-                                placeholder="№"
-                                type="text"
-                              />
-                            </label>
-
-                            <label>
-                              Квартира
-                              <input
-                                value={apartment}
-                                onChange={handleApartmentChange}
-                                placeholder="№"
-                                type="text"
-                              />
-                            </label>
+                            <div className={s.characterCount}>
+                              <span>
+                                {instructions.length}/{maxLength}
+                              </span>
+                            </div>
                           </div>
                         </div>
-
-                        <div className={s.textArea}>
-                          <label>
-                            Додаткові інструкції для курʼєра
-                            <textarea
-                              placeholder="Допоможіть курʼєру швидше знайти вас"
-                              value={instructions}
-                              onChange={handleChange}
-                            />
-                          </label>
-                          <div className={s.characterCount}>
-                            <span>
-                              {instructions.length}/{maxLength}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    ) : null}
-                  </div>
-                )}
+                      ) : null}
+                    </div>
+                  ))}
 
                 {step === 3 && (
                   <div className={s.paymentMethodRadio}>
@@ -747,6 +933,10 @@ export const OrderPage: React.FC = () => {
       )) || <OrderSucces data={orderSucces} />}
 
       <OrderFooter />
+
+      {addressPopup && (
+        <AddressPopup onClose={() => setAddressPopup(false)} user={userData} />
+      )}
     </div>
   );
 };
