@@ -13,7 +13,6 @@ import { Link } from "react-router";
 const BrandsList = () => {
   const dispatch = useAppDispatch();
 
-  // Додаємо тип для useSelector
   const { items } = useSelector((state: RootState) => state.brands);
 
   useEffect(() => {}, [dispatch]);
@@ -42,7 +41,12 @@ const BrandsList = () => {
                 <Link to={`/catalog?brand=${brand.id}`}>
                   <div className={s.brandImageCircle}>
                     <div className="overflow-hidden rounded-full w-[6.5vw] h-[6.5vw]">
-                      <img src={brand.popular_product.image} alt={brand.name} />
+                      {brand.popular_product.image && (
+                        <img
+                          src={brand.popular_product.image}
+                          alt={brand.name}
+                        />
+                      )}
                     </div>
                   </div>
                   <h4>{brand.name}</h4>

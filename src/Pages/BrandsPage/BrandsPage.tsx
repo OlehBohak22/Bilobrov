@@ -66,10 +66,12 @@ export const BrandsPage = () => {
                     >
                       <div className={s.brandImageCircle}>
                         <div className="overflow-hidden rounded-full w-[6.5vw] h-[6.5vw]">
-                          <img
-                            src={brand.popular_product.image}
-                            alt={brand.name}
-                          />
+                          {brand.popular_product.image && (
+                            <img
+                              src={brand.popular_product.image}
+                              alt={brand.name}
+                            />
+                          )}
                         </div>
                       </div>
                       <span>{brand.name}</span>
