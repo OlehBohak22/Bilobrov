@@ -58,92 +58,112 @@ export const ProductPageAccordion: FC<ProductAccordionPropType> = ({
     .replace(/- /g, "<br />- ")
     .replace(/\n/g, "<br />");
 
+  console.log(characteristics);
+
+  const hasDesc = desc.trim() !== "";
+  const hasComponents = components.trim() !== "";
+  const hasIngredients = ingredients.length > 0;
+  const hasCharacteristics =
+    characteristics.appointment.length > 0 ||
+    characteristics.skinType.length > 0 ||
+    characteristics.contraindication.length > 0;
+
   return (
     <div className={s.acardion}>
-      <CustomAccordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1-content"
-          id="panel1-header"
-        >
-          Опис товару
-        </AccordionSummary>
-        <AccordionDetails>
-          <div
-            className={s.desc}
-            dangerouslySetInnerHTML={{ __html: formattedDesc }}
-          />
-        </AccordionDetails>
-      </CustomAccordion>
+      {hasDesc && (
+        <CustomAccordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1-content"
+            id="panel1-header"
+          >
+            Опис товару
+          </AccordionSummary>
+          <AccordionDetails>
+            <div
+              className={s.desc}
+              dangerouslySetInnerHTML={{ __html: formattedDesc }}
+            />
+          </AccordionDetails>
+        </CustomAccordion>
+      )}
 
-      <CustomAccordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel2-content"
-          id="panel2-header"
-        >
-          ХАРАКТЕРИСТИКИ
-        </AccordionSummary>
-        <AccordionDetails>
-          <div className={s.characteristics}>
-            <p>
-              Призначення:
-              {characteristics.appointment.length > 0
-                ? characteristics.appointment.map((item, index) => (
-                    <span key={index}> {item},</span>
+      {hasCharacteristics && (
+        <CustomAccordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel2-content"
+            id="panel2-header"
+          >
+            ХАРАКТЕРИСТИКИ
+          </AccordionSummary>
+          <AccordionDetails>
+            <div className={s.characteristics}>
+              <p>
+                Призначення:
+                {characteristics.appointment.length > 0
+                  ? characteristics.appointment.map((item, index) => (
+                      <span key={index}> {item},</span>
+                    ))
+                  : "-"}
+              </p>
+              <p>
+                Тип шкіри:
+                {characteristics.skinType.length > 0
+                  ? characteristics.skinType.map((item, index) => (
+                      <span key={index}> {item},</span>
+                    ))
+                  : "-"}
+              </p>
+              <p>
+                Протипоказання:
+                {characteristics.contraindication.length > 0
+                  ? characteristics.contraindication.map((item, index) => (
+                      <span key={index}> {item},</span>
+                    ))
+                  : "-"}
+              </p>
+            </div>
+          </AccordionDetails>
+        </CustomAccordion>
+      )}
+
+      {hasIngredients && (
+        <CustomAccordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel3-content"
+            id="panel3-header"
+          >
+            Активні інгрідієнти
+          </AccordionSummary>
+
+          <AccordionDetails>
+            <ul className={s.ingredientsList}>
+              {ingredients.length > 0
+                ? ingredients.map((item, index) => (
+                    <li key={index}> {item},</li>
                   ))
                 : "-"}
-            </p>
-            <p>
-              Тип шкіри:
-              {characteristics.skinType.length > 0
-                ? characteristics.skinType.map((item, index) => (
-                    <span key={index}> {item},</span>
-                  ))
-                : "-"}
-            </p>
-            <p>
-              Протипоказання:
-              {characteristics.contraindication.length > 0
-                ? characteristics.contraindication.map((item, index) => (
-                    <span key={index}> {item},</span>
-                  ))
-                : "-"}
-            </p>
-          </div>
-        </AccordionDetails>
-      </CustomAccordion>
+            </ul>
+          </AccordionDetails>
+        </CustomAccordion>
+      )}
 
-      <CustomAccordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel3-content"
-          id="panel3-header"
-        >
-          Активні інгрідієнти
-        </AccordionSummary>
-
-        <AccordionDetails>
-          <ul className={s.ingredientsList}>
-            {ingredients.length > 0
-              ? ingredients.map((item, index) => <li key={index}> {item},</li>)
-              : "-"}
-          </ul>
-        </AccordionDetails>
-      </CustomAccordion>
-
-      <CustomAccordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel5-content"
-          id="panel5-header"
-        >
-          Склад товару
-        </AccordionSummary>
-        <AccordionDetails>
-          <div className={s.components}>{components}</div>
-        </AccordionDetails>
-      </CustomAccordion>
+      {hasComponents && (
+        <CustomAccordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel5-content"
+            id="panel5-header"
+          >
+            Склад товару
+          </AccordionSummary>
+          <AccordionDetails>
+            <div className={s.components}>{components}</div>
+          </AccordionDetails>
+        </CustomAccordion>
+      )}
     </div>
   );
 };
