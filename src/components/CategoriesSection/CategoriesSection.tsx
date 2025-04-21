@@ -33,6 +33,8 @@ export const CategoriesSection: React.FC<CategoriesSectionProps> = ({
 
   const parentSlug = categories.find((item) => item.id === parentId)?.slug;
 
+  console.log(parentSlug);
+
   useEffect(() => {
     if (categories.length === 0) {
       dispatch(fetchCategories());
@@ -43,6 +45,8 @@ export const CategoriesSection: React.FC<CategoriesSectionProps> = ({
   const otherCategories = subcategories
     .filter((item) => item.name !== largePlate)
     .slice(0, 4);
+
+  console.log(largeCategory);
 
   if (loading) {
     return <Loader />;
@@ -91,7 +95,7 @@ export const CategoriesSection: React.FC<CategoriesSectionProps> = ({
         <ul className={s.categoriesList}>
           {!reverse && (
             <li className={s.large} key={largeCategory.id}>
-              <Link to="/sdgfsdg">
+              <Link to={`/catalog/${parentSlug}/${largeCategory.slug}`}>
                 <p>{largeCategory.name}</p>
                 <img src={largeCategory.image?.src} alt="" />
 
