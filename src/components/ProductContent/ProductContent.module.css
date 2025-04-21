@@ -201,6 +201,13 @@
       fill: white;
     }
   }
+  .wishList.active {
+    background-color: var(--primary);
+
+    svg {
+      fill: white;
+    }
+  }
 }
 
 .isAvailable {

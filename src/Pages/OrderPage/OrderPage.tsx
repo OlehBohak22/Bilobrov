@@ -191,7 +191,10 @@ export const OrderPage: React.FC = () => {
   const [billing, setBilling] = useState({
     first_name: user?.name || "",
     last_name: user?.secondName || "",
-    middle_name: "",
+    middle_name:
+      user?.meta.address.find((item) => item.selected)?.middle_name ||
+      user?.meta.address[0]?.middle_name ||
+      "",
     address_1: "",
     city: "",
     state: "",

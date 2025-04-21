@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
@@ -15,6 +15,7 @@ import {
   fetchProducts,
   setSelectedAttributes,
 } from "../../store/slices/filterSlice";
+import { motion } from "framer-motion";
 
 export const Filters: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const dispatch = useAppDispatch();
@@ -163,9 +164,41 @@ export const Filters: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     onClose();
   };
 
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        modalRef.current &&
+        !modalRef.current.contains(event.target as Node)
+      ) {
+        onClose(); // Якщо клік був за межами модалки — закриваємо
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [onClose]);
+
   return (
-    <div className={s.modalOverlay}>
-      <div className={s.modal}>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3, ease: "easeOut" }}
+      className={s.modalOverlay}
+    >
+      <motion.div
+        initial={{ x: "-100%", opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        exit={{ x: "-100%", opacity: 0 }}
+        transition={{ duration: 0.3, ease: "easeOut" }}
+        className={s.modal}
+        ref={modalRef}
+      >
         <div>
           <div className={s.menuHeader}>
             <p>Фільтри</p>
@@ -407,7 +440,7 @@ export const Filters: React.FC<{ onClose: () => void }> = ({ onClose }) => {
         <button className={s.btn} onClick={applyFilters}>
           Застосувати фільтри
         </button>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };

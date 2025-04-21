@@ -49,12 +49,19 @@ export const WishListPopup: React.FC<{
     wishlist.includes(product.id)
   );
   return (
-    <div className={s.modalOverlay}>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3, ease: "easeOut" }}
+      className={s.modalOverlay}
+    >
       <motion.div
         className={s.modal}
-        initial={{ x: "50%", opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
+        initial={{ y: "-100%", opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        exit={{ y: "-100%", opacity: 0 }}
+        transition={{ duration: 0.3, ease: "easeOut" }}
       >
         <div className={s.swiperController}>
           <h2>
@@ -169,6 +176,6 @@ export const WishListPopup: React.FC<{
           </button>
         )) || <p>Список бажань порожній</p>}
       </motion.div>
-    </div>
+    </motion.div>
   );
 };

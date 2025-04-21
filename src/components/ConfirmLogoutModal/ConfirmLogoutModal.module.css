@@ -1,0 +1,104 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+}
+
+.modal {
+  background: white;
+  padding: 1.6vw 2vw 4.3vw 2vw;
+  text-align: center;
+  width: 35.6vw;
+
+  .onClose {
+    margin-left: auto;
+    width: fit-content;
+    transition: 0.3s;
+    cursor: pointer;
+
+    svg {
+      width: 2.7vw;
+      height: 2.7vw;
+      stroke: black;
+      transition: stroke 0.3s;
+    }
+  }
+
+  .onClose:hover {
+    transform: rotate(180deg);
+
+    svg {
+      stroke: var(--primary);
+    }
+  }
+
+  img {
+    max-width: 6.1vw;
+    margin: 0 auto;
+    margin-bottom: 2vw;
+  }
+
+  h3 {
+    font-family: Manrope;
+    font-weight: 500;
+    font-size: 2.1vw;
+    line-height: 120%;
+    text-align: center;
+    margin-bottom: 0.8vw;
+  }
+
+  p {
+    font-family: Manrope;
+    font-weight: 700;
+    font-size: 0.9vw;
+    line-height: 140%;
+    text-align: center;
+    max-width: 15vw;
+    margin: 0 auto;
+    margin-bottom: 2vw;
+  }
+}
+
+.buttons {
+  display: flex;
+  gap: 1vw;
+  justify-content: center;
+
+  button {
+    width: 11.5vw;
+    padding: 1.1vw 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+    font-family: Manrope;
+    font-weight: 700;
+    font-size: 0.8vw;
+    line-height: 0.8vw;
+    letter-spacing: 0.01vw;
+    transition: 0.3s;
+  }
+
+  button:hover {
+    background-color: rgba(255, 196, 58, 1);
+    color: black;
+  }
+}
+
+.confirm {
+  background-color: var(--primary);
+  color: white;
+  padding: 0.7rem 1.5rem;
+  cursor: pointer;
+}
+
+.cancel {
+  border: 1px solid rgba(239, 237, 238, 1);
+  color: rgba(117, 117, 117, 1);
+  padding: 0.7rem 1.5rem;
+  cursor: pointer;
+}

@@ -37,8 +37,6 @@ export const ProductPage: React.FC<HeaderProps> = ({
     (item: { product_id: any }) => item.product_id == id
   );
 
-  console.log(currentProduct);
-
   useEffect(() => {
     if (id) {
       const productIdNumber = parseInt(id, 10);
@@ -74,8 +72,6 @@ export const ProductPage: React.FC<HeaderProps> = ({
       link: `/product/${currentProduct?.slug}/${currentProduct?.id}`,
     },
   ];
-
-  console.log(currentProduct?.categories);
 
   return (
     <>

@@ -2,6 +2,7 @@ import { createContext, useContext } from "react";
 
 interface GlobalProps {
   openCart: () => void;
+  openRegister: () => void;
 }
 
 export const GlobalPropsContext = createContext<GlobalProps | null>(null);

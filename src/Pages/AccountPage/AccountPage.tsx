@@ -13,6 +13,8 @@ import { RootState } from "../../store";
 import { ResetPasswordTab } from "../../components/ResetPasswordTab/ResetPasswordTab";
 import { AddressTab } from "../../components/AddressTab/AddressTab";
 import { OrdersTab } from "../../components/OrdersTab/OrdersTab";
+import { ConfirmLogoutModal } from "../../components/ConfirmLogoutModal/ConfirmLogoutModal";
+import { AnimatePresence } from "framer-motion";
 
 const categories = [
   {
@@ -205,12 +207,12 @@ export const AccountPage = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
+
   const wishlist = useSelector(
     (state: RootState) => state.user?.user?.meta?.preferences || []
   );
   const user = useSelector((state: RootState) => state.user.user);
-
-  console.log(user?.meta.orders);
 
   const [activeTab, setActiveTab] = useState<string>(
     window.location.hash.replace("#", "") || "main"
@@ -227,9 +229,17 @@ export const AccountPage = () => {
   }, []);
 
   const handleLogout = () => {
+    setIsLogoutModalOpen(true);
+  };
+
+  const confirmLogout = () => {
     localStorage.removeItem("token");
     dispatch(logout());
     navigate("/");
+  };
+
+  const cancelLogout = () => {
+    setIsLogoutModalOpen(false);
   };
 
   const handleTabChange = (tabId: string) => {
@@ -320,6 +330,18 @@ export const AccountPage = () => {
             </button>
           </div>
           <div className={s.tabsContent}>{renderContent()}</div>
+
+          <AnimatePresence>
+            <ConfirmLogoutModal
+              isOpen={isLogoutModalOpen}
+              onConfirm={confirmLogout}
+              onCancel={cancelLogout}
+              confirmText="Вийти"
+              titleText="Вже йдеш?"
+              descText="Твої губи ще не сказали «дякую» за нову помаду!"
+              cancelText="Залишитись"
+            />
+          </AnimatePresence>
         </Layout>
       </div>
     </main>

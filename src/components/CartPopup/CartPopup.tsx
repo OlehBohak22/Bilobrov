@@ -10,6 +10,7 @@ import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { Loader } from "../Loader/Loader";
 import { ProductList } from "../ProductList/ProductList";
 import { Layout } from "../Layout/Layout";
+import { motion } from "framer-motion";
 
 interface CartPopupProps {
   onClose: () => void;
@@ -25,8 +26,10 @@ export const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
   const dispatch = useAppDispatch();
   const [cartProducts, setCartProducts] = useState<ProductInfo[]>([]);
 
+  const productIds = cartItems.map((item) => item.id);
+  const productIdsString = productIds.sort((a, b) => a - b).join(",");
+
   useEffect(() => {
-    const productIds = cartItems.map((item) => item.id);
     if (productIds.length) {
       setLoading(true);
       dispatch(fetchCartProducts(productIds)).then((res) => {
@@ -39,7 +42,7 @@ export const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
       setCartProducts([]);
       setLoading(false);
     }
-  }, [cartItems]);
+  }, [productIdsString]);
 
   const navigate = useNavigate();
 
@@ -91,8 +94,22 @@ export const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
 
   return (
     <Layout>
-      <div className={s.popupOverlay} onClick={onClose}>
-        <div className={s.popupContent} onClick={(e) => e.stopPropagation()}>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.3, ease: "easeOut" }}
+        className={s.popupOverlay}
+        onClick={onClose}
+      >
+        <motion.div
+          initial={{ y: "-100%", opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: "-100%", opacity: 0 }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
+          className={s.popupContent}
+          onClick={(e) => e.stopPropagation()}
+        >
           <div className={s.popupHeader}>
             <h2 className={s.popupTitle}>Кошик</h2>
             <button className={s.closeButton} onClick={onClose}>
@@ -195,8 +212,8 @@ export const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
               <h2>Тобі може сподобатись:</h2>
             </ProductList>
           </div>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </Layout>
   );
 };

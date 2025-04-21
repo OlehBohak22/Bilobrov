@@ -68,19 +68,34 @@ export const RegisterModal: React.FC<{ onClose: () => void }> = ({
   }, [onClose]);
 
   return (
-    <div className={s.modalOverlay}>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
+      className={s.modalOverlay}
+    >
       <motion.div
         className={s.before}
-        initial={{ x: "100%", opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        transition={{ duration: 0.5, ease: "easeOut", delay: 0.3 }}
+        initial={{ x: "300%" }}
+        animate={{ x: 0 }}
+        transition={{
+          duration: 0.5,
+          ease: "easeOut",
+          delay: 0.3, // для анімації входу
+        }}
+        exit={{
+          x: "500%",
+          transition: { duration: 0.5, ease: "easeOut", delay: 0 }, // окремо для виходу
+        }}
       >
         <img src="/images/popup-side-img.avif" alt="before" />
       </motion.div>
       <motion.div
         ref={modalRef}
-        initial={{ x: "50%", opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
+        initial={{ x: "100%" }}
+        animate={{ x: 0 }}
+        exit={{ x: "100%" }}
         transition={{ duration: 0.5, ease: "easeOut" }}
         className={s.modal}
       >
@@ -177,6 +192,6 @@ export const RegisterModal: React.FC<{ onClose: () => void }> = ({
           </div>
         </div>
       </motion.div>
-    </div>
+    </motion.div>
   );
 };

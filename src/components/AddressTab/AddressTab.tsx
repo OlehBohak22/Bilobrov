@@ -7,6 +7,7 @@ import { RootState } from "../../store";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { deleteAddress } from "../../store/slices/addressSlice";
 import { checkUserSession } from "../../store/actions/userActions";
+import { ConfirmLogoutModal } from "../ConfirmLogoutModal/ConfirmLogoutModal";
 
 interface AddressTabProps {
   user: UserData | null; // Типізуємо пропс user
@@ -16,6 +17,8 @@ export const AddressTab = ({ user }: AddressTabProps) => {
   const [formOpen, setFormOpen] = useState(false);
   const [editAddress, setEditAddress] = useState(null); // тип: Address | null
   const dispatch = useAppDispatch();
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [addressToDelete, setAddressToDelete] = useState<number | null>(null);
 
   const handleCLoseForm = () => {
     setFormOpen(false);
@@ -28,12 +31,28 @@ export const AddressTab = ({ user }: AddressTabProps) => {
   const token = useSelector((state: RootState) => state.user.token) || "";
 
   const handleDelete = (id: number) => {
-    const payload = { token, addressId: id.toString() }; // Конвертація в рядок
+    setAddressToDelete(id);
+    setIsDeleteModalOpen(true);
+  };
+
+  const confirmDelete = () => {
+    if (addressToDelete === null) return;
+
+    const payload = { token, addressId: addressToDelete.toString() };
     dispatch(deleteAddress(payload));
 
     setTimeout(() => {
       dispatch(checkUserSession());
     }, 1000);
+
+    // Закриваємо попап і очищаємо id
+    setIsDeleteModalOpen(false);
+    setAddressToDelete(null);
+  };
+
+  const cancelDelete = () => {
+    setIsDeleteModalOpen(false);
+    setAddressToDelete(null);
   };
 
   const handleChange = (address: any) => {
@@ -198,6 +217,16 @@ export const AddressTab = ({ user }: AddressTabProps) => {
           initialValues={editAddress} // ← ось це
         />
       )}
+
+      <ConfirmLogoutModal
+        isOpen={isDeleteModalOpen}
+        onConfirm={confirmDelete}
+        onCancel={cancelDelete}
+        confirmText="Видалити"
+        cancelText="Залишити"
+        titleText="Впевнена?"
+        descText="Твоя косметика вже полюбила цю адресу!"
+      />
     </div>
   );
 };

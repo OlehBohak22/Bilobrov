@@ -26,6 +26,7 @@ import { Breadcrumbs } from "@mui/material";
 import { CustomSortDropdown } from "../../components/DropDown/DropDown";
 import { Category } from "../../types/categoryType";
 import { Pagination } from "../../components/Pagination/Pagination";
+import { AnimatePresence } from "framer-motion";
 
 export const CatalogPage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -231,7 +232,9 @@ export const CatalogPage: React.FC = () => {
       </Layout>
 
       <Layout>
-        {isFilterOpen && <Filters onClose={() => setIsFilterOpen(false)} />}
+        <AnimatePresence>
+          {isFilterOpen && <Filters onClose={() => setIsFilterOpen(false)} />}
+        </AnimatePresence>
 
         <div className={s.categoryHeader}>
           <h1>{pageTitle}</h1>

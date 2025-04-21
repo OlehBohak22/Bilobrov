@@ -33,6 +33,8 @@ import { fetchBanner } from "./store/slices/bannerSlice";
 import LoadingBar from "./components/LoadingBar/LoadingBar";
 import {} from "./store/slices/wishlistSlice";
 import { GlobalPropsContext } from "./GlobalPropContext";
+// import { NovaPoshtaMap } from "./components/MapPopup/MapPopup";
+import { AnimatePresence } from "framer-motion";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -112,7 +114,7 @@ function App() {
 
   const globalProps = {
     openCart: handleOpenCart,
-    // інші пропси
+    openRegister: handleOpenRegister,
   };
   return (
     <GlobalPropsContext.Provider value={globalProps}>
@@ -128,24 +130,26 @@ function App() {
               openCart={handleOpenCart}
               openMenu={() => setIsMenuOpen(true)}
             />
-            {isRegisterOpen && <RegisterModal onClose={handleCloseModals} />}
-            {isWishList && <WishListPopup onClose={handleCloseModals} />}
-            {isCartOpen && <CartPopup onClose={handleCloseModals} />}
-            {isMenuOpen && (
-              <MenuPopup
-                openPopup={() => {
-                  handleOpenRegister();
-                  setIsMenuOpen(false);
-                }}
-                onClose={handleCloseModals}
-              />
-            )}
-            {isReview && (
-              <ReviewPopup
-                onClose={handleCloseModals}
-                product_id={currentProduct?.id}
-              />
-            )}
+            <AnimatePresence>
+              {isRegisterOpen && <RegisterModal onClose={handleCloseModals} />}
+              {isWishList && <WishListPopup onClose={handleCloseModals} />}
+              {isCartOpen && <CartPopup onClose={handleCloseModals} />}
+              {isMenuOpen && (
+                <MenuPopup
+                  openPopup={() => {
+                    handleOpenRegister();
+                    setIsMenuOpen(false);
+                  }}
+                  onClose={handleCloseModals}
+                />
+              )}
+              {isReview && (
+                <ReviewPopup
+                  onClose={handleCloseModals}
+                  product_id={currentProduct?.id}
+                />
+              )}
+            </AnimatePresence>
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/about" element={<AboutPage />} />
@@ -181,6 +185,8 @@ function App() {
               />
             </Routes>
             <Footer />
+
+            {/* <NovaPoshtaMap /> */}
           </>
         )}
       </>

@@ -4,6 +4,7 @@ import { togglePreference } from "../../store/slices/wishlistSlice";
 import { RootState } from "../../store";
 import s from "./WishListBtn.module.css";
 import { selectUserMetaPreferences } from "../../store/selectors/userSelectors";
+import { useGlobalProps } from "../../GlobalPropContext";
 
 interface WishlistButtonProps {
   productId: number;
@@ -19,12 +20,16 @@ const WishlistButton: React.FC<WishlistButtonProps> = ({ productId }) => {
 
   const loading = useSelector((state: RootState) => state.wishlist.loading);
 
+  const { openRegister } = useGlobalProps();
+
   // ПЕРЕВІРЯЄМО ЧИ ПРОДУКТ У СПИСКУ ВПОДОБАНЬ
   const isInWishlist = preferences.includes(productId);
 
   const handleToggle = () => {
     if (!loading && token) {
       dispatch(togglePreference({ token, preference: productId }) as any);
+    } else {
+      openRegister();
     }
   };
 

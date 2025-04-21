@@ -24,6 +24,7 @@ export const fetchCities = createAsyncThunk(
 
 interface warehouse {
   name: string;
+  position: { latitude: string; longitude: string };
 }
 
 // 🛠 Оновлений інтерфейс City (з великої літери)

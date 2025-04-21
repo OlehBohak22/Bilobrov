@@ -10,6 +10,8 @@ import { ProductPageAccordion } from "../ProductPageAccordion/ProductPageAccordi
 import Select from "react-select";
 import { StylesConfig } from "react-select";
 import { addToCart } from "../../store/slices/cartSlice";
+import { togglePreference } from "../../store/slices/wishlistSlice";
+import { selectUserMetaPreferences } from "../../store/selectors/userSelectors";
 
 interface VariationAttribute {
   id: number;
@@ -147,6 +149,17 @@ export const ProductContent: React.FC<ProductItemProps> = ({
       openRegister();
     }
   };
+
+  const handleToggle = () => {
+    if (token) {
+      dispatch(togglePreference({ token, preference: info.id }) as any);
+    } else {
+      openRegister();
+    }
+  };
+
+  const preferences = useSelector(selectUserMetaPreferences);
+  const isInWishlist = preferences.includes(info.id);
 
   const brandMeta = info.meta_data.find((item) => item.key === "brands");
 
@@ -489,7 +502,10 @@ export const ProductContent: React.FC<ProductItemProps> = ({
             ДОДАТИ В КОШИК
           </button>
 
-          <button className={s.wishList}>
+          <button
+            onClick={handleToggle}
+            className={`${s.wishList} ${isInWishlist ? s.active : ""}`}
+          >
             <svg
               viewBox="0 0 24 24"
               fill="none"
