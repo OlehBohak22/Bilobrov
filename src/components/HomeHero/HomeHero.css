@@ -5,3 +5,12 @@
 .banners-swiper .swiper-pagination {
   bottom: 2vw !important;
 }
+
+@media (max-width: 1024px) {
+  .banners-swiper .swiper-pagination {
+    bottom: 13vw !important;
+    text-align: end;
+    padding-right: 3vw;
+    height: 1px;
+  }
+}

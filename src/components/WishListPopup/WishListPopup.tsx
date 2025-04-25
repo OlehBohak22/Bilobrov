@@ -12,6 +12,8 @@ import { ProductItem } from "../ProductItem/ProductItem";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router";
+import { fetchCartProducts } from "../../store/slices/productsSlice";
+import { Loader } from "../Loader/Loader";
 
 export const WishListPopup: React.FC<{
   onClose: () => void;
@@ -19,6 +21,7 @@ export const WishListPopup: React.FC<{
   const dispatch = useAppDispatch();
   const [hasMounted, setHasMounted] = useState(false);
   const { pathname } = useLocation();
+  const [wishlistProducts, setWishlistProducts] = useState<ProductInfo[]>([]);
 
   useEffect(() => {
     if (hasMounted) {
@@ -40,14 +43,28 @@ export const WishListPopup: React.FC<{
     (state: RootState) => state.user.user?.meta.preferences || []
   );
 
-  // Отримуємо всі товари (припустимо, що вони є у `products` в Redux)
-  const products: ProductInfo[] = useSelector(
-    (state: RootState) => state.products.items
-  );
+  useEffect(() => {
+    if (wishlist.length > 0) {
+      dispatch(fetchCartProducts(wishlist))
+        .then((res) => {
+          if (fetchCartProducts.fulfilled.match(res)) {
+            setWishlistProducts(res.payload);
+          } else {
+            setWishlistProducts([]);
+          }
+        })
+        .catch((error) => {
+          console.error(
+            "Помилка при завантаженні товарів зі списку бажань",
+            error
+          );
+          setWishlistProducts([]);
+        });
+    } else {
+      setWishlistProducts([]);
+    }
+  }, [wishlist, dispatch]);
 
-  const wishlistProducts = products.filter((product) =>
-    wishlist.includes(product.id)
-  );
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -174,7 +191,7 @@ export const WishListPopup: React.FC<{
 
             <span>Видалити все</span>
           </button>
-        )) || <p>Список бажань порожній</p>}
+        )) || <Loader />}
       </motion.div>
     </motion.div>
   );

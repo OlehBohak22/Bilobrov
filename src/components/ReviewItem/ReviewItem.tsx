@@ -1,3 +1,4 @@
+import { useWindowSize } from "../../hooks/useWindowSize";
 import { StarRating } from "../StarRating/StarRating";
 import s from "./ReviewItem.module.css";
 import { FC } from "react";
@@ -13,12 +14,14 @@ export const ReviewItem: FC<ReviewItemPropType> = ({
   reviewerName,
   reviewerRating,
   review,
-  images = [], // Якщо review_images не передано, використовуємо порожній масив
+  images = [],
 }) => {
-  // Фільтруємо масив, щоб виключити порожні рядки, перевіряючи на undefined
   const filteredImages = Array.isArray(images)
     ? images.filter((image) => image.trim() !== "")
     : [];
+
+  const { width } = useWindowSize();
+  const isMobile = width < 1024;
 
   return (
     <li className={s.item}>
@@ -26,10 +29,10 @@ export const ReviewItem: FC<ReviewItemPropType> = ({
 
       <div className={s.reviewerContent}>
         <div className="mb-[0.8vw]">
-          <StarRating rating={reviewerRating.toString()} />
+          <StarRating isMobile={isMobile} rating={reviewerRating} />
         </div>
 
-        {filteredImages.length > 0 && ( // додаємо перевірку, чи є коректні зображення
+        {filteredImages.length > 0 && (
           <ul className={s.iamgeList}>
             {filteredImages.map((image, index) => (
               <li key={index}>

@@ -94,15 +94,11 @@
 }
 
 .titleContainer {
+  position: relative;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: end;
   margin-bottom: 2.9vw;
-
-  .stub {
-    opacity: 0;
-    pointer-events: none;
-  }
 
   h2 {
     color: #000000;
@@ -126,34 +122,111 @@
       text-indent: 2vw;
     }
   }
+}
 
-  a {
-    display: flex;
-    gap: 0.8vw;
+.categoryLink {
+  position: absolute;
+  right: 0;
+  display: flex;
+  gap: 0.8vw;
+
+  span {
+    font-family: Manrope, sans-serif;
+    font-size: 1vw;
+    font-weight: 500;
+    line-height: 1.3vw;
+    color: #000000;
+    transition: color 0.3s;
+  }
+
+  svg {
+    width: 1.25vw;
+    height: 1.25vw;
+    fill: #000000;
+    transition: fill 0.3s;
+  }
+}
+
+.categoryLink:hover {
+  span {
+    color: rgba(214, 61, 68, 1);
+  }
+  svg {
+    fill: rgba(214, 61, 68, 1);
+  }
+}
+
+@media (max-width: 1024px) {
+  .categoryLink {
+    position: static;
+    justify-content: center;
+    gap: 4.2vw;
 
     span {
-      font-family: Manrope, sans-serif;
-      font-size: 1vw;
-      font-weight: 500;
-      line-height: 1.3vw;
-      color: #000000;
-      transition: color 0.3s;
+      font-size: 4.2vw;
+      line-height: 6.6vw;
     }
 
     svg {
-      width: 1.25vw;
-      height: 1.25vw;
-      fill: #000000;
-      transition: fill 0.3s;
+      width: 6.4vw;
+      height: 6.4vw;
     }
   }
 
-  a:hover {
-    span {
-      color: rgba(214, 61, 68, 1);
+  .titleContainer {
+    margin-bottom: 9.6vw;
+
+    h2 {
+      width: auto;
+
+      span:nth-child(1) {
+        font-size: 9.6vw;
+        line-height: 100%;
+      }
+
+      span:nth-child(2) {
+        margin-top: -2vw;
+        font-size: 8.5vw;
+        line-height: 100%;
+        text-indent: 6vw;
+      }
     }
-    svg {
-      fill: rgba(214, 61, 68, 1);
+  }
+  .categoriesList {
+    flex-direction: column;
+    height: auto;
+    gap: 4vw;
+    margin-bottom: 9.6vw;
+
+    li {
+      font-size: 4.8vw;
+      line-height: 137%;
+      padding: 4.2vw;
+
+      .linkHover {
+        display: none;
+      }
+    }
+
+    .large {
+      width: 100%;
+      height: 43.7vw;
+
+      img {
+        width: 45%;
+      }
+    }
+
+    .subcategoriesContainer {
+      gap: 4vw;
+      li {
+        height: 69.3vw;
+        flex-basis: calc((100% - 4vw) / 2);
+
+        img {
+          width: 100%;
+        }
+      }
     }
   }
 }

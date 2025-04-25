@@ -161,8 +161,8 @@ export const ReviewPopup: React.FC<CartPopupProps> = ({
 
     try {
       await dispatch(addReview({ formData, headers }));
-      setIsSubmitted(true); // Оновлюємо стан на "відправлено"
-      setError(null); // Скидаємо помилку після успішної відправки
+      setIsSubmitted(true);
+      setError(null);
     } catch (err: any) {
       setError(err.message || "Щось пішло не так");
     }

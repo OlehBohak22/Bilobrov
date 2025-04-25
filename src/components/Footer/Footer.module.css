@@ -2,6 +2,14 @@
   background-color: var(--primary);
   padding: 12.2vw 0 8.3vw 0;
 
+  a {
+    transition: 0.3s;
+  }
+
+  a:hover {
+    color: #ffc43a;
+  }
+
   .instaBlock {
     display: flex;
     gap: 12.8vw;
@@ -38,6 +46,10 @@
           }
         }
       }
+    }
+
+    img {
+      width: 6.6vw;
     }
 
     svg {
@@ -203,6 +215,168 @@
       font-weight: 700;
       line-height: 0.8vw;
       border-bottom: 1px solid rgba(255, 255, 255, 1);
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .footer {
+    .instaBlock {
+      display: block;
+
+      img {
+        width: 19.2vw;
+      }
+
+      a {
+        gap: 5.3vw;
+        margin-bottom: 8.5vw;
+
+        div {
+          span:nth-child(1) {
+            font-size: 4.8vw;
+            line-height: 6.6vw;
+          }
+
+          span:nth-child(2) {
+            font-size: 4.2vw;
+            line-height: 100%;
+            gap: 1vw;
+
+            svg {
+              width: 6.4vw;
+              height: 6.4vw;
+            }
+          }
+        }
+      }
+    }
+
+    .instaTitle {
+      margin-bottom: 8.2vw;
+
+      span {
+        font-size: 4.8vw;
+        line-height: 100%;
+        margin-bottom: 3.2vw;
+      }
+
+      p {
+        font-size: 7.4vw;
+        line-height: 97%;
+        max-width: none;
+      }
+    }
+
+    .bilobrovFooterLogo {
+      width: 58.6vw;
+      height: 8.5vw;
+      margin-bottom: 8.5vw;
+    }
+
+    .footerInfoBlocks {
+      display: block;
+    }
+
+    .supportBlock {
+      margin-bottom: 10.6vw;
+      padding-bottom: 10.6vw;
+      border-bottom: 1px solid #ffffff77;
+
+      .linkBlock {
+        margin-bottom: 6.4vw;
+
+        a {
+          font-size: 7.4vw;
+          line-height: 100%;
+        }
+
+        a:nth-child(2) {
+          font-size: 5.3vw;
+        }
+        a:nth-child(1) {
+          margin-bottom: 3.7vw;
+        }
+      }
+
+      .scheduleBlock {
+        span {
+          font-size: 4.2vw;
+          line-height: 120%;
+          color: #ffffffbb;
+          margin-bottom: 1vw;
+        }
+
+        p {
+          font-size: 4.2vw;
+          line-height: 150%;
+          max-width: 45vw;
+          color: #ffffffbb;
+        }
+      }
+
+      .tgLink {
+        gap: 2.6vw;
+
+        .icon {
+          width: 13.8vw;
+          height: 13.8vw;
+
+          svg {
+            width: 5.8vw;
+            height: 5.8vw;
+          }
+        }
+
+        span {
+          font-size: 4.8vw;
+          line-height: 100%;
+        }
+      }
+    }
+
+    .paymentBlock {
+      display: block;
+      border: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+
+      .paymentLinks {
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 7vw;
+        gap: 5vw;
+      }
+
+      ul {
+        justify-content: center;
+        gap: 4vw;
+
+        li {
+          svg {
+            width: 12vw;
+            height: 6vw;
+          }
+        }
+      }
+    }
+
+    .footerBottomBlock {
+      flex-direction: column;
+      align-items: center;
+      gap: 7vw;
+      margin-bottom: 10.6vw;
+      padding-bottom: 10.6vw;
+      border-bottom: 1px solid #ffffff77;
+
+      p {
+        font-size: 3.7vw;
+        line-height: 100%;
+
+        a {
+          font-size: 3.7vw;
+        }
+      }
     }
   }
 }

@@ -124,3 +124,81 @@
     text-indent: 1vw;
   }
 }
+
+@media (max-width: 1024px) {
+  .section {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  .heartLine {
+    top: auto;
+    left: -50vw;
+    bottom: 5vw;
+    width: 150vw;
+  }
+
+  .viktoria {
+    top: auto;
+    bottom: 50vw;
+    left: auto;
+    right: 10vw;
+
+    color: var(--primary);
+    span:nth-child(1) {
+      font-size: 5.3vw;
+      line-height: 100%;
+    }
+
+    span:nth-child(2) {
+      margin-top: -1vw;
+      font-size: 5.3vw;
+      line-height: 100%;
+      text-indent: 6vw;
+    }
+  }
+
+  .aboutInfo {
+    padding: 10.6vw 4.2vw;
+    height: 80vh;
+
+    h2 {
+      font-size: 4.8vw;
+      line-height: 100%;
+      margin-bottom: 4.2vw;
+    }
+
+    p {
+      font-size: 7.4vw;
+      line-height: 97%;
+      max-width: none;
+      margin-bottom: 12.5vw;
+    }
+  }
+
+  .brandLink {
+    margin-left: 5vw;
+    gap: 1vw;
+
+    span {
+      font-size: 4.2vw;
+      line-height: 130%;
+    }
+
+    .arrow {
+      width: 6.4vw;
+      height: 6.4vw;
+    }
+
+    .svg {
+      width: 59vw;
+      height: 17vw;
+    }
+  }
+
+  .logo {
+    width: 100%;
+    height: 13.3vw;
+    bottom: 6.4vw;
+  }
+}

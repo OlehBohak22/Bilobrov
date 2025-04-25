@@ -198,6 +198,8 @@ export const ProductContent: React.FC<ProductItemProps> = ({
     contraindication,
   };
 
+  const { reviews } = useSelector((state: any) => state.products);
+
   const customStyles: StylesConfig<any, false> = {
     control: (provided, state) => ({
       ...provided,
@@ -239,12 +241,24 @@ export const ProductContent: React.FC<ProductItemProps> = ({
     }),
   };
 
+  const currentReviews = reviews.filter(
+    (item: { product_id: any }) => item.product_id == info.id
+  );
+
+  const localAverage =
+    currentReviews.length > 0
+      ? currentReviews.reduce(
+          (sum: number, r: { rating: number }) => sum + r.rating,
+          0
+        ) / currentReviews.length
+      : 0;
+
   if (!info.attributes) return <p>Loading...</p>; // Або інший заглушковий контент
 
   return (
     <div className={s.content}>
       <div className={s.ratingBlock}>
-        <StarRatingRed rating={info.average_rating} />
+        <StarRatingRed rating={localAverage} />
         <span>{reviewsQty} відгуків</span>
       </div>
 

@@ -1,7 +1,5 @@
-import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../store";
-import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { Layout } from "../Layout/Layout";
 import s from "./PopularBrands.module.css";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -9,28 +7,44 @@ import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 import { Link } from "react-router";
+import { useWindowSize } from "../../hooks/useWindowSize";
+import { useState } from "react";
 
 const BrandsList = () => {
-  const dispatch = useAppDispatch();
-
   const { items } = useSelector((state: RootState) => state.brands);
+  const { width } = useWindowSize();
+  const isMobile = width < 1024;
+  const [, setSwiperInstance] = useState<any>(null);
+  const [progress, setProgress] = useState(1);
 
-  useEffect(() => {}, [dispatch]);
+  const updateProgress = (swiper: any) => {
+    const slidesPerView =
+      typeof swiper.params.slidesPerView === "number"
+        ? swiper.params.slidesPerView
+        : 1;
+    const total = swiper.slides.length - slidesPerView + 1;
+    setProgress((swiper.realIndex + 1) / total);
+  };
 
   return (
     <section className={s.section}>
       <Layout>
-        <div className="flex gap-[8vw] mb-8">
+        <div className={s.brandsContainer}>
           <h2>
             <span>Популярні</span>
             <span>бренди</span>
           </h2>
 
           <Swiper
+            onSwiper={(swiper) => {
+              setSwiperInstance(swiper);
+              setTimeout(() => updateProgress(swiper), 1000);
+            }}
+            onSlideChange={updateProgress}
             className={s.swiper}
             modules={[Navigation]}
-            slidesPerView="auto"
-            spaceBetween={15}
+            slidesPerView={isMobile ? 3.5 : 7}
+            spaceBetween={20}
             navigation={{
               prevEl: `.${s.prevButton}`,
               nextEl: `.${s.nextButton}`,
@@ -40,7 +54,7 @@ const BrandsList = () => {
               <SwiperSlide className={s.brandItem} key={brand.id}>
                 <Link to={`/catalog?brand=${brand.id}`}>
                   <div className={s.brandImageCircle}>
-                    <div className="overflow-hidden rounded-full w-[6.5vw] h-[6.5vw]">
+                    <div className="overflow-hidden rounded-full w-full h-full">
                       {brand.popular_product.image && (
                         <img
                           src={brand.popular_product.image}
@@ -54,6 +68,15 @@ const BrandsList = () => {
               </SwiperSlide>
             ))}
           </Swiper>
+
+          {isMobile && (
+            <div className={s.progressBarWrapper}>
+              <div
+                className={s.progressBarFill}
+                style={{ transform: `scaleX(${progress})` }}
+              />
+            </div>
+          )}
         </div>
 
         <div className={s.bottomController}>
@@ -88,50 +111,52 @@ const BrandsList = () => {
             </svg>
           </Link>
 
-          <div className={s.navigationContainer}>
-            <button className={s.prevButton}>
-              <svg
-                viewBox="0 0 25 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <g clipPath="url(#clip0_480_5408)">
-                  <path d="M7.08228 5L8.15132 6.05572L3.39413 10.7535L24.5 10.7535V12.2465L3.39413 12.2465L8.15132 16.9443L7.08228 18L0.5 11.5L7.08228 5Z" />
-                </g>
-                <defs>
-                  <clipPath id="clip0_480_5408">
-                    <rect
-                      width="24"
-                      height="24"
-                      fill="white"
-                      transform="matrix(-1 0 0 1 24.5 0)"
-                    />
-                  </clipPath>
-                </defs>
-              </svg>
-            </button>
-            <button className={s.nextButton}>
-              <svg
-                viewBox="0 0 25 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <g clipPath="url(#clip0_480_5411)">
-                  <path d="M17.9177 5L16.8487 6.05572L21.6059 10.7535H0.5V12.2465H21.6059L16.8487 16.9443L17.9177 18L24.5 11.5L17.9177 5Z" />
-                </g>
-                <defs>
-                  <clipPath id="clip0_480_5411">
-                    <rect
-                      width="24"
-                      height="24"
-                      fill="white"
-                      transform="translate(0.5)"
-                    />
-                  </clipPath>
-                </defs>
-              </svg>
-            </button>
-          </div>
+          {!isMobile && (
+            <div className={s.navigationContainer}>
+              <button className={s.prevButton}>
+                <svg
+                  viewBox="0 0 25 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g clipPath="url(#clip0_480_5408)">
+                    <path d="M7.08228 5L8.15132 6.05572L3.39413 10.7535L24.5 10.7535V12.2465L3.39413 12.2465L8.15132 16.9443L7.08228 18L0.5 11.5L7.08228 5Z" />
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_480_5408">
+                      <rect
+                        width="24"
+                        height="24"
+                        fill="white"
+                        transform="matrix(-1 0 0 1 24.5 0)"
+                      />
+                    </clipPath>
+                  </defs>
+                </svg>
+              </button>
+              <button className={s.nextButton}>
+                <svg
+                  viewBox="0 0 25 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g clipPath="url(#clip0_480_5411)">
+                    <path d="M17.9177 5L16.8487 6.05572L21.6059 10.7535H0.5V12.2465H21.6059L16.8487 16.9443L17.9177 18L24.5 11.5L17.9177 5Z" />
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_480_5411">
+                      <rect
+                        width="24"
+                        height="24"
+                        fill="white"
+                        transform="translate(0.5)"
+                      />
+                    </clipPath>
+                  </defs>
+                </svg>
+              </button>
+            </div>
+          )}
         </div>
       </Layout>
 

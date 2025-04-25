@@ -46,7 +46,7 @@ export const ReviewsList: FC<ReviewsListPropType> = ({
           </h2>
 
           <div className="flex items-center gap-[0.3vw]">
-            <StarRatingRed rating={averageRating.toString()} />
+            <StarRatingRed rating={averageRating} />
             <div className={s.qty}>({reviews.length})</div>
           </div>
         </div>

@@ -3,3 +3,12 @@
   grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 1.6vw;
 }
+
+@media (max-width: 1024px) {
+  .list {
+    grid-template-columns: 1fr 1fr;
+    gap: 4vw;
+    padding-bottom: 10.6vw;
+    border-bottom: 1px solid #ffffff77;
+  }
+}

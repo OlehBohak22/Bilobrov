@@ -47,12 +47,14 @@
   }
 }
 
-.prevBtn:hover,
-.nextBtn:hover {
-  background-color: var(--primary);
+@media (min-width: 1024px) {
+  .prevBtn:hover,
+  .nextBtn:hover {
+    background-color: var(--primary);
 
-  svg {
-    fill: white;
+    svg {
+      fill: white;
+    }
   }
 }
 
@@ -77,7 +79,7 @@
 
 .tabsController {
   display: flex;
-  gap: 20px;
+  gap: 2vw;
 }
 
 .tabItem {
@@ -128,5 +130,69 @@
     font-weight: 500;
     line-height: 2.9vw;
     text-indent: 2vw;
+  }
+}
+
+.customPagination {
+  display: flex;
+  justify-content: center;
+  gap: 2.1vw;
+}
+
+.dot {
+  width: 2.1vw;
+  height: 2.1vw;
+  background-color: #e5e5e5;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.activeDot {
+  background-color: #c13f3f;
+}
+
+@media (max-width: 1024px) {
+  .section {
+    padding: 16vw 0 21vw 0;
+  }
+
+  .navigationContainer {
+    margin-bottom: 9.6vw;
+  }
+
+  .tabsController {
+    gap: 6.4vw;
+
+    li {
+      font-size: 5.8vw;
+    }
+
+    .activeTab {
+      font-size: 6vw !important;
+    }
+  }
+
+  .prevBtn,
+  .nextBtn {
+    svg {
+      width: 6.4vw;
+    }
+  }
+
+  .swiperController h2 {
+    width: 13vw;
+
+    span:nth-child(1) {
+      font-size: 9.6vw;
+      line-height: 100%;
+    }
+
+    span:nth-child(2) {
+      margin-top: -3vw;
+      font-size: 8.5vw;
+      line-height: 100%;
+      text-indent: 6vw;
+    }
   }
 }

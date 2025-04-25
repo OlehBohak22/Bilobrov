@@ -1,72 +1,104 @@
 import { Layout } from "../Layout/Layout";
 import s from "./HomeServices.module.css";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import { useState } from "react";
+import { useWindowSize } from "../../hooks/useWindowSize";
+
+const services = [
+  {
+    icon: "icon-free-shipping",
+    title: "Безкоштовна доставка по Україні",
+    description:
+      "Ваші улюблені продукти Bilobrov з доставкою без зайвих витрат у будь-який куточок України.",
+  },
+  {
+    icon: "icon-psychiatry",
+    title: "Підтримка та консультація",
+    description:
+      "Наші менеджери завжди готові допомогти підібрати потрібний засіб та відповісти на ваші запитання.",
+  },
+  {
+    icon: "icon-gift-card",
+    title: "Накопичуваний кешбек на покупки",
+    description:
+      "З кожної покупки в Bilobrov ви накопичуєте кешбек, який робить ваші майбутні замовлення вигіднішими.",
+  },
+  {
+    icon: "icon-return-box",
+    title: "Легкий обмін та повернення товарів",
+    description:
+      "Ми цінуємо вашу довіру та гарантуємо легкий обмін і повернення. Якщо продукт не підійшов, ми швидко замінимо його на інший",
+  },
+];
 
 export const HomeServices = () => {
+  const { width } = useWindowSize();
+  const isMobile = width < 1024;
+  const [progress, setProgress] = useState(0);
+
+  const handleSlideChange = (swiper: any) => {
+    const total = swiper.slides.length;
+    const current = swiper.realIndex;
+    setProgress((current + 1) / total);
+  };
+
   return (
     <section className={s.section}>
       <Layout>
-        <ul>
-          <li>
-            <div className={s.iconContainer}>
-              <svg>
-                <use href="/icons/services-icons.svg#icon-free-shipping"></use>
-              </svg>
-            </div>
+        {isMobile ? (
+          <>
+            <Swiper
+              slidesPerView={1.3}
+              spaceBetween={16}
+              onSlideChange={handleSlideChange}
+              onSwiper={(swiper) =>
+                setTimeout(() => handleSlideChange(swiper), 0)
+              }
+              className={s.swiper}
+            >
+              {services.map((item, index) => (
+                <SwiperSlide key={index}>
+                  <div className={s.slide}>
+                    <div className={s.iconContainer}>
+                      <svg>
+                        <use href={`/icons/services-icons.svg#${item.icon}`} />
+                      </svg>
+                    </div>
 
-            <div className={s.descContainer}>
-              <h4>Безкоштовна доставка по Україні</h4>
-              <p>
-                Ваші улюблені продукти Bilobrov з доставкою без зайвих витрат у
-                будь-який куточок України.
-              </p>
-            </div>
-          </li>
-          <li>
-            <div className={s.iconContainer}>
-              <svg>
-                <use href="/icons/services-icons.svg#icon-psychiatry"></use>
-              </svg>
-            </div>
+                    <div className={s.descContainer}>
+                      <h4>{item.title}</h4>
+                      <p>{item.description}</p>
+                    </div>
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
 
-            <div className={s.descContainer}>
-              <h4>Підтримка та консультація</h4>
-              <p>
-                Наші менеджери завжди готові допомогти підібрати потрібний засіб
-                та відповісти на ваші запитання.
-              </p>
+            <div className={s.progressBar}>
+              <div
+                className={s.progressBarFill}
+                style={{ transform: `scaleX(${progress})` }}
+              />
             </div>
-          </li>
-          <li>
-            <div className={s.iconContainer}>
-              <svg>
-                <use href="/icons/services-icons.svg#icon-gift-card"></use>
-              </svg>
-            </div>
-
-            <div className={s.descContainer}>
-              <h4>Накопичуваний кешбек на покупки</h4>
-              <p>
-                З кожної покупки в Bilobrov ви накопичуєте кешбек, який робить
-                ваші майбутні замовлення вигіднішими.
-              </p>
-            </div>
-          </li>
-          <li>
-            <div className={s.iconContainer}>
-              <svg>
-                <use href="/icons/services-icons.svg#icon-return-box"></use>
-              </svg>
-            </div>
-
-            <div className={s.descContainer}>
-              <h4>Легкий обмін та поверенення товарів</h4>
-              <p>
-                Ми цінуємо вашу довіру та гарантуємо легкий обмін і повернення.
-                Якщо продукт не підійшов, ми швидко замінимо його на інший
-              </p>
-            </div>
-          </li>
-        </ul>
+          </>
+        ) : (
+          <ul className={s.list}>
+            {services.map((item, index) => (
+              <li key={index}>
+                <div className={s.iconContainer}>
+                  <svg>
+                    <use href={`/icons/services-icons.svg#${item.icon}`} />
+                  </svg>
+                </div>
+                <div className={s.descContainer}>
+                  <h4>{item.title}</h4>
+                  <p>{item.description}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
       </Layout>
     </section>
   );

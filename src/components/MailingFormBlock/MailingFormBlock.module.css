@@ -1,6 +1,6 @@
 .form {
   button {
-    margin-bottom: 1.7vw;
+    margin-bottom: 2vw;
 
     span {
       display: block;
@@ -41,6 +41,10 @@
       width: 100%;
     }
 
+    input::placeholder {
+      color: #ffffff;
+    }
+
     svg {
       position: absolute;
       right: 0;
@@ -48,6 +52,42 @@
       width: 1.6vw;
       height: 1.6vw;
       fill: white;
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .form {
+    margin-bottom: 10.6vw;
+    padding-bottom: 10.6vw;
+    border-bottom: 1px solid #ffffff77;
+    button {
+      margin-bottom: 10.6vw;
+
+      span:nth-child(1) {
+        font-size: 8.5vw;
+        line-height: 140%;
+      }
+
+      span:nth-child(2) {
+        font-size: 8.5vw;
+        line-height: 140%;
+      }
+    }
+
+    .inputContainer {
+      padding-bottom: 3.7vw;
+
+      input {
+        font-size: 5.3vw;
+        line-height: 100%;
+      }
+
+      svg {
+        width: 8.5vw;
+        height: 8.5vw;
+        bottom: 2vw;
+      }
     }
   }
 }

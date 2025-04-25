@@ -31,8 +31,9 @@
 }
 
 .titleContainer {
+  position: relative;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: end;
   margin-bottom: 2vw;
 
@@ -65,6 +66,8 @@
   }
 
   a {
+    position: absolute;
+    right: 0;
     display: flex;
     gap: 0.8vw;
 
@@ -92,5 +95,101 @@
     svg {
       fill: var(--primary);
     }
+  }
+}
+
+.customPagination {
+  display: flex;
+  justify-content: center;
+  gap: 2.1vw;
+}
+
+.dot {
+  width: 2.1vw;
+  height: 2.1vw;
+  background-color: #e5e5e5;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.activeDot {
+  background-color: #c13f3f;
+}
+
+.prevBtn,
+.nextBtn {
+  svg {
+    width: 6.4vw;
+    fill: #000000;
+  }
+}
+
+@media (max-width: 1024px) {
+  .section {
+    padding: 21vw 0;
+  }
+
+  .titleContainer {
+    flex-direction: column;
+    align-items: center;
+    gap: 9.6vw;
+    margin-bottom: 9.6vw;
+
+    a {
+      position: static;
+      gap: 4.2vw;
+
+      span {
+        font-size: 4.2vw;
+        line-height: 6vw;
+      }
+
+      svg {
+        width: 6.4vw;
+        height: 6.4vw;
+      }
+    }
+
+    h2 {
+      width: auto;
+
+      span:nth-child(1) {
+        font-size: 9.6vw;
+        line-height: 100%;
+      }
+
+      span:nth-child(2) {
+        margin-top: -3vw;
+        font-size: 8.5vw;
+        line-height: 100%;
+        text-indent: 6vw;
+      }
+    }
+  }
+
+  .blogImage {
+    height: 48vw;
+    overflow: hidden;
+    margin-bottom: 5.3vw;
+  }
+
+  h3 {
+    font-family: Manrope;
+    font-weight: 700;
+    font-size: 3.7vw;
+    line-height: 137%;
+    letter-spacing: 0.5vw;
+    text-transform: uppercase;
+    color: var(--primary);
+    margin-bottom: 3.2vw;
+  }
+
+  p {
+    font-family: Manrope;
+    font-weight: 600;
+    font-size: 4.8vw;
+    line-height: 120%;
+    vertical-align: middle;
   }
 }

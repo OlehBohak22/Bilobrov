@@ -1,35 +1,26 @@
-// import { useEffect } from "react";
 import { useSelector } from "react-redux";
-// import { fetchBanner } from "../../store/slices/bannerSlice";
 import { RootState } from "../../store";
-// import { useAppDispatch } from "../../hooks/useAppDispatch";
-import { Swiper, SwiperSlide } from "swiper/react"; // Імпорт компонентів Swiper
-import "swiper/css"; // Базові стилі Swiper
-import "swiper/css/pagination"; // Стилі для пагінації
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/pagination";
 import s from "./HomeHero.module.css";
 import { Layout } from "../Layout/Layout";
 import { Pagination, Autoplay } from "swiper/modules";
 import "./HomeHero.css";
 
 export const HomeHero = () => {
-  // const dispatch = useAppDispatch();
-
   const { items: banners } = useSelector((state: RootState) => state.banner);
-
-  // useEffect(() => {
-  //   dispatch(fetchBanner());
-  // }, [dispatch]);
 
   return (
     <section className={s.sliderContainer}>
       <Swiper
         modules={[Pagination, Autoplay]}
         pagination={{
-          clickable: true, // Дозволяє клікабельність точок
+          clickable: true,
         }}
         loop
-        autoplay={{ delay: 5000 }} // Автоматична прокрутка
-        slidesPerView={1} // Кількість слайдів на екрані
+        autoplay={{ delay: 5000 }}
+        slidesPerView={1}
         className="banners-swiper"
       >
         {banners.map(
@@ -50,8 +41,10 @@ export const HomeHero = () => {
                 }}
               >
                 <Layout className={s.slideContent}>
-                  <h3>{banner.input_title}</h3>
-                  <p>{banner.input_description}</p>
+                  <div>
+                    <h3>{banner.input_title}</h3>
+                    <p>{banner.input_description}</p>
+                  </div>
                   <a href={banner.input_link}>
                     <span>Детальніше</span>
                     <svg

@@ -2,6 +2,7 @@
   position: relative;
   padding: 6.2vw 0;
   background-color: var(--primary);
+  overflow: hidden;
 
   h2 {
     color: #ffffff;
@@ -25,6 +26,12 @@
       text-indent: 3.5vw;
     }
   }
+}
+
+.brandsContainer {
+  display: flex;
+  gap: 8vw;
+  margin-bottom: 2.1vw;
 }
 
 .sectionLineSvg {
@@ -65,8 +72,11 @@
 }
 
 .brandItem {
-  width: 7vw;
+  position: relative;
+  padding-bottom: 2vw;
+
   h4 {
+    position: absolute;
     text-transform: uppercase;
     font-family: Manrope;
     font-size: 0.9vw;
@@ -75,6 +85,7 @@
     letter-spacing: 0.09em;
     color: #ffffff;
     text-align: center;
+    width: 100%;
   }
 
   img {
@@ -160,4 +171,105 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+@media (max-width: 1024px) {
+  .progressBarWrapper {
+    height: 2px;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.3); /* сірий бек */
+    overflow: hidden;
+  }
+
+  .progressBarFill {
+    height: 100%;
+    background-color: white;
+    transform-origin: left center;
+    transition: transform 0.3s ease;
+  }
+
+  .section {
+    height: 100vh;
+    padding: 31vw 0;
+
+    h2 {
+      color: #ffffff;
+      width: 13vw;
+      margin-bottom: 16vw;
+
+      span:nth-child(1) {
+        font-size: 9.6vw;
+        line-height: 3.5vw;
+      }
+
+      span:nth-child(2) {
+        margin-top: 2vw;
+        font-size: 8.5vw;
+        line-height: 2.9vw;
+        text-indent: 10vw;
+      }
+    }
+  }
+
+  .brandsContainer {
+    display: block;
+    margin-bottom: 25vw;
+  }
+
+  .bottomController {
+    justify-content: center;
+  }
+
+  .brandLink {
+    gap: 1vw;
+    flex-direction: row-reverse;
+    span {
+      font-size: 4.2vw;
+    }
+
+    .svg {
+      width: 6.4vw;
+      height: 6.4vw;
+    }
+
+    .line {
+      opacity: 1;
+      width: 52.8vw;
+      height: 15.4vw;
+      left: -40%;
+    }
+  }
+
+  .swiper {
+    padding-top: 1.5vw;
+    padding-left: 1vw;
+    overflow: visible;
+  }
+
+  .brandItem {
+    padding-bottom: 10vw;
+    .brandImageCircle {
+      width: 22.1vw;
+      height: 22.1vw;
+      margin-bottom: 4.8vw;
+    }
+
+    h4 {
+      font-size: 3vw;
+      line-height: 120%;
+      min-width: 20vw;
+    }
+
+    .brandImageCircle::before {
+      border-width: 1px;
+    }
+  }
+
+  .sectionLineSvg {
+    width: 177vw;
+    height: 17.3vw;
+    transform: rotate(5deg);
+    left: -35vw;
+    bottom: 30vw;
+  }
 }

@@ -37,3 +37,35 @@
     transition: 0.3s;
   }
 }
+
+@media (max-width: 1024px) {
+  .userSettings {
+    button {
+      padding: 3.7vw;
+    }
+
+    button:nth-child(2) {
+      svg {
+        stroke: var(--primary);
+      }
+
+      .qty {
+        background-color: var(--primary);
+      }
+    }
+
+    svg {
+      width: 6.4vw;
+      height: 6.4vw;
+    }
+
+    .qty {
+      width: 5.3vw;
+      height: 5.3vw;
+      font-size: 3.2vw;
+
+      top: 2vw;
+      right: 1.5vw;
+    }
+  }
+}

@@ -145,7 +145,7 @@
   padding: 0;
   opacity: 0;
   margin-top: 1vw;
-  transition: opacity 0.3s ease; /* Плавний перехід для opacity */
+  transition: opacity 0.3s ease;
 
   li {
     a {
@@ -186,5 +186,68 @@
   svg {
     transform: rotate(180deg);
     stroke: var(--primary);
+  }
+}
+
+@media (max-width: 1024px) {
+  .modal {
+    width: 100%;
+  }
+
+  .menuHeader {
+    padding: 4.2vw 4.2vw 0 4.2vw;
+    margin-bottom: 8.5vw;
+
+    p {
+      font-size: 7.4vw;
+      line-height: 100%;
+    }
+
+    svg {
+      width: 11.2vw;
+      height: 11.2vw;
+    }
+  }
+
+  .subMenu {
+    margin-top: 8.5vw;
+  }
+
+  .asideTop {
+    padding: 0 4.2vw 4.2vw 4.2vw;
+
+    li {
+      a,
+      button {
+        font-size: 4.8vw;
+      }
+
+      .toggle {
+        font-size: 4.8vw;
+
+        svg {
+          width: 5.3vw;
+          height: 5.3vw;
+        }
+      }
+    }
+
+    li:not(:last-child) {
+      margin-bottom: 8.5vw;
+    }
+  }
+
+  .asideBottom {
+    padding: 8.5vw 4.2vw 8.5vw 4.2vw;
+
+    li {
+      a {
+        font-size: 4.2vw;
+      }
+    }
+
+    li:not(:last-child) {
+      margin-bottom: 6.4vw;
+    }
   }
 }

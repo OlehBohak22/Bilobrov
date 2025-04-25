@@ -184,6 +184,7 @@ function App() {
                 }
               />
             </Routes>
+
             <Footer />
 
             {/* <NovaPoshtaMap /> */}

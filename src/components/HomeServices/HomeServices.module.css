@@ -51,3 +51,77 @@
     }
   }
 }
+
+.progressBar {
+  height: 2px;
+  background-color: #fee4e5;
+
+  width: 100%;
+  overflow: hidden;
+  margin-top: 4vw;
+}
+.progressBarFill {
+  height: 100%;
+  background: var(--primary);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.swiper {
+  padding-bottom: 1rem;
+
+  .iconContainer {
+    background-color: #fee4e5;
+    width: fit-content;
+    padding: 5.8vw;
+    margin-bottom: 4.8vw;
+
+    svg {
+      fill: var(--primary);
+
+      width: 14.6vw;
+      height: 14.6vw;
+    }
+  }
+
+  .descContainer {
+    h4 {
+      font-family: Manrope;
+      font-weight: 700;
+      font-size: 4.8vw;
+      line-height: 120%;
+      margin-bottom: 3.2vw;
+    }
+
+    p {
+      font-family: Manrope;
+      font-weight: 400;
+      font-size: 4.2vw;
+      line-height: 140%;
+      letter-spacing: 0%;
+      color: #666666;
+      opacity: 0.7;
+    }
+  }
+}
+
+.slide {
+  background: #fff;
+  padding: 4vw;
+  border-radius: 8px;
+}
+
+@media (max-width: 1024px) {
+  .section {
+    padding: 24vw 0 22.6vw 0;
+  }
+
+  .list {
+    display: flex;
+    gap: 1vw;
+  }
+  .list li {
+    flex: 1;
+    padding: 1.6vw;
+  }
+}

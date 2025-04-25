@@ -4,9 +4,12 @@ import { FooterNavigationBlock } from "../FooterNavigationBlock/FooterNavigation
 import { Layout } from "../Layout/Layout";
 import { MailingFormBlock } from "../MailingFormBlock/MailingFormBlock";
 import s from "./Footer.module.css";
+import { useWindowSize } from "../../hooks/useWindowSize";
 
 export const Footer = () => {
   const location = useLocation();
+  const { width } = useWindowSize();
+  const isMobile = width < 1024;
 
   if (location.pathname === "/order") {
     return;
@@ -45,11 +48,11 @@ export const Footer = () => {
           </div>
         </div>
 
-        <div className="pb-[3.9vw]">
+        <div className="lg:pb-[3.9vw] pb-0">
           <FooterInstList />
         </div>
 
-        <div className="pt-[8.3vw] pb-[3.7vw]">
+        <div className="pt-[8.3vw] lg:pb-[3.7vw] pb-0">
           <svg
             className={s.bilobrovFooterLogo}
             viewBox="0 0 290 42"
@@ -101,9 +104,11 @@ export const Footer = () => {
               </a>
             </div>
 
+            {isMobile && <MailingFormBlock />}
+
             <FooterNavigationBlock />
 
-            <MailingFormBlock />
+            {!isMobile && <MailingFormBlock />}
           </div>
         </div>
         <div className={s.paymentBlock}>
@@ -111,6 +116,15 @@ export const Footer = () => {
             <a href="">Політика конфіденційності</a>
             <a href="">Оферта</a>
           </div>
+
+          {isMobile && (
+            <div className={s.footerBottomBlock}>
+              <p>©2024 Bilobrov Cosmetics. All Rights Reserved.</p>
+              <p>
+                Сайт розроблено агенством: <a href="">Before/After </a>
+              </p>
+            </div>
+          )}
 
           <ul>
             <li>
@@ -141,12 +155,14 @@ export const Footer = () => {
           </ul>
         </div>
 
-        <div className={s.footerBottomBlock}>
-          <p>©2024 Bilobrov Cosmetics. All Rights Reserved.</p>
-          <p>
-            Сайт розроблено агенством: <a href="">Before/After </a>
-          </p>
-        </div>
+        {!isMobile && (
+          <div className={s.footerBottomBlock}>
+            <p>©2024 Bilobrov Cosmetics. All Rights Reserved.</p>
+            <p>
+              Сайт розроблено агенством: <a href="">Before/After </a>
+            </p>
+          </div>
+        )}
       </Layout>
     </footer>
   );

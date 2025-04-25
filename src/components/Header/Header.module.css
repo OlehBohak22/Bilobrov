@@ -98,9 +98,10 @@
 .headerLogo {
   position: absolute;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-50%) translateY(-50%);
   width: 10.1vw;
   height: 1.4vw;
+  top: 50%;
 
   svg {
     stroke: transparent !important;
@@ -113,7 +114,7 @@
 
 .headerTopLine {
   padding: 1.25vw 0;
-
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -138,6 +139,7 @@
       line-height: 0.8vw;
       letter-spacing: 0.01vw;
       padding: 1.2vw;
+      white-space: nowrap;
     }
 
     .menuItem a::before {
@@ -233,4 +235,76 @@ body {
 
 .menuItem:hover .overlay {
   display: block; /* показуємо overlay при ховері на меню */
+}
+
+@media (max-width: 1024px) {
+  .header {
+    position: static;
+    padding-bottom: 5.3vw;
+  }
+
+  .headerTopLine {
+    padding: 4.2vw 0;
+  }
+
+  .menuBtn {
+    background-color: var(--primary);
+    width: 13.8vw;
+    height: 13.8vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+
+    svg {
+      stroke: white !important;
+      width: 6.4vw;
+      height: 6.4vw;
+    }
+  }
+
+  .headerLogo {
+    width: 9.8vw;
+    height: 11.4vw;
+  }
+
+  .profile {
+    svg {
+      width: 6.4vw;
+      height: 6.4vw;
+    }
+  }
+
+  .headerBottomLine {
+    overflow-x: scroll;
+    overflow-y: visible;
+    padding-left: 4.5vw;
+    height: 15.5vw;
+
+    .navMenu {
+      .menuItem {
+        a {
+          font-size: 3.7vw;
+          line-height: 4.2vw;
+          padding: 5.3vw 3.2vw;
+        }
+
+        .subMenu {
+          display: none;
+        }
+      }
+
+      .menuItem a::before {
+        display: none;
+      }
+    }
+  }
+
+  .headerBottomLine::before {
+    display: none;
+  }
+
+  .headerBottomLine::after {
+    width: 250vw;
+  }
 }

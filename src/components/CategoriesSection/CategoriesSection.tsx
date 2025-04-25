@@ -7,6 +7,7 @@ import s from "./CategoriesSection.module.css";
 import { Layout } from "../Layout/Layout";
 import { Link } from "react-router";
 import { Loader } from "../Loader/Loader";
+import { useWindowSize } from "../../hooks/useWindowSize";
 
 interface CategoriesSectionProps {
   parentId: number;
@@ -22,6 +23,9 @@ export const CategoriesSection: React.FC<CategoriesSectionProps> = ({
   largePlate,
 }) => {
   const dispatch = useDispatch<AppDispatch>();
+  const { width } = useWindowSize();
+
+  const isMobile = width < 1024;
 
   const { categories, loading, error } = useSelector(
     (state: RootState) => state.categories
@@ -33,8 +37,6 @@ export const CategoriesSection: React.FC<CategoriesSectionProps> = ({
 
   const parentSlug = categories.find((item) => item.id === parentId)?.slug;
 
-  console.log(parentSlug);
-
   useEffect(() => {
     if (categories.length === 0) {
       dispatch(fetchCategories());
@@ -45,8 +47,6 @@ export const CategoriesSection: React.FC<CategoriesSectionProps> = ({
   const otherCategories = subcategories
     .filter((item) => item.name !== largePlate)
     .slice(0, 4);
-
-  console.log(largeCategory);
 
   if (loading) {
     return <Loader />;
@@ -63,30 +63,32 @@ export const CategoriesSection: React.FC<CategoriesSectionProps> = ({
   return (
     <Layout>
       <div className={s.titleContainer}>
-        <span className={s.stub}>stuuuuuuuuuuuuuuuuuuuuub</span>
         {children}
-        <Link to={`/catalog/${parentSlug}`}>
-          <span>Перейти до категорії</span>
-          <svg
-            viewBox="0 0 25 25"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <g clipPath="url(#clip0_1195_3453)">
-              <path d="M17.9177 5.5L16.8487 6.55572L21.6059 11.2535H0.5V12.7465H21.6059L16.8487 17.4443L17.9177 18.5L24.5 12L17.9177 5.5Z" />
-            </g>
-            <defs>
-              <clipPath id="clip0_1195_3453">
-                <rect
-                  width="24"
-                  height="24"
-                  fill="white"
-                  transform="translate(0.5 0.5)"
-                />
-              </clipPath>
-            </defs>
-          </svg>
-        </Link>
+
+        {!isMobile && (
+          <Link className={s.categoryLink} to={`/catalog/${parentSlug}`}>
+            <span>Перейти до категорії</span>
+            <svg
+              viewBox="0 0 25 25"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g clipPath="url(#clip0_1195_3453)">
+                <path d="M17.9177 5.5L16.8487 6.55572L21.6059 11.2535H0.5V12.7465H21.6059L16.8487 17.4443L17.9177 18.5L24.5 12L17.9177 5.5Z" />
+              </g>
+              <defs>
+                <clipPath id="clip0_1195_3453">
+                  <rect
+                    width="24"
+                    height="24"
+                    fill="white"
+                    transform="translate(0.5 0.5)"
+                  />
+                </clipPath>
+              </defs>
+            </svg>
+          </Link>
+        )}
       </div>
 
       {subcategories.length === 0 ? (
@@ -213,6 +215,31 @@ export const CategoriesSection: React.FC<CategoriesSectionProps> = ({
             </li>
           )}
         </ul>
+      )}
+
+      {isMobile && (
+        <Link className={s.categoryLink} to={`/catalog/${parentSlug}`}>
+          <span>Перейти до категорії</span>
+          <svg
+            viewBox="0 0 25 25"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <g clipPath="url(#clip0_1195_3453)">
+              <path d="M17.9177 5.5L16.8487 6.55572L21.6059 11.2535H0.5V12.7465H21.6059L16.8487 17.4443L17.9177 18.5L24.5 12L17.9177 5.5Z" />
+            </g>
+            <defs>
+              <clipPath id="clip0_1195_3453">
+                <rect
+                  width="24"
+                  height="24"
+                  fill="white"
+                  transform="translate(0.5 0.5)"
+                />
+              </clipPath>
+            </defs>
+          </svg>
+        </Link>
       )}
     </Layout>
   );

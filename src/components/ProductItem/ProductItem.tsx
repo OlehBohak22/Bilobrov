@@ -11,6 +11,7 @@ import { RootState } from "../../store";
 import { VariationsPopup } from "../VariationCartPopup/VariationCartPopup";
 import { useGlobalProps } from "../../GlobalPropContext";
 import { truncateHtmlString } from "../../utils/truncateHtmlString";
+import { useWindowSize } from "../../hooks/useWindowSize";
 
 interface ProductItemProps {
   info: ProductInfo;
@@ -50,6 +51,10 @@ export const ProductItem: React.FC<ProductItemProps> = ({
 
   const [isPopupOpen, setPopupOpen] = useState(false);
 
+  const { width } = useWindowSize();
+
+  const isMobile = width < 1024;
+
   const brandMeta = info.meta_data.find((item) => item.key === "brands");
   const brandName =
     Array.isArray(brandMeta?.value) &&
@@ -77,6 +82,14 @@ export const ProductItem: React.FC<ProductItemProps> = ({
       openCart();
     }
   };
+
+  const localAverage =
+    currentReviews.length > 0
+      ? currentReviews.reduce(
+          (sum: number, r: { rating: number }) => sum + r.rating,
+          0
+        ) / currentReviews.length
+      : 0;
 
   return (
     <>
@@ -163,7 +176,7 @@ export const ProductItem: React.FC<ProductItemProps> = ({
           <p className={s.productName}>{info.name}</p>
           {typeof info.short_description === "string" ? (
             <p className={s.shortDesc}>
-              {truncateHtmlString(info.short_description, 100)}{" "}
+              {truncateHtmlString(info.short_description, 80)}{" "}
             </p>
           ) : (
             <>{info.short_description}</>
@@ -171,7 +184,7 @@ export const ProductItem: React.FC<ProductItemProps> = ({
 
           {!withoutRating && (
             <div className={s.ratingBlock}>
-              <StarRating rating={info.average_rating} />
+              <StarRating isMobile={isMobile} rating={localAverage} />
               <span>({currentReviews.length})</span>
             </div>
           )}
@@ -180,10 +193,11 @@ export const ProductItem: React.FC<ProductItemProps> = ({
         <div>
           {info.sale_price && info.sale_price !== "0" ? (
             <>
-              <span className={`${s.currency} ${s.red}`}>₴</span>
               <span className={`${s.salePrice} ${s.red}`}>
                 {info.sale_price}
               </span>
+              <span className={`${s.currency} ${s.red}`}>₴</span>
+
               <span className={s.regularPrice}>{info.regular_price}</span>
             </>
           ) : (

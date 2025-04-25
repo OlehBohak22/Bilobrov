@@ -6,7 +6,7 @@
   z-index: 2;
 
   svg {
-    fill: black;
+    stroke: black;
     width: 1.2vw;
     transition: fill 0.3s;
   }
@@ -37,11 +37,42 @@
 }
 
 .wishList:hover svg {
-  fill: var(--primary);
+  stroke: var(--primary);
 }
 
 .wishList:has(.active) {
   outline: 1px solid var(--primary);
   outline-offset: 0.6vw;
   border-radius: 50%;
+
+  svg {
+    stroke: var(--primary);
+  }
+}
+
+@media (max-width: 1024px) {
+  .wishList {
+    top: 3.2vw;
+    right: 3.2vw;
+
+    svg {
+      width: 4.8vw;
+      stroke: black;
+    }
+  }
+
+  .wishList:hover svg {
+    stroke: var(--primary);
+  }
+
+  .wishList:hover::before {
+    opacity: 0;
+  }
+
+  .wishList::before {
+  }
+
+  .wishList:has(.active) {
+    outline-offset: 1.5vw;
+  }
 }

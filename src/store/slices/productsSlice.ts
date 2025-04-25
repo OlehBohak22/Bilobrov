@@ -36,7 +36,6 @@ const initialState: ProductState = {
   reviewError: null,
 };
 
-// Асинхронна операція для додавання відгуку
 export const addReview = createAsyncThunk(
   "products/addReview",
   async (

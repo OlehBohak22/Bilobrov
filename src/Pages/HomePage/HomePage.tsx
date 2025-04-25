@@ -23,7 +23,7 @@ export const HomePage = () => {
       <ProductList categories={["Новинки"]} defaultCategory="Новинки">
         <h2>
           <span>Нові</span>
-          <span>Надходження</span>
+          <span>надходження</span>
         </h2>
       </ProductList>
 
@@ -41,7 +41,7 @@ export const HomePage = () => {
         </h2>
       </ProductList>
 
-      <div className="mb-[8.3vw]">
+      <div className="lg:mb-[8.3vw] mb-[21.3vw]">
         <CategoriesSection
           largePlate="Помада для губ"
           parentId={1161}
