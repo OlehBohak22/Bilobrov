@@ -9,6 +9,7 @@ import {
   Address,
   updateAddress,
 } from "../../store/slices/addressSlice";
+import { NovaPoshtaMapPopup } from "../MapPopup/MapPopup";
 
 interface AddAddressFormProps {
   closeForm: () => void;
@@ -25,6 +26,8 @@ export const AddAddressForm: FC<AddAddressFormProps> = ({
   const [departmentSelect, setDepartmentSelect] = useState("На відділення");
   const [selectedStreet, setSelectedStreet] = useState("");
   const dispatch = useAppDispatch();
+  const [showMapPopup, setShowMapPopup] = useState(false);
+  const [, setSelectedWarehouse] = useState<string | null>(null);
 
   const token = useSelector((state: RootState) => state.user.token) || "";
 
@@ -316,6 +319,13 @@ export const AddAddressForm: FC<AddAddressFormProps> = ({
                   onChange={(value) => setWarehouse(value)} // ✅ value - це рядок
                 />
               </div>
+              <button
+                type="button"
+                onClick={() => setShowMapPopup(true)}
+                className={s.mapSelect}
+              >
+                Обрати на мапі
+              </button>
             </div>
           ) : selectedCity && departmentSelect === "Кур'єр" ? (
             <div>
@@ -366,8 +376,6 @@ export const AddAddressForm: FC<AddAddressFormProps> = ({
                     />
                   </label>
                 </div>
-
-                <button className={s.mapSelect}>Обрати на мапі</button>
               </div>
 
               <div className={s.textArea}>
@@ -387,6 +395,22 @@ export const AddAddressForm: FC<AddAddressFormProps> = ({
               </div>
             </div>
           ) : null}
+
+          {showMapPopup && (
+            <NovaPoshtaMapPopup
+              selectedCity={selectedCity}
+              onClose={() => setShowMapPopup(false)}
+              onSelect={(warehouseName) => {
+                setSelectedWarehouse(warehouseName);
+                setWarehouse(warehouseName);
+                setAddress((prev) => ({
+                  ...prev,
+                  department: warehouseName,
+                }));
+                setShowMapPopup(false);
+              }}
+            />
+          )}
 
           <button onClick={handleSubmit} className={s.submitBtn} type="submit">
             <p>Зберегти зміни</p>

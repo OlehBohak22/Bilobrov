@@ -13,6 +13,7 @@ import { OrderFooter } from "./OrderFooter";
 import { OrderSucces } from "../../components/OrderSucces/OrderSucces";
 import { clearCart } from "../../store/slices/cartSlice";
 import { AddressPopup } from "../../components/AddressPopup/AddressPopup";
+import { NovaPoshtaMapPopup } from "../../components/MapPopup/MapPopup";
 
 export const OrderPage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -26,6 +27,8 @@ export const OrderPage: React.FC = () => {
   const [apartment, setApartment] = useState("");
   const [errors, setErrors] = useState<Record<string, boolean>>({});
   const [addressPopup, setAddressPopup] = useState(false);
+
+  const [showMapPopup, setShowMapPopup] = useState(false);
 
   const [selectedAddressId, setSelectedAddressId] = useState<number | null>(
     null
@@ -769,6 +772,24 @@ export const OrderPage: React.FC = () => {
                               onChange={(value) => setWarehouse(value)} // ✅ value - це рядок
                             />
                           </div>
+
+                          <button
+                            className={s.mapButton}
+                            onClick={() => setShowMapPopup(true)}
+                          >
+                            Обрати на мапі
+                          </button>
+
+                          {showMapPopup && (
+                            <NovaPoshtaMapPopup
+                              selectedCity={selectedCity}
+                              onClose={() => setShowMapPopup(false)}
+                              onSelect={(warehouse) => {
+                                setWarehouse(warehouse);
+                                setShowMapPopup(false);
+                              }}
+                            />
+                          )}
                         </div>
                       ) : selectedCity && departmentSelect === "Кур'єр" ? (
                         <div>

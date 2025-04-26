@@ -529,6 +529,27 @@
   }
 }
 
+.mapButton {
+  background-color: var(--primary);
+  color: white;
+  font-family: Manrope;
+  font-weight: 700;
+  font-size: 0.8vw;
+  line-height: 100%;
+  letter-spacing: -0.01vw;
+  vertical-align: middle;
+  text-transform: uppercase;
+  white-space: nowrap;
+  align-self: flex-end;
+  padding: 1.05vw 1.6vw;
+  transition: 0.3s;
+}
+
+.mapButton:hover {
+  background-color: rgba(255, 196, 58, 1);
+  color: black;
+}
+
 .orderBtn {
   position: relative;
 
@@ -564,4 +585,37 @@
 .orderBtn button:hover {
   background-color: rgba(255, 196, 58, 1);
   color: black;
+}
+
+.confirmOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.confirmBox {
+  background: white;
+  padding: 20px 30px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.confirmButtons {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.confirmButtons button {
+  padding: 8px 16px;
+  font-weight: bold;
+  cursor: pointer;
 }

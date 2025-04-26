@@ -136,6 +136,7 @@
   vertical-align: middle;
   text-transform: uppercase;
   padding: 1.1vw 0;
+  align-self: flex-end;
   transition: 0.3s;
 }
 
