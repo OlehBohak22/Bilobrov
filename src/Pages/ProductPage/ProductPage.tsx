@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import {
   fetchProductById,
   fetchProductVariations,
-  fetchReviews,
 } from "../../store/slices/productsSlice";
 import { ProductSlider } from "../../components/ProductSlider/ProductSlider";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
@@ -41,7 +40,6 @@ export const ProductPage: React.FC<HeaderProps> = ({
     if (id) {
       const productIdNumber = parseInt(id, 10);
       dispatch(fetchProductById(productIdNumber));
-      dispatch(fetchReviews());
       dispatch(fetchProductVariations(+id));
     }
   }, [dispatch, id]);

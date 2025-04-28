@@ -3,6 +3,7 @@
 }
 
 .container {
+  position: relative;
   display: flex;
   gap: 5.2vw;
   /* overflow: hidden; */
@@ -12,6 +13,9 @@
   display: flex;
   flex-direction: column;
   min-width: 16.6vw;
+  max-height: max-content;
+  position: sticky;
+  top: 1vw;
 
   ul {
     padding-bottom: 0.8vw;

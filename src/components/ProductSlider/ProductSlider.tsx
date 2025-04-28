@@ -13,9 +13,21 @@ export const ProductSlider: React.FC<ProductSliderProps> = ({
   info,
 }) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [displayImages, setDisplayImages] = useState<string[]>([]);
+
+  const MAX_IMAGES = 6;
 
   useEffect(() => {
-    setCurrentIndex(0); // Кожен раз, коли масив images змінюється, активуємо перший слайд
+    if (images && images.length > 0) {
+      let newImages = [...images];
+
+      if (newImages.length > MAX_IMAGES) {
+        newImages = newImages.slice(0, MAX_IMAGES);
+      }
+
+      setDisplayImages(newImages);
+      setCurrentIndex(0);
+    }
   }, [images]);
 
   // Перевірка на випадок порожнього масиву images
@@ -72,15 +84,16 @@ export const ProductSlider: React.FC<ProductSliderProps> = ({
           </svg>
         </button>
 
-        {images.map((img, index) => (
+        {displayImages.map((img, index) => (
           <img
-            key={index}
+            key={img}
             src={img}
             alt={`Thumbnail ${index + 1}`}
             className={`thumbnail ${index === currentIndex ? "active" : ""}`}
             onClick={() => selectSlide(index)}
           />
         ))}
+
         <button className="custom-right-nav" onClick={nextSlide}>
           <svg
             width="24"
@@ -129,7 +142,7 @@ export const ProductSlider: React.FC<ProductSliderProps> = ({
         </div>
 
         <img
-          src={images[currentIndex]}
+          src={displayImages[currentIndex]}
           alt={`Slide ${currentIndex + 1}`}
           className="slider-image"
         />

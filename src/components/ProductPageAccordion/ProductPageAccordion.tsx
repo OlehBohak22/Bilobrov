@@ -58,8 +58,6 @@ export const ProductPageAccordion: FC<ProductAccordionPropType> = ({
     .replace(/- /g, "<br />- ")
     .replace(/\n/g, "<br />");
 
-  console.log(characteristics);
-
   const hasDesc = desc.trim() !== "";
   const hasComponents = components.trim() !== "";
   const hasIngredients = ingredients.length > 0;

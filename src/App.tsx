@@ -35,6 +35,7 @@ import {} from "./store/slices/wishlistSlice";
 import { GlobalPropsContext } from "./GlobalPropContext";
 // import { NovaPoshtaMap } from "./components/MapPopup/MapPopup";
 import { AnimatePresence } from "framer-motion";
+import { fetchReviews } from "./store/slices/productsSlice";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -62,9 +63,8 @@ function App() {
     dispatch(fetchProducts());
     dispatch(fetchCategories());
     dispatch(fetchMenus());
-
+    dispatch(fetchReviews());
     dispatch(fetchCities());
-
     dispatch(fetchBrands());
   }, [dispatch]);
 
