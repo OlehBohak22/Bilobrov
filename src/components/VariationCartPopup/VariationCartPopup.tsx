@@ -11,6 +11,7 @@ import Select, { StylesConfig } from "react-select"; // Імпортуємо Rea
 import ReactDOM from "react-dom";
 import { ProductInfo } from "../../types/productTypes";
 import { CartProductItem } from "../CartProductItem/CartProductItem";
+import { Loader } from "../Loader/Loader";
 
 interface VariationsPopupProps {
   onSelect: (variationId: number) => void;
@@ -184,11 +185,10 @@ export const VariationsPopup: React.FC<VariationsPopupProps> = ({
           </div>
 
           {loading ? (
-            <p>Завантаження варіацій...</p>
+            <Loader />
           ) : (
             <>
               {uniqueAttributes.map((attribute) => {
-                // Отримуємо всі можливі варіанти значень для поточного атрибута
                 const options = [
                   ...new Set(
                     variations.flatMap((v) =>
@@ -199,14 +199,12 @@ export const VariationsPopup: React.FC<VariationsPopupProps> = ({
                   ),
                 ];
 
-                // Фільтруємо лише ті варіанти, які існують разом із вибраними атрибутами
                 const optionsList = options.map((option) => {
                   const isValid = variations.some((variation) => {
-                    // Перевіряємо, чи всі вибрані атрибути є в цій варіації
                     const matchesSelected = Object.entries(
                       selectedAttributes
                     ).every(([selectedSlug, selectedOption]) => {
-                      if (selectedSlug === attribute.slug) return true; // Пропускаємо поточний атрибут
+                      if (selectedSlug === attribute.slug) return true;
                       return variation.attributes.some(
                         (attr) =>
                           attr.slug === selectedSlug &&
@@ -214,7 +212,6 @@ export const VariationsPopup: React.FC<VariationsPopupProps> = ({
                       );
                     });
 
-                    // Перевіряємо, чи ця варіація має поточний варіант `option`
                     const hasOption = variation.attributes.some(
                       (attr) =>
                         attr.slug === attribute.slug && attr.option === option
@@ -223,20 +220,19 @@ export const VariationsPopup: React.FC<VariationsPopupProps> = ({
                     return matchesSelected && hasOption;
                   });
 
-                  // Знаходимо правильне зображення для варіанту
                   const optionImage = variations
                     .filter((v) =>
                       v.attributes.some(
                         (a) => a.slug === attribute.slug && a.option === option
                       )
                     )
-                    .map((v) => v.image?.src)[0]; // Беремо зображення першої варіації, що підходить
+                    .map((v) => v.image?.src)[0];
 
                   return {
                     value: option,
                     label: option,
-                    image: optionImage, // Додаємо правильне зображення для варіанту
-                    isDisabled: !isValid, // Додаємо дізейбл для неіснуючих комбінацій
+                    image: optionImage,
+                    isDisabled: !isValid,
                   };
                 });
 
@@ -245,10 +241,9 @@ export const VariationsPopup: React.FC<VariationsPopupProps> = ({
                     <p className={s.title}>{attribute.name}</p>
 
                     {attribute.slug === "pa_color" ? (
-                      // Відображаємо Select для кольорів
                       <div className={s.select}>
                         <Select
-                          menuPortalTarget={document.body} // Рендерить список прямо в body
+                          menuPortalTarget={document.body}
                           options={optionsList.map((opt, index) => ({
                             ...opt,
                             label: (
@@ -280,7 +275,6 @@ export const VariationsPopup: React.FC<VariationsPopupProps> = ({
                         />
                       </div>
                     ) : (
-                      // Відображаємо Radio-кнопки для всіх інших атрибутів
                       <div className={s.volume}>
                         {optionsList.map((opt) => (
                           <label
@@ -317,8 +311,6 @@ export const VariationsPopup: React.FC<VariationsPopupProps> = ({
                   </div>
                 );
               })}
-
-              <p>{selectedVariation}</p>
             </>
           )}
         </div>
