@@ -210,6 +210,10 @@
       }
     }
 
+    .disabled {
+      pointer-events: none;
+    }
+
     button:not(:last-child) {
       margin-bottom: 1vw;
     }

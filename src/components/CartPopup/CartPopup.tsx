@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import s from "./CartPopup.module.css";
 import { ProductInfo } from "../../types/productTypes";
-import { CartProductItem } from "../CartProductItem/CartProductItem";
+import { CartProductItemMemo } from "../CartProductItem/CartProductItem";
 import { useLocation, useNavigate } from "react-router";
 import { fetchCartProducts } from "../../store/slices/productsSlice"; // шлях залежить від структури
 import { useAppDispatch } from "../../hooks/useAppDispatch";
@@ -137,7 +137,7 @@ export const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
                   <Loader />
                 ) : cart.length ? (
                   cart.map((item) => (
-                    <CartProductItem
+                    <CartProductItemMemo
                       optional={false}
                       key={item.id}
                       info={item}
@@ -151,7 +151,6 @@ export const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
               </ul>
             </div>
 
-            {/* Інформація про замовлення */}
             <div className={s.orderInfo}>
               <div>
                 <div className={s.orderDetails}>
@@ -189,7 +188,10 @@ export const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
               </div>
 
               <div className={s.btnBlock}>
-                <button onClick={() => navigate("/order")}>
+                <button
+                  className={cart.length < 1 ? s.disabled : ""}
+                  onClick={() => navigate("/order")}
+                >
                   Оформити замовлення
                   <svg
                     viewBox="0 0 24 24"

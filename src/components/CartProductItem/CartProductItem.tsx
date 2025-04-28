@@ -7,6 +7,7 @@ import {
   removeFromCart,
 } from "../../store/slices/cartSlice";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { memo } from "react";
 
 interface ProductItemProps {
   info: ProductInfo;
@@ -15,7 +16,7 @@ interface ProductItemProps {
   variation?: ProductInfo["variations"][0]; // додаємо варіацію як optional
 }
 
-export const CartProductItem: React.FC<ProductItemProps> = ({
+const CartProductItem: React.FC<ProductItemProps> = ({
   info,
   token,
   optional,
@@ -48,13 +49,14 @@ export const CartProductItem: React.FC<ProductItemProps> = ({
       : null;
 
   const handleDecrease = () => {
-    // Видаляємо одиницю товару з кошика, враховуючи варіацію
+    if (info.quantity <= 1) return;
+
     dispatch(
       removeFromCart({
         product: {
           id: info.id,
-          quantity: 1, // Видаляємо одну одиницю товару
-          variation_id: variation || 0, // Використовуємо ID варіації, якщо вона є
+          quantity: 1,
+          variation_id: variation || 0,
         },
         token,
       })
@@ -62,13 +64,12 @@ export const CartProductItem: React.FC<ProductItemProps> = ({
   };
 
   const handleIncrease = () => {
-    // Додаємо одиницю товару до кошика, враховуючи варіацію
     dispatch(
       addToCart({
         product: {
           id: info.id,
-          quantity: 1, // Додаємо одну одиницю товару
-          variation_id: variation || 0, // Використовуємо ID варіації, якщо вона є
+          quantity: 1,
+          variation_id: variation || 0,
         },
         token,
       })
@@ -82,7 +83,7 @@ export const CartProductItem: React.FC<ProductItemProps> = ({
       removeAllFromCart({
         productId: info.id,
         variationId: variation || 0,
-        quantity: info.quantity, // Використовуємо поточний локальний `quantity`
+        quantity: info.quantity,
         token,
       })
     );
@@ -234,3 +235,5 @@ export const CartProductItem: React.FC<ProductItemProps> = ({
     </li>
   );
 };
+
+export const CartProductItemMemo = memo(CartProductItem);

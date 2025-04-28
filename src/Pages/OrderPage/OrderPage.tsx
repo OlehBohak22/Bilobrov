@@ -253,7 +253,6 @@ export const OrderPage: React.FC = () => {
     let finalBilling = { ...billing };
     let finalShipping = { ...shipping };
 
-    // Якщо постійна клієнтка і вибрано збережену адресу
     if (regularCustomer && selectedAddressId) {
       const selected = address?.find((addr) => addr.id === selectedAddressId);
 
@@ -308,7 +307,6 @@ export const OrderPage: React.FC = () => {
       ],
     };
 
-    // далі сабміт як у тебе
     try {
       const resultAction = await dispatch(createOrder(orderData));
       if (createOrder.fulfilled.match(resultAction)) {

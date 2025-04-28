@@ -21,7 +21,6 @@ export const WishListPopup: React.FC<{
   const dispatch = useAppDispatch();
   const [hasMounted, setHasMounted] = useState(false);
   const { pathname } = useLocation();
-  const [wishlistProducts, setWishlistProducts] = useState<ProductInfo[]>([]);
 
   useEffect(() => {
     if (hasMounted) {
@@ -35,7 +34,7 @@ export const WishListPopup: React.FC<{
 
   const handleClearWishlist = () => {
     if (token) {
-      dispatch(togglePreference({ token, preference: [] })); // Очищаємо вподобання
+      dispatch(togglePreference({ token, preference: [] }));
     }
   };
 
@@ -43,7 +42,11 @@ export const WishListPopup: React.FC<{
     (state: RootState) => state.user.user?.meta.preferences || []
   );
 
+  const [wishlistProducts, setWishlistProducts] = useState<ProductInfo[]>([]);
+  const [loading, setLoading] = useState(true); // ➔ додаємо loading
+
   useEffect(() => {
+    setLoading(true); // ➔ починаємо лоадинг
     if (wishlist.length > 0) {
       dispatch(fetchCartProducts(wishlist))
         .then((res) => {
@@ -59,9 +62,13 @@ export const WishListPopup: React.FC<{
             error
           );
           setWishlistProducts([]);
+        })
+        .finally(() => {
+          setLoading(false); // ➔ завершення завантаження у будь-якому випадку
         });
     } else {
       setWishlistProducts([]);
+      setLoading(false); // ➔ якщо wishlist порожній, також завершити лоадинг
     }
   }, [wishlist, dispatch]);
 
@@ -148,51 +155,56 @@ export const WishListPopup: React.FC<{
           </svg>
         </button>
 
-        <Swiper
-          modules={[Navigation]}
-          spaceBetween={20}
-          slidesPerView={"auto"}
-          navigation={{
-            prevEl: `.${s.prevButton}`,
-            nextEl: `.${s.nextButton}`,
-          }}
-          className={s.productListSwiper}
-        >
-          {wishlistProducts.map((product: ProductInfo) => (
-            <SwiperSlide className={s.slide} key={product.id}>
-              <ProductItem info={product} />
-            </SwiperSlide>
-          ))}
-        </Swiper>
-
-        {(wishlistProducts.length !== 0 && (
-          <button className={s.clear} onClick={handleClearWishlist}>
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
+        {loading ? (
+          <Loader />
+        ) : wishlistProducts.length > 0 ? (
+          <>
+            <Swiper
+              modules={[Navigation]}
+              spaceBetween={20}
+              slidesPerView={"auto"}
+              navigation={{
+                prevEl: `.${s.prevButton}`,
+                nextEl: `.${s.nextButton}`,
+              }}
+              className={s.productListSwiper}
             >
-              <path
-                d="M4.11719 6.45117H19.8784L18.461 21.2503H5.53458L4.11719 6.45117Z"
-                strokeWidth="1.6"
-                strokeLinecap="square"
-              />
-              <path
-                d="M12 11.3638L12 16.3366"
-                strokeWidth="1.6"
-                strokeLinecap="square"
-              />
-              <path
-                d="M16.4758 5.99734L15.4071 2.75H8.59217L7.52344 5.99734"
-                strokeWidth="1.6"
-                strokeLinecap="square"
-              />
-            </svg>
+              {wishlistProducts.map((product: ProductInfo) => (
+                <SwiperSlide className={s.slide} key={product.id}>
+                  <ProductItem info={product} />
+                </SwiperSlide>
+              ))}
+            </Swiper>
 
-            <span>Видалити все</span>
-          </button>
-        )) || <Loader />}
+            <button className={s.clear} onClick={handleClearWishlist}>
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                {/* Іконка */}
+              </svg>
+              <span>Видалити все</span>
+            </button>
+          </>
+        ) : (
+          <div className={s.emptyWishlist}>Ваш список бажань порожній</div>
+        )}
       </motion.div>
     </motion.div>
   );
 };
+
+<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path
+    d="M4.11719 6.45117H19.8784L18.461 21.2503H5.53458L4.11719 6.45117Z"
+    strokeWidth="1.6"
+    strokeLinecap="square"
+  />
+  <path d="M12 11.3638L12 16.3366" strokeWidth="1.6" strokeLinecap="square" />
+  <path
+    d="M16.4758 5.99734L15.4071 2.75H8.59217L7.52344 5.99734"
+    strokeWidth="1.6"
+    strokeLinecap="square"
+  />
+</svg>;

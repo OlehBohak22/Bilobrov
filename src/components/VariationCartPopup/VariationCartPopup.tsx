@@ -10,7 +10,7 @@ import { RootState } from "../../store";
 import Select, { StylesConfig } from "react-select"; // Імпортуємо React Select
 import ReactDOM from "react-dom";
 import { ProductInfo } from "../../types/productTypes";
-import { CartProductItem } from "../CartProductItem/CartProductItem";
+import { CartProductItemMemo } from "../CartProductItem/CartProductItem";
 import { Loader } from "../Loader/Loader";
 
 interface VariationsPopupProps {
@@ -177,7 +177,7 @@ export const VariationsPopup: React.FC<VariationsPopupProps> = ({
           </div>
 
           <div className="mb-[2vw]">
-            <CartProductItem
+            <CartProductItemMemo
               optional={true}
               info={product}
               token={user.token}

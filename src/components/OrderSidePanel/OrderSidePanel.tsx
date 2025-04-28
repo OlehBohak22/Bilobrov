@@ -3,7 +3,10 @@ import { useSelector } from "react-redux";
 import s from "./OrderSidePanel.module.css";
 import { RootState } from "../../store";
 import { ProductInfo } from "../../types/productTypes";
-import { CartProductItem } from "../CartProductItem/CartProductItem";
+import {
+  // CartProductItem,
+  CartProductItemMemo,
+} from "../CartProductItem/CartProductItem";
 import { fetchCartProducts } from "../../store/slices/productsSlice";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { Loader } from "../Loader/Loader";
@@ -15,9 +18,10 @@ export const OrderSidePanel = () => {
 
   const [cartProducts, setCartProducts] = useState<ProductInfo[]>([]);
   const [loading, setLoading] = useState(false);
+  const productIds = items.map((item) => item.id);
+  const productIdsString = productIds.sort((a, b) => a - b).join(",");
 
   useEffect(() => {
-    const productIds = items.map((item) => item.id);
     if (productIds.length) {
       setLoading(true);
       dispatch(fetchCartProducts(productIds)).then((res) => {
@@ -28,8 +32,9 @@ export const OrderSidePanel = () => {
       });
     } else {
       setCartProducts([]);
+      setLoading(false);
     }
-  }, [items]);
+  }, [productIdsString]);
 
   const cart = items
     .map((cartItem) => {
@@ -45,6 +50,7 @@ export const OrderSidePanel = () => {
 
       return null;
     })
+
     .filter(
       (item): item is ProductInfo & { variation: number; quantity: number } =>
         item !== null
@@ -82,7 +88,7 @@ export const OrderSidePanel = () => {
             <Loader />
           ) : cart.length ? (
             cart.map((item) => (
-              <CartProductItem
+              <CartProductItemMemo
                 optional={false}
                 key={item.id}
                 info={item}
