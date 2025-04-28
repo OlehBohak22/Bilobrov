@@ -7,4 +7,5 @@ declare module "leaflet";
 declare module "https://cdn.esm.sh/react-leaflet/TileLayer";
 declare module "https://cdn.esm.sh/react-leaflet/MapContainer";
 declare module "https://cdn.esm.sh/react-leaflet/Marker";
+declare module "react-input-mask";
 // declare module "@mui/icons-material/ExpandMore";

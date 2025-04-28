@@ -14,6 +14,7 @@ import { OrderSucces } from "../../components/OrderSucces/OrderSucces";
 import { clearCart } from "../../store/slices/cartSlice";
 import { AddressPopup } from "../../components/AddressPopup/AddressPopup";
 import { NovaPoshtaMapPopup } from "../../components/MapPopup/MapPopup";
+import InputMask from "react-input-mask";
 
 export const OrderPage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -84,14 +85,24 @@ export const OrderPage: React.FC = () => {
     if (!billing.first_name.trim()) newErrors.first_name = true;
     if (!billing.last_name.trim()) newErrors.last_name = true;
     if (!billing.middle_name.trim()) newErrors.middle_name = true;
-    if (!billing.phone.trim()) newErrors.phone = true;
+    if (
+      !billing.phone.trim() ||
+      !/^(\+380|0)\d{9}$/.test(billing.phone.trim())
+    ) {
+      newErrors.phone = true;
+    }
     if (!billing.email.trim()) newErrors.email = true;
 
     if (!shipper) {
       if (!shipping.first_name.trim()) newErrors.shipping_first_name = true;
       if (!shipping.last_name.trim()) newErrors.shipping_last_name = true;
       if (!shipping.middle_name.trim()) newErrors.shipping_middle_name = true;
-      if (!shipping.phone.trim()) newErrors.shipping_phone = true;
+      if (
+        !shipping.phone.trim() ||
+        !/^(\+380|0)\d{9}$/.test(shipping.phone.trim())
+      ) {
+        newErrors.shipping_phone = true;
+      }
       if (!shipping.email.trim()) newErrors.shipping_email = true;
     }
 
@@ -471,25 +482,31 @@ export const OrderPage: React.FC = () => {
                             }
                           />
                         </label>
-
                         <label>
                           Номер телефону <span>*</span>
-                          <input
-                            className={
-                              !billing.phone.trim() && errors.phone
-                                ? s.errorInput
-                                : ""
-                            }
-                            type="text"
-                            placeholder="Твій номер телефону"
+                          <InputMask
+                            mask="+380 (99) 999-99-99"
+                            maskChar=""
                             value={billing.phone}
-                            onChange={(e) =>
-                              setBilling({
-                                ...billing,
-                                phone: e.target.value,
-                              })
+                            onChange={(e: any) =>
+                              setBilling({ ...billing, phone: e.target.value })
                             }
-                          />
+                          >
+                            {(
+                              inputProps: React.InputHTMLAttributes<HTMLInputElement>
+                            ) => (
+                              <input
+                                {...inputProps}
+                                type="tel"
+                                className={`${
+                                  !billing.phone.trim() && errors.phone
+                                    ? s.errorInput
+                                    : ""
+                                }`}
+                                placeholder="+380 (__) ___-__-__"
+                              />
+                            )}
+                          </InputMask>
                         </label>
                       </div>
 
