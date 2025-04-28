@@ -128,6 +128,25 @@
 @media (max-width: 1024px) {
   .section {
     padding: 21vw 0;
+
+    h3 {
+      font-family: Manrope;
+      font-weight: 700;
+      font-size: 3.7vw;
+      line-height: 137%;
+      letter-spacing: 0.5vw;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 3.2vw;
+    }
+
+    p {
+      font-family: Manrope;
+      font-weight: 600;
+      font-size: 4.8vw;
+      line-height: 120%;
+      vertical-align: middle;
+    }
   }
 
   .titleContainer {
@@ -172,24 +191,5 @@
     height: 48vw;
     overflow: hidden;
     margin-bottom: 5.3vw;
-  }
-
-  h3 {
-    font-family: Manrope;
-    font-weight: 700;
-    font-size: 3.7vw;
-    line-height: 137%;
-    letter-spacing: 0.5vw;
-    text-transform: uppercase;
-    color: var(--primary);
-    margin-bottom: 3.2vw;
-  }
-
-  p {
-    font-family: Manrope;
-    font-weight: 600;
-    font-size: 4.8vw;
-    line-height: 120%;
-    vertical-align: middle;
   }
 }

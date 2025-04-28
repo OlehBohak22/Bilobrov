@@ -7,7 +7,10 @@
   .img {
     min-width: 8.8vw;
     max-width: 8.8vw;
-    background-color: rgba(246, 246, 246, 1);
+
+    img {
+      background-color: rgba(246, 246, 246, 1);
+    }
   }
 
   .markersBlock {
@@ -189,5 +192,99 @@
     width: 0.8vw;
     height: 0.8vw;
     fill: black;
+  }
+}
+
+@media (max-width: 1024px) {
+  .item {
+    /* height: auto !important; */
+    align-items: start;
+    gap: 5.3vw;
+
+    .img {
+      flex-shrink: 1;
+      max-width: none;
+      min-width: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10vw;
+
+      width: auto;
+      height: auto;
+
+      img {
+        width: 31vw;
+        height: 31vw;
+      }
+    }
+  }
+
+  .quantityControl {
+    width: fit-content;
+    gap: 4vw;
+
+    span {
+      font-size: 3.7vw;
+      line-height: 4.2vw;
+    }
+
+    button {
+      padding: 2.6vw;
+    }
+
+    svg {
+      width: 3.2vw;
+      height: 3.2vw;
+    }
+  }
+
+  .code {
+    font-size: 3.2vw;
+    line-height: 4.2vw;
+    align-items: anchor-center;
+
+    p {
+      margin-right: 1vw;
+    }
+  }
+
+  .div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 50vw;
+  }
+
+  .productName {
+    font-size: 3.2vw;
+    line-height: 100%;
+    margin-bottom: 2.1vw;
+  }
+
+  .shortDesc {
+    font-size: 3.2vw !important;
+    line-height: 5.8vw !important;
+  }
+
+  .currency {
+    font-size: 4.2vw;
+    margin-right: 1vw;
+  }
+
+  .salePrice {
+    font-size: 4.2vw;
+  }
+
+  .clear {
+    gap: 1vw;
+
+    svg {
+      width: 4.2vw;
+      height: 4.2vw;
+    }
+
+    span {
+      font-size: 3.7vw;
+    }
   }
 }

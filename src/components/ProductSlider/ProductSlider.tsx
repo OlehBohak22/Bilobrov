@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./ProductSlider.css";
 import s from "./ProductSlider.module.css";
 import { ProductInfo } from "../../types/productTypes";
@@ -15,7 +15,28 @@ export const ProductSlider: React.FC<ProductSliderProps> = ({
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [displayImages, setDisplayImages] = useState<string[]>([]);
 
-  const MAX_IMAGES = 6;
+  const thumbnailsRef = useRef<HTMLDivElement>(null);
+
+  // const { width };
+
+  const MAX_IMAGES = 60;
+
+  useEffect(() => {
+    if (thumbnailsRef.current) {
+      const thumbnailsContainer = thumbnailsRef.current;
+      const activeThumbnail = thumbnailsContainer.children[
+        currentIndex
+      ] as HTMLElement;
+
+      if (activeThumbnail) {
+        activeThumbnail.scrollIntoView({
+          behavior: "smooth",
+          inline: "center", // прокручуємо горизонтально так, щоб картинка була в центрі
+          block: "nearest",
+        });
+      }
+    }
+  }, [currentIndex]);
 
   useEffect(() => {
     if (images && images.length > 0) {
@@ -84,15 +105,17 @@ export const ProductSlider: React.FC<ProductSliderProps> = ({
           </svg>
         </button>
 
-        {displayImages.map((img, index) => (
-          <img
-            key={img}
-            src={img}
-            alt={`Thumbnail ${index + 1}`}
-            className={`thumbnail ${index === currentIndex ? "active" : ""}`}
-            onClick={() => selectSlide(index)}
-          />
-        ))}
+        <div ref={thumbnailsRef} className={s.smallSliderImages}>
+          {displayImages.map((img, index) => (
+            <img
+              key={img}
+              src={img}
+              alt={`Thumbnail ${index + 1}`}
+              className={`thumbnail ${index === currentIndex ? "active" : ""}`}
+              onClick={() => selectSlide(index)}
+            />
+          ))}
+        </div>
 
         <button className="custom-right-nav" onClick={nextSlide}>
           <svg

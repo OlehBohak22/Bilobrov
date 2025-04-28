@@ -7,7 +7,8 @@ interface ReviewItemPropType {
   reviewerName: string;
   reviewerRating: number;
   review: string;
-  images: string[]; // масив рядків
+  images: string[];
+  date: string;
 }
 
 export const ReviewItem: FC<ReviewItemPropType> = ({
@@ -15,6 +16,7 @@ export const ReviewItem: FC<ReviewItemPropType> = ({
   reviewerRating,
   review,
   images = [],
+  date,
 }) => {
   const filteredImages = Array.isArray(images)
     ? images.filter((image) => image.trim() !== "")
@@ -28,8 +30,9 @@ export const ReviewItem: FC<ReviewItemPropType> = ({
       <p className={s.reviewerName}>{reviewerName || "Користувач"}</p>
 
       <div className={s.reviewerContent}>
-        <div className="mb-[0.8vw]">
+        <div className={s.dateHeading}>
           <StarRating isMobile={isMobile} rating={reviewerRating} />
+          <p className={s.date}>{date}</p>
         </div>
 
         {filteredImages.length > 0 && (
@@ -42,7 +45,10 @@ export const ReviewItem: FC<ReviewItemPropType> = ({
           </ul>
         )}
 
-        <p dangerouslySetInnerHTML={{ __html: review }}></p>
+        <p
+          className={s.review}
+          dangerouslySetInnerHTML={{ __html: review }}
+        ></p>
       </div>
     </li>
   );

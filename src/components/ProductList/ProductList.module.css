@@ -195,4 +195,14 @@
       text-indent: 6vw;
     }
   }
+
+  .mini {
+    h2 {
+      font-size: 6.4vw;
+    }
+
+    .navigationContainer {
+      margin-bottom: 8.5vw;
+    }
+  }
 }

@@ -11,10 +11,13 @@
     font-weight: 600;
     font-size: 1vw;
     line-height: 1.4vw;
+    flex-shrink: 0;
   }
 
   .reviewerContent {
-    p {
+    width: 100%;
+
+    .review {
       font-family: Manrope;
       font-weight: 500;
       font-size: 0.9vw;
@@ -26,9 +29,67 @@
     display: flex;
     gap: 0.6vw;
     margin-bottom: 0.8vw;
+    flex-wrap: wrap;
 
     li {
       width: 4.1vw;
+      aspect-ratio: 1;
+      overflow: hidden;
+    }
+  }
+
+  .date {
+    font-family: Manrope;
+    font-weight: 500;
+    font-size: 0.7vw;
+    line-height: 100%;
+    opacity: 0.4;
+  }
+
+  .dateHeading {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.8vw;
+    width: 100%;
+  }
+}
+
+@media (max-width: 1024px) {
+  .item {
+    flex-direction: column;
+    padding: 4.2vw 5.3vw;
+    gap: 3.2vw;
+    min-height: 87vw;
+
+    .reviewerName {
+      font-size: 4.8vw;
+      line-height: 100%;
+    }
+
+    .reviewerContent {
+      .review {
+        font-size: 3.2vw;
+        line-height: 140%;
+      }
+    }
+
+    .dateHeading {
+      margin-bottom: 3.2vw;
+    }
+
+    .date {
+      font-size: 3.2vw;
+      line-height: 100%;
+    }
+
+    .iamgeList {
+      margin-bottom: 3.2vw;
+
+      gap: 2vw;
+      li {
+        width: 16vw;
+        flex-shrink: 0;
+      }
     }
   }
 }

@@ -253,7 +253,7 @@ export const ProductContent: React.FC<ProductItemProps> = ({
         ) / currentReviews.length
       : 0;
 
-  if (!info.attributes) return <p>Loading...</p>; // Або інший заглушковий контент
+  if (!info.attributes) return <p>Loading...</p>;
 
   return (
     <div className={s.content}>
@@ -277,7 +277,6 @@ export const ProductContent: React.FC<ProductItemProps> = ({
 
       <div>
         {uniqueAttributes.map((attribute) => {
-          // Отримуємо всі можливі варіанти значень для поточного атрибута
           const options = [
             ...new Set(
               variations.flatMap((v) =>
@@ -288,13 +287,11 @@ export const ProductContent: React.FC<ProductItemProps> = ({
             ),
           ];
 
-          // Фільтруємо лише ті варіанти, які існують разом із вибраними атрибутами
           const optionsList = options.map((option) => {
             const isValid = variations.some((variation) => {
-              // Перевіряємо, чи всі вибрані атрибути є в цій варіації
               const matchesSelected = Object.entries(selectedAttributes).every(
                 ([selectedSlug, selectedOption]) => {
-                  if (selectedSlug === attribute.slug) return true; // Пропускаємо поточний атрибут
+                  if (selectedSlug === attribute.slug) return true;
                   return variation.attributes.some(
                     (attr) =>
                       attr.slug === selectedSlug &&
@@ -303,7 +300,6 @@ export const ProductContent: React.FC<ProductItemProps> = ({
                 }
               );
 
-              // Перевіряємо, чи ця варіація має поточний варіант `option`
               const hasOption = variation.attributes.some(
                 (attr) => attr.slug === attribute.slug && attr.option === option
               );
@@ -311,20 +307,19 @@ export const ProductContent: React.FC<ProductItemProps> = ({
               return matchesSelected && hasOption;
             });
 
-            // Знаходимо правильне зображення для варіанту
             const optionImage = variations
               .filter((v) =>
                 v.attributes.some(
                   (a) => a.slug === attribute.slug && a.option === option
                 )
               )
-              .map((v) => v.image?.src)[0]; // Беремо зображення першої варіації, що підходить
+              .map((v) => v.image?.src)[0];
 
             return {
               value: option,
               label: option,
-              image: optionImage, // Додаємо правильне зображення для варіанту
-              isDisabled: !isValid, // Додаємо дізейбл для неіснуючих комбінацій
+              image: optionImage,
+              isDisabled: !isValid,
             };
           });
 
@@ -333,7 +328,6 @@ export const ProductContent: React.FC<ProductItemProps> = ({
               <p className={s.title}>{attribute.name}</p>
 
               {attribute.slug === "pa_kolir" ? (
-                // Відображаємо Select для кольорів
                 <div className={s.select}>
                   <Select
                     options={optionsList.map((opt, index) => ({
@@ -366,7 +360,6 @@ export const ProductContent: React.FC<ProductItemProps> = ({
                   />
                 </div>
               ) : (
-                // Відображаємо Radio-кнопки для всіх інших атрибутів
                 <div className={s.volume}>
                   {optionsList.map((opt) => (
                     <label
@@ -403,11 +396,9 @@ export const ProductContent: React.FC<ProductItemProps> = ({
             </div>
           );
         })}
-
-        {selectedVariation && <p>Вибрана варіація: {selectedVariation}</p>}
       </div>
 
-      <div className="flex mb-[1vw]">
+      <div className="flex lg:mb-[1vw] mb-[4.2vw]">
         {info.sale_price && info.sale_price !== "0" ? (
           <>
             <span className={`${s.salePrice} ${s.red}`}>{info.sale_price}</span>
@@ -461,7 +452,8 @@ export const ProductContent: React.FC<ProductItemProps> = ({
             />
             <path d="M10 4V19" strokeWidth="1.7" />
           </svg>
-          <span>авторизуйся</span>
+
+          <span>авторизуйся </span>
           <p> і отримуй бонуси</p>
         </div>
       )}

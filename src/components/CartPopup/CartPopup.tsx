@@ -130,7 +130,7 @@ export const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
             </button>
           </div>
 
-          <div className="flex gap-[0.8vw] justify-between">
+          <div className={s.flexBlock}>
             <div className={s.cartListBox}>
               <ul className={s.popupList}>
                 {loading ? (

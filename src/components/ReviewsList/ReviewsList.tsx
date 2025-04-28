@@ -1,14 +1,22 @@
+import { FC, useRef, useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination as SwiperPagination } from "swiper/modules";
+import { useWindowSize } from "../../hooks/useWindowSize";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+
 import { ReviewItem } from "../ReviewItem/ReviewItem";
 import { StarRatingRed } from "../StarRating/StarRating";
+import { Pagination } from "../Pagination/Pagination"; // твоя власна пагінація для desktop
 import s from "./ReviewsList.module.css";
-import { FC, useState } from "react";
-import { Pagination } from "../Pagination/Pagination";
 
 interface ReviewerType {
   reviewer: string;
   rating: number;
   review: string;
   review_images: [];
+  date_created: string;
 }
 
 interface ReviewsListPropType {
@@ -23,6 +31,14 @@ export const ReviewsList: FC<ReviewsListPropType> = ({
   openReview,
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
+  const [swiperInstance, setSwiperInstance] = useState<any>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const prevButtonRef = useRef<HTMLDivElement | null>(null);
+  const nextButtonRef = useRef<HTMLDivElement | null>(null);
+
+  const { width } = useWindowSize();
+  const isMobile = width < 1024;
 
   const totalPages = Math.ceil(reviews.length / REVIEWS_PER_PAGE);
 
@@ -30,6 +46,14 @@ export const ReviewsList: FC<ReviewsListPropType> = ({
     (currentPage - 1) * REVIEWS_PER_PAGE,
     currentPage * REVIEWS_PER_PAGE
   );
+
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const year = date.getFullYear();
+    return `${day}.${month}.${year}`;
+  };
 
   const averageRating =
     reviews.length > 0
@@ -45,8 +69,8 @@ export const ReviewsList: FC<ReviewsListPropType> = ({
             <span>покупців</span>
           </h2>
 
-          <div className="flex items-center gap-[0.3vw]">
-            <StarRatingRed rating={averageRating} />
+          <div className="flex items-center lg:gap-[0.3vw] gap-[13vw] lg:mb-[0] mb-[10vw]">
+            <StarRatingRed className={s.scale} rating={averageRating} />
             <div className={s.qty}>({reviews.length})</div>
           </div>
         </div>
@@ -93,19 +117,114 @@ export const ReviewsList: FC<ReviewsListPropType> = ({
         </button>
       </div>
 
-      <ul className={s.list}>
-        {paginatedReviews.map((item, index) => (
-          <ReviewItem
-            key={index}
-            reviewerName={item.reviewer}
-            reviewerRating={item.rating}
-            review={item.review}
-            images={item.review_images}
-          />
-        ))}
-      </ul>
+      {isMobile ? (
+        <div>
+          <Swiper
+            className={s.swiper}
+            slidesPerView={1.1}
+            spaceBetween={16}
+            onSwiper={setSwiperInstance}
+            onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
+            navigation={{
+              prevEl: prevButtonRef.current,
+              nextEl: nextButtonRef.current,
+            }}
+            modules={[Navigation, SwiperPagination]}
+          >
+            {reviews.map((item, index) => (
+              <SwiperSlide key={index}>
+                <ReviewItem
+                  reviewerName={item.reviewer}
+                  reviewerRating={item.rating}
+                  review={item.review}
+                  images={item.review_images}
+                  date={formatDate(item.date_created)}
+                />
+              </SwiperSlide>
+            ))}
+          </Swiper>
 
-      {totalPages > 1 && (
+          {/* Пагінація + стрілки */}
+          <div className="flex justify-between items-center mt-[9.6vw]">
+            <div className={s.customPagination}>
+              {reviews.map((_, index) => (
+                <span
+                  key={index}
+                  onClick={() => swiperInstance?.slideTo(index)}
+                  className={`${s.dot} ${
+                    activeIndex === index ? s.activeDot : ""
+                  }`}
+                />
+              ))}
+            </div>
+            <div className="flex gap-[8vw]">
+              <div
+                ref={prevButtonRef}
+                className={`${s.prevBtn} ${s.navigationButton}`}
+              >
+                <svg
+                  viewBox="0 0 25 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g clipPath="url(#clip0_480_5408)">
+                    <path d="M7.08228 5L8.15132 6.05572L3.39413 10.7535L24.5 10.7535V12.2465L3.39413 12.2465L8.15132 16.9443L7.08228 18L0.5 11.5L7.08228 5Z" />
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_480_5408">
+                      <rect
+                        width="24"
+                        height="24"
+                        fill="white"
+                        transform="matrix(-1 0 0 1 24.5 0)"
+                      />
+                    </clipPath>
+                  </defs>
+                </svg>
+              </div>
+              <div
+                ref={nextButtonRef}
+                className={`${s.nextBtn} ${s.navigationButton}`}
+              >
+                <svg
+                  viewBox="0 0 25 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g clipPath="url(#clip0_480_5411)">
+                    <path d="M17.9177 5L16.8487 6.05572L21.6059 10.7535H0.5V12.2465H21.6059L16.8487 16.9443L17.9177 18L24.5 11.5L17.9177 5Z" />
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_480_5411">
+                      <rect
+                        width="24"
+                        height="24"
+                        fill="white"
+                        transform="translate(0.5)"
+                      />
+                    </clipPath>
+                  </defs>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <ul className={s.list}>
+          {paginatedReviews.map((item, index) => (
+            <ReviewItem
+              key={index}
+              reviewerName={item.reviewer}
+              reviewerRating={item.rating}
+              review={item.review}
+              images={item.review_images}
+              date={formatDate(item.date_created)}
+            />
+          ))}
+        </ul>
+      )}
+
+      {!isMobile && totalPages > 1 && (
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}

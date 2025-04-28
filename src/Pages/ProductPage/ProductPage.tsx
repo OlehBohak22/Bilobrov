@@ -86,7 +86,8 @@ export const ProductPage: React.FC<HeaderProps> = ({
               ))}
             </Breadcrumbs>
           </Layout>
-          <Layout className="flex gap-[5vw]">
+
+          <Layout className={s.contentFlex}>
             <ProductSlider images={productImages} info={currentProduct} />
             <ProductContent
               openRegister={openRegister}
@@ -97,15 +98,17 @@ export const ProductPage: React.FC<HeaderProps> = ({
             />
           </Layout>
 
-          <ProductList
-            categories={[currentProduct.categories[0]?.id || "Новинки"]}
-            defaultCategory={currentProduct.categories[0]?.id || "Новинки"}
-          >
-            <h2>
-              <span>Схожі</span>
-              <span>товари</span>
-            </h2>
-          </ProductList>
+          <Layout>
+            <ProductList
+              categories={[currentProduct.categories[0]?.id || "Новинки"]}
+              defaultCategory={currentProduct.categories[0]?.id || "Новинки"}
+            >
+              <h2>
+                <span>Схожі</span>
+                <span>товари</span>
+              </h2>
+            </ProductList>
+          </Layout>
 
           <Layout>
             <ReviewsList openReview={openReview} reviews={currentReviews} />

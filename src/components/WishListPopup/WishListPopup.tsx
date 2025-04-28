@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import { fetchCartProducts } from "../../store/slices/productsSlice";
 import { Loader } from "../Loader/Loader";
+import { useWindowSize } from "../../hooks/useWindowSize";
 
 export const WishListPopup: React.FC<{
   onClose: () => void;
@@ -21,6 +22,8 @@ export const WishListPopup: React.FC<{
   const dispatch = useAppDispatch();
   const [hasMounted, setHasMounted] = useState(false);
   const { pathname } = useLocation();
+  const { width } = useWindowSize();
+  const isMobile = width < 1024;
 
   useEffect(() => {
     if (hasMounted) {
@@ -88,12 +91,48 @@ export const WishListPopup: React.FC<{
         transition={{ duration: 0.3, ease: "easeOut" }}
       >
         <div className={s.swiperController}>
-          <h2>
-            <span>Список</span>
-            <span>побажань</span>
-          </h2>
+          {isMobile ? (
+            <>
+              <h2>Список побажань</h2>
+              <button className={s.clear} onClick={handleClearWishlist}>
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M3.43359 5.37598H16.5679L15.3868 17.7086H4.61476L3.43359 5.37598Z"
+                    stroke="#D63D44"
+                    stroke-width="1.6"
+                    stroke-linecap="square"
+                  />
+                  <path
+                    d="M10 9.46973L10 13.6138"
+                    stroke="#D63D44"
+                    stroke-width="1.6"
+                    stroke-linecap="square"
+                  />
+                  <path
+                    d="M13.7298 4.99811L12.8392 2.29199H7.16014L6.26953 4.99811"
+                    stroke="#D63D44"
+                    stroke-width="1.6"
+                    stroke-linecap="square"
+                  />
+                </svg>
 
-          {wishlistProducts.length > 0 && (
+                <span>Видалити все</span>
+              </button>
+            </>
+          ) : (
+            <h2>
+              <span>Список</span>
+              <span>побажань</span>
+            </h2>
+          )}
+
+          {wishlistProducts.length > 0 && !isMobile && (
             <div className={s.navigationContainer}>
               <button className={s.prevButton}>
                 <svg
@@ -159,33 +198,61 @@ export const WishListPopup: React.FC<{
           <Loader />
         ) : wishlistProducts.length > 0 ? (
           <>
-            <Swiper
-              modules={[Navigation]}
-              spaceBetween={20}
-              slidesPerView={"auto"}
-              navigation={{
-                prevEl: `.${s.prevButton}`,
-                nextEl: `.${s.nextButton}`,
-              }}
-              className={s.productListSwiper}
-            >
-              {wishlistProducts.map((product: ProductInfo) => (
-                <SwiperSlide className={s.slide} key={product.id}>
+            {isMobile ? (
+              <div className={s.mobileList}>
+                {wishlistProducts.map((product: ProductInfo) => (
                   <ProductItem info={product} />
-                </SwiperSlide>
-              ))}
-            </Swiper>
-
-            <button className={s.clear} onClick={handleClearWishlist}>
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
+                ))}
+              </div>
+            ) : (
+              <Swiper
+                modules={[Navigation]}
+                spaceBetween={20}
+                slidesPerView="auto"
+                navigation={{
+                  prevEl: `.${s.prevButton}`,
+                  nextEl: `.${s.nextButton}`,
+                }}
+                className={s.productListSwiper}
               >
-                {/* Іконка */}
-              </svg>
-              <span>Видалити все</span>
-            </button>
+                {wishlistProducts.map((product: ProductInfo) => (
+                  <SwiperSlide className={s.slide} key={product.id}>
+                    <ProductItem info={product} />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            )}
+
+            {!isMobile && (
+              <button className={s.clear} onClick={handleClearWishlist}>
+                <svg
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M3.43359 5.37598H16.5679L15.3868 17.7086H4.61476L3.43359 5.37598Z"
+                    stroke="#D63D44"
+                    stroke-width="1.6"
+                    stroke-linecap="square"
+                  />
+                  <path
+                    d="M10 9.46973L10 13.6138"
+                    stroke="#D63D44"
+                    stroke-width="1.6"
+                    stroke-linecap="square"
+                  />
+                  <path
+                    d="M13.7298 4.99811L12.8392 2.29199H7.16014L6.26953 4.99811"
+                    stroke="#D63D44"
+                    stroke-width="1.6"
+                    stroke-linecap="square"
+                  />
+                </svg>
+
+                <span>Видалити все</span>
+              </button>
+            )}
           </>
         ) : (
           <div className={s.emptyWishlist}>Ваш список бажань порожній</div>

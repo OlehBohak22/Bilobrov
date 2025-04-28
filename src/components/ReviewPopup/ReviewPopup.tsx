@@ -51,7 +51,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ setFieldValue, values }) => {
             <img
               src={URL.createObjectURL(file)}
               alt="uploaded"
-              className="w-16 h-16 object-cover"
+              className={s.reviewImage}
             />
             <button
               type="button"
@@ -87,9 +87,10 @@ const StarRating: React.FC<StarRatingProps> = ({ setFieldValue, values }) => {
       {[1, 2, 3, 4, 5].map((star) => (
         <FaStar
           key={star}
-          className={`cursor-pointer ${
-            values.rating >= star ? "text-red-600" : "text-gray-300"
-          }`}
+          className="cursor-pointer"
+          style={{
+            color: values.rating >= star ? "#D63D44" : "#D1D5DB", // "#D1D5DB" — це приблизно Tailwind text-gray-300
+          }}
           onClick={() => setFieldValue("rating", star)}
         />
       ))}
@@ -197,14 +198,14 @@ export const ReviewPopup: React.FC<CartPopupProps> = ({
               <Form className={s.form}>
                 {!initialValues.isAuthenticated && (
                   <>
-                    <div className="mb-[0.7vw]">
+                    <div className="lg:mb-[0.7vw] mb-[3.4vw]">
                       <label htmlFor="name">
                         Ім'я<span>*</span>
                       </label>
                       <Field id="name" name="name" placeholder="Твоє імʼя" />
                     </div>
 
-                    <div className="mb-[2vw]">
+                    <div className="lg:mb-[2vw] mb-[6.4vw]">
                       <label htmlFor="email">
                         Номер телефону<span>*</span>
                       </label>
@@ -241,7 +242,7 @@ export const ReviewPopup: React.FC<CartPopupProps> = ({
                     />
                   </div>
 
-                  <div>
+                  <div className={s.stars}>
                     <StarRating setFieldValue={setFieldValue} values={values} />
                   </div>
                 </div>

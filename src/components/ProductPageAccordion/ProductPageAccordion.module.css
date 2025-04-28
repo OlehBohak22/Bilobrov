@@ -34,6 +34,11 @@
       text-transform: uppercase;
       margin: 0;
     }
+
+    svg {
+      min-width: 1.2vw;
+      min-height: 1.2vw;
+    }
   }
 
   .css-1lj39kh-MuiAccordionDetails-root {
@@ -52,6 +57,7 @@
   display: flex;
   align-items: center;
   gap: 0.2vw;
+  flex-wrap: wrap;
 
   li {
     padding: 0.2vw 0.4vw;
@@ -68,4 +74,57 @@
   font-weight: 500;
   font-size: 0.8vw;
   line-height: 1.2vw;
+}
+
+@media (max-width: 1024px) {
+  .acardion {
+    h3 {
+      button {
+        min-height: 19.7vw;
+        height: 19.7vw;
+      }
+
+      span {
+        font-size: 3.7vw;
+        line-height: 4.2vw;
+      }
+
+      svg {
+        min-width: 6.4vw;
+        min-height: 6.4vw;
+      }
+    }
+  }
+
+  .desc {
+    font-size: 4.2vw;
+    line-height: 150%;
+  }
+
+  .components {
+    font-size: 4.2vw;
+    line-height: 150%;
+  }
+
+  .characteristics {
+    p {
+      font-size: 4.2vw;
+
+      line-height: 100%;
+    }
+
+    p:not(:last-child) {
+      margin-bottom: 2.5vw;
+    }
+  }
+
+  .ingredientsList {
+    gap: 1vw;
+
+    li {
+      padding: 1vw 2.1vw;
+      font-size: 4.2vw;
+      line-height: 150%;
+    }
+  }
 }

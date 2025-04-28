@@ -191,3 +191,76 @@
     color: var(--primary);
   }
 }
+
+.mobileList {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  row-gap: 6.4vw;
+  column-gap: 4vw;
+  overflow-y: scroll;
+  padding-right: 2vw;
+}
+
+.mobileList::-webkit-scrollbar {
+  width: 0.8vw;
+}
+.mobileList::-webkit-scrollbar-track {
+  width: 1vw;
+  background-color: rgba(254, 228, 229, 1);
+}
+.mobileList::-webkit-scrollbar-thumb {
+  width: 1vw;
+  background-color: var(--primary);
+}
+
+@media (max-width: 1024px) {
+  .modal {
+    max-width: none;
+    min-width: auto;
+    max-height: none;
+    min-height: auto;
+    height: 100%;
+    width: 100%;
+    padding: 4.2vw;
+  }
+
+  .clear {
+    margin-top: 0;
+
+    svg {
+      width: 5.3vw;
+      height: 5.3vw;
+    }
+
+    span {
+      font-size: 4.2vw;
+    }
+  }
+
+  .closeBtn {
+    right: 3vw;
+    top: 3vw;
+
+    svg {
+      width: 11.2vw;
+      height: 11.2vw;
+      stroke: #000000;
+    }
+  }
+
+  .swiperController {
+    margin-bottom: 8.5vw;
+    flex-direction: column;
+    align-items: start;
+    gap: 5vw;
+
+    h2 {
+      font-family: Playfair Display;
+      font-weight: 600;
+      font-style: italic;
+      font-size: 7.4vw;
+      line-height: 100%;
+      margin-bottom: 0;
+    }
+  }
+}

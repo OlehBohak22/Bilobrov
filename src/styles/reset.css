@@ -81,3 +81,43 @@ textarea {
 .breadcrumbs span {
   color: #6c757d;
 }
+
+@media (max-width: 1024px) {
+  .breadcrumbs {
+    margin-bottom: 6.6vw !important;
+
+    a {
+      font-size: 3.2vw;
+      line-height: 3.7vw;
+      white-space: nowrap;
+    }
+
+    ol {
+      gap: 2.1vw;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      padding-bottom: 2vw;
+
+      .MuiBreadcrumbs-separator {
+        min-width: 1vw;
+        min-height: 1vw;
+        max-width: 1vw;
+        max-height: 1vw;
+      }
+    }
+
+    ol::-webkit-scrollbar {
+      width: 0.1vw;
+      height: 0.9vw;
+    }
+    ol::-webkit-scrollbar-track {
+      width: 0.1vw;
+      background-color: rgba(239, 237, 238, 1);
+    }
+    ol::-webkit-scrollbar-thumb {
+      width: 0.1vw;
+      background-color: black;
+      max-width: 1vw !important;
+    }
+  }
+}

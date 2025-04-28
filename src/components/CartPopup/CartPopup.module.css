@@ -3,8 +3,8 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   background-color: rgba(0, 0, 0, 0.5); /* напівпрозорий фон */
   display: flex;
   justify-content: center;
@@ -61,6 +61,12 @@
   }
 }
 
+.flexBlock {
+  display: flex;
+  gap: 0.8vw;
+  justify-content: space-between;
+}
+
 .popupTitle {
   font-size: 1.2rem;
   margin: 0;
@@ -96,6 +102,12 @@
 
 :root {
   --itemHeight: 10vw;
+}
+
+@media (max-width: 1024px) {
+  :root {
+    --itemHeight: 54.2vw;
+  }
 }
 
 .cartListBox {
@@ -256,4 +268,119 @@
 
 .cartProductsSlider {
   /* transform: scale(0.5); */
+}
+
+@media (max-width: 1024px) {
+  .popupContent {
+    width: 100vw;
+    height: 100vh;
+    max-width: none;
+    max-height: none;
+    padding: 4.2vw;
+  }
+
+  .popupHeader {
+    margin-bottom: 8.5vw;
+
+    h2 {
+      font-size: 7.4vw;
+    }
+
+    svg {
+      width: 11.2vw;
+      height: 11.2vw;
+    }
+  }
+
+  .flexBlock {
+    display: block;
+  }
+
+  .cartListBox {
+    padding-right: 1.5vw;
+    margin-bottom: 8.5vw;
+  }
+
+  .cartListBox::-webkit-scrollbar {
+    width: 0.8vw;
+  }
+
+  .popupList {
+    li {
+      border-left: none;
+      border-right: none;
+      border-top: none;
+      padding: 0 0 4.2vw 0;
+    }
+
+    li:not(:last-child) {
+      margin-bottom: 4.2vw;
+    }
+  }
+
+  .orderInfo {
+    width: 100%;
+    padding: 4.2vw;
+
+    .orderDetails {
+      margin-bottom: 8.5vw;
+
+      P:not(:last-child) {
+        margin-bottom: 2.1vw;
+      }
+
+      p {
+        font-size: 3.7vw;
+        line-height: 137%;
+
+        span:nth-child(2) {
+          font-size: 4.2vw;
+
+          svg {
+            width: 4.5vw;
+            height: 4.5vw;
+          }
+        }
+      }
+    }
+
+    .totalAmount {
+      margin-bottom: 8.5vw;
+
+      P {
+        font-size: 4.2vw;
+      }
+
+      span {
+        font-size: 7.4vw;
+      }
+    }
+
+    .btnBlock {
+      button:nth-child(1) {
+        font-size: 4.2vw;
+        gap: 2.6vw;
+
+        svg {
+          width: 6.4vw;
+          height: 6.4vw;
+        }
+      }
+
+      button:nth-child(2) {
+        font-size: 4.2vw;
+        line-height: 4.2vw;
+        border: 1px solid rgba(26, 26, 26, 0.2);
+        padding: 5.8vw 0;
+      }
+
+      button {
+        padding: 4.8vw 0;
+      }
+
+      button:not(:last-child) {
+        margin-bottom: 2.1vw;
+      }
+    }
+  }
 }

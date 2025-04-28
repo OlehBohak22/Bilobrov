@@ -20,8 +20,23 @@
   animation: spin 0.8s linear infinite;
 }
 
+.contentFlex {
+  display: flex;
+  gap: 5vw;
+}
+
 @keyframes spin {
   to {
     transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 1024px) {
+  .page {
+    padding-bottom: 21.3vw;
+  }
+
+  .contentFlex {
+    display: block;
   }
 }

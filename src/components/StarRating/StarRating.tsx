@@ -67,7 +67,7 @@ export const StarRating = ({
 
 const FullStarRed = () => (
   <svg
-    className="w-[1.6vw] h-[1.6vw]"
+    className="lg:w-[1.6vw] lg:h-[1.6vw] w-[5vw] h-[5vw]"
     viewBox="0 0 25 24"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -80,7 +80,10 @@ const FullStarRed = () => (
 );
 
 const HalfStarRed = () => (
-  <svg className="w-[1.3vw] h-[1.6vw]" viewBox="0 0 24 24">
+  <svg
+    className="lg:w-[1.3vw] lg:h-[1.6vw] w-[4vw] h-[5.1vw]"
+    viewBox="0 0 24 24"
+  >
     <defs>
       <linearGradient id="halfRed" x1="0%" y1="0%" x2="100%" y2="0%">
         <stop offset="50%" stopColor="rgba(214, 61, 68, 1)" />
@@ -96,7 +99,7 @@ const HalfStarRed = () => (
 
 const EmptyStarRed = () => (
   <svg
-    className="w-[1.6vw] h-[1.6vw]"
+    className="lg:w-[1.6vw] lg:h-[1.6vw] w-[5.3vw] h-[5.3vw]"
     viewBox="0 0 25 24"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -109,7 +112,14 @@ const EmptyStarRed = () => (
   </svg>
 );
 
-export const StarRatingRed = ({ rating }: { rating: number }) => {
+export const StarRatingRed = ({
+  rating,
+  className,
+}: {
+  rating: number;
+  className?: string;
+}) => {
+  console.log(className);
   const stars = Array.from({ length: 5 }, (_, i) => {
     const value = rating;
     if (i + 1 <= value) return <FullStarRed key={i} />;
@@ -117,5 +127,5 @@ export const StarRatingRed = ({ rating }: { rating: number }) => {
     return <EmptyStarRed key={i} />;
   });
 
-  return <div className="flex ">{stars}</div>;
+  return <div className={`flex ${className}`}>{stars}</div>;
 };

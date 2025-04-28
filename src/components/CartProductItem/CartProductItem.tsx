@@ -8,6 +8,7 @@ import {
 } from "../../store/slices/cartSlice";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { memo } from "react";
+import { useWindowSize } from "../../hooks/useWindowSize";
 
 interface ProductItemProps {
   info: ProductInfo;
@@ -23,6 +24,8 @@ const CartProductItem: React.FC<ProductItemProps> = ({
   variation,
 }) => {
   const dispatch = useAppDispatch();
+  const { width } = useWindowSize();
+  const isMobile = width < 1024;
 
   const isNewProduct = (dateCreated: string) => {
     if (!dateCreated) return false;
@@ -95,63 +98,98 @@ const CartProductItem: React.FC<ProductItemProps> = ({
     <li className={s.item}>
       <div className={s.img}>
         <img src={info.images[0]?.src} alt={info.images[0]?.alt || info.name} />
+
+        {isMobile && !optional && (
+          <div className={s.quantityControl}>
+            <button onClick={handleDecrease}>
+              <svg
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M16 7.33301H0V8.66634H16V7.33301Z" />
+              </svg>
+            </button>
+
+            <span>{info.quantity}</span>
+
+            <button onClick={handleIncrease}>
+              <svg
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g clip-path="url(#clip0_2700_8776)">
+                  <path d="M16 7.33333H8.66667V0H7.33333V7.33333H0V8.66667H7.33333V16H8.66667V8.66667H16V7.33333Z" />
+                </g>
+                <defs>
+                  <clipPath id="clip0_2700_8776">
+                    <rect width="16" height="16" fill="white" />
+                  </clipPath>
+                </defs>
+              </svg>
+            </button>
+          </div>
+        )}
       </div>
 
       <div className={s.div}>
-        <div className="flex  items-center mb-[0.6vw]">
-          <div>
-            {optional && (
-              <div className={s.markersBlock}>
-                {info.featured && (
-                  <div className={s.bestMarker}>
-                    <span>bilobrov'S</span>
-                    <span>BEST</span>
-                  </div>
-                )}
-
-                <div className={s.topMarker}>TOP</div>
-
-                {isNewProduct(info.date_created) && (
-                  <div className={s.newMarker}>NEW</div>
-                )}
-
-                {info.sale_price &&
-                  info.sale_price !== "0" &&
-                  info.regular_price &&
-                  info.regular_price !== "0" && (
-                    <div className={s.saleMarker}>
-                      -
-                      {Math.round(
-                        (1 -
-                          Number(info.sale_price) /
-                            Number(info.regular_price)) *
-                          100
-                      )}
-                      %
+        <div>
+          <div className="flex  items-center lg:mb-[0.6vw] mb-[3.2vw]">
+            <div>
+              {optional && (
+                <div className={s.markersBlock}>
+                  {info.featured && (
+                    <div className={s.bestMarker}>
+                      <span>bilobrov'S</span>
+                      <span>BEST</span>
                     </div>
                   )}
-              </div>
-            )}
-          </div>
 
-          <div className={s.code}>
-            <p>Код товару: </p> <span> {info.sku}</span>
+                  <div className={s.topMarker}>TOP</div>
+
+                  {isNewProduct(info.date_created) && (
+                    <div className={s.newMarker}>NEW</div>
+                  )}
+
+                  {info.sale_price &&
+                    info.sale_price !== "0" &&
+                    info.regular_price &&
+                    info.regular_price !== "0" && (
+                      <div className={s.saleMarker}>
+                        -
+                        {Math.round(
+                          (1 -
+                            Number(info.sale_price) /
+                              Number(info.regular_price)) *
+                            100
+                        )}
+                        %
+                      </div>
+                    )}
+                </div>
+              )}
+            </div>
+
+            <div className={s.code}>
+              <p>Код товару: </p> <span> {info.sku}</span>
+            </div>
           </div>
+          {brandName && <p className={s.productBrand}>{brandName}</p>}
+
+          <p className={s.productName}>{info.name}</p>
+
+          {typeof info.short_description === "string" ? (
+            <p
+              className={s.shortDesc}
+              dangerouslySetInnerHTML={{ __html: info.short_description }}
+            />
+          ) : (
+            <>{info.short_description}</>
+          )}
         </div>
-        {brandName && <p className={s.productBrand}>{brandName}</p>}
 
-        <p className={s.productName}>{info.name}</p>
-
-        {typeof info.short_description === "string" ? (
-          <p
-            className={s.shortDesc}
-            dangerouslySetInnerHTML={{ __html: info.short_description }}
-          />
-        ) : (
-          <>{info.short_description}</>
-        )}
-
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between lg:pb-[0] pb-[2vw]">
           <div className="flex items-center gap-[1vw]">
             {info.sale_price && info.sale_price !== "0" ? (
               <div>
@@ -168,7 +206,7 @@ const CartProductItem: React.FC<ProductItemProps> = ({
               </div>
             )}
 
-            {!optional && (
+            {!isMobile && !optional && (
               <div className={s.quantityControl}>
                 <button onClick={handleDecrease}>
                   <svg
@@ -202,7 +240,6 @@ const CartProductItem: React.FC<ProductItemProps> = ({
             )}
           </div>
 
-          {/* Інпут для зміни кількості */}
           {!optional && (
             <button className={s.clear} onClick={handleRemoveAll}>
               <svg

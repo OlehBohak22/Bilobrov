@@ -28,9 +28,7 @@ export const OrderPage: React.FC = () => {
   const [apartment, setApartment] = useState("");
   const [errors, setErrors] = useState<Record<string, boolean>>({});
   const [addressPopup, setAddressPopup] = useState(false);
-
   const [showMapPopup, setShowMapPopup] = useState(false);
-
   const [selectedAddressId, setSelectedAddressId] = useState<number | null>(
     null
   );
@@ -85,24 +83,30 @@ export const OrderPage: React.FC = () => {
     if (!billing.first_name.trim()) newErrors.first_name = true;
     if (!billing.last_name.trim()) newErrors.last_name = true;
     if (!billing.middle_name.trim()) newErrors.middle_name = true;
+
     if (
       !billing.phone.trim() ||
       !/^(\+380|0)\d{9}$/.test(billing.phone.trim())
     ) {
       newErrors.phone = true;
     }
+
     if (!billing.email.trim()) newErrors.email = true;
 
     if (!shipper) {
       if (!shipping.first_name.trim()) newErrors.shipping_first_name = true;
+
       if (!shipping.last_name.trim()) newErrors.shipping_last_name = true;
+
       if (!shipping.middle_name.trim()) newErrors.shipping_middle_name = true;
+
       if (
         !shipping.phone.trim() ||
         !/^(\+380|0)\d{9}$/.test(shipping.phone.trim())
       ) {
         newErrors.shipping_phone = true;
       }
+
       if (!shipping.email.trim()) newErrors.shipping_email = true;
     }
 
@@ -134,6 +138,7 @@ export const OrderPage: React.FC = () => {
   };
 
   const userData = useSelector((state: RootState) => state.user.user);
+
   const { token } = useSelector((state: RootState) => state.user);
 
   const address = userData?.meta.address;
@@ -141,9 +146,9 @@ export const OrderPage: React.FC = () => {
   useEffect(() => {
     if (Array.isArray(address) && address.length > 0) {
       const selected = address.find((addr) => addr.selected) || address[0];
+
       setSelectedAddressId(selected.id);
 
-      // Автоматично також заповнити дані в billing і shipping
       handleAddressSelect(selected.id);
     }
   }, [address]);
@@ -172,7 +177,7 @@ export const OrderPage: React.FC = () => {
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
     if (value.length <= maxLength) {
-      setInstructions(value); // Оновлюємо значення інструкцій
+      setInstructions(value);
     }
   };
 

@@ -52,3 +52,53 @@
     width: fit-content;
   }
 }
+
+.smallSliderImages {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4vw;
+  max-height: 19.5vw;
+  overflow: auto;
+}
+
+.smallSliderImages::-webkit-scrollbar {
+  display: none;
+}
+
+@media (max-width: 1024px) {
+  .smallSliderImages {
+    display: flex;
+    flex-direction: row;
+    gap: 1.6vw;
+    max-height: none;
+    overflow: auto;
+  }
+
+  .markersBlock {
+    top: 3.2vw;
+
+    div:not(:last-child) {
+      margin-bottom: 1.6vw;
+    }
+
+    .bestMarker {
+      font-size: 2.6vw;
+      padding: 1.6vw 2.1vw;
+      line-height: 100%;
+    }
+
+    .topMarker,
+    .newMarker {
+      padding: 1.6vw 0;
+      width: 10.6vw;
+      font-size: 2.6vw;
+      line-height: 100%;
+    }
+
+    .saleMarker {
+      font-size: 2.6vw;
+      line-height: 100%;
+      padding: 1.6vw 2.1vw;
+    }
+  }
+}

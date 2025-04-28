@@ -64,3 +64,43 @@
   opacity: 1;
   border-color: #212121;
 }
+
+@media (max-width: 1024px) {
+  .slider {
+    position: static;
+    flex-direction: column-reverse;
+    height: auto;
+    width: 100%;
+    gap: 3.2vw;
+    margin-bottom: 8.5vw;
+  }
+
+  .slider-main {
+    width: auto;
+    height: auto;
+  }
+
+  .slider-thumbnails {
+    flex-direction: row;
+  }
+
+  .custom-left-nav {
+    svg {
+      width: 6.4vw;
+      height: 6.4vw;
+      transform: rotate(-90deg);
+    }
+  }
+  .custom-right-nav {
+    svg {
+      width: 6.4vw;
+      height: 6.4vw;
+      transform: rotate(-90deg);
+    }
+  }
+
+  .thumbnail {
+    width: 16.1vw;
+    height: 16.1vw;
+  }
+}

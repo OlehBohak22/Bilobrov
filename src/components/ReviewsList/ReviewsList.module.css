@@ -106,3 +106,85 @@
   letter-spacing: 0.1vw;
   color: rgba(102, 102, 102, 1);
 }
+
+.customPagination {
+  display: flex;
+  justify-content: center;
+  gap: 2.1vw;
+}
+
+.dot {
+  width: 2.1vw;
+  height: 2.1vw;
+  background-color: #e5e5e5;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.activeDot {
+  background-color: #c13f3f;
+}
+
+.prevBtn,
+.nextBtn {
+  svg {
+    width: 6.4vw;
+    fill: #000000;
+  }
+}
+
+@media (max-width: 1024px) {
+  .titleContainer {
+    display: block;
+
+    h2 {
+      width: 13vw;
+      margin-bottom: 5.3vw;
+
+      span:nth-child(1) {
+        font-size: 9.6vw;
+
+        line-height: 100%;
+      }
+
+      span:nth-child(2) {
+        margin-top: -2.1vw;
+        font-size: 8.5vw;
+        line-height: 100%;
+        text-indent: 5vw;
+      }
+    }
+  }
+
+  .qty {
+    font-size: 3.7vw;
+    line-height: 100%;
+  }
+
+  .scale {
+    transform: scale(1.5) translateX(3.15vw);
+  }
+
+  .brandLink {
+    position: relative;
+    gap: 1vw;
+    left: 12.1vw;
+    margin-bottom: 15vw;
+
+    span {
+      font-size: 4.2vw;
+      line-height: 140%;
+    }
+
+    .svg {
+      width: 59.2vw;
+      height: 15.4vw;
+    }
+
+    .arrow {
+      width: 6.4vw;
+      height: 6.4vw;
+    }
+  }
+}

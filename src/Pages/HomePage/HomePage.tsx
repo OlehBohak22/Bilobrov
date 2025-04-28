@@ -8,24 +8,30 @@ import { HomeAbout } from "../../components/HomeAbout/HomeAbout";
 import { HomeServices } from "../../components/HomeServices/HomeServices";
 import { CashbackSection } from "../../components/CashbackSection/CashbackSection";
 import { BlogSection } from "../../components/BlogSection/BlogSection";
+import { Layout } from "../../components/Layout/Layout";
 
 export const HomePage = () => {
   return (
     <main>
       <HomeHero></HomeHero>
-      <ProductList
-        categories={["Акції", "Новинки", "Бестселлери"]}
-        defaultCategory="Новинки"
-      />
+
+      <Layout>
+        <ProductList
+          categories={["Акції", "Новинки", "Бестселлери"]}
+          defaultCategory="Новинки"
+        />
+      </Layout>
 
       <BrandsList />
 
-      <ProductList categories={["Новинки"]} defaultCategory="Новинки">
-        <h2>
-          <span>Нові</span>
-          <span>надходження</span>
-        </h2>
-      </ProductList>
+      <Layout>
+        <ProductList categories={["Новинки"]} defaultCategory="Новинки">
+          <h2>
+            <span>Нові</span>
+            <span>надходження</span>
+          </h2>
+        </ProductList>
+      </Layout>
 
       <CategoriesSection largePlate="Креми" parentId={1160}>
         <h2>
@@ -34,12 +40,14 @@ export const HomePage = () => {
         </h2>
       </CategoriesSection>
 
-      <ProductList categories={["Бестселлери"]} defaultCategory="Бестселлери">
-        <h2>
-          <span>Хіти</span>
-          <span>продажів</span>
-        </h2>
-      </ProductList>
+      <Layout>
+        <ProductList categories={["Бестселлери"]} defaultCategory="Бестселлери">
+          <h2>
+            <span>Хіти</span>
+            <span>продажів</span>
+          </h2>
+        </ProductList>
+      </Layout>
 
       <div className="lg:mb-[8.3vw] mb-[21.3vw]">
         <CategoriesSection

@@ -90,6 +90,7 @@
 
   span {
     text-decoration: underline;
+    margin-right: 0.3vw;
   }
 
   svg {
@@ -244,10 +245,12 @@
     p {
       margin-right: 0.2vw;
       color: rgba(26, 26, 26, 0.4);
+      white-space: nowrap;
     }
 
     span {
       color: rgba(26, 26, 26, 1);
+      white-space: nowrap;
     }
   }
 }
@@ -375,5 +378,206 @@
     font-size: 0.7vw;
     line-height: 0.7vw;
     letter-spacing: 0.01vw;
+  }
+}
+
+@media (max-width: 1024px) {
+  .ratingBlock {
+    gap: 2.1vw;
+    margin-bottom: 8.5vw;
+
+    span {
+      font-size: 3.7vw;
+    }
+  }
+
+  .productBrand {
+    font-size: 3.2vw;
+    line-height: 100%;
+    margin-bottom: 3.2vw;
+  }
+
+  .productName {
+    font-size: 4.8vw;
+    line-height: 130%;
+    margin-bottom: 4.2vw;
+  }
+
+  .shortDesc {
+    font-size: 3.2vw;
+    line-height: 120%;
+  }
+
+  .title {
+    font-size: 3.7vw;
+    line-height: 3.7vw;
+    margin-bottom: 4.2vw;
+  }
+
+  .volume {
+    gap: 2.1vw;
+    margin-bottom: 8.5vw;
+
+    label {
+      font-size: 3.7vw;
+      line-height: 3.7vw;
+      padding: 4.5vw 4vw;
+    }
+  }
+
+  .select {
+    width: 100%;
+    margin-bottom: 8.5vw;
+
+    * {
+      font-size: 5vw;
+      line-height: 100%;
+    }
+  }
+
+  .salePrice {
+    font-size: 6.4vw;
+    line-height: 100%;
+    margin-right: 1vw;
+  }
+
+  .currency {
+    font-size: 6.4vw;
+    line-height: 100%;
+    margin-right: 3.2vw;
+  }
+
+  .regularPrice {
+    font-size: 4.8vw;
+    line-height: 4.8vw;
+  }
+
+  .auth {
+    margin-bottom: 8.5vw;
+
+    svg {
+      width: 6.6vw;
+      height: 6.6vw;
+      margin-right: 2.1vw;
+    }
+    span {
+      margin-right: 0.7vw;
+    }
+
+    span,
+    p {
+      font-size: 3.7vw;
+      line-height: 140%;
+    }
+  }
+
+  .orderController {
+    flex-wrap: wrap;
+    gap: 3.2vw;
+    margin-bottom: 4.2vw;
+
+    .qty {
+      width: 100%;
+      justify-content: space-between;
+
+      span {
+        font-size: 4.2vw;
+        line-height: 4.2vw;
+      }
+
+      button {
+        width: 13.3vw;
+        height: 13.3vw;
+
+        svg {
+          width: 4.2vw;
+          height: 4.2vw;
+        }
+      }
+    }
+
+    .cart {
+      width: calc(86% - 3.1vw); /* 0.9rem це якщо gap 1rem */
+      font-size: 4.2vw;
+      line-height: 4.2vw;
+      padding: 4.5vw 0;
+    }
+
+    .wishList {
+      width: calc(14% - 0.1vw); /* 0.1rem якщо gap 1rem */
+      height: auto;
+
+      svg {
+        width: 6.4vw;
+        height: 6.4vw;
+      }
+    }
+  }
+
+  .consultation {
+    gap: 4.2vw;
+    margin-bottom: 8.5vw;
+
+    .circle {
+      width: 21.8vw;
+      height: 21.8vw;
+    }
+
+    .icon {
+      width: 6.6vw;
+      height: 6.6vw;
+    }
+
+    .text {
+      p {
+        font-size: 3.7vw;
+        line-height: 4.2vw;
+        margin-bottom: 1vw;
+      }
+
+      span {
+        font-size: 4.8vw;
+        line-height: 4.2vw;
+      }
+    }
+  }
+
+  .questionCircle {
+    width: 21.8vw;
+    height: 21.8vw;
+  }
+
+  .isAvailable {
+    margin-bottom: 6.4vw;
+    align-items: baseline;
+    flex-wrap: wrap;
+
+    .available {
+      p {
+        font-size: 5vw;
+        line-height: 5vw;
+        gap: 1.6vw;
+        white-space: nowrap;
+
+        svg {
+          width: 3.7vw;
+          height: 3.7vw;
+        }
+      }
+    }
+
+    .code {
+      align-items: baseline;
+      p {
+        font-size: 3.7vw;
+        line-height: 4.2vw;
+        margin-left: 0;
+      }
+
+      span {
+        font-size: 3vw;
+        line-height: 4.2vw;
+      }
+    }
   }
 }
