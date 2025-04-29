@@ -16,7 +16,7 @@
   font-size: 0.9vw;
   line-height: 140%;
   letter-spacing: -0.01vw;
-  color: rgba(186, 186, 186, 1);
+  color: rgba(186, 186, 186, 0.5);
   cursor: pointer;
 }
 
@@ -48,5 +48,27 @@
 
   svg {
     fill: white;
+  }
+}
+
+@media (max-width: 1024px) {
+  .pagination {
+    justify-content: space-between;
+
+    .numbers {
+      gap: 6.4vw;
+    }
+  }
+
+  .arrow {
+    svg {
+      width: 6.4vw;
+      height: 6.4vw;
+    }
+  }
+
+  .pageBtn {
+    font-size: 4.2vw;
+    line-height: 140%;
   }
 }

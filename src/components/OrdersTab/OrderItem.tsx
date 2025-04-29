@@ -20,6 +20,10 @@ export const OrderItem: FC<OrderTabProp> = ({ info }) => {
 
   const formattedDate = date.toLocaleDateString("uk-UA");
 
+  function formatNumber(num: number): string {
+    return Number.isInteger(num) ? num.toString() : num.toFixed(1);
+  }
+
   switch (info.status) {
     case "pending":
       STATUS = "формуємо замовлення";
@@ -43,7 +47,7 @@ export const OrderItem: FC<OrderTabProp> = ({ info }) => {
   }
 
   return (
-    <li className={s.item}>
+    <li onClick={() => setIsOpen(!isOpen)} className={s.item}>
       <div className={s.orderHeading}>
         <div>
           <p className={`${s[CLASS]} ${s.status}`}>{STATUS}</p>
@@ -57,20 +61,19 @@ export const OrderItem: FC<OrderTabProp> = ({ info }) => {
           <span>{info.grand_total} ₴</span>
         </div>
 
-        <div className={s.imageList}>
-          {info.products.length > 3 && (
-            <span>+ {info.products.length - 3}</span>
-          )}
+        {!isOpen && (
+          <div className={s.imageList}>
+            {info.products.length > 3 && (
+              <span>+ {info.products.length - 3}</span>
+            )}
 
-          {info.products.slice(0, 3).map((product) => (
-            <img src={product.image} alt="" />
-          ))}
-        </div>
+            {info.products.slice(0, 3).map((product) => (
+              <img src={product.image} alt="" />
+            ))}
+          </div>
+        )}
 
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          className={`${s.openBtn} ${isOpen && s.opened}`}
-        >
+        <button className={`${s.openBtn} ${isOpen && s.opened}`}>
           <svg
             viewBox="0 0 24 24"
             fill="none"
@@ -125,7 +128,7 @@ export const OrderItem: FC<OrderTabProp> = ({ info }) => {
 
                       <div className={s.priceBlock}>
                         <div>
-                          {item.price / item.quantity} ₴
+                          {formatNumber(item.price / item.quantity)} ₴
                           <span> x {item.quantity}</span>
                         </div>
 

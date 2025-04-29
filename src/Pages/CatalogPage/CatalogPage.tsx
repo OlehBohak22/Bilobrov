@@ -27,6 +27,7 @@ import { CustomSortDropdown } from "../../components/DropDown/DropDown";
 import { Category } from "../../types/categoryType";
 import { Pagination } from "../../components/Pagination/Pagination";
 import { AnimatePresence } from "framer-motion";
+import { useWindowSize } from "../../hooks/useWindowSize";
 
 export const CatalogPage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -56,6 +57,10 @@ export const CatalogPage: React.FC = () => {
     page: state.filters.page,
     totalCount: state.filters.totalCount,
   }));
+
+  const { width } = useWindowSize();
+
+  const isMobile = width < 1024;
 
   const totalPages = Math.ceil(totalCount / 20);
 
@@ -241,8 +246,10 @@ export const CatalogPage: React.FC = () => {
 
           <span>{totalCount} продукти</span>
         </div>
-
-        {selectedCategories.length === 1 && childCategories.length > 0 && (
+      </Layout>
+      {selectedCategories.length === 1 &&
+        childCategories.length > 0 &&
+        isMobile && (
           <div className={s.childCategories}>
             <ul>
               {childCategories.map((cat) => (
@@ -261,6 +268,28 @@ export const CatalogPage: React.FC = () => {
             </ul>
           </div>
         )}
+      <Layout>
+        {selectedCategories.length === 1 &&
+          childCategories.length > 0 &&
+          !isMobile && (
+            <div className={s.childCategories}>
+              <ul>
+                {childCategories.map((cat) => (
+                  <li
+                    key={cat.id}
+                    className={
+                      selectedCategories.includes(cat.id.toString())
+                        ? s.active
+                        : ""
+                    }
+                    onClick={() => onTabClick(cat.id, cat.slug)}
+                  >
+                    {cat.name}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
 
         <div className={s.filterController}>
           <button onClick={() => setIsFilterOpen(true)}>

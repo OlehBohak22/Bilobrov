@@ -439,6 +439,18 @@ export const Filters: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 
         <button className={s.btn} onClick={applyFilters}>
           Застосувати фільтри
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M17.4177 5L16.3487 6.05572L21.1059 10.7535H0V12.2465H21.1059L16.3487 16.9443L17.4177 18L24 11.5L17.4177 5Z"
+              fill="white"
+            />
+          </svg>
         </button>
       </motion.div>
     </motion.div>

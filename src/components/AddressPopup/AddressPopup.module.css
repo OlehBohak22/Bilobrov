@@ -22,7 +22,7 @@
   padding: 2vw;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   width: 100%;
-  height: 70vh;
+  height: 90vh;
   overflow-y: scroll;
   overflow-x: hidden;
 }
@@ -52,4 +52,35 @@
 
 .closeBtn:hover {
   transform: rotate(180deg);
+
+  svg {
+    stroke: var(--primary);
+  }
+}
+
+@media (max-width: 1024px) {
+  .wrapper {
+    width: 100%;
+    height: 100%;
+  }
+
+  .popupContent {
+    width: 100vw;
+    height: 100%;
+    padding: 5.3vw 4.2vw;
+    padding-bottom: 25vw;
+    position: relative;
+  }
+
+  .popupContent::-webkit-scrollbar {
+    width: 0.8vw;
+  }
+
+  .closeBtn {
+    stroke: black;
+    top: 5.3vw;
+    right: 4.2vw;
+    width: 13.8vw;
+    height: 13.8vw;
+  }
 }

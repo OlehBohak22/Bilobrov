@@ -111,3 +111,102 @@
     }
   }
 }
+
+@media (max-width: 1024px) {
+  .sidePanel {
+    padding: 0;
+    background-color: transparent;
+
+    .orderCartList {
+      padding-bottom: 4.2vw;
+      margin-bottom: 8.5vw;
+
+      li:not(:last-child) {
+        margin-bottom: 4.2vw;
+      }
+    }
+
+    .sideHeading {
+      padding-bottom: 6.4vw;
+      margin-bottom: 8.5vw;
+
+      p {
+        font-size: 5.3vw;
+        line-height: 100%;
+      }
+
+      span {
+        font-size: 8.5vw;
+        line-height: 100%;
+      }
+    }
+  }
+
+  .orderInfo {
+    width: 100%;
+    padding: 0;
+
+    .orderDetails {
+      margin-bottom: 8.5vw;
+      padding-bottom: 6.4vw;
+
+      P:not(:last-child) {
+        margin-bottom: 2.1vw;
+      }
+
+      p {
+        font-size: 3.7vw;
+        line-height: 137%;
+
+        span:nth-child(2) {
+          font-size: 4.2vw;
+
+          svg {
+            width: 4.5vw;
+            height: 4.5vw;
+          }
+        }
+      }
+    }
+
+    .totalAmount {
+      margin-bottom: 0;
+
+      P {
+        font-size: 5.2vw;
+        line-height: 150%;
+      }
+
+      span {
+        font-size: 7.4vw;
+      }
+    }
+
+    .btnBlock {
+      button:nth-child(1) {
+        font-size: 4.2vw;
+        gap: 2.6vw;
+
+        svg {
+          width: 6.4vw;
+          height: 6.4vw;
+        }
+      }
+
+      button:nth-child(2) {
+        font-size: 4.2vw;
+        line-height: 4.2vw;
+        border: 1px solid rgba(26, 26, 26, 0.2);
+        padding: 5.8vw 0;
+      }
+
+      button {
+        padding: 4.8vw 0;
+      }
+
+      button:not(:last-child) {
+        margin-bottom: 2.1vw;
+      }
+    }
+  }
+}

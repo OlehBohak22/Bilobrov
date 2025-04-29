@@ -97,3 +97,65 @@
     color: rgba(255, 196, 58, 1);
   }
 }
+
+@media (max-width: 1024px) {
+  .footer {
+    padding: 17vw 0;
+
+    .container {
+      flex-direction: column;
+      align-items: start;
+      gap: 21vw;
+    }
+
+    .leftBlock {
+      flex-direction: column;
+      gap: 10.6vw;
+      align-items: start;
+
+      p {
+        font-size: 4.2vw;
+        line-height: 100%;
+        margin-bottom: 6.4vw;
+      }
+
+      a:nth-child(1) {
+        font-size: 7.4vw;
+        line-height: 100%;
+        margin-bottom: 3vw;
+      }
+      a:nth-child(2) {
+        font-size: 5.3vw;
+        line-height: 100%;
+      }
+    }
+
+    .tgLink {
+      gap: 2.6vw;
+
+      .icon {
+        width: 13.8vw;
+        height: 13.8vw;
+
+        svg {
+          width: 5.8vw;
+          height: 5.8vw;
+        }
+      }
+
+      span {
+        font-size: 4.8vw;
+        line-height: 100%;
+      }
+    }
+
+    .rightBLock {
+      gap: 8.5vw;
+
+      a {
+        font-size: 4.8vw;
+        line-height: 100%;
+      }
+    }
+  }
+}

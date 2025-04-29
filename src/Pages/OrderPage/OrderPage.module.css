@@ -39,9 +39,14 @@
   .headerLogo {
     position: absolute;
     left: 50%;
-    transform: translateX(-50%);
-    width: 10.1vw;
-    height: 1.4vw;
+    top: 50%;
+
+    transform: translateX(-50%) translateY(-50%);
+
+    svg {
+      width: 10.1vw;
+      height: 1.4vw;
+    }
 
     path {
       fill: black;
@@ -228,6 +233,8 @@
       font-size: 0.8vw;
       line-height: 0.8vw;
       letter-spacing: 0%;
+      flex-shrink: 0;
+      text-transform: uppercase;
     }
 
     p {
@@ -624,4 +631,285 @@
   padding: 8px 16px;
   font-weight: bold;
   cursor: pointer;
+}
+
+@media (max-width: 1024px) {
+  .page {
+    h2 {
+      font-size: 4.8vw;
+      line-height: 4.2vw;
+      margin-bottom: 8.5vw;
+    }
+  }
+
+  .orderTopPanel {
+    padding: 8.5vw 0;
+
+    svg {
+      width: 6.4vw;
+      height: 6.4vw;
+    }
+
+    .headerLogo {
+      svg {
+        width: 9.8vw;
+        height: 11.2vw;
+      }
+    }
+  }
+
+  .navTabs {
+    justify-content: start;
+    overflow-x: auto;
+    padding-left: 4.3vw;
+    padding-bottom: 5vw;
+    padding-top: 6.4vw;
+    margin-bottom: 10.6vw;
+
+    button {
+      font-size: 4.2vw;
+      line-height: 3.7vw;
+      gap: 3.2vw;
+      white-space: nowrap;
+
+      span {
+        min-width: 6.4vw;
+        min-height: 6.4vw;
+      }
+    }
+  }
+
+  .regularCustomerController {
+    overflow-x: auto;
+    gap: 6.4vw;
+    margin-bottom: 13.8vw;
+
+    padding-left: 4.3vw;
+
+    div:not(.active) {
+      font-size: 5.3vw;
+      line-height: 150%;
+    }
+
+    div {
+      white-space: nowrap;
+    }
+
+    .active {
+      font-size: 5.3vw;
+    }
+  }
+
+  .navTabs::-webkit-scrollbar {
+    display: none;
+  }
+  .regularCustomerController::-webkit-scrollbar {
+    display: none;
+  }
+
+  .navTabs::before {
+    display: none;
+  }
+
+  .navTabs::after {
+    height: 1px;
+    width: 150vw;
+    transform: translateX(-30vw);
+  }
+
+  .inputBox {
+    margin-bottom: 8.5vw;
+
+    .inputContainer:not(:last-child) {
+      margin-bottom: 6.4vw;
+    }
+  }
+
+  .inputContainer {
+    flex-direction: column;
+    gap: 6.4vw;
+
+    input {
+      width: 100%;
+      font-size: 4.8vw;
+      line-height: 140%;
+      padding: 4.6vw 4.2vw;
+      margin-top: 3.2vw;
+    }
+
+    label {
+      font-size: 4.2vw;
+      line-height: 130%;
+    }
+  }
+
+  .orderAllInfo > div {
+    height: max-content;
+    position: static;
+    top: 2vw;
+    margin-bottom: 20.2vw;
+  }
+
+  .checkboxContainer {
+    flex-direction: column;
+    gap: 8.5vw;
+
+    .checkboxLabel {
+      gap: 3.2vw;
+    }
+
+    span {
+      font-size: 4.2vw;
+      line-height: 130%;
+    }
+
+    .checkboxLabel::before {
+      width: 5.3vw;
+      height: 5.3vw;
+      flex-shrink: 0;
+    }
+
+    .customCheckbox input:checked + .checkboxLabel::before {
+      content: "";
+      width: 5.3vw;
+      height: 5.3vw;
+      border: 1px solid transparent;
+      background-image: url(/icons/checkMark.jpg);
+      background-size: contain;
+      display: inline-block;
+      transition: background-color 0.3s ease;
+    }
+  }
+
+  .stepController {
+    padding-top: 8.5vw;
+    margin-top: 8.5vw;
+
+    .prevBtn {
+      font-size: 4.2vw;
+      line-height: 100%;
+      width: 34vw;
+    }
+
+    .nextBtn {
+      font-size: 4.2vw;
+      line-height: 100%;
+      padding: 5.3vw 0;
+      width: 40vw;
+
+      svg {
+        width: 6.4vw;
+        height: 6.4vw;
+      }
+    }
+  }
+
+  .orderAllInfo {
+    display: block;
+  }
+
+  .selectContainer {
+    p {
+      font-size: 4.2vw;
+      line-height: 130%;
+    }
+  }
+
+  .mapButton {
+    width: 100%;
+    padding: 5.8vw 0;
+    font-size: 4.2vw;
+    line-height: 100%;
+  }
+
+  .addressList {
+    .infoBlock {
+      flex-direction: column;
+      align-items: start;
+      gap: 4.2vw;
+
+      span {
+        font-size: 4.2vw;
+        line-height: 4.2vw;
+      }
+
+      p {
+        font-size: 4.8vw;
+      }
+    }
+
+    li {
+      padding: 6.4vw;
+      min-height: 68vw;
+      flex-direction: column;
+      align-items: start;
+    }
+
+    li:not(:last-child) {
+      margin-bottom: 5vw;
+    }
+
+    .changeAddress {
+      display: flex;
+      justify-content: end;
+      width: 100%;
+
+      svg {
+        width: 6.4vw;
+        height: 6.4vw;
+      }
+    }
+  }
+
+  .paymentMethodRadio {
+    .radioBox:not(:last-child) {
+      margin-bottom: 6.4vw;
+    }
+
+    input[type="radio"] {
+      min-width: 5.3vw;
+      min-height: 5.3vw;
+      flex-shrink: 0;
+      border: 1px solid #000 !important;
+      padding: 0.01vw !important;
+    }
+
+    .radioBox {
+      gap: 3.2vw;
+
+      label {
+        font-size: 4.8vw;
+        line-height: 140%;
+        padding: 4.6vw 4.2vw;
+      }
+    }
+  }
+
+  .stepController {
+    flex-direction: column-reverse;
+    gap: 8.5vw;
+
+    .prevBtn {
+      font-size: 4.2vw;
+      width: 34vw;
+      height: 16vw;
+      line-height: 100%;
+    }
+  }
+
+  .orderBtn {
+    button {
+      font-size: 4.2vw;
+      line-height: 100%;
+      width: 100%;
+      padding: 5.8vw 0;
+      margin-bottom: 4.2vw;
+    }
+
+    p {
+      position: static;
+      font-size: 3.2vw;
+      line-height: 140%;
+    }
+  }
 }

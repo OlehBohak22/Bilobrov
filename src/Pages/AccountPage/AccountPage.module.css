@@ -165,3 +165,70 @@
   margin-bottom: 1.6vw;
   padding-left: 1.2vw;
 }
+
+@media (max-width: 1024px) {
+  .page {
+    padding-bottom: 21vw !important;
+  }
+
+  .container {
+    display: block;
+  }
+
+  .tabsMenu {
+    position: static;
+    ul {
+      padding-bottom: 4.2vw;
+      li {
+        .wishLength {
+          width: 5.3vw;
+          height: 5.3vw;
+          font-size: 3.2vw;
+          line-height: 100%;
+          right: 6.4vw;
+        }
+      }
+    }
+  }
+
+  .logout {
+    font-size: 4.8vw;
+    line-height: 100%;
+    gap: 3.2vw;
+    padding: 6.4vw 0;
+    padding-left: 6.4vw;
+    margin-top: 4.2vw;
+
+    svg {
+      width: 6.4vw;
+      height: 6.4vw;
+    }
+  }
+
+  .username {
+    font-size: 7.4vw;
+    line-height: 100%;
+    display: flex;
+    gap: 2vw;
+    padding-left: 0;
+    margin-bottom: 4.2vw;
+  }
+
+  .email {
+    font-size: 3.7vw;
+    padding-left: 0;
+    line-height: 140%;
+    margin-bottom: 10vw;
+  }
+
+  .tabButton {
+    font-size: 4.2vw;
+    line-height: 137%;
+    padding: 4.2vw 6.4vw;
+
+    svg {
+      width: 6.4vw;
+      height: 6.4vw;
+    }
+  }
+}

@@ -17,15 +17,13 @@ export const WishListTab = () => {
 
   const handleClearWishlist = () => {
     if (token) {
-      dispatch(togglePreference({ token, preference: [] })); // Очищаємо вподобання
+      dispatch(togglePreference({ token, preference: [] }));
     }
   };
-  // Отримуємо масив ID вподобаних товарів
   const wishlist = useSelector(
     (state: RootState) => state.user?.user?.meta?.preferences || []
   );
 
-  // Отримуємо всі товари (припустимо, що вони є у `products` в Redux)
   const products: ProductInfo[] = useSelector(
     (state: RootState) => state.products.items
   );
@@ -90,7 +88,7 @@ export const WishListTab = () => {
       <Swiper
         modules={[Navigation]}
         spaceBetween={20}
-        slidesPerView={"auto"}
+        slidesPerView={4}
         navigation={{
           prevEl: `.${s.prevButton}`,
           nextEl: `.${s.nextButton}`,

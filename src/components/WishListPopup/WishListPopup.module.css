@@ -213,6 +213,11 @@
   background-color: var(--primary);
 }
 
+.productListSwiper {
+  overflow: hidden;
+  max-width: 100%;
+}
+
 @media (max-width: 1024px) {
   .modal {
     max-width: none;

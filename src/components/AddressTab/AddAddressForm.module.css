@@ -204,3 +204,115 @@
     text-transform: uppercase;
   }
 }
+
+.headingContoller {
+  display: flex;
+  align-items: center;
+  gap: 0.8vw;
+}
+
+@media (max-width: 1024px) {
+  .headingContoller {
+    justify-content: space-between;
+  }
+
+  .heading {
+    padding: 6.4vw 4.2vw;
+    flex-direction: column;
+    gap: 6.4vw;
+    margin-bottom: 4.2vw;
+
+    svg {
+      width: 6.4vw;
+      height: 6.4vw;
+    }
+
+    p {
+      font-size: 4.2vw;
+      line-height: 4.2vw;
+    }
+  }
+
+  .customCheckbox {
+    gap: 2.1vw;
+
+    span {
+      font-size: 4.2vw;
+      line-height: 4.2vw;
+    }
+  }
+
+  .addressIndo {
+    gap: 4.2vw;
+  }
+
+  .inputContainer {
+    flex-direction: column;
+    gap: 4.2vw;
+    margin-bottom: 4.2vw;
+    padding-bottom: 4.2vw;
+
+    label {
+      font-size: 4.2vw;
+      line-height: 130%;
+    }
+
+    input {
+      font-size: 4.8vw;
+      line-height: 140%;
+      padding: 4.6vw 4vw;
+      margin-top: 3.2vw;
+    }
+  }
+
+  .textArea {
+    margin-bottom: 4.2vw;
+    padding-bottom: 4.2vw;
+
+    label {
+      font-size: 4.2vw;
+    }
+
+    textarea {
+      font-size: 4.2vw;
+      padding: 4.2vw;
+      height: 36.5vw;
+      margin-top: 3.2vw;
+    }
+
+    .characterCount {
+      font-size: 3.7vw;
+      line-height: 140%;
+      margin-top: 3.2vw;
+    }
+  }
+
+  .selectContainer {
+    p {
+      font-size: 4.2vw;
+      line-height: 130%;
+      margin-bottom: 3.2vw;
+    }
+  }
+
+  .submitBtn {
+    font-size: 4.2vw;
+    line-height: 100%;
+    width: 100%;
+    padding: 5.3vw 0;
+    gap: 2.6vw;
+    justify-content: center;
+
+    svg {
+      width: 6.4vw;
+      height: 6.4vw;
+    }
+  }
+
+  .mapSelect {
+    font-size: 4.2vw;
+    line-height: 100%;
+    padding: 5.8vw 0;
+    width: 100%;
+  }
+}

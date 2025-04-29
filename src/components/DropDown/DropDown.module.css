@@ -1,6 +1,7 @@
 .dropdownWrapper {
   position: relative;
   width: 14.6vw;
+  z-index: 99999999;
 }
 
 .dropdownButton {
@@ -65,4 +66,17 @@
   font-weight: bold;
   color: rgba(186, 186, 186, 1);
   cursor: not-allowed;
+}
+
+@media (max-width: 1024px) {
+  .dropdownWrapper {
+    width: 50vw;
+  }
+
+  .dropdownItem {
+    font-size: 4.2vw;
+    line-height: 4.2vw;
+    line-height: 100%;
+    padding: 5.8vw 4.2vw;
+  }
 }

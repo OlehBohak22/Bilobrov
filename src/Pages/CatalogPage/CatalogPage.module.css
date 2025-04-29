@@ -77,6 +77,8 @@
     display: flex;
     justify-content: center;
     gap: 1.2vw;
+    overflow-x: auto;
+    height: 1.5vw;
 
     li {
       font-family: Manrope;
@@ -86,6 +88,7 @@
       color: rgba(26, 26, 26, 0.5);
       transition: 0.3s;
       cursor: pointer;
+      flex-shrink: 0;
     }
 
     li:hover {
@@ -126,5 +129,77 @@
 @keyframes spin {
   to {
     transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 1024px) {
+  .page {
+    padding-bottom: 21.3vw;
+  }
+  .list {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4.2vw;
+    margin-bottom: 8.5vw;
+  }
+
+  .categoryHeader {
+    margin-bottom: 6.4vw;
+
+    h1 {
+      font-size: 8.5vw;
+      line-height: 100%;
+      margin-bottom: 3.2vw;
+    }
+
+    span {
+      font-size: 3.7vw;
+      line-height: 120%;
+    }
+  }
+
+  .childCategories {
+    ul {
+      gap: 4.8vw;
+      height: 15vw;
+      justify-content: start;
+      padding-left: 4.3vw;
+
+      li {
+        font-size: 4.8vw;
+        line-height: 100%;
+      }
+
+      .active {
+        font-size: 4.8vw;
+      }
+    }
+
+    ul::-webkit-scrollbar {
+      height: 3px;
+    }
+    ul::-webkit-scrollbar-track {
+      width: 0.1vw;
+      background-color: rgba(254, 228, 229, 1);
+    }
+    ul::-webkit-scrollbar-thumb {
+      width: 0.1vw;
+      background-color: var(--primary);
+    }
+  }
+
+  .filterController {
+    margin-top: 8.5vw;
+    margin-bottom: 6.4vw;
+
+    button {
+      font-size: 3.7vw;
+      line-height: 4.2vw;
+      gap: 1.6vw;
+
+      svg {
+        width: 5.3vw;
+        height: 5.3vw;
+      }
+    }
   }
 }

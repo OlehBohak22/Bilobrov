@@ -109,6 +109,7 @@ export const AddressTab = ({ user }: AddressTabProps) => {
                 <div className={s.addressInfo}>
                   <p>
                     {address.city && `м. ${address.city} `}
+                    {address.department && `м. ${address.department} `}
                     {address.street && `вул. ${address.street} `}
                     {address.house && `буд. ${address.house} `}
                     {address.entrance && `під'їзд ${address.entrance} `}
@@ -124,18 +125,8 @@ export const AddressTab = ({ user }: AddressTabProps) => {
                 </div>
               </div>
 
-              {/* <div>{address.id}</div> */}
-
-              <div className="flex gap-[0.8vw]">
-                <div
-                  className={s.customCheckbox}
-                  // onClick={() =>
-                  //   setAddress((prev) => ({
-                  //     ...prev,
-                  //     selected: !prev.selected,
-                  //   }))
-                  // }
-                >
+              <div className={s.bottomFlex}>
+                <div className={s.customCheckbox}>
                   <span className={s.checkboxIcon}>
                     {address.selected ? (
                       <svg

@@ -1,6 +1,6 @@
 import { UserData } from "../../store/slices/userSlice";
 import { AddressTab } from "../AddressTab/AddressTab";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import s from "./AddressPopup.module.css";
 
 interface AddressPopupProps {
@@ -10,29 +10,44 @@ interface AddressPopupProps {
 
 export const AddressPopup = ({ user, onClose }: AddressPopupProps) => {
   const popupRef = useRef<HTMLDivElement>(null);
+  const [isClosing, setIsClosing] = useState(false);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
+      const mapPopup = document.getElementById("mapPopup");
       if (
         popupRef.current &&
-        !popupRef.current.contains(event.target as Node)
+        !popupRef.current.contains(event.target as Node) &&
+        (!mapPopup || !mapPopup.contains(event.target as Node))
       ) {
-        onClose();
+        closePopup();
       }
     };
 
     document.addEventListener("mousedown", handleClickOutside);
+
+    // Блокувати скрол сторінки
+    document.body.style.overflow = "hidden";
+
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
+      document.body.style.overflow = "auto"; // Повернути скрол
     };
-  }, [onClose]);
+  }, []);
+
+  const closePopup = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      onClose();
+    }, 300); // Час має відповідати тривалості анімації CSS
+  };
 
   return (
-    <div className={s.popupOverlay}>
+    <div className={`${s.popupOverlay} ${isClosing ? s.fadeOut : s.fadeIn}`}>
       <div className={s.wrapper}>
         <div ref={popupRef} className={s.popupContent}>
           <AddressTab user={user} />
-          <div onClick={onClose} className={s.closeBtn}>
+          <div onClick={closePopup} className={s.closeBtn}>
             <svg
               viewBox="0 0 52 52"
               fill="none"

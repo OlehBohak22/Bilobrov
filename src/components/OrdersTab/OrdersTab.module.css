@@ -25,6 +25,8 @@
 
   .item {
     padding: 1.2vw;
+    position: relative;
+    cursor: pointer;
 
     border: 1px solid rgba(239, 237, 238, 1);
     padding-left: 3.3vw;
@@ -114,6 +116,9 @@
     }
 
     .openBtn {
+      position: absolute;
+      top: 3vw;
+      right: 2vw;
       svg {
         width: 1.2vw;
         height: 1.2vw;
@@ -368,6 +373,244 @@
       line-height: 100%;
       letter-spacing: 0%;
       color: var(--primary);
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .tab {
+    h3 {
+      margin-bottom: 6.4vw;
+
+      span:nth-child(1) {
+        font-size: 9.6vw;
+        line-height: 100%;
+      }
+
+      span:nth-child(2) {
+        margin-top: -1vw;
+        font-size: 8.5vw;
+        line-height: 100%;
+        text-indent: 10vw;
+      }
+    }
+
+    .item {
+      padding: 6.4vw;
+
+      .status {
+        font-size: 3.2vw;
+        line-height: 100%;
+        width: 55.2vw;
+        padding: 2vw 0;
+        margin-bottom: 4.2vw;
+      }
+
+      .orderDate {
+        font-size: 4.2vw;
+        line-height: 100%;
+      }
+
+      .orderHeading {
+        display: block;
+      }
+
+      .orderPrice {
+        margin-top: 4.2vw;
+
+        p {
+          font-size: 4.2vw;
+          line-height: 137%;
+          margin-bottom: 4.2vw;
+        }
+
+        span {
+          display: block;
+          font-size: 4.8vw;
+          line-height: 100%;
+          margin-bottom: 4.2vw;
+        }
+      }
+
+      .imageList {
+        gap: 1vw;
+        img {
+          width: 25.6vw;
+          height: 25.6vw;
+        }
+
+        span {
+          font-size: 4.2vw;
+          line-height: 137%;
+          flex-shrink: 0;
+        }
+      }
+
+      .openBtn {
+        position: absolute;
+        top: 6.4vw;
+        right: 6.4vw;
+
+        svg {
+          width: 6.4vw;
+          height: 6.4vw;
+        }
+      }
+
+      .backdropContent {
+        display: block;
+        padding-top: 0;
+
+        .cartListBox {
+          padding: 3.2vw;
+          max-height: 152vw;
+          margin-bottom: 5.3vw;
+
+          ul {
+            gap: 4.2vw;
+            li {
+              align-items: start;
+              .imageBlock {
+                width: 25.6vw;
+                height: 27vw;
+                img {
+                  width: 25.6vw;
+                  height: 27vw;
+                }
+              }
+            }
+          }
+        }
+
+        .cartListBox::-webkit-scrollbar {
+          width: 0.8vw;
+        }
+      }
+
+      .productInfo {
+        .code {
+          font-size: 2.7vw;
+          line-height: 3.7vw;
+          margin-bottom: 3.2vw;
+        }
+
+        .brandName {
+          font-size: 3.2vw;
+          line-height: 100%;
+          margin-bottom: 2.1vw;
+        }
+
+        .productName {
+          font-size: 3.7vw;
+          line-height: 140%;
+          margin-bottom: 2.1vw;
+        }
+
+        .productDesc {
+          font-size: 3.7vw;
+          line-height: 140%;
+          margin-bottom: 2.1vw;
+        }
+
+        .priceBlock {
+          font-size: 4.2vw;
+          line-height: 100%;
+
+          span {
+            font-size: 3vw;
+          }
+        }
+      }
+
+      .orderInfo {
+        margin-bottom: 5.3vw;
+        h4 {
+          font-size: 4.8vw;
+          line-height: 137%;
+          margin-bottom: 3.2vw;
+        }
+
+        p {
+          font-size: 4.2vw;
+          line-height: 140%;
+        }
+        div {
+          p:not(:last-child) {
+            margin-bottom: 2vw;
+          }
+        }
+      }
+
+      .totalInfo {
+        width: 100%;
+        padding: 4.2vw;
+
+        .orderDetails {
+          margin-bottom: 8.5vw;
+
+          P:not(:last-child) {
+            margin-bottom: 2.1vw;
+          }
+
+          p {
+            font-size: 3.7vw;
+            line-height: 137%;
+
+            span:nth-child(2) {
+              font-size: 4.2vw;
+
+              svg {
+                width: 4.5vw;
+                height: 4.5vw;
+              }
+            }
+          }
+        }
+
+        .totalAmount {
+          margin-bottom: 8.5vw;
+
+          P {
+            font-size: 5.2vw;
+            line-height: 150%;
+          }
+
+          span {
+            font-size: 7.4vw;
+          }
+        }
+
+        .btnBlock {
+          button:nth-child(1) {
+            font-size: 4.2vw;
+            gap: 2.6vw;
+
+            svg {
+              width: 6.4vw;
+              height: 6.4vw;
+            }
+          }
+
+          button:nth-child(2) {
+            font-size: 4.2vw;
+            line-height: 4.2vw;
+            border: 1px solid rgba(26, 26, 26, 0.2);
+            padding: 5.8vw 0;
+          }
+
+          button {
+            padding: 4.8vw 0;
+          }
+
+          button:not(:last-child) {
+            margin-bottom: 2.1vw;
+          }
+        }
+      }
+    }
+
+    .item:not(:last-child) {
+      margin-bottom: 4.2vw;
     }
   }
 }

@@ -52,6 +52,7 @@
       cursor: pointer;
       min-height: 25vh;
       overflow: hidden;
+      background-size: cover;
 
       img {
         transition: transform 0.3s;
@@ -80,13 +81,82 @@
     }
 
     li:hover {
-      img {
-        transform: scale(1.1);
-      }
-
       p {
         gap: 1vw;
       }
+    }
+  }
+
+  .item::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: var(--bg); /* Працює */
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.4s ease;
+    z-index: 0;
+  }
+
+  .item:hover::before {
+    transform: scale(1.1);
+  }
+}
+
+@media (max-width: 1024px) {
+  .tab {
+    h2 {
+      margin-bottom: 6.4vw;
+
+      span:nth-child(1) {
+        font-size: 9.6vw;
+        line-height: 100%;
+      }
+
+      span:nth-child(2) {
+        margin-top: -1vw;
+        font-size: 8.5vw;
+        line-height: 100%;
+        text-indent: 10vw;
+      }
+    }
+
+    .welcomeText {
+      font-size: 5.3vw;
+      line-height: 120%;
+      margin-bottom: 4.2vw;
+    }
+
+    .descText {
+      font-size: 4.2vw;
+      line-height: 150%;
+      max-width: none;
+      margin-bottom: 10vw;
+    }
+
+    .list {
+      flex-direction: column;
+      gap: 3.2vw;
+
+      li {
+        min-height: 36.8vw;
+
+        p {
+          font-size: 6.4vw;
+          line-height: 100%;
+          bottom: 6.6vw;
+          left: 4.2vw;
+          gap: 3.2vw;
+
+          svg {
+            width: 8.5vw;
+            height: 8.5vw;
+          }
+        }
+      }
+    }
+
+    .item {
     }
   }
 }

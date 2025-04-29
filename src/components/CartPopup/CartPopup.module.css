@@ -9,7 +9,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: 999999999;
 }
 
 .popupContent {
@@ -348,7 +348,8 @@
       margin-bottom: 8.5vw;
 
       P {
-        font-size: 4.2vw;
+        font-size: 5.2vw;
+        line-height: 150%;
       }
 
       span {

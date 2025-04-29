@@ -2,7 +2,7 @@
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.5);
-  z-index: 9999;
+  z-index: 9999999999999;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -167,5 +167,85 @@
 
   svg {
     fill: white;
+  }
+}
+
+@media (max-width: 1024px) {
+  .popup {
+    width: 90vw;
+  }
+
+  .sidebar {
+    width: 90%;
+    left: 50%;
+    top: 8.5vw;
+    transform: translateX(-50%);
+    padding: 8.5vw 4.2vw;
+    height: auto;
+  }
+
+  .topBar {
+    margin-bottom: 6.4vw;
+    padding-bottom: 6.4vw;
+
+    h2 {
+      font-size: 4.2vw;
+      line-height: 4.2vw;
+    }
+  }
+
+  .searchInput {
+    padding: 4vw 3.2vw;
+    font-size: 4.2vw;
+    line-height: 140%;
+  }
+
+  .mapInputContainer {
+    svg {
+      width: 4.2vw;
+      height: 4.2vw;
+      right: 3.2vw;
+    }
+  }
+
+  .closeBtn {
+    top: -15vw;
+    right: -1vw;
+
+    svg {
+      width: 13.8vw;
+      height: 13.8vw;
+    }
+  }
+
+  .tabs {
+    gap: 4.2vw;
+    margin-bottom: 6.4vw;
+
+    div {
+      white-space: nowrap;
+    }
+
+    .tabItem {
+      font-size: 5.5vw;
+      line-height: 100%;
+    }
+
+    .active {
+      font-size: 5.5vw;
+      line-height: 100%;
+    }
+  }
+
+  .listItem {
+    font-size: 4.2vw;
+    line-height: 100%;
+    gap: 3.2vw;
+    padding: 3.2vw 0 3.2vw 2.1vw;
+
+    svg {
+      width: 7.4vw;
+      height: 7.4vw;
+    }
   }
 }

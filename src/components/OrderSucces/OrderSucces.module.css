@@ -234,3 +234,124 @@
   background-color: rgba(255, 196, 58, 1);
   color: black;
 }
+
+@media (max-width: 1024px) {
+  .succesCard {
+    width: 100%;
+    margin-top: 55.2vw;
+    padding: 10.6vw 4.2vw;
+  }
+
+  .succesCard::before {
+    height: 55.2vw;
+  }
+
+  .succesTitle {
+    svg {
+      width: 15vw;
+      height: 15vw;
+      margin-bottom: 6.4vw;
+    }
+
+    p {
+      font-size: 4.8vw;
+      line-height: 100%;
+      margin-bottom: 3.2vw;
+    }
+
+    h3 {
+      margin-bottom: 10.6vw;
+
+      span:nth-child(1) {
+        font-size: 10.6vw;
+      }
+      span:nth-child(2) {
+        font-size: 8.5vw;
+        text-indent: 2vw;
+      }
+    }
+
+    span {
+      font-size: 5.3vw;
+      line-height: 100%;
+    }
+  }
+
+  .imageList {
+    margin-bottom: 12.8vw;
+    li {
+      img {
+        width: 26.6vw;
+      }
+    }
+  }
+
+  .orderInfo {
+    margin-bottom: 12.8vw;
+    padding-bottom: 12.8vw;
+
+    div:not(:last-child) {
+      margin-bottom: 8.5vw;
+    }
+    div {
+      flex-direction: column;
+      align-items: start;
+      gap: 2.1vw;
+
+      span {
+        font-size: 3.7vw;
+        line-height: 137%;
+      }
+
+      p {
+        font-size: 4.8vw;
+        line-height: 140%;
+        max-width: none;
+        text-align: unset;
+      }
+    }
+  }
+
+  .orderAmount {
+    .orderDetails {
+      margin-bottom: 8.5vw;
+
+      P:not(:last-child) {
+        margin-bottom: 2.1vw;
+      }
+
+      p {
+        font-size: 3.7vw;
+        line-height: 137%;
+
+        span:nth-child(2) {
+          font-size: 4.2vw;
+
+          svg {
+            width: 4.5vw;
+            height: 4.5vw;
+          }
+        }
+      }
+    }
+
+    .totalAmount {
+      margin-bottom: 10vw;
+
+      P {
+        font-size: 5.2vw;
+        line-height: 150%;
+      }
+
+      span {
+        font-size: 7.4vw;
+      }
+    }
+  }
+
+  .homeBackLink {
+    font-size: 4.2vw;
+    line-height: 100%;
+    padding: 5.8vw 0;
+  }
+}

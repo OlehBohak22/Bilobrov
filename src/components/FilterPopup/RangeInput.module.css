@@ -98,9 +98,56 @@
   border-radius: 50%;
   box-shadow: 0 0 1px 1px #ced4da;
   cursor: pointer;
-  height: 18px;
-  width: 18px;
+  height: 1.4vw;
+  width: 1.4vw;
   margin-top: 4px;
   pointer-events: all;
   position: relative;
+}
+
+@media (max-width: 1024px) {
+  .valuesContainer {
+    font-size: 4.2vw;
+    line-height: 160%;
+    margin-bottom: 8.8vw;
+
+    span {
+      font-size: 4.2vw;
+      line-height: 160%;
+      margin-left: 1vw;
+    }
+  }
+
+  .container {
+    margin-bottom: 11.7vw;
+  }
+
+  .slider__track {
+    height: 2px;
+  }
+
+  .thumb::-webkit-slider-thumb {
+    background-color: white;
+    border: 2px solid var(--primary);
+    border-radius: 50%;
+    cursor: pointer;
+    height: 7.4vw;
+    width: 7.4vw;
+    margin-top: 0.2vw;
+    pointer-events: all;
+    position: relative;
+  }
+
+  .thumb::-moz-range-thumb {
+    background-color: #f1f5f7;
+    border: none;
+    border-radius: 50%;
+    box-shadow: 0 0 1px 1px #ced4da;
+    cursor: pointer;
+    height: 7.4vw;
+    width: 7.4vw;
+    margin-top: 4px;
+    pointer-events: all;
+    position: relative;
+  }
 }

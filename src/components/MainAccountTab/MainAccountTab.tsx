@@ -173,8 +173,11 @@ export const MainAccountTab: React.FC<MainAccountTabProps> = ({ setTab }) => {
 
       <ul className={s.list}>
         {categories.map((item) => (
-          <li key={item.id} onClick={() => setTab(item.id)}>
-            <img src={item.image} alt={item.label} />
+          <li
+            onClick={() => setTab(item.id)}
+            className={s.item}
+            style={{ "--bg": `url(${item.image})` } as React.CSSProperties}
+          >
             <p>
               {item.label}
               {item.icon}

@@ -9,7 +9,7 @@
   display: flex;
   align-items: center;
   transition: 0.3s;
-  z-index: 99999999;
+  z-index: 99999999999999999999999999;
 }
 
 /* Вікно модалки */
@@ -131,6 +131,7 @@
 }
 
 .backDropCOntaienr {
+  margin-bottom: 5vw;
   .backDrop:not(:last-child) {
     margin-bottom: 1vw;
   }
@@ -170,6 +171,10 @@
   .list {
     padding-left: 1.6vw;
     margin-top: 1vw;
+    overflow-y: auto;
+    overflow-x: visible;
+    max-height: 50vh;
+
     label {
       font-size: 10vw;
       font-family: Manrope;
@@ -182,6 +187,18 @@
     label:not(:last-child) {
       margin-bottom: 0.8vw;
     }
+  }
+
+  .list::-webkit-scrollbar {
+    width: 0.2vw;
+  }
+  .list::-webkit-scrollbar-track {
+    width: 1vw;
+    background-color: rgba(254, 228, 229, 1);
+  }
+  .list::-webkit-scrollbar-thumb {
+    width: 1vw;
+    background-color: var(--primary);
   }
 }
 
@@ -267,6 +284,8 @@
   position: relative;
   padding-left: 24px; /* Робимо місце для кастомного чекбокса */
   text-transform: capitalize;
+  display: flex;
+  align-items: center;
 }
 
 .btn {
@@ -300,5 +319,106 @@
 
   svg {
     fill: black;
+  }
+}
+
+@media (max-width: 1024px) {
+  .modal {
+    width: 100%;
+    padding: 4.2vw;
+    padding-bottom: 20vw;
+  }
+
+  .modal::-webkit-scrollbar {
+    width: 0.8vw;
+  }
+
+  .menuHeader {
+    margin-bottom: 8.5vw;
+    p {
+      font-size: 7.4vw;
+      line-height: 100%;
+    }
+
+    svg {
+      width: 11.2vw;
+      height: 11.2vw;
+    }
+  }
+
+  .switchController {
+    margin-bottom: 8.5vw;
+    label {
+      font-size: 4.2vw;
+      line-height: 137%;
+      gap: 5.6vw;
+    }
+
+    label:not(:last-child) {
+      margin-bottom: 4.2vw;
+    }
+  }
+
+  .backDropCOntaienr {
+    margin-bottom: 10vw;
+    .backDrop:not(:last-child) {
+      margin-bottom: 6.6vw;
+    }
+  }
+
+  .checkboxLabel {
+    font-size: 3.7vw;
+    line-height: 130%;
+  }
+
+  .checkboxLabel::before {
+    width: 5.3vw;
+    height: 5.3vw;
+  }
+
+  .customCheckbox input:checked + .checkboxLabel::before {
+    width: 5.3vw;
+    height: 5.3vw;
+    margin-right: 10px;
+  }
+
+  .backDrop {
+    label {
+      font-size: 4.8vw;
+      line-height: 137%;
+      gap: 2.6vw;
+    }
+
+    .list {
+      margin-top: 4.2vw;
+      label:not(:last-child) {
+        margin-bottom: 4.2vw;
+      }
+    }
+  }
+
+  .btn {
+    font-size: 4.2vw;
+    line-height: 100%;
+    padding: 5.3vw 0;
+    gap: 2.6vw;
+
+    svg {
+      width: 6.4vw;
+      height: 6.4vw;
+    }
+  }
+
+  .plus,
+  .minus {
+    width: 4.2vw;
+    height: 4.2vw;
+  }
+
+  .qty {
+    font-size: 3.2vw;
+    line-height: 3.2vw;
+    width: 5.3vw;
+    height: 5.3vw;
   }
 }

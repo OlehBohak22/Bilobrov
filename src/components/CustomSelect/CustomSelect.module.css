@@ -75,3 +75,42 @@
   max-height: 15vw;
   overflow-y: scroll;
 }
+
+@media (max-width: 1024px) {
+  .selectHead {
+    padding: 4.6vw 4.6vw 4.6vw 4.2vw;
+
+    svg {
+      width: 6.4vw;
+      height: 6.4vw;
+    }
+
+    p {
+      gap: 3.2vw;
+
+      svg {
+        width: 6.4vw;
+        height: 6.4vw;
+      }
+    }
+  }
+
+  .optionsList {
+    max-height: 50vh;
+  }
+
+  .selectHead {
+    p {
+      font-size: 4.2vw;
+    }
+  }
+
+  .selectOption {
+    padding: 4.6vw 4.6vw 4.6vw 4.2vw;
+
+    svg {
+      width: 6.4vw;
+      height: 6.4vw;
+    }
+  }
+}

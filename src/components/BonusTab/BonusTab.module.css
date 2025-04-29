@@ -194,3 +194,170 @@
     background-color: var(--primary);
   }
 }
+
+.titleContainer {
+  margin-bottom: 2vw;
+
+  h2 {
+    color: #000000;
+    margin-bottom: 1.6vw;
+
+    span:nth-child(1) {
+      font-family: Playfair display;
+      font-size: 3.2vw;
+      font-style: italic;
+      font-weight: 400;
+      line-height: 3.2vw;
+    }
+
+    span:nth-child(2) {
+      display: block;
+      margin-top: -0.3vw;
+      font-family: Manrope;
+      font-size: 3.2vw;
+      font-weight: 500;
+      line-height: 3.2vw;
+      text-indent: 5vw;
+    }
+  }
+
+  p {
+    font-family: Raleway;
+    font-weight: 600;
+    font-size: 0.9vw;
+    line-height: 150%;
+    letter-spacing: -0.01vw;
+
+    span {
+      font-weight: 700;
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .titleContainer {
+    margin-bottom: 10vw;
+    h2 {
+      margin-bottom: 6.4vw;
+
+      span:nth-child(1) {
+        font-size: 9.6vw;
+        line-height: 100%;
+      }
+
+      span:nth-child(2) {
+        margin-top: -1vw;
+        font-size: 8.5vw;
+        line-height: 100%;
+        text-indent: 10vw;
+      }
+    }
+
+    p {
+      font-size: 4.8vw;
+    }
+  }
+
+  .flex {
+    flex-direction: column;
+    gap: 10vw;
+  }
+
+  .bonusQty {
+    gap: 0;
+    justify-content: space-between;
+    margin-bottom: 10vw;
+
+    svg {
+      width: 32vw;
+      height: 32vw;
+    }
+
+    p {
+      font-size: 4.8vw;
+      line-height: 100%;
+      margin-bottom: 2vw;
+    }
+
+    .qty {
+      font-size: 13.8vw;
+      line-height: 100%;
+    }
+
+    .text {
+      font-size: 6.2vw;
+      line-height: 100%;
+      margin-left: 2vw;
+    }
+  }
+
+  .card {
+    img {
+      width: 100%;
+    }
+
+    p {
+      font-size: 4.2vw;
+      line-height: 110%;
+      top: 20vw;
+      left: 3.2vw;
+    }
+  }
+
+  .scrollbarContainer {
+    max-height: 118vw;
+  }
+
+  .bonusTransactionList {
+    h4 {
+      font-size: 4.8vw;
+      line-height: 150%;
+      margin-bottom: 6.4vw;
+    }
+
+    ul {
+      padding: 4.2vw;
+      padding-right: 0;
+
+      li:not(:last-child) {
+        margin-bottom: 4.2vw;
+      }
+    }
+  }
+
+  .scrollbarContainer::-webkit-scrollbar {
+    width: 0.5vw;
+    background-color: #f5f5f5;
+  }
+
+  .transactionInfo {
+    gap: 4.2vw;
+
+    .icon {
+      width: 13.8vw;
+      height: 13.8vw;
+
+      img {
+        width: 6.4vw;
+        height: 6.4vw;
+      }
+    }
+
+    p {
+      font-size: 4.8vw;
+      line-height: 100%;
+      margin-bottom: 1vw;
+    }
+
+    span {
+      font-size: 3.7vw;
+      line-height: 140%;
+    }
+  }
+
+  .transactionValue {
+    text-align: left;
+    font-size: 4.8vw;
+    line-height: 125%;
+  }
+}

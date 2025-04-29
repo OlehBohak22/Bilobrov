@@ -3,10 +3,7 @@ import { useSelector } from "react-redux";
 import s from "./OrderSidePanel.module.css";
 import { RootState } from "../../store";
 import { ProductInfo } from "../../types/productTypes";
-import {
-  // CartProductItem,
-  CartProductItemMemo,
-} from "../CartProductItem/CartProductItem";
+import { CartProductItemMemo } from "../CartProductItem/CartProductItem";
 import { fetchCartProducts } from "../../store/slices/productsSlice";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { Loader } from "../Loader/Loader";

@@ -5,8 +5,9 @@
 }
 
 .slide {
-  width: auto !important; /* Або вказати конкретну ширину, наприклад 200px */
-  max-width: 16vw;
+  li {
+    max-width: 16vw;
+  }
 }
 
 .prevButton,
@@ -36,7 +37,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-
+  /* max-width: 10vw; */
   margin-bottom: 2vw;
 }
 
@@ -121,4 +122,10 @@
     letter-spacing: 0%;
     color: var(--primary);
   }
+}
+
+.productListSwiper {
+  /* max-width: 10%; */
+  overflow: hidden;
+  max-width: 61vw;
 }

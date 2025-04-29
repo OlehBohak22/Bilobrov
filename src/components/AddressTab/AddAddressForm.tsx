@@ -33,6 +33,16 @@ export const AddAddressForm: FC<AddAddressFormProps> = ({
 
   const { user } = useSelector((state: RootState) => state.user) ?? {};
 
+  const [tab, setTab] = useState<"PostOffice" | "ParcelLocker">("PostOffice");
+
+  useEffect(() => {
+    if (departmentSelect === "Поштомат") {
+      setTab("ParcelLocker");
+    } else if (departmentSelect === "На відділення") {
+      setTab("PostOffice");
+    }
+  }, [departmentSelect]);
+
   useEffect(() => {
     if (initialValues) {
       setAddress((prev) => ({
@@ -58,8 +68,6 @@ export const AddAddressForm: FC<AddAddressFormProps> = ({
         .map((warehouse) => warehouse.name)
     : [];
   const [warehouse, setWarehouse] = useState<string>(warehouses[0] || "");
-
-  console.log(warehouse);
 
   const streets = selectedCity
     ? cities
@@ -140,7 +148,7 @@ export const AddAddressForm: FC<AddAddressFormProps> = ({
               : `Адреса #${(user?.meta.address?.length || 0) + 1}`}
           </p>
 
-          <div className="flex items-center gap-[0.8vw]">
+          <div className={s.headingContoller}>
             <div
               className={s.customCheckbox}
               onClick={() =>
@@ -267,11 +275,11 @@ export const AddAddressForm: FC<AddAddressFormProps> = ({
           <div className={`${s.inputContainer} ${s.flex}`}>
             <div className={s.selectContainer}>
               <p>
-                Відділення <span>*</span>
+                Спосіб доставки <span>*</span>
               </p>
               <CustomSelect
                 novaIcon={true}
-                options={["На відділення", "Кур'єр"]}
+                options={["На відділення", "Кур'єр", "Поштомат"]}
                 value={departmentSelect}
                 onChange={setDepartmentSelect}
               />
@@ -298,14 +306,19 @@ export const AddAddressForm: FC<AddAddressFormProps> = ({
                   isWarehouses={false}
                   novaIcon={false}
                   options={streets}
-                  value={selectedStreet.split(",")[0]} // Вибір вулиці
+                  value={
+                    typeof selectedStreet === "string"
+                      ? selectedStreet.split(",")[0]
+                      : ""
+                  }
                   onChange={(value) => setSelectedStreet(value)}
                 />
               </div>
             ) : null}
           </div>
 
-          {selectedCity && departmentSelect === "На відділення" ? (
+          {(selectedCity && departmentSelect === "На відділення") ||
+          departmentSelect === "Поштомат" ? (
             <div className={`${s.inputContainer} `}>
               <div className={s.selectContainer}>
                 <p>
@@ -399,6 +412,8 @@ export const AddAddressForm: FC<AddAddressFormProps> = ({
           {showMapPopup && (
             <NovaPoshtaMapPopup
               selectedCity={selectedCity}
+              tab={tab}
+              setTab={setTab} // ⬅️ додай
               onClose={() => setShowMapPopup(false)}
               onSelect={(warehouseName) => {
                 setSelectedWarehouse(warehouseName);
@@ -408,6 +423,13 @@ export const AddAddressForm: FC<AddAddressFormProps> = ({
                   department: warehouseName,
                 }));
                 setShowMapPopup(false);
+
+                // автоматично оновлюємо тип доставки:
+                if (warehouseName.toLowerCase().includes("поштомат")) {
+                  setDepartmentSelect("Поштомат");
+                } else {
+                  setDepartmentSelect("На відділення");
+                }
               }}
             />
           )}

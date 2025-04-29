@@ -84,8 +84,6 @@ export const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
     0
   );
 
-  console.log(cart);
-
   useEffect(() => {
     if (hasMounted) {
       onClose();

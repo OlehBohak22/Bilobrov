@@ -1,10 +1,14 @@
 import s from "./BonusTab.module.css";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
+import { useWindowSize } from "../../hooks/useWindowSize";
 
 export const BonusTab = () => {
   const user = useSelector((state: RootState) => state.user?.user?.meta);
   const username = useSelector((state: RootState) => state.user?.user);
+
+  const { width } = useWindowSize();
+  const isMobile = width < 10244;
 
   if (!user) {
     return;
@@ -12,11 +16,20 @@ export const BonusTab = () => {
 
   return (
     <div className={s.tab}>
-      <h2>
-        <span></span>
-        <span></span>
-      </h2>
+      <div className={s.titleContainer}>
+        <h2>
+          <span>Бонусна</span>
+          <span>карта</span>
+        </h2>
 
+        <p>
+          <span>Це твоя бонусна карта BILOBROV CLUB!</span> Вона створена, щоб
+          кожна твоя покупка була ще приємнішою. Збирай бонуси за покупки,
+          відгуки та активність у соцмережах, а потім використовуй їх для
+          вигідних знижок. З цією картою ти завжди на крок ближче до своїх
+          улюблених продуктів.
+        </p>
+      </div>
       <div className={s.flex}>
         <div className={s.bonusContainer}>
           <div className={s.bonusQty}>
@@ -87,25 +100,42 @@ export const BonusTab = () => {
 
                       <div className={s.transactionType}>
                         <p>{item.type}</p>
+                        {isMobile && (
+                          <div
+                            className={s.transactionValue}
+                            style={{
+                              color: String(item.value).startsWith("-")
+                                ? "black"
+                                : "#38B558",
+                            }}
+                          >
+                            {String(item.value).startsWith("-")
+                              ? `-${item.value} `
+                              : `+${item.value} `}
+                            бонусів
+                          </div>
+                        )}
                         <span>
                           {item.time.slice(0, item.time.indexOf(" "))}
                         </span>
                       </div>
                     </div>
 
-                    <div
-                      className={s.transactionValue}
-                      style={{
-                        color: String(item.value).startsWith("-")
-                          ? "black"
-                          : "#38B558",
-                      }}
-                    >
-                      {String(item.value).startsWith("-")
-                        ? `-${item.value} `
-                        : `+${item.value} `}
-                      бонусів
-                    </div>
+                    {!isMobile && (
+                      <div
+                        className={s.transactionValue}
+                        style={{
+                          color: String(item.value).startsWith("-")
+                            ? "black"
+                            : "#38B558",
+                        }}
+                      >
+                        {String(item.value).startsWith("-")
+                          ? `-${item.value} `
+                          : `+${item.value} `}
+                        бонусів
+                      </div>
+                    )}
                   </li>
                 ))}
               </div>

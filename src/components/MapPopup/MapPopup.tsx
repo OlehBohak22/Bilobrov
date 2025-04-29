@@ -9,24 +9,32 @@ import { RootState } from "../../store";
 import { Loader } from "../Loader/Loader";
 import { AnimatePresence, motion } from "framer-motion";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { useWindowSize } from "../../hooks/useWindowSize";
 
 interface NovaPoshtaMapPopupProps {
   selectedCity: string;
   onClose: () => void;
   onSelect: (warehouseName: string) => void;
+  tab: "PostOffice" | "ParcelLocker";
+  setTab: (tab: "PostOffice" | "ParcelLocker") => void;
 }
 
 export const NovaPoshtaMapPopup: React.FC<NovaPoshtaMapPopupProps> = ({
   selectedCity,
   onClose,
+  tab,
   onSelect,
+  setTab,
 }) => {
   const { cities } = useSelector((state: RootState) => state.cities);
   const [search, setSearch] = useState("");
 
+  const { width } = useWindowSize();
+  const isMobile = width < 1024;
+
   const [filteredWarehouses, setFilteredWarehouses] = useState<any[]>([]);
 
-  const [tab, setTab] = useState<"PostOffice" | "ParcelLocker">("PostOffice");
+  const [isListVisible, setIsListVisible] = useState(isMobile ? false : true);
 
   const customIcon = new L.Icon({
     iconUrl: "/icons/nova-icon.png",
@@ -36,6 +44,7 @@ export const NovaPoshtaMapPopup: React.FC<NovaPoshtaMapPopupProps> = ({
   const warehouses =
     cities.find((city) => city.name === selectedCity)?.warehouses || [];
 
+  // ✅ замість цього користуйся tab з props:
   const filteredByTab = warehouses.filter((w) =>
     tab === "PostOffice"
       ? !w.name.toLowerCase().includes("поштомат")
@@ -53,8 +62,6 @@ export const NovaPoshtaMapPopup: React.FC<NovaPoshtaMapPopupProps> = ({
   }, [search, tab, warehouses]);
 
   const cityData = cities.find((city) => city.name === selectedCity);
-
-  console.log(cityData);
 
   const userPosition = cityData
     ? {
@@ -77,7 +84,7 @@ export const NovaPoshtaMapPopup: React.FC<NovaPoshtaMapPopupProps> = ({
 
   return createPortal(
     <AnimatePresence>
-      <div className={s.overlay}>
+      <div id="mapPopup" className={s.overlay}>
         <motion.div className="relative">
           <motion.div
             initial={{ scale: 0.9, opacity: 0 }}
@@ -116,6 +123,7 @@ export const NovaPoshtaMapPopup: React.FC<NovaPoshtaMapPopupProps> = ({
                   placeholder="Введіть назву вулиці"
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
+                  onFocus={() => setIsListVisible(true)}
                 />
                 <svg
                   width="16"
@@ -133,30 +141,32 @@ export const NovaPoshtaMapPopup: React.FC<NovaPoshtaMapPopupProps> = ({
                 </svg>
               </div>
 
-              <div className={s.list}>
-                {filteredWarehouses.map((w, i) => (
-                  <div
-                    key={i}
-                    className={s.listItem}
-                    onClick={() => {
-                      onSelect(w.name);
-                      onClose();
-                    }}
-                  >
-                    <svg
-                      width="28"
-                      height="29"
-                      viewBox="0 0 28 29"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
+              {isListVisible && (
+                <div className={s.list}>
+                  {filteredWarehouses.map((w, i) => (
+                    <div
+                      key={i}
+                      className={s.listItem}
+                      onClick={() => {
+                        onSelect(w.name);
+                        onClose();
+                      }}
                     >
-                      <path d="M16.1221 21.8931V16.9656H11.8853V21.8931H8.64675L12.5799 25.7824C13.3706 26.5644 14.6501 26.5644 15.4409 25.7824L19.374 21.8931H16.1205H16.1221ZM6.52619 19.7947V9.19429L2.59308 13.0836C1.80231 13.8656 1.80231 15.1307 2.59308 15.9127L6.52619 19.7947ZM11.8853 7.10467V12.0322H16.1221V7.10467H19.3606L15.426 3.21538C14.6353 2.43342 13.3558 2.43342 12.5651 3.21538L8.63195 7.10467H11.8853ZM25.4069 13.0851L21.4738 9.19576V19.7947L25.4069 15.9127C26.1977 15.1307 26.1977 13.8656 25.4069 13.0836" />
-                    </svg>
+                      <svg
+                        width="28"
+                        height="29"
+                        viewBox="0 0 28 29"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path d="M16.1221 21.8931V16.9656H11.8853V21.8931H8.64675L12.5799 25.7824C13.3706 26.5644 14.6501 26.5644 15.4409 25.7824L19.374 21.8931H16.1205H16.1221ZM6.52619 19.7947V9.19429L2.59308 13.0836C1.80231 13.8656 1.80231 15.1307 2.59308 15.9127L6.52619 19.7947ZM11.8853 7.10467V12.0322H16.1221V7.10467H19.3606L15.426 3.21538C14.6353 2.43342 13.3558 2.43342 12.5651 3.21538L8.63195 7.10467H11.8853ZM25.4069 13.0851L21.4738 9.19576V19.7947L25.4069 15.9127C26.1977 15.1307 26.1977 13.8656 25.4069 13.0836" />
+                      </svg>
 
-                    <p>{w.name}</p>
-                  </div>
-                ))}
-              </div>
+                      <p>{w.name}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
 
             <div className={s.mapWrapper}>
@@ -164,7 +174,7 @@ export const NovaPoshtaMapPopup: React.FC<NovaPoshtaMapPopupProps> = ({
                 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                 // @ts-expect-error
                 center={userPosition}
-                zoom={15}
+                zoom={13}
                 style={{ height: "100%", width: "100%" }}
               >
                 <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
