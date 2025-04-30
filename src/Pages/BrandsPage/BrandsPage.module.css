@@ -84,6 +84,7 @@
   display: flex;
   align-items: center;
   gap: 1.7vw;
+  flex-wrap: wrap;
 }
 
 .brandItem {
@@ -144,4 +145,104 @@
 
 .brandItem:hover img {
   transform: scale(1.2);
+}
+
+@media (max-width: 1024px) {
+  .page {
+    padding-bottom: 20vw;
+    h1 {
+      font-size: 9.6vw;
+      line-height: 100%;
+      margin-bottom: 5vw;
+    }
+
+    .qty {
+      font-size: 3.7vw;
+      line-height: 100%;
+    }
+    .alphabetNav {
+      overflow-x: auto;
+      gap: 1vw;
+      border-bottom: none;
+      padding-left: 4.2vw;
+
+      a {
+        font-size: 4.2vw;
+        line-height: 100%;
+        width: 12.8vw;
+        height: 12.8vw;
+        flex-shrink: 0;
+      }
+    }
+
+    .brandsList {
+      padding-top: 10vw;
+      h2 {
+        font-size: 8.5vw;
+        line-height: 100%;
+        margin-bottom: 8.5vw;
+      }
+
+      .letterGroup {
+        padding: 10vw 0;
+      }
+
+      .letterGroup:first-child {
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+      }
+    }
+
+    .brandItems {
+      gap: 9vw;
+    }
+
+    .brandItem {
+      padding: 1.2vw;
+
+      .brandImageCircle {
+        width: 22.1vw;
+        height: 22.1vw;
+        margin-bottom: 3.5vw;
+        /* overflow: hidden; */
+      }
+
+      span {
+        font-size: 3.7vw;
+        line-height: 100%;
+      }
+    }
+
+    .scrollbarContainer {
+      width: 100%; /* Ширина скролбару */
+      height: 0.8vw;
+      background: #efedee;
+      border-radius: 0.4vw;
+      overflow: hidden;
+      z-index: 10;
+    }
+
+    .scroller {
+      display: flex;
+      align-items: center;
+      gap: 10vw;
+    }
+
+    .scrollbar {
+      height: 100%;
+      width: 0; /* Початковий стан */
+      background: var(--primary);
+      transition: width 0.1s ease-out; /* Плавне розширення */
+    }
+
+    .alphabetNav {
+      /* Приховування скролбару для Webkit браузерів (Chrome, Safari, Opera) */
+      -webkit-overflow-scrolling: touch; /* Гладкий скролінг для мобільних */
+      scrollbar-width: none; /* Firefox */
+      -ms-overflow-style: none; /* Internet Explorer/Edge */
+    }
+
+    .alphabetNav::-webkit-scrollbar {
+      display: none; /* Chrome, Safari, Opera */
+    }
+  }
 }

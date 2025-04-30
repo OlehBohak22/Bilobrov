@@ -178,6 +178,19 @@
 }
 
 @media (max-width: 1024px) {
+  .noneAddress {
+    p {
+      font-size: 4.8vw;
+      line-height: 125%;
+      margin-bottom: 10.6vw;
+    }
+
+    img {
+      width: 32.2vw;
+      height: 30vw;
+    }
+  }
+
   .tab {
     .heading {
       flex-direction: column;

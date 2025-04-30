@@ -142,3 +142,107 @@
     }
   }
 }
+
+@media (max-width: 1024px) {
+  .tab {
+    h2 {
+      margin-bottom: 10vw;
+
+      span:nth-child(1) {
+        font-size: 9.6vw;
+        line-height: 9.6vw;
+      }
+
+      span:nth-child(2) {
+        margin-top: -0.5vw;
+        font-size: 8.5vw;
+        line-height: 8.5vw;
+        text-indent: 10vw;
+      }
+    }
+
+    .list {
+      flex-direction: column;
+      display: flex;
+      gap: 3.2vw;
+      margin-bottom: 6.4vw;
+
+      li {
+        padding: 6.4vw;
+
+        h3 {
+          font-size: 6.4vw;
+          line-height: 100%;
+          margin-bottom: 4.2vw;
+        }
+
+        p {
+          font-size: 4.2vw;
+          line-height: 140%;
+          margin-bottom: 14.6vw;
+        }
+
+        a {
+          font-size: 5.3vw;
+          line-height: 137%;
+        }
+      }
+    }
+
+    .schdule {
+      font-size: 4.2vw;
+      line-height: 100%;
+      max-width: 60vw;
+      margin: 0 auto;
+      margin-bottom: 6.4vw;
+    }
+
+    .socialList {
+      flex-direction: column;
+      gap: 3.2vw;
+
+      li {
+        padding: 6.4vw;
+
+        .socialName {
+          gap: 4.2vw;
+          margin-bottom: 15vw;
+
+          p {
+            font-size: 6.4vw;
+            line-height: 100%;
+          }
+
+          svg {
+            width: 8.5vw;
+            height: 8.5vw;
+          }
+        }
+
+        .socialInfo {
+          gap: 3.2vw;
+          img {
+            width: 17vw;
+            height: 17vw;
+          }
+
+          p {
+            font-size: 5.3vw;
+            line-height: 6.6vw;
+            margin-bottom: 2.1vw;
+          }
+
+          span {
+            font-size: 4.2vw;
+            line-height: 100%;
+
+            svg {
+              width: 5.3vw;
+              height: 5.3vw;
+            }
+          }
+        }
+      }
+    }
+  }
+}

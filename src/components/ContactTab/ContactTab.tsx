@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { fetchContacts } from "../../store/slices/contactSlice";
 import { AppDispatch, RootState } from "../../store";
+import { Loader } from "../Loader/Loader";
 
 export const ContactTab = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -22,7 +23,7 @@ export const ContactTab = () => {
     dispatch(fetchContacts());
   }, [dispatch]);
 
-  if (loading) return <div>Завантаження...</div>;
+  if (loading) return <Loader />;
   if (error) return <div className={s.error}>Помилка: {error}</div>;
 
   return (

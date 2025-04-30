@@ -55,3 +55,49 @@
     }
   }
 }
+
+@media (max-width: 1024px) {
+  .tab {
+    h2 {
+      margin-bottom: 10vw;
+
+      span:nth-child(1) {
+        font-size: 9.6vw;
+        line-height: 9.6vw;
+      }
+
+      span:nth-child(2) {
+        margin-top: -0.5vw;
+        font-size: 8.5vw;
+        line-height: 8.5vw;
+        text-indent: 8vw;
+      }
+    }
+
+    .desc {
+      font-size: 4.2vw;
+      line-height: 120%;
+      margin-bottom: 6.4vw;
+    }
+
+    .list {
+      flex-direction: column;
+      gap: 3.2vw;
+
+      li {
+        padding: 6.4vw;
+
+        svg {
+          width: 8.5vw;
+          height: 8.5vw;
+          margin-bottom: 4.2vw;
+        }
+
+        p {
+          font-size: 4.2vw;
+          line-height: 150%;
+        }
+      }
+    }
+  }
+}

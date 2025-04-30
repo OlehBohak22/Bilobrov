@@ -4,10 +4,11 @@ import { AppDispatch, RootState } from "../../store";
 import { fetchFaqs } from "../../store/slices/faqSlice";
 import { motion } from "framer-motion";
 import s from "./FaqTab.module.css";
+import { Loader } from "../Loader/Loader";
 
 export const FaqTab = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { faqs } = useSelector((state: RootState) => state.faq);
+  const { faqs, loading } = useSelector((state: RootState) => state.faq);
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   useEffect(() => {
@@ -17,6 +18,10 @@ export const FaqTab = () => {
   const toggleAccordion = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
   };
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <div className={s.tab}>

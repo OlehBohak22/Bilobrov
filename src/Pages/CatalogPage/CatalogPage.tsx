@@ -28,6 +28,7 @@ import { Category } from "../../types/categoryType";
 import { Pagination } from "../../components/Pagination/Pagination";
 import { AnimatePresence } from "framer-motion";
 import { useWindowSize } from "../../hooks/useWindowSize";
+import { Loader } from "../../components/Loader/Loader";
 
 export const CatalogPage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -313,7 +314,7 @@ export const CatalogPage: React.FC = () => {
         </div>
 
         {loading ? (
-          <div className={s.loader}></div>
+          <Loader />
         ) : (
           <ul ref={productsRef} className={s.list}>
             {products.map((product) => (

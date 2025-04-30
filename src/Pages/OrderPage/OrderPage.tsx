@@ -336,6 +336,8 @@ export const OrderPage: React.FC = () => {
       set_paid: false,
       status: paymentMethod === "cod" ? "on-hold" : "processing",
       customer_id: userData ? userData.ID : 0,
+      shipping_type: departmentSelect,
+
       billing: finalBilling,
       shipping: finalShipping,
       line_items: cart.map((item) => ({
@@ -369,6 +371,7 @@ export const OrderPage: React.FC = () => {
               phone: billing.phone,
               middle_name: billing.middle_name,
               city: billing.city || selectedCity,
+
               street: selectedStreet,
               house: house,
               entrance: entrance,

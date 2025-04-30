@@ -10,6 +10,7 @@ export interface OrderData {
   set_paid: boolean;
   status: string;
   customer_id?: number;
+  shipping_type: string;
   number?: string;
   billing: {
     first_name: string;
