@@ -7,7 +7,7 @@ import { WishListTab } from "../../components/WishListTab/WishListTab";
 import { BonusTab } from "../../components/BonusTab/BonusTab";
 import { logout } from "../../store/slices/userSlice";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { ResetPasswordTab } from "../../components/ResetPasswordTab/ResetPasswordTab";
@@ -15,6 +15,8 @@ import { AddressTab } from "../../components/AddressTab/AddressTab";
 import { OrdersTab } from "../../components/OrdersTab/OrdersTab";
 import { ConfirmLogoutModal } from "../../components/ConfirmLogoutModal/ConfirmLogoutModal";
 import { AnimatePresence } from "framer-motion";
+import { Loader } from "../../components/Loader/Loader";
+import { useWindowSize } from "../../hooks/useWindowSize";
 
 const categories = [
   {
@@ -206,6 +208,8 @@ const categories = [
 export const AccountPage = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { width } = useWindowSize();
+  const isMobile = width < 1024;
 
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
 
@@ -214,10 +218,22 @@ export const AccountPage = () => {
   );
   const user = useSelector((state: RootState) => state.user.user);
 
+  const [tabsMenuHidden, setTabsMenuHidden] = useState(false);
+
   const [activeTab, setActiveTab] = useState<string>(
     window.location.hash.replace("#", "") || "main"
   );
   const [loading, setLoading] = useState(false);
+
+  const location = useLocation();
+
+  console.log(location);
+
+  useEffect(() => {
+    if (location.hash === "#main") {
+      setTabsMenuHidden(false);
+    }
+  }, [location.hash]);
 
   useEffect(() => {
     const handleHashChange = () => {
@@ -244,6 +260,11 @@ export const AccountPage = () => {
 
   const handleTabChange = (tabId: string) => {
     setLoading(true);
+
+    if (isMobile) {
+      setTabsMenuHidden(true);
+    }
+
     setTimeout(() => {
       setLoading(false);
     }, 500); // Імітація завантаження
@@ -253,7 +274,7 @@ export const AccountPage = () => {
   };
 
   const renderContent = () => {
-    if (loading) return <div className={s.loader}></div>;
+    if (loading) return <Loader />;
 
     switch (activeTab) {
       case "main":
@@ -279,7 +300,7 @@ export const AccountPage = () => {
     <main className={s.page}>
       <div className={s.section}>
         <Layout className={s.container}>
-          <div className={s.tabsMenu}>
+          <div className={`${tabsMenuHidden && s.hidden} ${s.tabsMenu}`}>
             <div className={s.username}>
               <p>{user?.name}</p>
               <p>{user?.secondName}</p>

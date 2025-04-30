@@ -9,11 +9,19 @@ import "swiper/css/pagination";
 import { Navigation } from "swiper/modules";
 import { togglePreference } from "../../store/slices/wishlistSlice";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { useWindowSize } from "../../hooks/useWindowSize";
+import { useEffect, useState } from "react";
+import { fetchCartProducts } from "../../store/slices/productsSlice";
+import { Loader } from "../Loader/Loader";
 
 export const WishListTab = () => {
   const dispatch = useAppDispatch();
 
   const token = useSelector((state: RootState) => state.user?.token);
+
+  const { width } = useWindowSize();
+
+  const isMobile = width < 1024;
 
   const handleClearWishlist = () => {
     if (token) {
@@ -32,6 +40,40 @@ export const WishListTab = () => {
     wishlist.includes(product.id)
   );
 
+  const [wish, setWish] = useState<ProductInfo[]>([]);
+  const [loading, setLoading] = useState(true); // ➔ додаємо loading
+
+  useEffect(() => {
+    setLoading(true); // ➔ починаємо лоадинг
+    if (wishlistProducts.length > 0) {
+      dispatch(fetchCartProducts(wishlist))
+        .then((res) => {
+          if (fetchCartProducts.fulfilled.match(res)) {
+            setWish(res.payload);
+          } else {
+            setWish([]);
+          }
+        })
+        .catch((error) => {
+          console.error(
+            "Помилка при завантаженні товарів зі списку бажань",
+            error
+          );
+          setWish([]);
+        })
+        .finally(() => {
+          setLoading(false); // ➔ завершення завантаження у будь-якому випадку
+        });
+    } else {
+      setWish([]);
+      setLoading(false); // ➔ якщо wishlist порожній, також завершити лоадинг
+    }
+  }, [wishlist, dispatch]);
+
+  if (loading) {
+    return <Loader />;
+  }
+
   return (
     <div className={s.tab}>
       <div className={s.swiperController}>
@@ -39,70 +81,75 @@ export const WishListTab = () => {
           <span>Список</span>
           <span>побажань</span>
         </h2>
-        <div className={s.navigationContainer}>
-          <button className={s.prevButton}>
-            <svg
-              viewBox="0 0 25 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <g clipPath="url(#clip0_480_5408)">
-                <path d="M7.08228 5L8.15132 6.05572L3.39413 10.7535L24.5 10.7535V12.2465L3.39413 12.2465L8.15132 16.9443L7.08228 18L0.5 11.5L7.08228 5Z" />
-              </g>
-              <defs>
-                <clipPath id="clip0_480_5408">
-                  <rect
-                    width="24"
-                    height="24"
-                    fill="white"
-                    transform="matrix(-1 0 0 1 24.5 0)"
-                  />
-                </clipPath>
-              </defs>
-            </svg>
-          </button>
-          <button className={s.nextButton}>
-            <svg
-              viewBox="0 0 25 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <g clipPath="url(#clip0_480_5411)">
-                <path d="M17.9177 5L16.8487 6.05572L21.6059 10.7535H0.5V12.2465H21.6059L16.8487 16.9443L17.9177 18L24.5 11.5L17.9177 5Z" />
-              </g>
-              <defs>
-                <clipPath id="clip0_480_5411">
-                  <rect
-                    width="24"
-                    height="24"
-                    fill="white"
-                    transform="translate(0.5)"
-                  />
-                </clipPath>
-              </defs>
-            </svg>
-          </button>
-        </div>
+
+        {!isMobile && (
+          <div className={s.navigationContainer}>
+            <button className={s.prevButton}>
+              <svg
+                viewBox="0 0 25 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g clipPath="url(#clip0_480_5408)">
+                  <path d="M7.08228 5L8.15132 6.05572L3.39413 10.7535L24.5 10.7535V12.2465L3.39413 12.2465L8.15132 16.9443L7.08228 18L0.5 11.5L7.08228 5Z" />
+                </g>
+                <defs>
+                  <clipPath id="clip0_480_5408">
+                    <rect
+                      width="24"
+                      height="24"
+                      fill="white"
+                      transform="matrix(-1 0 0 1 24.5 0)"
+                    />
+                  </clipPath>
+                </defs>
+              </svg>
+            </button>
+            <button className={s.nextButton}>
+              <svg
+                viewBox="0 0 25 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g clipPath="url(#clip0_480_5411)">
+                  <path d="M17.9177 5L16.8487 6.05572L21.6059 10.7535H0.5V12.2465H21.6059L16.8487 16.9443L17.9177 18L24.5 11.5L17.9177 5Z" />
+                </g>
+                <defs>
+                  <clipPath id="clip0_480_5411">
+                    <rect
+                      width="24"
+                      height="24"
+                      fill="white"
+                      transform="translate(0.5)"
+                    />
+                  </clipPath>
+                </defs>
+              </svg>
+            </button>
+          </div>
+        )}
       </div>
 
-      <Swiper
-        modules={[Navigation]}
-        spaceBetween={20}
-        slidesPerView={4}
-        navigation={{
-          prevEl: `.${s.prevButton}`,
-          nextEl: `.${s.nextButton}`,
-        }}
-        className={s.productListSwiper}
-      >
-        {wishlistProducts.map((product: ProductInfo) => (
-          <SwiperSlide className={s.slide} key={product.id}>
-            <ProductItem info={product} />
-          </SwiperSlide>
-        ))}
-      </Swiper>
+      {!isMobile && (
+        <Swiper
+          modules={[Navigation]}
+          spaceBetween={20}
+          slidesPerView={4}
+          navigation={{
+            prevEl: `.${s.prevButton}`,
+            nextEl: `.${s.nextButton}`,
+          }}
+          className={s.productListSwiper}
+        >
+          {wish.map((product: ProductInfo) => (
+            <SwiperSlide className={s.slide} key={product.id}>
+              <ProductItem info={product} />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      )}
 
-      {(wishlistProducts.length !== 0 && (
+      {(wish.length !== 0 && (
         <button className={s.clear} onClick={handleClearWishlist}>
           <svg
             viewBox="0 0 24 24"
@@ -129,6 +176,14 @@ export const WishListTab = () => {
           <span>Видалити все</span>
         </button>
       )) || <p>Список бажань порожній</p>}
+
+      {isMobile && (
+        <div className={s.mobileList}>
+          {wish.map((product: ProductInfo) => (
+            <ProductItem info={product} />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

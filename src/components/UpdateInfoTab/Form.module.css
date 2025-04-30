@@ -107,3 +107,56 @@
     fill: black;
   }
 }
+
+@media (max-width: 1024px) {
+  .title {
+    padding: 4.2vw 6.4vw;
+    gap: 3vw;
+    margin-bottom: 3.2vw;
+
+    p {
+      font-size: 4.2vw;
+      line-height: 4.2vw;
+    }
+
+    svg {
+      width: 6.1vw;
+      height: 6.1vw;
+    }
+  }
+
+  .form {
+    .inputLine {
+      flex-direction: column;
+      gap: 4.2vw;
+      margin-bottom: 4.2vw;
+      padding-bottom: 4.2vw;
+
+      label {
+        font-size: 4.2vw;
+        line-height: 130%;
+        margin-bottom: 3.2vw;
+      }
+
+      input {
+        font-size: 4.8vw;
+        line-height: 140%;
+        padding: 4.6vw 4.2vw;
+      }
+    }
+  }
+
+  .btn {
+    font-size: 4.2vw;
+    line-height: 100%;
+    gap: 2.6vw;
+    width: 100%;
+    justify-content: center;
+    padding: 5.2vw 0;
+
+    svg {
+      width: 6.4vw;
+      height: 6.4vw;
+    }
+  }
+}

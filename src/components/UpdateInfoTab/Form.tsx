@@ -80,6 +80,19 @@ export const UpdateForm: React.FC = () => {
       >
         <Form>
           <div className={s.title}>
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M11.5 0C5.14873 0 0 5.14873 0 11.5C0 17.8513 5.14873 23 11.5 23C17.8513 23 23 17.8513 23 11.5C23 5.14873 17.8513 0 11.5 0ZM13.8955 17.2357H10.8051V8.3639H9.10455V5.76431H13.8955V17.2357Z"
+                fill="#1A1A1A"
+              />
+            </svg>
+
             <p>Особиста інформація</p>
           </div>
 
@@ -124,6 +137,19 @@ export const UpdateForm: React.FC = () => {
           </div>
 
           <div className={s.title}>
+            <svg
+              width="23"
+              height="23"
+              viewBox="0 0 23 23"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M11.5 0C5.14873 0 0 5.14873 0 11.5C0 17.8513 5.14873 23 11.5 23C17.8513 23 23 17.8513 23 11.5C23 5.14873 17.8513 0 11.5 0ZM15.7659 17.3821H7.23405V16.6838C11.8496 11.24 12.4853 10.3602 12.4853 9.37535C12.4853 8.75334 12.0755 8.33621 11.4879 8.33621C10.8439 8.33621 10.4513 8.77054 10.4513 9.4611V9.683H7.41893V9.4708C7.41893 7.15134 8.93923 5.61816 11.4509 5.61816C13.8843 5.61816 15.5643 7.11427 15.5643 9.26794C15.5643 10.7115 15.0303 11.8196 12.5768 14.6616H15.7659V17.3821Z"
+                fill="#1A1A1A"
+              />
+            </svg>
+
             <p>Контакти</p>
           </div>
 
@@ -137,7 +163,9 @@ export const UpdateForm: React.FC = () => {
             </div>
 
             <div>
-              <label htmlFor="email">Еmail</label>
+              <label htmlFor="email">
+                Еmail<span>*</span>
+              </label>
               <Field type="email" id="email" name="email" />
               <ErrorMessage name="email" component="div" className="error" />
             </div>

@@ -124,8 +124,52 @@
   }
 }
 
+.mobileList {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4.2vw;
+}
+
 .productListSwiper {
   /* max-width: 10%; */
   overflow: hidden;
   max-width: 61vw;
+}
+
+@media (max-width: 1024px) {
+  .swiperController {
+    margin-bottom: 0;
+
+    h2 {
+      margin-bottom: 2vw;
+
+      span:nth-child(1) {
+        font-size: 9.6vw;
+        line-height: 9.6vw;
+      }
+
+      span:nth-child(2) {
+        margin-top: -0.5vw;
+        font-size: 8.5vw;
+        line-height: 8.5vw;
+        text-indent: 18vw;
+      }
+    }
+  }
+
+  .clear {
+    gap: 2.1vw;
+    margin-bottom: 5vw;
+    margin-top: 5vw;
+
+    span {
+      font-size: 5vw;
+      line-height: 5vw;
+    }
+
+    svg {
+      width: 5.3vw;
+      height: 5.3vw;
+    }
+  }
 }

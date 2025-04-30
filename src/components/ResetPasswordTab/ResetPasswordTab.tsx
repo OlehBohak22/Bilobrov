@@ -54,7 +54,7 @@ export const ResetPasswordTab = () => {
       >
         {({ values, handleChange }) => (
           <Form className={s.form}>
-            <div className={`${s.field} mb-[1.8vw]`}>
+            <div className={`${s.field} lg:mb-[1.8vw] mb-[4.2vw]`}>
               <label htmlFor="oldPassword">
                 Поточний пароль<span>*</span>
               </label>

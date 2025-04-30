@@ -76,7 +76,7 @@ function App() {
 
   const handleOpenRegister = () => {
     if (user) {
-      navigate("/account");
+      navigate("/account#main");
     } else {
       setIsRegisterOpen(true);
       document.body.style.overflow = "hidden";

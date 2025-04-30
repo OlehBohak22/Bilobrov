@@ -191,6 +191,10 @@
     }
   }
 
+  .hidden {
+    display: none;
+  }
+
   .logout {
     font-size: 4.8vw;
     line-height: 100%;
@@ -225,6 +229,7 @@
     font-size: 4.2vw;
     line-height: 137%;
     padding: 4.2vw 6.4vw;
+    gap: 4.2vw;
 
     svg {
       width: 6.4vw;
