@@ -213,3 +213,75 @@
     text-decoration: underline;
   }
 }
+
+@media (max-width: 1024px) {
+  .before {
+    display: none;
+  }
+
+  .modal {
+    width: 100%;
+    padding: 18.1vw 4.2vw 8vw 4.2vw;
+
+    img {
+      width: 25.3vw;
+      margin-bottom: 5.3vw;
+    }
+
+    h2 {
+      font-size: 8.5vw;
+      line-height: 100%;
+      margin-bottom: 3.2vw;
+    }
+
+    p {
+      font-size: 3.7vw;
+      line-height: 137%;
+      margin-bottom: 5.3vw;
+    }
+  }
+
+  .form {
+    padding-top: 5.3vw;
+
+    label {
+      font-size: 4.2vw;
+      line-height: 130%;
+      margin-bottom: 3.2vw;
+    }
+
+    input {
+      font-size: 4.8vw;
+      line-height: 140%;
+      padding: 4.6vw 4.2vw;
+    }
+  }
+
+  .registerBtn {
+    font-size: 4.2vw;
+    line-height: 4.2vw;
+    gap: 2.6vw;
+    padding: 5.3vw 0;
+    margin-bottom: 6.4vw;
+
+    svg {
+      width: 6.4vw;
+      height: 6.4vw;
+    }
+  }
+
+  .controller {
+    font-size: 4.5vw;
+    line-height: 137%;
+  }
+
+  .closeBtn {
+    top: 4.2vw;
+    right: 4.2vw;
+
+    svg {
+      width: 13.8vw;
+      height: 13.8vw;
+    }
+  }
+}

@@ -136,7 +136,7 @@ export const RegisterModal: React.FC<{ onClose: () => void }> = ({
               placeholder="Твоя електронна пошта"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="mb-[1.2vw]"
+              className="lg:mb-[1.2vw] mb-[5.3vw]"
             />
 
             {isRegister && (
@@ -150,7 +150,7 @@ export const RegisterModal: React.FC<{ onClose: () => void }> = ({
                   placeholder="Введи своє ім'я"
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
-                  className="mb-[1.2vw]"
+                  className="lg:mb-[1.2vw] mb-[5.3vw]"
                 />
               </>
             )}
@@ -164,7 +164,7 @@ export const RegisterModal: React.FC<{ onClose: () => void }> = ({
               placeholder="Введи пароль"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="mb-[2vw]"
+              className="lg:mb-[2vw] mb-[8vw]"
             />
 
             {error && <p className={s.error}>{error}</p>}

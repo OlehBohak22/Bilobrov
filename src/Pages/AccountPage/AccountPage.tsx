@@ -350,7 +350,12 @@ export const AccountPage = () => {
               Вийти
             </button>
           </div>
-          <div className={s.tabsContent}>{renderContent()}</div>
+
+          {isMobile && tabsMenuHidden && (
+            <div className={s.tabsContent}>{renderContent()}</div>
+          )}
+
+          {!isMobile && <div className={s.tabsContent}>{renderContent()}</div>}
 
           <AnimatePresence>
             <ConfirmLogoutModal

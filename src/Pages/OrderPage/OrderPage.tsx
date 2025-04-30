@@ -255,7 +255,7 @@ export const OrderPage: React.FC = () => {
     country: "UA",
     email: user?.email || "",
     // eslint-disable-next-line no-constant-binary-expression
-    phone: `+38${user?.meta.phone}` || "",
+    phone: user?.meta.phone ? `+38${user.meta.phone}` : "",
   });
 
   const [shipping, setShipping] = useState({ ...billing });
@@ -489,7 +489,7 @@ export const OrderPage: React.FC = () => {
         </div>
       </Layout>
 
-      {isMobile && (
+      {isMobile && !orderSucces && (
         <div className={s.navTabs}>
           <button className={`${step === 1 && s.active} ${step > 1 && s.done}`}>
             <span>1</span> Контактні дані

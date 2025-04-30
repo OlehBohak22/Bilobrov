@@ -32,6 +32,7 @@
     gap: 0.8vw;
     padding: 1vw 3.7vw;
     transition: 0.3s;
+    text-transform: uppercase;
 
     span {
       font-family: Manrope, sans-serif;
