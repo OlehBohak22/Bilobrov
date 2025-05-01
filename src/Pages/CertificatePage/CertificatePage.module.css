@@ -12,12 +12,12 @@
 
   h2 {
     color: #000000;
-    width: 13vw;
+    width: auto;
     margin: 0 auto;
     margin-bottom: 3vw;
 
     span:nth-child(1) {
-      font-family: Playfair-display, serif;
+      font-family: Playfair display;
       font-size: 2.7vw;
       font-style: italic;
       font-weight: 400;
@@ -33,5 +33,88 @@
       line-height: 2.9vw;
       text-indent: 4.5vw;
     }
+  }
+}
+
+.customPagination {
+  display: flex;
+  justify-content: center;
+  gap: 2.1vw;
+}
+
+.dot {
+  width: 2.1vw;
+  height: 2.1vw;
+  background-color: #e5e5e5;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.activeDot {
+  background-color: #c13f3f;
+}
+
+.prevBtn,
+.nextBtn {
+  display: block;
+  background-color: #fff;
+  padding: 1vw;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 16px;
+  color: #333;
+  transition: background-color 0.3s ease;
+
+  svg {
+    fill: black;
+    width: 1.2vw;
+    transition: fill 0.3s;
+  }
+}
+
+@media (min-width: 1024px) {
+  .prevBtn:hover,
+  .nextBtn:hover {
+    background-color: var(--primary);
+
+    svg {
+      fill: white;
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .certificates {
+    padding: 21vw 0;
+    h2 {
+      margin-bottom: 8.8vw;
+
+      span:nth-child(1) {
+        font-size: 9.6vw;
+        line-height: 9.6vw;
+      }
+
+      span:nth-child(2) {
+        margin-top: -0.5vw;
+        font-size: 8.5vw;
+        line-height: 8.5vw;
+        text-indent: 7vw;
+      }
+    }
+  }
+
+  .prevBtn,
+  .nextBtn {
+    svg {
+      width: 6.4vw;
+    }
+  }
+
+  .list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4.2vw;
   }
 }

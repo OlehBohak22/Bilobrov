@@ -26,3 +26,23 @@
     }
   }
 }
+
+@media (max-width: 1024px) {
+  .section {
+    padding-top: 2vw;
+    .titleContainer {
+      width: auto;
+      margin-bottom: 13.8vw;
+
+      p {
+        font-size: 4vw;
+        line-height: 96%;
+      }
+
+      h1 {
+        font-size: 13.8vw;
+        line-height: 100%;
+      }
+    }
+  }
+}

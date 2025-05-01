@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { Layout } from "../../components/Layout/Layout";
 import s from "./BrandsPage.module.css";
 import { RootState } from "../../store";
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
 import { Breadcrumbs } from "@mui/material";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { useEffect } from "react";
@@ -26,6 +26,7 @@ export const BrandsPage = () => {
     },
     {}
   );
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -36,7 +37,14 @@ export const BrandsPage = () => {
 
       if (container && scrollbar) {
         const maxScroll = container.scrollWidth - container.clientWidth;
-        const scrollProgress = (container.scrollLeft / maxScroll) * 100;
+
+        // уникнути ділення на 0
+        const rawProgress =
+          maxScroll > 0 ? (container.scrollLeft / maxScroll) * 100 : 0;
+
+        // гарантувати мінімум 5%
+        const scrollProgress = Math.max(rawProgress, 15);
+
         scrollbar.style.width = `${scrollProgress}%`;
       }
     };
@@ -44,6 +52,7 @@ export const BrandsPage = () => {
     const container = document.querySelector(`.${s.alphabetNav}`);
     if (container) {
       container.addEventListener("scroll", handleScroll);
+      handleScroll(); // 👉 виклик одразу для початкового значення
     }
 
     return () => {
@@ -51,7 +60,7 @@ export const BrandsPage = () => {
         container.removeEventListener("scroll", handleScroll);
       }
     };
-  }, []);
+  }, [location]);
 
   const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 

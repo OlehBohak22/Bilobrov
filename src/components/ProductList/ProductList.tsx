@@ -15,12 +15,15 @@ import {
   consumerSecret,
 } from "../../store/slices/productsSlice";
 import { useWindowSize } from "../../hooks/useWindowSize";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 
 interface ProductListProps {
   categories?: string[];
   defaultCategory?: string;
   children?: ReactNode;
   mini?: boolean;
+  products?: ProductInfo[]; // 🔥 новий проп
 }
 
 export const ProductList = ({
@@ -28,10 +31,14 @@ export const ProductList = ({
   defaultCategory,
   children,
   mini,
+  products,
 }: ProductListProps) => {
   const [activeTab, setActiveTab] = useState(defaultCategory);
-  const [products, setProducts] = useState<ProductInfo[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [localProducts, setLocalProducts] = useState<ProductInfo[]>([]);
+
+  const loading = useSelector((state: RootState) => state.filters.loading);
+
+  const [loader, setloader] = useState(true);
   const { width } = useWindowSize();
   const isMobile = width < 1024;
   const prevButtonRef = useRef<HTMLDivElement | null>(null);
@@ -41,10 +48,17 @@ export const ProductList = ({
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
+    if (products) {
+      setLocalProducts(products);
+      setloader(false);
+    }
+  }, [products]);
+
+  useEffect(() => {
     if (!activeTab) return;
 
     const fetchProducts = async () => {
-      setLoading(true);
+      setloader(true);
       try {
         const params = new URLSearchParams({
           per_page: "10",
@@ -67,12 +81,12 @@ export const ProductList = ({
           },
         });
 
-        setProducts(res.data);
+        setLocalProducts(res.data);
       } catch (error) {
         console.error("Помилка завантаження товарів:", error);
-        setProducts([]);
+        setLocalProducts([]);
       } finally {
-        setLoading(false);
+        setloader(false);
       }
     };
 
@@ -159,7 +173,7 @@ export const ProductList = ({
         )}
       </div>
 
-      {loading ? (
+      {loader || loading ? (
         <Loader />
       ) : (
         <div>
@@ -175,7 +189,7 @@ export const ProductList = ({
             }}
             className={s.productListSwiper}
           >
-            {products.map((product: ProductInfo) => (
+            {localProducts.map((product: ProductInfo) => (
               <SwiperSlide className="h-auto!" key={product.id}>
                 <ProductItem mini={mini} info={product} />
               </SwiperSlide>
@@ -185,7 +199,7 @@ export const ProductList = ({
           {isMobile && (
             <div className="flex justify-between items-center mt-[9.6vw]">
               <div className={s.customPagination}>
-                {products.map((_, index) => (
+                {localProducts.map((_, index) => (
                   <span
                     key={index}
                     onClick={() => swiperInstance?.slideTo(index)}

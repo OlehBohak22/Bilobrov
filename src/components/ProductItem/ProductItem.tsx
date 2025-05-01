@@ -15,7 +15,7 @@ import { useWindowSize } from "../../hooks/useWindowSize";
 
 interface ProductItemProps {
   info: ProductInfo;
-  withoutRating?: boolean;
+  certificate?: boolean;
   mini?: boolean;
 }
 
@@ -31,7 +31,7 @@ const isNewProduct = (dateCreated: string) => {
 
 export const ProductItem: React.FC<ProductItemProps> = ({
   info,
-  withoutRating,
+  certificate,
   mini,
 }) => {
   const dispatch = useAppDispatch();
@@ -173,6 +173,9 @@ export const ProductItem: React.FC<ProductItemProps> = ({
           </div>
 
           {brandName && <p className={s.productBrand}>{brandName}</p>}
+
+          {certificate && <p className={s.productBrand}>Bilobrov</p>}
+
           <p className={s.productName}>{info.name}</p>
           {typeof info.short_description === "string" ? (
             <p className={s.shortDesc}>
@@ -182,7 +185,9 @@ export const ProductItem: React.FC<ProductItemProps> = ({
             <>{info.short_description}</>
           )}
 
-          {!withoutRating && (
+          {certificate && <p className={s.shortDesc}>Gift Card</p>}
+
+          {!certificate && (
             <div className={s.ratingBlock}>
               <StarRating isMobile={isMobile} rating={localAverage} />
               <span>({currentReviews.length})</span>

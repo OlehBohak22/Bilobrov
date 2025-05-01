@@ -7,7 +7,7 @@ export const BilobrovTodaySection = () => {
       <Layout className={s.container}>
         <div>
           <p>Bilobrov cosmetics</p>
-          <span>Bilobrov cosmetics</span>
+          <span>сьогодні</span>
         </div>
 
         <ul>

@@ -225,6 +225,40 @@ export const CatalogPage: React.FC = () => {
     return list;
   }, [slug, parentCategory, childCategory]);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const container = document.querySelector(`.${s.scroller}`);
+      const scrollbar = document.querySelector(
+        `.${s.scrollbar}`
+      ) as HTMLElement;
+
+      if (container && scrollbar) {
+        const maxScroll = container.scrollWidth - container.clientWidth;
+
+        // уникнути ділення на 0
+        const rawProgress =
+          maxScroll > 0 ? (container.scrollLeft / maxScroll) * 100 : 0;
+
+        // гарантувати мінімум 5%
+        const scrollProgress = Math.max(rawProgress, 15);
+
+        scrollbar.style.width = `${scrollProgress}%`;
+      }
+    };
+
+    const container = document.querySelector(`.${s.scroller}`);
+    if (container) {
+      container.addEventListener("scroll", handleScroll);
+      handleScroll(); // 👉 виклик одразу для початкового значення
+    }
+
+    return () => {
+      if (container) {
+        container.removeEventListener("scroll", handleScroll);
+      }
+    };
+  }, [location]);
+
   return (
     <main className={s.page}>
       <Layout>
@@ -252,7 +286,7 @@ export const CatalogPage: React.FC = () => {
         childCategories.length > 0 &&
         isMobile && (
           <div className={s.childCategories}>
-            <ul>
+            <ul className={s.scroller}>
               {childCategories.map((cat) => (
                 <li
                   key={cat.id}
@@ -269,6 +303,17 @@ export const CatalogPage: React.FC = () => {
             </ul>
           </div>
         )}
+
+      {childCategories.length > 0 && isMobile && (
+        <Layout>
+          <div className={s.scroller}>
+            <div className={s.scrollbarContainer}>
+              <div className={s.scrollbar}></div>і
+            </div>
+          </div>
+        </Layout>
+      )}
+
       <Layout>
         {selectedCategories.length === 1 &&
           childCategories.length > 0 &&

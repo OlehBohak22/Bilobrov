@@ -21,10 +21,12 @@
     display: block;
     font-family: Manrope;
     font-size: 0.9vw;
-    font-weight: 700;
+    font-weight: 600;
+    letter-spacing: 1px;
     line-height: 1.4vw;
     color: #ffffff;
     margin-bottom: 1.6vw;
+    text-transform: uppercase;
   }
 
   h3 {
@@ -53,22 +55,83 @@
 
   color: var(--primary);
   span:nth-child(1) {
-    font-family: Playfair;
+    font-family: Playfair display;
     font-size: 1.5vw;
     font-style: italic;
     font-weight: 600;
     line-height: 1.6vw;
     margin-bottom: 0.3vw;
+    text-transform: capitalize;
   }
 
   span:nth-child(2) {
     display: block;
-    margin-top: -0.5vw;
+    margin-top: -0.3vw;
     font-family: Manrope, sans-serif;
     font-size: 1.2vw;
     font-weight: 700;
     line-height: 1.6vw;
     text-indent: 1vw;
     margin-bottom: 0;
+    text-transform: capitalize;
+  }
+}
+
+@media (max-width: 1024px) {
+  .section {
+    background-image: url(/images/mobile-about-philosophy-bg.avif);
+    padding: 8vw 0 38.6vw 0;
+
+    .container {
+      flex-direction: column;
+      align-items: center;
+      gap: 8.5vw;
+      max-width: 82%;
+    }
+  }
+
+  .imageContainer {
+    width: 100%;
+  }
+
+  .blockDesc {
+    span {
+      font-size: 3.2vw;
+      line-height: 150%;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      font-size: 8.2vw;
+      line-height: 96%;
+    }
+
+    p {
+      font-size: 8.5vw;
+      max-width: none;
+      line-height: 96%;
+    }
+  }
+
+  .viktoria {
+    top: unset;
+    left: unset;
+    right: 0;
+    bottom: -10vw;
+  }
+
+  .viktoria {
+    span:nth-child(1) {
+      font-size: 4.8vw;
+      line-height: 100%;
+      margin-bottom: 0.3vw;
+    }
+
+    span:nth-child(2) {
+      margin-top: -0.3vw;
+      font-size: 4.8vw;
+      line-height: 100%;
+      text-indent: 5vw;
+    }
   }
 }

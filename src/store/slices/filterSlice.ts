@@ -28,10 +28,11 @@ interface ProductState {
   minPrice: number;
   maxPrice: number;
   attributes: ProductAttribute[];
-  page: number; // 🔥 додаємо
-  hasMore: boolean; // 🔥 для контролю закінчення сторінок
+  page: number;
+  hasMore: boolean;
   totalCount: number;
-  certificates: ProductInfo[]; // 🔥 додали
+  certificates: ProductInfo[];
+  searchQuery: string;
 }
 
 const initialState: ProductState = {
@@ -50,6 +51,7 @@ const initialState: ProductState = {
   hasMore: true, // 🔥 додаємо
   totalCount: 0,
   certificates: [],
+  searchQuery: "",
 };
 
 export const fetchAttributes = createAsyncThunk(
@@ -103,12 +105,17 @@ export const fetchProducts = createAsyncThunk(
       selectedAttributes,
       attributes,
       page,
+      searchQuery,
     } = state.filters;
 
     const params = new URLSearchParams({
       per_page: "20",
       page: page.toString(),
     });
+
+    if (searchQuery.trim() !== "") {
+      params.set("search", searchQuery);
+    }
 
     const attrEntries = Object.entries(selectedAttributes).filter(
       ([, values]) => values.length > 0
@@ -186,6 +193,9 @@ const productSlice = createSlice({
   reducers: {
     setSort: (state, action: PayloadAction<ProductState["sort"]>) => {
       state.sort = action.payload;
+    },
+    setSearchQuery: (state, action: PayloadAction<string>) => {
+      state.searchQuery = action.payload;
     },
     setSelectedCategories: (state, action: PayloadAction<string[]>) => {
       state.selectedCategories = action.payload;
@@ -288,6 +298,7 @@ export const {
   setPage,
   incrementPage,
   resetPage,
+  setSearchQuery,
 } = productSlice.actions;
 
 export default productSlice.reducer;

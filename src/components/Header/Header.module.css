@@ -18,6 +18,20 @@
   }
 }
 
+.searchBtn {
+  svg {
+    width: 1.2vw;
+    height: 1.2vw;
+    stroke: white;
+  }
+}
+
+.searchBtn:hover {
+  svg {
+    stroke: var(--primary) !important;
+  }
+}
+
 .freeDelivery {
   text-align: center;
   font-family: Manrope;
@@ -42,6 +56,7 @@
 
 .hovered ~ main {
   padding-top: 0;
+  backdrop-filter: rgb(1, 1, 1);
 }
 
 .header.hovered span,
@@ -92,6 +107,16 @@
     width: 1.25vw;
     height: 1.25vw;
     stroke: white;
+  }
+}
+
+.menuBtn:hover {
+  p {
+    color: var(--primary) !important;
+  }
+
+  svg {
+    stroke: var(--primary);
   }
 }
 

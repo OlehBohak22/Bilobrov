@@ -36,6 +36,7 @@ import { GlobalPropsContext } from "./GlobalPropContext";
 // import { NovaPoshtaMap } from "./components/MapPopup/MapPopup";
 import { AnimatePresence } from "framer-motion";
 import { fetchReviews } from "./store/slices/productsSlice";
+import { SearchPopup } from "./components/SearchPopup/SearchPopup";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -46,17 +47,18 @@ function App() {
   const [isWishList, setIsWishList] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isReview, setIsReview] = useState(false);
-  // const [loading, setLoading] = useState(true);
+  const [isSearchOpen, setSearchOpen] = useState(false); // 🔥
+
   const { user } = useSelector((state: RootState) => state.user);
 
   const { currentProduct } = useSelector((state: any) => state.products);
 
   useEffect(() => {
     document.body.style.overflow =
-      isRegisterOpen || isWishList || isCartOpen || isMenuOpen
+      isRegisterOpen || isWishList || isCartOpen || isMenuOpen || isSearchOpen
         ? "hidden"
         : "visible";
-  }, [isRegisterOpen, isWishList, isCartOpen, isMenuOpen]);
+  }, [isRegisterOpen, isWishList, isCartOpen, isMenuOpen, isSearchOpen]);
 
   useEffect(() => {
     dispatch(checkUserSession());
@@ -87,6 +89,10 @@ function App() {
     setIsWishList(true);
   };
 
+  const handleOpenSearch = () => {
+    setSearchOpen(true);
+  };
+
   const handleOpenCart = () => {
     setIsCartOpen(true);
   };
@@ -100,6 +106,8 @@ function App() {
     setIsWishList(false);
     setIsCartOpen(false);
     setIsReview(false);
+    setIsCartOpen(false);
+
     setIsMenuOpen(false);
     document.body.style.overflow = "visible";
   };
@@ -127,6 +135,7 @@ function App() {
             <Header
               openRegister={handleOpenRegister}
               openWishList={handleOpenWishList}
+              openSearch={handleOpenSearch}
               openCart={handleOpenCart}
               openMenu={() => setIsMenuOpen(true)}
             />
@@ -134,6 +143,10 @@ function App() {
               {isRegisterOpen && <RegisterModal onClose={handleCloseModals} />}
               {isWishList && <WishListPopup onClose={handleCloseModals} />}
               {isCartOpen && <CartPopup onClose={handleCloseModals} />}
+              {isSearchOpen && (
+                <SearchPopup close={() => setSearchOpen(false)} />
+              )}
+
               {isMenuOpen && (
                 <MenuPopup
                   openPopup={() => {

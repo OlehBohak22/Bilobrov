@@ -84,6 +84,12 @@
     margin-top: 8vw;
   }
 
+  .imageLine:nth-child(1) {
+    .imageItem:nth-child(1) {
+      opacity: 0;
+    }
+  }
+
   .imageItem {
     position: relative;
     width: 15.6vw;
@@ -132,7 +138,7 @@
   }
 
   span:nth-child(1) {
-    font-family: Playfair;
+    font-family: Playfair display !important;
     font-size: 3.2vw;
     font-style: italic;
     font-weight: 400;
@@ -164,4 +170,120 @@
   width: 22vw;
   height: 29vw;
   z-index: -1;
+}
+
+@media (max-width: 1024px) {
+  .container {
+    flex-direction: column;
+    gap: 21vw;
+    padding-top: 21vw;
+  }
+
+  .imageList {
+    flex-wrap: wrap;
+    gap: 4vw;
+    flex-direction: row-reverse;
+
+    .imageLine {
+      flex-basis: calc((100% - 4vw) / 2);
+    }
+
+    .imageLine:nth-child(1) {
+      .imageItem:nth-child(1) {
+        /* display: none; */
+      }
+    }
+
+    .imageLine:nth-child(odd) {
+      margin-top: 0;
+    }
+    .imageItem {
+      width: auto;
+      height: auto;
+    }
+
+    .imageItem::before {
+      opacity: 1;
+      bottom: -1px;
+      top: unset;
+      height: 25%;
+      backdrop-filter: blur(2vw);
+    }
+
+    .hoverBlock {
+      opacity: 1;
+      left: 2.6vw;
+      bottom: 2.6vw;
+
+      .name {
+        margin-bottom: 1vw;
+        display: flex;
+
+        span {
+          font-family: Playfair display !important;
+          font-size: 3.7vw;
+          font-style: italic;
+          line-height: 100%;
+        }
+      }
+
+      p {
+        font-size: 3.2vw;
+        line-height: 140%;
+      }
+    }
+
+    .imageItem:not(:last-child) {
+      margin-bottom: 4vw;
+    }
+  }
+
+  .rose {
+    top: 28vw;
+    left: unset;
+    right: 0;
+    width: 42.6vw;
+    height: 70.6vw;
+    transform: scaleX(-1);
+  }
+
+  .leftSide {
+    .teamCount {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+
+      span {
+        font-size: 13.8vw;
+        line-height: 133%;
+        display: block;
+        width: fit-content;
+        margin-left: auto;
+      }
+
+      p {
+        font-size: 4.2vw;
+        line-height: 137%;
+      }
+    }
+  }
+
+  .titleContainer {
+    span:nth-child(1) {
+      font-size: 11.2vw;
+      line-height: 100%;
+    }
+    span:nth-child(2) {
+      font-size: 11.2vw !important;
+      font-size: 100%;
+      text-indent: 12vw;
+      margin-top: -2vw;
+    }
+    span:nth-child(3) {
+      font-size: 4vw;
+      line-height: 137%;
+      text-indent: 12vw;
+      margin-top: -0.1vw;
+    }
+  }
 }

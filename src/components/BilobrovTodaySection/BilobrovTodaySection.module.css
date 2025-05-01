@@ -7,12 +7,12 @@
 
   div {
     p {
-      font-family: Playfair;
+      font-family: Playfair Display;
       font-size: 1.2vw;
-      /* font-style: italic; */
+      font-style: italic;
       font-weight: 600;
       line-height: 1.6vw;
-      margin-bottom: -0.2vw;
+      margin-bottom: 1vw;
     }
 
     span {
@@ -30,7 +30,7 @@
 
     span {
       display: block;
-      font-family: Playfair display;
+      font-family: Playfair;
       font-size: 3.2vw;
       font-style: italic;
       font-weight: 700;
@@ -46,6 +46,45 @@
       font-weight: 700;
       line-height: 1.2vw;
       letter-spacing: -0.02em;
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .container {
+    flex-direction: column;
+    gap: 8.5vw;
+    padding: 21vw 5vw;
+
+    div {
+      p {
+        font-size: 6.4vw;
+        line-height: 100%;
+      }
+
+      span {
+        display: block;
+        font-size: 6.4vw;
+        line-height: 100%;
+        text-align: center;
+      }
+    }
+
+    ul {
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 8.5vw;
+
+      span {
+        font-size: 13.8vw;
+        margin-bottom: 1vw;
+        line-height: 133%;
+      }
+
+      p {
+        font-size: 3.7vw;
+        line-height: 137%;
+      }
     }
   }
 }

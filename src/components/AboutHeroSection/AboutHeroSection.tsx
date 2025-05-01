@@ -1,6 +1,10 @@
+import { useWindowSize } from "../../hooks/useWindowSize";
 import s from "./AboutHeroSection.module.css";
 
 export const AboutHeroSection = () => {
+  const { width } = useWindowSize();
+  const isMobile = width < 1024;
+
   return (
     <section className={s.section}>
       <div className={s.titleContainer}>
@@ -9,7 +13,14 @@ export const AboutHeroSection = () => {
       </div>
 
       <div className={s.heroBg}>
-        <img src="/images/about-hero-girl.avif" alt="Beaty girl" />
+        <img
+          src={
+            isMobile
+              ? "/images/mobile-about-hero-girl.avif"
+              : "/images/about-hero-girl.avif"
+          }
+          alt="Beaty girl"
+        />
       </div>
     </section>
   );

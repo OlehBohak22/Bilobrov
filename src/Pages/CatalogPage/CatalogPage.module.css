@@ -143,7 +143,7 @@
   }
 
   .categoryHeader {
-    margin-bottom: 6.4vw;
+    /* margin-bottom: 6.4vw; */
 
     h1 {
       font-size: 8.5vw;
@@ -163,6 +163,7 @@
       height: 15vw;
       justify-content: start;
       padding-left: 4.3vw;
+      padding-right: 4.3vw;
 
       li {
         font-size: 4.8vw;
@@ -174,16 +175,15 @@
       }
     }
 
+    ul {
+      /* Приховування скролбару для Webkit браузерів (Chrome, Safari, Opera) */
+      -webkit-overflow-scrolling: touch; /* Гладкий скролінг для мобільних */
+      scrollbar-width: none; /* Firefox */
+      -ms-overflow-style: none; /* Internet Explorer/Edge */
+    }
+
     ul::-webkit-scrollbar {
-      height: 3px;
-    }
-    ul::-webkit-scrollbar-track {
-      width: 0.1vw;
-      background-color: rgba(254, 228, 229, 1);
-    }
-    ul::-webkit-scrollbar-thumb {
-      width: 0.1vw;
-      background-color: var(--primary);
+      display: none;
     }
   }
 
@@ -202,4 +202,26 @@
       }
     }
   }
+}
+
+.scrollbarContainer {
+  width: 100%; /* Ширина скролбару */
+  height: 0.8vw;
+  background: #efedee;
+  border-radius: 0.4vw;
+  overflow: hidden;
+  z-index: 10;
+}
+
+.scroller {
+  display: flex;
+  align-items: center;
+  gap: 10vw;
+}
+
+.scrollbar {
+  height: 100%;
+  width: 0; /* Початковий стан */
+  background: var(--primary);
+  transition: width 0.1s ease-out; /* Плавне розширення */
 }
