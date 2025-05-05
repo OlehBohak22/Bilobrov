@@ -1,5 +1,5 @@
 .page {
-  padding-top: 11.4vw;
+  /* padding-top: 11.4vw; */
 }
 
 .list {
@@ -87,7 +87,7 @@
 
 @media (max-width: 1024px) {
   .certificates {
-    padding: 21vw 0;
+    padding-bottom: 21vw;
     h2 {
       margin-bottom: 8.8vw;
 
