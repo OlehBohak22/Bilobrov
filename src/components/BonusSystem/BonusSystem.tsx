@@ -132,11 +132,11 @@ export const BonusSystem = () => {
 
             <div className={s.info}>
               <p>
-                250
+                50
                 <span>бонусів</span>
               </p>
 
-              <span>До Дня народження</span>
+              <span>За відмітку в сторіс</span>
             </div>
           </li>
           <li>
@@ -159,11 +159,11 @@ export const BonusSystem = () => {
 
             <div className={s.info}>
               <p>
-                250
+                50
                 <span>бонусів</span>
               </p>
 
-              <span>До Дня народження</span>
+              <span>За відгук</span>
             </div>
           </li>
         </ul>

@@ -23,3 +23,23 @@
     max-width: 21vw;
   }
 }
+
+@media (max-width: 1024px) {
+  .section {
+    background-image: url(/images/mobile-bonus-hero.avif);
+    padding-top: 13.8vw;
+    padding-bottom: 174vw;
+
+    h1 {
+      font-size: 13.8vw;
+      line-height: 100%;
+      margin-bottom: 6.4vw;
+    }
+
+    p {
+      font-size: 4.2vw;
+      line-height: 140%;
+      max-width: none;
+    }
+  }
+}

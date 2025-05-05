@@ -43,7 +43,7 @@
     margin-bottom: 1.2vw;
   }
 
-  a {
+  button {
     color: rgb(255, 255, 255);
     background-color: var(--primary);
     display: flex;
@@ -52,6 +52,7 @@
     gap: 0.8vw;
     padding: 1vw 3.7vw;
     transition: background-color 0.3s;
+    text-transform: uppercase;
 
     span {
       font-family: Manrope, sans-serif;
@@ -69,7 +70,7 @@
     }
   }
 
-  a:hover {
+  button:hover {
     background-color: #ffc43a;
 
     span {
@@ -89,11 +90,84 @@
     width: fit-content;
     margin-bottom: 1.6vw;
 
+    svg {
+      width: 1.2vw;
+      height: 1.2vw;
+    }
+
     span {
       font-family: Manrope;
       font-size: 0.9vw;
       font-weight: 700;
       line-height: 1.3vw;
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .section {
+    padding-bottom: 10.6vw;
+    .container {
+      flex-direction: column;
+      gap: 6.4vw;
+      align-items: start;
+    }
+
+    p {
+      font-size: 3.7vw;
+      line-height: 150%;
+      max-width: none;
+      margin-bottom: 4.2vw;
+    }
+
+    h2 {
+      margin-bottom: 6.4vw;
+
+      span:nth-child(2) {
+        font-size: 9.6vw;
+        line-height: 100%;
+        text-indent: 5vw;
+      }
+
+      span:nth-child(1) {
+        font-size: 8.5vw;
+        line-height: 100%;
+        margin-bottom: 0.5vw;
+      }
+    }
+
+    .bonus {
+      gap: 2.1vw;
+      padding: 3.2vw;
+      margin-bottom: 4.2vw;
+
+      svg {
+        width: 4.8vw;
+        height: 4.8vw;
+      }
+
+      span {
+        font-size: 3.7vw;
+        line-height: 140%;
+      }
+    }
+
+    button {
+      padding: 4.2vw 10.6vw;
+      gap: 2.6vw;
+      span {
+        font-size: 3.7vw;
+        line-height: 100%;
+      }
+
+      svg {
+        width: 4.8vw;
+        height: 4.8vw;
+      }
+    }
+
+    img {
+      height: 50vh;
     }
   }
 }

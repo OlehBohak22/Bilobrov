@@ -156,3 +156,110 @@
     margin-bottom: 2.1vw;
   }
 }
+
+@media (max-width: 1024px) {
+  .section {
+    padding-top: 10vw;
+    padding-bottom: 10vw;
+    h2 {
+      margin-bottom: 3.7vw;
+
+      span:nth-child(1) {
+        font-size: 8.5vw;
+        line-height: 100%;
+      }
+
+      span:nth-child(2) {
+        margin-top: -0.7vw;
+        font-size: 7.4vw;
+        line-height: 100%;
+        text-indent: 12vw;
+      }
+    }
+
+    .list {
+      flex-direction: column;
+      gap: 2.1vw;
+      margin-bottom: 21.3vw;
+
+      li {
+        width: 100%;
+      }
+
+      .price {
+        padding: 4.2vw 6.4vw;
+
+        h4 {
+          font-size: 4.2vw;
+          line-height: 150%;
+        }
+
+        p {
+          font-size: 13.8vw;
+          line-height: 100%;
+
+          span {
+            font-size: 6.4vw;
+            line-height: 100%;
+          }
+        }
+      }
+
+      .cashback {
+        padding: 4.2vw;
+        span {
+          font-size: 13.8vw;
+          line-height: 133%;
+        }
+
+        p {
+          font-size: 4.2vw;
+          line-height: 150%;
+        }
+      }
+    }
+
+    .subTitle {
+      font-size: 5.3vw;
+      line-height: 96%;
+      text-align: left;
+      margin-bottom: 9.8vw;
+    }
+
+    .bonusList {
+      flex-direction: column;
+      gap: 6.4vw;
+
+      li {
+        gap: 6.4vw;
+      }
+
+      .icon {
+        width: 24.5vw;
+        height: 24.5vw;
+
+        svg {
+          width: 11.2vw;
+          height: 11.2vw;
+        }
+      }
+
+      .info {
+        p {
+          font-size: 13.8vw;
+          line-height: 100%;
+          margin-bottom: 2.1vw;
+
+          span {
+            font-size: 6vw;
+          }
+        }
+
+        span {
+          font-size: 4.2vw;
+          line-height: 150%;
+        }
+      }
+    }
+  }
+}

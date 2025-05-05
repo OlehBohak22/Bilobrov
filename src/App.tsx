@@ -171,7 +171,10 @@ function App() {
               <Route path="/" element={<HomePage />} />
               <Route path="/about" element={<AboutPage />} />
               <Route path="/support" element={<ClientsSupportPage />} />
-              <Route path="/bilobrov-club" element={<BonusPage />} />
+              <Route
+                path="/bilobrov-club"
+                element={<BonusPage openRegister={handleOpenRegister} />}
+              />
               <Route
                 path="/podarunkovi-sertyfikaty-20"
                 element={<CertificatePage />}

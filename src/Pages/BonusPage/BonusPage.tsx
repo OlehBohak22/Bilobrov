@@ -4,11 +4,11 @@ import { BonusSection } from "../../components/BonusSection/BonusSection";
 import { BonusSystem } from "../../components/BonusSystem/BonusSystem";
 import s from "./BonusPage.module.css";
 
-export const BonusPage = () => {
+export const BonusPage = ({ openRegister }: { openRegister: () => void }) => {
   return (
     <main className={s.page}>
       <BonusPageHero />
-      <BonusSection />
+      <BonusSection openRegister={openRegister} />
       <BonusSystem />
       <BonusFaq />
     </main>

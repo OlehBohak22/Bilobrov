@@ -1,8 +1,15 @@
-import { Link } from "react-router";
 import { Layout } from "../Layout/Layout";
 import s from "./BonusSection.module.css";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 
-export const BonusSection = () => {
+export const BonusSection = ({
+  openRegister,
+}: {
+  openRegister: () => void;
+}) => {
+  const { user } = useSelector((state: RootState) => state.user);
+
   return (
     <section className={s.section}>
       <Layout className={s.container}>
@@ -56,28 +63,30 @@ export const BonusSection = () => {
             <span>*1 БОНУС = 1 грн</span>
           </div>
 
-          <Link to="">
-            <span>Зареєструватись</span>
-            <svg
-              viewBox="0 0 25 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <g clipPath="url(#clip0_691_3833)">
-                <path d="M17.9177 5L16.8487 6.05572L21.6059 10.7535H0.5V12.2465H21.6059L16.8487 16.9443L17.9177 18L24.5 11.5L17.9177 5Z" />
-              </g>
-              <defs>
-                <clipPath id="clip0_691_3833">
-                  <rect
-                    width="24"
-                    height="24"
-                    fill="white"
-                    transform="translate(0.5)"
-                  />
-                </clipPath>
-              </defs>
-            </svg>
-          </Link>
+          {!user && (
+            <button onClick={openRegister}>
+              <span>Зареєструватись</span>
+              <svg
+                viewBox="0 0 25 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g clipPath="url(#clip0_691_3833)">
+                  <path d="M17.9177 5L16.8487 6.05572L21.6059 10.7535H0.5V12.2465H21.6059L16.8487 16.9443L17.9177 18L24.5 11.5L17.9177 5Z" />
+                </g>
+                <defs>
+                  <clipPath id="clip0_691_3833">
+                    <rect
+                      width="24"
+                      height="24"
+                      fill="white"
+                      transform="translate(0.5)"
+                    />
+                  </clipPath>
+                </defs>
+              </svg>
+            </button>
+          )}
         </div>
 
         <div className={s.imageContainer}>
