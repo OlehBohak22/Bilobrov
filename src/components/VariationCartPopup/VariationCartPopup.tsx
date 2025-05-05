@@ -12,6 +12,7 @@ import ReactDOM from "react-dom";
 import { ProductInfo } from "../../types/productTypes";
 import { CartProductItemMemo } from "../CartProductItem/CartProductItem";
 import { Loader } from "../Loader/Loader";
+import { motion } from "framer-motion";
 
 interface VariationsPopupProps {
   onSelect: (variationId: number) => void;
@@ -145,12 +146,20 @@ export const VariationsPopup: React.FC<VariationsPopupProps> = ({
   const user = useSelector((state: RootState) => state.user);
 
   return ReactDOM.createPortal(
-    <div
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3, ease: "easeOut" }}
       className={s.overlay}
       onClick={onClose}
       aria-labelledby="variation-popup"
     >
-      <div
+      <motion.div
+        initial={{ x: "-100%" }}
+        animate={{ x: 0 }}
+        exit={{ x: "-100%" }}
+        transition={{ duration: 0.3, ease: "easeOut" }}
         className={s.popup}
         onClick={(e) => e.stopPropagation()}
         role="dialog"
@@ -176,7 +185,7 @@ export const VariationsPopup: React.FC<VariationsPopupProps> = ({
             </button>
           </div>
 
-          <div className="mb-[2vw]">
+          <div className="lg:mb-[2vw] mb-[8.5vw] lg:max-w-[30vw] max-w-full">
             <CartProductItemMemo
               optional={true}
               info={product}
@@ -240,10 +249,9 @@ export const VariationsPopup: React.FC<VariationsPopupProps> = ({
                   <div key={attribute.slug} className={s.attribute}>
                     <p className={s.title}>{attribute.name}</p>
 
-                    {attribute.slug === "pa_color" ? (
+                    {attribute.slug === "pa_kolir" ? (
                       <div className={s.select}>
                         <Select
-                          menuPortalTarget={document.body}
                           options={optionsList.map((opt, index) => ({
                             ...opt,
                             label: (
@@ -338,8 +346,8 @@ export const VariationsPopup: React.FC<VariationsPopupProps> = ({
             </defs>
           </svg>
         </button>
-      </div>
-    </div>,
+      </motion.div>
+    </motion.div>,
     document.body
   );
 };

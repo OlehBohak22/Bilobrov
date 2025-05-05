@@ -12,6 +12,7 @@ import { VariationsPopup } from "../VariationCartPopup/VariationCartPopup";
 import { useGlobalProps } from "../../GlobalPropContext";
 import { truncateHtmlString } from "../../utils/truncateHtmlString";
 import { useWindowSize } from "../../hooks/useWindowSize";
+import { AnimatePresence } from "framer-motion";
 
 interface ProductItemProps {
   info: ProductInfo;
@@ -214,29 +215,32 @@ export const ProductItem: React.FC<ProductItemProps> = ({
         </div>
       </li>
 
-      {isPopupOpen && info.variations && (
-        <VariationsPopup
-          onSelect={(variation_id) => {
-            dispatch(
-              addToCart({
-                product: {
-                  id: info.id,
-                  quantity: 1,
-                  variation_id,
-                },
-                token,
-              })
-            );
+      <AnimatePresence>
+        {isPopupOpen && info.variations && (
+          <VariationsPopup
+            onSelect={(variation_id) => {
+              dispatch(
+                addToCart({
+                  product: {
+                    id: info.id,
+                    quantity: 1,
+                    variation_id,
+                  },
+                  token,
+                })
+              );
 
-            setPopupOpen(false);
-          }}
-          onClose={() => {
-            setPopupOpen(false);
-          }}
-          productId={info.id}
-          product={info}
-        />
-      )}
+              setPopupOpen(false);
+              openCart();
+            }}
+            onClose={() => {
+              setPopupOpen(false);
+            }}
+            productId={info.id}
+            product={info}
+          />
+        )}
+      </AnimatePresence>
     </>
   );
 };

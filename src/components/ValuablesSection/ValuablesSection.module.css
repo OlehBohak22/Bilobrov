@@ -59,3 +59,36 @@
   background-color: #fee4e5;
   color: var(--primary);
 }
+
+@media (max-width: 1024px) {
+  .section {
+    padding: 20vw 0;
+    h2 {
+      font-size: 5.3vw;
+      line-height: 96%;
+      margin-bottom: 8.5vw;
+    }
+
+    ul {
+      display: flex;
+      flex-direction: column;
+      gap: 2.1vw;
+
+      li {
+        padding: 10.6vw 8.5vw !important;
+        min-height: 80vw;
+        justify-content: space-between;
+
+        h3 {
+          font-size: 6.4vw;
+          line-height: 100%;
+        }
+
+        p {
+          font-size: 3.7vw;
+          line-height: 150%;
+        }
+      }
+    }
+  }
+}

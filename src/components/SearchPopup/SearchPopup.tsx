@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import s from "./SearchPopup.module.css"; // Створи файл стилів
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppDispatch } from "../../store";
@@ -30,32 +30,21 @@ export const SearchPopup: React.FC<SearchPopupProps> = ({ close }) => {
     }
   }, [location.pathname]);
 
-  const [localQuery, setLocalQuery] = useState("");
+  const searchQuery = useSelector(
+    (state: RootState) => state.filters.searchQuery
+  );
 
   useEffect(() => {
     dispatch(resetPage());
     dispatch(fetchProducts());
   }, [dispatch]);
 
-  const [typingTimeout, setTypingTimeout] = useState<ReturnType<
-    typeof setTimeout
-  > | null>(null);
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setLocalQuery(value);
 
-    if (typingTimeout) {
-      clearTimeout(typingTimeout);
-    }
-
-    const timeout = setTimeout(() => {
-      dispatch(setSearchQuery(value));
-      dispatch(resetPage());
-      dispatch(fetchProducts());
-    }, 500); // 500ms затримка
-
-    setTypingTimeout(timeout);
+    dispatch(setSearchQuery(value));
+    dispatch(resetPage());
+    dispatch(fetchProducts());
   };
 
   useEffect(() => {
@@ -110,7 +99,7 @@ export const SearchPopup: React.FC<SearchPopupProps> = ({ close }) => {
         <div className={s.inputContainer}>
           <input
             type="text"
-            value={localQuery}
+            value={searchQuery}
             onChange={handleInputChange}
             placeholder="Введіть товар для пошуку"
             className={s.input}

@@ -2,6 +2,7 @@
 import { HomeHero } from "../../components/HomeHero/HomeHero";
 import BrandsList from "../../components/PopularBrands/BrandsList";
 import { ProductList } from "../../components/ProductList/ProductList";
+import s from "./HomePage.module.css";
 
 import { CategoriesSection } from "../../components/CategoriesSection/CategoriesSection";
 import { HomeAbout } from "../../components/HomeAbout/HomeAbout";
@@ -12,7 +13,7 @@ import { Layout } from "../../components/Layout/Layout";
 
 export const HomePage = () => {
   return (
-    <main>
+    <main className={s.page}>
       <HomeHero></HomeHero>
 
       <Layout>

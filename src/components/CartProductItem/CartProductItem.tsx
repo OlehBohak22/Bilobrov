@@ -135,16 +135,16 @@ const CartProductItem: React.FC<ProductItemProps> = ({
 
       <div className={s.div}>
         <div>
-          <div className="flex  items-center lg:mb-[0.6vw] mb-[3.2vw]">
+          <div className="flex  items-center lg:mb-[0.6vw] mb-[3.2vw] flex-wrap">
             <div>
               {optional && (
                 <div className={s.markersBlock}>
-                  {info.featured && (
+                  {/* {info.featured && (
                     <div className={s.bestMarker}>
                       <span>bilobrov'S</span>
                       <span>BEST</span>
                     </div>
-                  )}
+                  )} */}
 
                   <div className={s.topMarker}>TOP</div>
 

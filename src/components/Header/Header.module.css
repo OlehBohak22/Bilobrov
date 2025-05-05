@@ -1,10 +1,10 @@
 .header {
   /* border-bottom: 1px solid rgba(0, 0, 0, 0.05); */
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+  position: fixed;
+  /* left: 50%; */
+  /* transform: translateX(-50%); */
   width: 100%;
-  transition: background 0.3s;
+  transition: 0.3s;
   z-index: 999;
 
   a,
@@ -16,6 +16,10 @@
   path {
     transition: stroke 0.3s;
   }
+}
+
+.opacity {
+  display: none;
 }
 
 .searchBtn {
@@ -50,13 +54,12 @@
   background-color: #ffffff;
 }
 .header.hovered {
-  position: static;
+  position: fixed;
   transform: none;
 }
 
 .hovered ~ main {
-  padding-top: 0;
-  backdrop-filter: rgb(1, 1, 1);
+  backdrop-filter: rgb(0, 0, 0);
 }
 
 .header.hovered span,
@@ -143,6 +146,34 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.headerInputSearch {
+  position: relative;
+  border-radius: 83px;
+  background: rgba(26, 26, 26, 0.03);
+  padding: 4.8vw 4.8vw 4.8vw 15.4vw;
+  color: var(--Black-40, #a7a9aa);
+  font-variant-numeric: lining-nums proportional-nums;
+  font-family: Raleway;
+  font-size: 3.7vw;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: -0.28px;
+
+  input {
+    width: 100%;
+  }
+
+  svg {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 3.7vw;
+    width: 6.4vw;
+    height: 6.4vw;
+  }
 }
 
 .headerBottomLine {

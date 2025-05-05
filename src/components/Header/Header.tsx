@@ -3,10 +3,17 @@ import s from "./Header.module.css";
 import { HeaderUserSettings } from "../HeaderUserSettings/HeaderUserSettings";
 import { Link } from "react-router";
 import { useLocation } from "react-router";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../store";
 import { buildMenuTree } from "../../utils/buildMenuTree";
 import { useWindowSize } from "../../hooks/useWindowSize";
+import {
+  fetchProducts,
+  resetPage,
+  setSearchQuery,
+} from "../../store/slices/filterSlice";
+import { useEffect, useState } from "react";
+import "./Header.css";
 
 interface HeaderProps {
   openRegister: () => void;
@@ -26,6 +33,39 @@ export const Header: React.FC<HeaderProps> = ({
   const location = useLocation();
   const { width } = useWindowSize();
 
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  let lastScrollY = window.scrollY;
+  const header = document.querySelector(".header");
+
+  window.addEventListener("scroll", () => {
+    if (window.scrollY < 100) {
+      header?.classList.remove("hide");
+      return;
+    }
+
+    if (window.scrollY > lastScrollY) {
+      header?.classList.add("hide");
+    } else {
+      header?.classList.remove("hide");
+    }
+
+    lastScrollY = window.scrollY;
+  });
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 100) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const isMobile = width < 1024;
 
   const menu = useSelector(
@@ -33,6 +73,28 @@ export const Header: React.FC<HeaderProps> = ({
   );
 
   const menuTree = buildMenuTree(menu);
+
+  const dispatch = useDispatch<AppDispatch>();
+  const searchQuery = useSelector(
+    (state: RootState) => state.filters.searchQuery
+  );
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    dispatch(setSearchQuery(value));
+    dispatch(resetPage());
+    dispatch(fetchProducts());
+  };
+
+  const foundProducts = useSelector(
+    (state: RootState) => state.filters.products
+  );
+
+  useEffect(() => {
+    if (searchQuery.trim().length > 0 && foundProducts.length > 0) {
+      openSearch();
+    }
+  }, [foundProducts, searchQuery]);
 
   return (
     <header
@@ -50,7 +112,9 @@ export const Header: React.FC<HeaderProps> = ({
         ].includes(location.pathname)
           ? s.hovered
           : ""
-      } ${location.pathname === "/order" && s.dn} `}
+      } ${isScrolled ? s.hovered : ""} ${
+        location.pathname === "/order" && s.dn
+      } header`}
     >
       {!isMobile && (
         <div className={s.freeDelivery}>
@@ -162,8 +226,45 @@ export const Header: React.FC<HeaderProps> = ({
           />
         </div>
 
+        {isMobile && (
+          <div className={s.headerInputSearch}>
+            <input
+              type="text"
+              placeholder="Введіть товар для пошуку"
+              value={searchQuery}
+              onChange={handleInputChange}
+            />
+
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <ellipse
+                cx="10.9995"
+                cy="10.7885"
+                rx="8.03854"
+                ry="8.03854"
+                stroke="#1A1A1A"
+                stroke-width="1.6"
+                stroke-linecap="square"
+              />
+              <path
+                d="M16.4863 16.708L21.0398 21.2497"
+                stroke="#1A1A1A"
+                stroke-width="1.6"
+                stroke-linecap="square"
+              />
+            </svg>
+          </div>
+        )}
+
         {!isMobile && (
-          <div className={s.headerBottomLine}>
+          <div
+            className={`${s.headerBottomLine} ${
+              location.pathname.startsWith("/account") && s.opacity
+            }`}
+          >
             <nav>
               <ul className={s.navMenu}>
                 {menuTree.map((item) => {

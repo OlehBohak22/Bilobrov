@@ -16,6 +16,7 @@ import {
   fetchAttributes,
   resetPage,
   setPage,
+  resetFilters,
 } from "../../store/slices/filterSlice";
 
 import { ProductItem } from "../../components/ProductItem/ProductItem";
@@ -106,6 +107,14 @@ export const CatalogPage: React.FC = () => {
   }, [isFilterOpen]);
 
   useEffect(() => {
+    if (slug === "news" || slug === "sales") {
+      dispatch(resetFilters());
+
+      navigate(`/catalog/${slug}`, { replace: true });
+    }
+  }, [slug]);
+
+  useEffect(() => {
     dispatch(fetchAttributes());
     const categoriesFromQuery = query.get("categories");
     const brandsFromQuery = query.get("brand") || query.get("brands");
@@ -148,7 +157,11 @@ export const CatalogPage: React.FC = () => {
     const sortFromQuery = query.get("sort");
 
     if (slug === "news") {
-      dispatch(setSort("date"));
+      if (!sortFromQuery) {
+        dispatch(setSort("date")); // тільки якщо в query нема sort
+      } else if (validSortValues.includes(sortFromQuery as any)) {
+        dispatch(setSort(sortFromQuery as (typeof validSortValues)[number]));
+      }
     } else if (validSortValues.includes(sortFromQuery as any)) {
       dispatch(setSort(sortFromQuery as (typeof validSortValues)[number]));
     } else {

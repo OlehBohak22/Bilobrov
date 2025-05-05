@@ -15,7 +15,6 @@ import { RegisterModal } from "./components/RegisterPopup/Register";
 import { RootState } from "./store/index";
 import { fetchProducts } from "./store/slices/productsSlice";
 import { WishListPopup } from "./components/WishListPopup/WishListPopup";
-// import { LoadingBar } from "./components/LoadingBar/LoadingBar";
 import { CartPopup } from "./components/CartPopup/CartPopup";
 import { ProductPage } from "./Pages/ProductPage/ProductPage";
 import { ReviewPopup } from "./components/ReviewPopup/ReviewPopup";
@@ -33,10 +32,10 @@ import { fetchBanner } from "./store/slices/bannerSlice";
 import LoadingBar from "./components/LoadingBar/LoadingBar";
 import {} from "./store/slices/wishlistSlice";
 import { GlobalPropsContext } from "./GlobalPropContext";
-// import { NovaPoshtaMap } from "./components/MapPopup/MapPopup";
 import { AnimatePresence } from "framer-motion";
 import { fetchReviews } from "./store/slices/productsSlice";
 import { SearchPopup } from "./components/SearchPopup/SearchPopup";
+import { setSearchQuery } from "./store/slices/filterSlice";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -144,7 +143,12 @@ function App() {
               {isWishList && <WishListPopup onClose={handleCloseModals} />}
               {isCartOpen && <CartPopup onClose={handleCloseModals} />}
               {isSearchOpen && (
-                <SearchPopup close={() => setSearchOpen(false)} />
+                <SearchPopup
+                  close={() => {
+                    setSearchOpen(false);
+                    dispatch(setSearchQuery(""));
+                  }}
+                />
               )}
 
               {isMenuOpen && (
@@ -185,7 +189,6 @@ function App() {
                 />
               </Route>
 
-              {/* Сторінка товару */}
               <Route
                 path="/product/:slug/:id"
                 element={
@@ -199,8 +202,6 @@ function App() {
             </Routes>
 
             <Footer />
-
-            {/* <NovaPoshtaMap /> */}
           </>
         )}
       </>

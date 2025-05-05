@@ -1,7 +1,11 @@
+import { useWindowSize } from "../../hooks/useWindowSize";
 import { Layout } from "../Layout/Layout";
 import s from "./ValuablesSection.module.css";
 
 export const ValuablesSection = () => {
+  const { width } = useWindowSize();
+  const isMobile = width < 1024;
+
   return (
     <section className={s.section}>
       <Layout>
@@ -24,9 +28,13 @@ export const ValuablesSection = () => {
               лікарі-консультанти допоможуть обрати найкраще саме для вас.
             </p>
           </li>
-          <li>
-            <img src="/images/valuables.jpg" alt="Valuables" />
-          </li>
+
+          {!isMobile && (
+            <li>
+              <img src="/images/valuables.jpg" alt="Valuables" />
+            </li>
+          )}
+
           <li className={s.rose}>
             <h3>Якість продукції</h3>
             <p>

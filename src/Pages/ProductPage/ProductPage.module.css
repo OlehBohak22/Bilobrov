@@ -1,13 +1,14 @@
 .page {
-  padding-top: 15vw;
+  /* padding-top: 15vw; */
   padding-bottom: 8.3vw;
 }
 
 .loader {
   display: flex;
   justify-content: center;
-  align-items: center;
-  height: 20vw;
+  /* align-items: center; */
+  padding-top: 15vw;
+  height: 100vh;
 }
 
 .loader::after {
@@ -34,6 +35,10 @@
 @media (max-width: 1024px) {
   .page {
     padding-bottom: 21.3vw;
+  }
+
+  .loader {
+    padding-top: 80vw;
   }
 
   .contentFlex {

@@ -1,0 +1,4 @@
+.hide {
+  /* position: relative; */
+  transform: translateY(-100%) !important;
+}
