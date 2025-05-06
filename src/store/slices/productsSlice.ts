@@ -1,10 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { ProductInfo } from "../../types/productTypes";
-
-export const API_URL =
-  "https://bilobrov.projection-learn.website/wp-json/wc/v3/";
-export const consumerKey = "ck_f6e14983147c7a65ff3dd554625c6ae3069dbd5b";
-export const consumerSecret = "cs_f9430f1ca298c36b0001d95521253a5b1deb2fc5";
+import {
+  API_URL_WC,
+  API_URL_WP,
+  consumerKey,
+  consumerSecret,
+} from "../../constants/api";
 
 const headers = new Headers();
 headers.set(
@@ -20,8 +21,8 @@ interface ProductState {
   reviews: any[];
   variations: ProductInfo[];
   error: string | null;
-  reviewMessage: string | null; // Повідомлення для відгуку
-  reviewError: string | null; // Помилка для відгуку
+  reviewMessage: string | null;
+  reviewError: string | null;
 }
 
 const initialState: ProductState = {
@@ -49,14 +50,11 @@ export const addReview = createAsyncThunk(
     { rejectWithValue }
   ) => {
     try {
-      const response = await fetch(
-        "https://bilobrov.projection-learn.website/wp-json/responses/v1/add-review",
-        {
-          method: "POST",
-          headers,
-          body: formData,
-        }
-      );
+      const response = await fetch(`${API_URL_WP}add-review`, {
+        method: "POST",
+        headers,
+        body: formData,
+      });
 
       const data = await response.json();
 
@@ -74,11 +72,11 @@ export const addReview = createAsyncThunk(
 
 export const fetchProducts = createAsyncThunk<
   ProductInfo[],
-  void, // Видалено параметри
+  void,
   { rejectValue: string }
 >("products/fetchProducts", async (_, { rejectWithValue }) => {
   try {
-    const url = `${API_URL}products?per_page=100`; // Тільки базовий URL без фільтрів
+    const url = `${API_URL_WC}products?per_page=100`;
 
     const response = await fetch(url, {
       method: "GET",
@@ -98,15 +96,15 @@ export const fetchProducts = createAsyncThunk<
 
 export const fetchCartProducts = createAsyncThunk<
   ProductInfo[],
-  number[], // масив ID продуктів
+  number[],
   { rejectValue: string }
 >("products/fetchCartProducts", async (productIds, { rejectWithValue }) => {
   try {
     if (!productIds.length) return [];
 
-    const url = `${API_URL}products?include=${productIds.join(",")}&per_page=${
-      productIds.length
-    }`;
+    const url = `${API_URL_WC}products?include=${productIds.join(
+      ","
+    )}&per_page=${productIds.length}`;
 
     const response = await fetch(url, {
       method: "GET",
@@ -127,7 +125,7 @@ export const fetchCartProducts = createAsyncThunk<
 export const fetchProductById = createAsyncThunk<ProductInfo, number>(
   "products/fetchProductById",
   async (productId) => {
-    const response = await fetch(`${API_URL}products/${productId}`, {
+    const response = await fetch(`${API_URL_WC}products/${productId}`, {
       method: "GET",
       headers: headers,
     });
@@ -141,10 +139,13 @@ export const fetchProductById = createAsyncThunk<ProductInfo, number>(
 export const fetchProductVariations = createAsyncThunk<ProductInfo[], number>(
   "products/fetchProductVariations",
   async (productId) => {
-    const response = await fetch(`${API_URL}products/${productId}/variations`, {
-      method: "GET",
-      headers: headers,
-    });
+    const response = await fetch(
+      `${API_URL_WC}products/${productId}/variations`,
+      {
+        method: "GET",
+        headers: headers,
+      }
+    );
     if (!response.ok) {
       throw new Error("Failed to fetch product");
     }
@@ -157,7 +158,7 @@ export const fetchVariationById = createAsyncThunk<
   { productId: number; variationId: number }
 >("products/fetchVariationById", async ({ productId, variationId }) => {
   const response = await fetch(
-    `${API_URL}products/${productId}/variations/${variationId}`,
+    `${API_URL_WC}products/${productId}/variations/${variationId}`,
     {
       method: "GET",
       headers: headers,
@@ -172,7 +173,7 @@ export const fetchVariationById = createAsyncThunk<
 export const fetchReviews = createAsyncThunk(
   "products/fetchReviews",
   async () => {
-    const response = await fetch(`${API_URL}products/reviews?per_page=100`, {
+    const response = await fetch(`${API_URL_WC}products/reviews?per_page=100`, {
       method: "GET",
       headers: headers,
     });

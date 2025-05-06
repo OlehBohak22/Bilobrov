@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { API_URL_WP } from "../../constants/api";
 
-const URL =
-  "https://bilobrov.projection-learn.website/wp-json/responses/v1/user_address";
+const URL = `${API_URL_WP}user_address`;
 
 export interface Address {
   first_name?: string;
@@ -14,7 +14,7 @@ export interface Address {
   entrance: string;
   apartment: string;
   selected: boolean;
-  delivery_type: string; // Обмежуємо значення лише двома варіантами
+  delivery_type: string;
   department: string;
 }
 
@@ -28,7 +28,6 @@ const initialState: AddressState = {
   error: null,
 };
 
-// Додавання адреси
 export const addAddress = createAsyncThunk(
   "address/addAddress",
   async ({ token, address }: { token: string; address: Address }) => {
@@ -54,7 +53,6 @@ export const addAddress = createAsyncThunk(
   }
 );
 
-// Видалення адреси
 export const deleteAddress = createAsyncThunk(
   "address/deleteAddress",
   async ({ token, addressId }: { token: string; addressId: string }) => {
@@ -76,7 +74,6 @@ export const deleteAddress = createAsyncThunk(
   }
 );
 
-// Оновлення адреси
 export const updateAddress = createAsyncThunk(
   "address/updateAddress",
   async ({ token, address }: { token: string; address: Address }) => {

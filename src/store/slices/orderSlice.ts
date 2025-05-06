@@ -1,8 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-
-const consumerKey = "ck_f6e14983147c7a65ff3dd554625c6ae3069dbd5b";
-const consumerSecret = "cs_f9430f1ca298c36b0001d95521253a5b1deb2fc5";
+import { API_URL_WC, consumerKey, consumerSecret } from "../../constants/api";
 
 export interface OrderData {
   payment_method: string;
@@ -40,7 +38,7 @@ export interface OrderData {
     product_id: number;
     quantity: number;
     variation_id?: number;
-    image?: { src: string }; // змінили тип на об'єкт з полем src
+    image?: { src: string };
   }[];
   shipping_lines: {
     method_id: string;
@@ -69,16 +67,12 @@ export const createOrder = createAsyncThunk<OrderData, OrderData>(
     console.log(orderData);
 
     try {
-      const response = await axios.post(
-        "https://bilobrov.projection-learn.website/wp-json/wc/v3/orders",
-        orderData,
-        {
-          headers: {
-            Authorization: "Basic " + btoa(`${consumerKey}:${consumerSecret}`),
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await axios.post(`${API_URL_WC}orders`, orderData, {
+        headers: {
+          Authorization: "Basic " + btoa(`${consumerKey}:${consumerSecret}`),
+          "Content-Type": "application/json",
+        },
+      });
       console.log(response.data);
       return response.data;
     } catch (error: any) {

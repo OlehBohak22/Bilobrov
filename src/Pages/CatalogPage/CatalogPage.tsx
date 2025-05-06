@@ -16,7 +16,6 @@ import {
   fetchAttributes,
   resetPage,
   setPage,
-  resetFilters,
 } from "../../store/slices/filterSlice";
 
 import { ProductItem } from "../../components/ProductItem/ProductItem";
@@ -30,6 +29,9 @@ import { Pagination } from "../../components/Pagination/Pagination";
 import { AnimatePresence } from "framer-motion";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { Loader } from "../../components/Loader/Loader";
+import { usePageData } from "../../hooks/usePageData";
+import { Helmet } from "react-helmet";
+import { API_URL } from "../../constants/api";
 
 export const CatalogPage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -90,13 +92,33 @@ export const CatalogPage: React.FC = () => {
     return allCategories.filter((cat) => cat.parent === parentCategory.id);
   }, [parentCategory, allCategories]);
 
-  const onTabClick = (categoryId: number, categorySlug: string) => {
+  const onTabClick = (
+    categoryId: number,
+    categorySlug: string,
+    categoryUrl: string
+  ) => {
+    const clickedCategory = allCategories.find((cat) => cat.id === categoryId);
+    let fullSlugPath = `/catalog/${categorySlug}`;
+
+    if (clickedCategory?.parent) {
+      const parentCat = allCategories.find(
+        (cat) => cat.id === clickedCategory.parent
+      );
+      if (parentCat) {
+        fullSlugPath = `/catalog/${parentCat.slug}/${clickedCategory.slug}`;
+      }
+    }
+
     const currentParams = new URLSearchParams(location.search);
     currentParams.set("categories", categoryId.toString());
-    navigate({
-      pathname: `/catalog/${categorySlug}`,
-      search: currentParams.toString(),
-    });
+
+    navigate(
+      {
+        pathname: fullSlugPath,
+        search: currentParams.toString(),
+      },
+      { state: categoryUrl } // залишаємо для meta
+    );
   };
 
   useEffect(() => {
@@ -106,13 +128,13 @@ export const CatalogPage: React.FC = () => {
     }
   }, [isFilterOpen]);
 
-  useEffect(() => {
-    if (slug === "news" || slug === "sales") {
-      dispatch(resetFilters());
+  // useEffect(() => {
+  //   if (slug === "news" || slug === "sales") {
+  //     dispatch(resetFilters());
 
-      navigate(`/catalog/${slug}`, { replace: true });
-    }
-  }, [slug]);
+  //     navigate(`/catalog/${slug}`, { replace: true });
+  //   }
+  // }, [slug]);
 
   useEffect(() => {
     dispatch(fetchAttributes());
@@ -158,7 +180,7 @@ export const CatalogPage: React.FC = () => {
 
     if (slug === "news") {
       if (!sortFromQuery) {
-        dispatch(setSort("date")); // тільки якщо в query нема sort
+        dispatch(setSort("date"));
       } else if (validSortValues.includes(sortFromQuery as any)) {
         dispatch(setSort(sortFromQuery as (typeof validSortValues)[number]));
       }
@@ -272,8 +294,61 @@ export const CatalogPage: React.FC = () => {
     };
   }, [location]);
 
+  let metaUrl = location.state;
+
+  if (!metaUrl) {
+    if (slug === "news") {
+      metaUrl = `${API_URL}/product-category/news`;
+    } else if (slug === "sales") {
+      metaUrl = `${API_URL}/product-category/sales`;
+    } else if (parentSlug && childSlug) {
+      metaUrl = `${API_URL}/product-category/${parentSlug}/${childSlug}`;
+    } else if (parentSlug) {
+      metaUrl = `${API_URL}/product-category/${parentSlug}`;
+    } else if (slug) {
+      metaUrl = `${API_URL}/product-category/${slug}`;
+    } else {
+      metaUrl = `${API_URL}/product-category`; // fallback
+    }
+  }
+
+  const seoData = usePageData(metaUrl);
+
   return (
     <main className={s.page}>
+      <Helmet>
+        <title>{seoData.title || "Bilobrov"}</title>
+        <link
+          rel="canonical"
+          href={seoData.canonical || window.location.href}
+        />
+
+        {seoData.og_title && (
+          <meta property="og:title" content={seoData.og_title} />
+        )}
+        {seoData.og_description && (
+          <meta property="og:description" content={seoData.og_description} />
+        )}
+        {seoData.og_url && <meta property="og:url" content={seoData.og_url} />}
+        {seoData.og_locale && (
+          <meta property="og:locale" content={seoData.og_locale} />
+        )}
+        {seoData.og_type && (
+          <meta property="og:type" content={seoData.og_type} />
+        )}
+        {seoData.og_site_name && (
+          <meta property="og:site_name" content={seoData.og_site_name} />
+        )}
+        {seoData.twitter_card && (
+          <meta name="twitter:card" content={seoData.twitter_card} />
+        )}
+
+        <meta
+          name="robots"
+          content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
+        />
+      </Helmet>
+
       <Layout>
         <Breadcrumbs aria-label="breadcrumb" className="breadcrumbs">
           {breadcrumbs.map((breadcrumb, index) => (
@@ -308,7 +383,9 @@ export const CatalogPage: React.FC = () => {
                       ? s.active
                       : ""
                   }
-                  onClick={() => onTabClick(cat.id, cat.slug)}
+                  onClick={() =>
+                    onTabClick(cat.id, cat.slug, cat.yoast_head_json.og_url)
+                  }
                 >
                   {cat.name}
                 </li>
@@ -341,7 +418,9 @@ export const CatalogPage: React.FC = () => {
                         ? s.active
                         : ""
                     }
-                    onClick={() => onTabClick(cat.id, cat.slug)}
+                    onClick={() =>
+                      onTabClick(cat.id, cat.slug, cat.yoast_head_json.og_url)
+                    }
                   >
                     {cat.name}
                   </li>

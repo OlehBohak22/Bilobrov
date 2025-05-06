@@ -1,14 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios, { AxiosError } from "axios";
 import { setUserFromToken } from "../slices/userSlice";
-import { AppDispatch } from "../index"; // тип для dispatch
+import { AppDispatch } from "../index";
+import { API_URL_BASE, consumerKey, consumerSecret } from "../../constants/api";
 
-// Константи
-const API_URL = "https://bilobrov.projection-learn.website/wp-json";
-const consumerKey = "ck_f6e14983147c7a65ff3dd554625c6ae3069dbd5b";
-const consumerSecret = "cs_f9430f1ca298c36b0001d95521253a5b1deb2fc5";
+const API_URL = API_URL_BASE;
 
-// Axios Instance
 const axiosInstance = axios.create({
   baseURL: API_URL,
   withCredentials: true,
@@ -17,17 +14,14 @@ const axiosInstance = axios.create({
   },
 });
 
-// Тип для помилок
 interface ErrorResponse {
   message: string;
 }
 
-// Отримати токен з localStorage
 export const getTokenFromLocalStorage = () => {
   return localStorage.getItem("token");
 };
 
-// Перевірка токену при завантаженні додатка
 export const checkUserSession = () => async (dispatch: AppDispatch) => {
   const token = getTokenFromLocalStorage();
   if (token) {
@@ -42,7 +36,6 @@ export const checkUserSession = () => async (dispatch: AppDispatch) => {
   }
 };
 
-// Реєстрація користувача
 export const registerUser = createAsyncThunk(
   "user/register",
   async (data: { email: string; password: string; name: string }, thunkAPI) => {
@@ -70,7 +63,6 @@ export const registerUser = createAsyncThunk(
   }
 );
 
-// Логін користувача
 export const loginUser = createAsyncThunk(
   "user/login",
   async (data: { email: string; password: string }, thunkAPI) => {
@@ -99,7 +91,6 @@ export const loginUser = createAsyncThunk(
   }
 );
 
-// Оновлення інформації користувача
 export const updateUserInfo = createAsyncThunk(
   "user/updateUserInfo",
   async (

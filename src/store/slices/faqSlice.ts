@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
+import { API_URL_WP_V2 } from "../../constants/api";
 
 interface FaqItem {
   id: number;
@@ -20,9 +21,7 @@ const initialState: FaqState = {
 };
 
 export const fetchFaqs = createAsyncThunk("faq/fetchFaqs", async () => {
-  const response = await axios.get<FaqItem[]>(
-    "https://bilobrov.projection-learn.website/wp-json/wp/v2/faqs"
-  );
+  const response = await axios.get<FaqItem[]>(`${API_URL_WP_V2}faqs`);
   return response.data;
 });
 

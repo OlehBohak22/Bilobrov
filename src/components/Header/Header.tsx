@@ -75,6 +75,7 @@ export const Header: React.FC<HeaderProps> = ({
   const menuTree = buildMenuTree(menu);
 
   const dispatch = useDispatch<AppDispatch>();
+
   const searchQuery = useSelector(
     (state: RootState) => state.filters.searchQuery
   );
@@ -299,16 +300,16 @@ export const Header: React.FC<HeaderProps> = ({
 
                   return (
                     <li className={s.menuItem} key={item.id}>
-                      <Link to={modifiedUrl}>{item.title}</Link>
+                      <Link state={item.url} to={modifiedUrl}>
+                        {item.title}
+                      </Link>
                       {item.children.length > 0 && (
                         <ul className={s.subMenu}>
                           {item.children.map((child) => {
-                            let modifiedChildUrl = child.url.replace(/\/$/, ""); // Видаляємо слеш у кінці
+                            let modifiedChildUrl = child.url.replace(/\/$/, "");
 
-                            // Остання частина URL
                             const lastPart = modifiedChildUrl.split("/").pop();
 
-                            // Обробка виключених категорій для дочірніх елементів
                             if (modifiedChildUrl.includes("support")) {
                               modifiedChildUrl = modifiedChildUrl.endsWith(
                                 "support"
@@ -329,7 +330,12 @@ export const Header: React.FC<HeaderProps> = ({
 
                             return (
                               <li key={child.id}>
-                                <Link to={modifiedChildUrl}>{child.title}</Link>
+                                <Link
+                                  state={child.url}
+                                  to={`${modifiedChildUrl}?id=${child.id}`}
+                                >
+                                  {child.title}
+                                </Link>
                               </li>
                             );
                           })}
@@ -377,16 +383,17 @@ export const Header: React.FC<HeaderProps> = ({
 
                 return (
                   <li className={s.menuItem} key={item.id}>
-                    <Link to={modifiedUrl}>{item.title}</Link>
+                    <Link to={`${modifiedUrl}?id=${item.id}`}>
+                      {item.title}
+                    </Link>
+
                     {item.children.length > 0 && (
                       <ul className={s.subMenu}>
                         {item.children.map((child) => {
-                          let modifiedChildUrl = child.url.replace(/\/$/, ""); // Видаляємо слеш у кінці
+                          let modifiedChildUrl = child.url.replace(/\/$/, "");
 
-                          // Остання частина URL
                           const lastPart = modifiedChildUrl.split("/").pop();
 
-                          // Обробка виключених категорій для дочірніх елементів
                           if (modifiedChildUrl.includes("support")) {
                             modifiedChildUrl = modifiedChildUrl.endsWith(
                               "support"
@@ -407,7 +414,9 @@ export const Header: React.FC<HeaderProps> = ({
 
                           return (
                             <li key={child.id}>
-                              <Link to={modifiedChildUrl}>{child.title}</Link>
+                              <Link to={`${modifiedChildUrl}?id=${item.id}`}>
+                                {child.title}
+                              </Link>
                             </li>
                           );
                         })}

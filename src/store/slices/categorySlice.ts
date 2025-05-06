@@ -1,14 +1,10 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { Category } from "../../types/categoryType";
+import { API_URL_WC, consumerKey, consumerSecret } from "../../constants/api";
 
-const API_URL =
-  "https://bilobrov.projection-learn.website/wp-json/wc/v3/products/categories?per_page=100";
+const API_URL = `${API_URL_WC}products/categories?per_page=100`;
 
-const consumerKey = "ck_f6e14983147c7a65ff3dd554625c6ae3069dbd5b";
-const consumerSecret = "cs_f9430f1ca298c36b0001d95521253a5b1deb2fc5";
-
-// Заголовок авторизації
 const headers = {
   Authorization: "Basic " + btoa(`${consumerKey}:${consumerSecret}`),
 };
@@ -45,10 +41,13 @@ const categoriesSlice = createSlice({
       .addCase(
         fetchCategories.fulfilled,
         (state, action: PayloadAction<Category[]>) => {
-          state.categories = action.payload;
+          state.categories = action.payload.filter(
+            (cat) => cat.slug !== "sales" && cat.slug !== "news"
+          );
           state.loading = false;
         }
       )
+
       .addCase(fetchCategories.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || "Помилка завантаження";

@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { togglePreference } from "./wishlistSlice";
 import { registerUser, loginUser } from "../actions/userActions";
 
 interface BonusHistoryItem {
@@ -52,7 +51,6 @@ export interface Order {
   products: Product[];
 }
 
-// Оновлюємо інтерфейс UserData
 interface UserMeta {
   preferences: number[];
   birthday?: string;
@@ -68,7 +66,7 @@ export interface UserData {
   email: string;
   name: string;
   secondName: string;
-  meta: UserMeta; // Додано поле meta
+  meta: UserMeta;
 }
 
 interface AuthState {
@@ -167,13 +165,7 @@ const userSlice = createSlice({
 
   extraReducers: (builder) => {
     builder
-      .addCase(togglePreference.fulfilled, (state, action) => {
-        if (state.user && state.user.meta) {
-          state.user.meta.preferences = action.payload;
-        }
-      })
 
-      // Реєстрація
       .addCase(registerUser.pending, (state) => {
         state.loading = true;
         state.error = null;

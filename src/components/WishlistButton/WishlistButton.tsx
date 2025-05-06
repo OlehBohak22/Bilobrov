@@ -1,10 +1,8 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { togglePreference } from "../../store/slices/wishlistSlice";
 import { RootState } from "../../store";
+import { toggleWishlistItem } from "../../store/slices/wishlistSlice"; // новий локальний екшен
 import s from "./WishListBtn.module.css";
-import { selectUserMetaPreferences } from "../../store/selectors/userSelectors";
-import { useGlobalProps } from "../../GlobalPropContext";
 
 interface WishlistButtonProps {
   productId: number;
@@ -13,24 +11,14 @@ interface WishlistButtonProps {
 const WishlistButton: React.FC<WishlistButtonProps> = ({ productId }) => {
   const dispatch = useDispatch();
 
-  const { token } = useSelector((state: RootState) => state.user); // Вибираємо стан авторизації
+  const preferences = useSelector(
+    (state: RootState) => state.wishlist.preferences
+  );
 
-  // БЕРЕМО preferences ЗАВДЯКИ user.meta.preferences
-  const preferences = useSelector(selectUserMetaPreferences);
-
-  const loading = useSelector((state: RootState) => state.wishlist.loading);
-
-  const { openRegister } = useGlobalProps();
-
-  // ПЕРЕВІРЯЄМО ЧИ ПРОДУКТ У СПИСКУ ВПОДОБАНЬ
   const isInWishlist = preferences.includes(productId);
 
   const handleToggle = () => {
-    if (!loading && token) {
-      dispatch(togglePreference({ token, preference: productId }) as any);
-    } else {
-      openRegister();
-    }
+    dispatch(toggleWishlistItem(productId));
   };
 
   return (

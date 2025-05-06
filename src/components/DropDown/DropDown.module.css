@@ -1,7 +1,7 @@
 .dropdownWrapper {
   position: relative;
   width: 14.6vw;
-  z-index: 99999999;
+  z-index: 9999;
 }
 
 .dropdownButton {

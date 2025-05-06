@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
+import { API_URL_WP_V2 } from "../../constants/api";
 
 interface SocialLink {
   hl_input_name: string;
@@ -32,9 +33,7 @@ const initialState: ContactState = {
 export const fetchContacts = createAsyncThunk(
   "contact/fetchContacts",
   async () => {
-    const response = await axios.get<ContactState>(
-      "https://bilobrov.projection-learn.website/wp-json/wp/v2/contact"
-    );
+    const response = await axios.get<ContactState>(`${API_URL_WP_V2}contact`);
     return response.data;
   }
 );

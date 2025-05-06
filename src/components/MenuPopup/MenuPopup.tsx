@@ -58,6 +58,8 @@ export const MenuPopup: React.FC<{
     };
   }, [onClose]);
 
+  console.log(asideBottomMenuTree);
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -200,7 +202,7 @@ export const MenuPopup: React.FC<{
                     {item.title}
                   </button>
                 ) : (
-                  <Link onClick={onClose} to={modifiedUrl}>
+                  <Link state={item.url} onClick={onClose} to={modifiedUrl}>
                     {item.title}
                   </Link>
                 )}
@@ -242,7 +244,11 @@ export const MenuPopup: React.FC<{
 
                       return (
                         <li key={child.id}>
-                          <Link onClick={onClose} to={modifiedChildUrl}>
+                          <Link
+                            state={child.url}
+                            onClick={onClose}
+                            to={modifiedChildUrl}
+                          >
                             {child.title}
                           </Link>
                         </li>
@@ -315,7 +321,7 @@ export const MenuPopup: React.FC<{
                     {item.title}
                   </button>
                 ) : (
-                  <Link onClick={onClose} to={modifiedUrl}>
+                  <Link state={item.url} onClick={onClose} to={modifiedUrl}>
                     {item.title}
                   </Link>
                 )}
@@ -353,7 +359,11 @@ export const MenuPopup: React.FC<{
 
                       return (
                         <li key={child.id}>
-                          <Link onClick={onClose} to={modifiedChildUrl}>
+                          <Link
+                            state={child.url}
+                            onClick={onClose}
+                            to={modifiedChildUrl}
+                          >
                             {child.title}
                           </Link>
                         </li>

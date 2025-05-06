@@ -7,16 +7,12 @@ import { Navigation } from "swiper/modules";
 import s from "./ProductList.module.css";
 import { ProductItem } from "../ProductItem/ProductItem";
 import { ProductInfo } from "../../types/productTypes";
-// import { Layout } from "../Layout/Layout";
 import { Loader } from "../Loader/Loader";
-import {
-  API_URL,
-  consumerKey,
-  consumerSecret,
-} from "../../store/slices/productsSlice";
+
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
+import { API_URL_WC, consumerKey, consumerSecret } from "../../constants/api";
 
 interface ProductListProps {
   categories?: string[];
@@ -75,11 +71,15 @@ export const ProductList = ({
           params.set("category", activeTab); // Можна передавати slug
         }
 
-        const res = await axios.get(`${API_URL}products?${params.toString()}`, {
-          headers: {
-            Authorization: "Basic " + btoa(`${consumerKey}:${consumerSecret}`),
-          },
-        });
+        const res = await axios.get(
+          `${API_URL_WC}products?${params.toString()}`,
+          {
+            headers: {
+              Authorization:
+                "Basic " + btoa(`${consumerKey}:${consumerSecret}`),
+            },
+          }
+        );
 
         setLocalProducts(res.data);
       } catch (error) {

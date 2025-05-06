@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import s from "./ClientsSupportPage.module.css";
 import { Layout } from "../../components/Layout/Layout";
 import { ReturnTab } from "../../components/ReturnTab/ReturnTab";
 import { FaqTab } from "../../components/FaqTab/FaqTab";
 import { ContactTab } from "../../components/ContactTab/ContactTab";
 import { useWindowSize } from "../../hooks/useWindowSize";
+import { Breadcrumbs } from "@mui/material";
 
 const categories = [
   {
@@ -236,8 +237,14 @@ const categories = [
 
 export const ClientsSupportPage = () => {
   const { hash } = useLocation();
-  const [activeTab, setActiveTab] = useState(
-    hash ? hash.substring(1) : "obmin-ta-povernennya"
+  const initialTabId = hash ? hash.substring(1) : "obmin-ta-povernennya";
+  const initialTab = categories
+    .flatMap((category) => category.tabs)
+    .find((tab) => tab.id === initialTabId);
+
+  const [activeTab, setActiveTab] = useState(initialTabId);
+  const [activeHash, setActiveHash] = useState(
+    initialTab?.label || "Обмін та повернення"
   );
 
   const { width } = useWindowSize();
@@ -245,16 +252,28 @@ export const ClientsSupportPage = () => {
 
   useEffect(() => {
     if (hash) {
-      setActiveTab(hash.substring(1));
+      const newTabId = hash.substring(1);
+      setActiveTab(newTabId);
+
+      const foundTab = categories
+        .flatMap((category) => category.tabs)
+        .find((tab) => tab.id === newTabId);
+
+      setActiveHash(foundTab?.label || "");
 
       if (isMobile) {
         setTabsMenuHidden(true);
       }
     }
-  }, [hash]);
+  }, [hash, isMobile]);
 
   const handleTabClick = (id: string) => {
+    const foundTab = categories
+      .flatMap((category) => category.tabs)
+      .find((tab) => tab.id === id);
+
     setActiveTab(id);
+    setActiveHash(foundTab?.label || "");
 
     if (isMobile) {
       setTabsMenuHidden(true);
@@ -286,8 +305,28 @@ export const ClientsSupportPage = () => {
     }
   };
 
+  const breadcrumbs = [{ name: "Головна", link: "/" }, { name: activeHash }];
+
   return (
     <main className={s.page}>
+      <Layout>
+        <Breadcrumbs aria-label="breadcrumb" className="breadcrumbs">
+          <Breadcrumbs aria-label="breadcrumb" className="breadcrumbs">
+            {breadcrumbs.map((breadcrumb, index) => (
+              <li>
+                {breadcrumb.link ? (
+                  <Link key={index} to={breadcrumb.link}>
+                    {breadcrumb.name}
+                  </Link>
+                ) : (
+                  <span key={index}>{breadcrumb.name}</span>
+                )}
+              </li>
+            ))}
+          </Breadcrumbs>
+        </Breadcrumbs>
+      </Layout>
+
       <div className={s.section}>
         <Layout className={s.container}>
           <div className={`${tabsMenuHidden && s.hidden} ${s.tabsMenu}`}>
@@ -301,7 +340,11 @@ export const ClientsSupportPage = () => {
                     className={`${s.tabButton} ${
                       activeTab === tab.id ? s.active : ""
                     }`}
-                    onClick={() => handleTabClick(tab.id)}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleTabClick(tab.id);
+                      window.location.hash = `#${tab.id}`;
+                    }}
                   >
                     {tab.icon}
                     {tab.label}

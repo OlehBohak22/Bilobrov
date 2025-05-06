@@ -119,7 +119,6 @@ export const StarRatingRed = ({
   rating: number;
   className?: string;
 }) => {
-  console.log(className);
   const stars = Array.from({ length: 5 }, (_, i) => {
     const value = rating;
     if (i + 1 <= value) return <FullStarRed key={i} />;

@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { ProductInfo } from "../../types/productTypes";
-import { API_URL, consumerKey, consumerSecret } from "./productsSlice";
+import { API_URL_WC, consumerKey, consumerSecret } from "../../constants/api";
 
 interface option {
   id: number;
@@ -78,7 +78,7 @@ export const fetchCertificates = createAsyncThunk(
       category: "1159", // тут вказуємо слаг категорії!
     });
 
-    const url = `${API_URL}products?${params.toString()}`;
+    const url = `${API_URL_WC}products?${params.toString()}`;
 
     const response = await axios.get(url, {
       headers: {
@@ -168,7 +168,7 @@ export const fetchProducts = createAsyncThunk(
     params.set("min_price", minPrice.toString());
     params.set("max_price", maxPrice.toString());
 
-    const url = `${API_URL}products?${params.toString()}`;
+    const url = `${API_URL_WC}products?${params.toString()}`;
 
     const response = await axios.get(url, {
       headers: {

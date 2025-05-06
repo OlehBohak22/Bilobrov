@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { API_URL_WP } from "../../constants/api";
 
-// Типи для відповіді та помилок
 interface ResetPasswordState {
   status: "idle" | "loading" | "succeeded" | "failed";
   message: string | null;
@@ -8,7 +8,6 @@ interface ResetPasswordState {
   error: string | null;
 }
 
-// Ініціалізація стейту
 const initialState: ResetPasswordState = {
   status: "idle",
   message: null,
@@ -16,23 +15,19 @@ const initialState: ResetPasswordState = {
   error: null,
 };
 
-// Створення async thunk для відправки запиту на відновлення паролю
 export const sendResetMail = createAsyncThunk(
   "password/reset/sendMail",
   async (email: string) => {
-    const response = await fetch(
-      "https://bilobrov.projection-learn.website/wp-json/responses/v1/users_send_reset_mail",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email }),
-      }
-    );
+    const response = await fetch(`${API_URL_WP}users_send_reset_mail`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email }),
+    });
 
     if (!response.ok) {
-      const errorData = await response.json(); // Додано для отримання даних помилки
+      const errorData = await response.json();
       throw new Error(
         errorData.message ||
           "Не вдалося надіслати інструкції для відновлення паролю"
@@ -44,7 +39,6 @@ export const sendResetMail = createAsyncThunk(
   }
 );
 
-// Створення async thunk для скидання паролю
 export const resetPassword = createAsyncThunk(
   "password/reset/resetPassword",
   async (
@@ -54,20 +48,17 @@ export const resetPassword = createAsyncThunk(
     const state = getState() as { user: { token: string } };
     const token = payload.resetToken || state.user.token;
 
-    const response = await fetch(
-      "https://bilobrov.projection-learn.website/wp-json/responses/v1/users_reset_password",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(payload),
-      }
-    );
+    const response = await fetch(`${API_URL_WP}users_reset_password`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(payload),
+    });
 
     if (!response.ok) {
-      const errorData = await response.json(); // Додано для отримання даних помилки
+      const errorData = await response.json();
       throw new Error(errorData.message || "Не вдалося змінити пароль");
     }
 
@@ -75,7 +66,7 @@ export const resetPassword = createAsyncThunk(
     return data;
   }
 );
-// Створення слайсу
+
 const resetPasswordSlice = createSlice({
   name: "password/reset",
   initialState,

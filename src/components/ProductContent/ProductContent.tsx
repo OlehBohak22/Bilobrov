@@ -10,8 +10,8 @@ import { ProductPageAccordion } from "../ProductPageAccordion/ProductPageAccordi
 import Select from "react-select";
 import { StylesConfig } from "react-select";
 import { addToCart } from "../../store/slices/cartSlice";
-import { togglePreference } from "../../store/slices/wishlistSlice";
 import { selectUserMetaPreferences } from "../../store/selectors/userSelectors";
+import { toggleWishlistItem } from "../../store/slices/wishlistSlice";
 
 interface VariationAttribute {
   id: number;
@@ -151,11 +151,7 @@ export const ProductContent: React.FC<ProductItemProps> = ({
   };
 
   const handleToggle = () => {
-    if (token) {
-      dispatch(togglePreference({ token, preference: info.id }) as any);
-    } else {
-      openRegister();
-    }
+    dispatch(toggleWishlistItem(info.id));
   };
 
   const preferences = useSelector(selectUserMetaPreferences);

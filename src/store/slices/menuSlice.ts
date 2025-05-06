@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
+import { API_URL_WP } from "../../constants/api";
 
 export interface MenuItem {
   id: number;
@@ -37,9 +38,7 @@ export const fetchMenus = createAsyncThunk<
   { rejectValue: string }
 >("menu/fetchMenus", async (_, { rejectWithValue }) => {
   try {
-    const response = await axios.get(
-      "https://bilobrov.projection-learn.website/wp-json/responses/v1/menus"
-    );
+    const response = await axios.get(`${API_URL_WP}menus`);
     return response.data;
   } catch (error) {
     console.log(error);

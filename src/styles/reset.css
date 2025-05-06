@@ -91,7 +91,8 @@ textarea {
     }
   }
 }
-.breadcrumbs a {
+.breadcrumbs a,
+.breadcrumbs span {
   color: #1a1a1a;
   font-family: Manrope;
   font-size: 0.7vw;

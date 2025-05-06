@@ -1,79 +1,41 @@
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface WishlistState {
-  preferences: number[];
-  loading: boolean;
-  error: string | null;
+  preferences: number[]; // id товарів
 }
 
 const initialState: WishlistState = {
-  preferences: [],
-  loading: false,
-  error: null,
+  preferences: JSON.parse(localStorage.getItem("wishlist") || "[]"),
 };
-
-// 🔥 Асинхронна дія для зміни вподобань через API
-export const togglePreference = createAsyncThunk<
-  number[], // Очікуваний тип повернених даних (масив вподобань)
-  { token: string; preference: number[] | number } // Аргумент (token + productId)
->(
-  "wishlist/togglePreference",
-  async ({ token, preference }, { rejectWithValue }) => {
-    try {
-      const response = await fetch(
-        "https://bilobrov.projection-learn.website/wp-json/responses/v1/user_edit_preferences",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ preference }),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Помилка оновлення вподобань");
-      }
-
-      const data = await response.json();
-      return data.current_preferences; // Повертаємо оновлений масив вподобань
-    } catch (error: any) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
 
 const wishlistSlice = createSlice({
   name: "wishlist",
   initialState,
   reducers: {
+    toggleWishlistItem: (state, action: PayloadAction<number>) => {
+      if (state.preferences.includes(action.payload)) {
+        // якщо вже є — видаляємо
+        state.preferences = state.preferences.filter(
+          (id) => id !== action.payload
+        );
+      } else {
+        // якщо немає — додаємо
+        state.preferences.push(action.payload);
+      }
+      // синхронізуємо з localStorage
+      localStorage.setItem("wishlist", JSON.stringify(state.preferences));
+    },
     setWishlist: (state, action: PayloadAction<number[]>) => {
       state.preferences = action.payload;
+      localStorage.setItem("wishlist", JSON.stringify(state.preferences));
     },
-
-    removeFromWishlist: (state, action: PayloadAction<number>) => {
-      state.preferences = state.preferences.filter(
-        (id) => id !== action.payload
-      );
+    clearWishlist: (state) => {
+      state.preferences = [];
+      localStorage.removeItem("wishlist");
     },
-  },
-  extraReducers: (builder) => {
-    builder
-      .addCase(togglePreference.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(togglePreference.fulfilled, (state, action) => {
-        state.loading = false;
-        state.preferences = action.payload;
-      })
-      .addCase(togglePreference.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload as string;
-      });
   },
 });
 
-export const { setWishlist, removeFromWishlist } = wishlistSlice.actions;
+export const { toggleWishlistItem, setWishlist, clearWishlist } =
+  wishlistSlice.actions;
 export default wishlistSlice.reducer;

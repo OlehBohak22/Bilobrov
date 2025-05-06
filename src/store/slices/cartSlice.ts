@@ -1,8 +1,8 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
+import { API_URL_WP } from "../../constants/api";
 
-const API_URL =
-  "https://bilobrov.projection-learn.website/wp-json/responses/v1/cart";
+const API_URL = `${API_URL_WP}cart`;
 
 interface Product {
   id: number;
@@ -36,26 +36,23 @@ export const fetchCart = createAsyncThunk<Product[], string | null>(
   }
 );
 
-// Додаємо нову операцію для очищення кошика
 export const clearCart = createAsyncThunk<Product[], string | null>(
   "cart/clearCart",
   async (token, { rejectWithValue }) => {
     try {
       if (!token) {
-        // Якщо немає токена, просто очищаємо локальний кошик
         localStorage.removeItem("cart");
         return [];
       }
 
-      // Якщо є токен, очищаємо кошик через API
       await axios.delete(API_URL, {
         headers: { Authorization: `Bearer ${token}` },
         data: {
-          product: {}, // Пустий об'єкт для очищення кошика
+          product: {},
         },
       });
 
-      return []; // Повертаємо порожній масив, оскільки кошик очищений
+      return [];
     } catch (error: any) {
       return rejectWithValue(error.response?.data || error.message);
     }
@@ -96,7 +93,6 @@ export const removeFromCart = createAsyncThunk<
   { product: Product; token: string | null }
 >("cart/removeFromCart", async ({ product, token }, { rejectWithValue }) => {
   try {
-    // Якщо немає токена, працюємо з локальним кошиком
     if (!token) {
       const localCart = getLocalCart()
         .map((item) => {
@@ -104,11 +100,11 @@ export const removeFromCart = createAsyncThunk<
             item.id === product.id &&
             item.variation_id === (product.variation_id || 0)
           ) {
-            return { ...item, quantity: item.quantity - 1 }; // Зменшуємо кількість
+            return { ...item, quantity: item.quantity - 1 };
           }
           return item;
         })
-        .filter((item) => item.quantity > 0); // Видаляємо лише якщо кількість стала 0
+        .filter((item) => item.quantity > 0);
 
       saveLocalCart(localCart);
       return localCart;
@@ -120,7 +116,7 @@ export const removeFromCart = createAsyncThunk<
         product: {
           id: product.id,
           quantity: product.quantity,
-          variation_id: product.variation_id || 0, // Додаємо варіацію як 0, якщо вона не вказана
+          variation_id: product.variation_id || 0,
         },
       },
       headers: { Authorization: `Bearer ${token}` },
@@ -148,7 +144,6 @@ export const removeAllFromCart = createAsyncThunk<
   ) => {
     try {
       if (!token) {
-        // Локальне видалення всіх товарів із цим `id` та `variation_id`
         const localCart = getLocalCart().filter(
           (item) =>
             !(item.id === productId && item.variation_id === variationId)
@@ -157,13 +152,12 @@ export const removeAllFromCart = createAsyncThunk<
         return localCart;
       }
 
-      // Запит на сервер для видалення всіх товарів цього `id` і `variation_id`
       const { data } = await axios.delete<{ cart: Product[] }>(API_URL, {
         data: {
           product: {
             id: productId,
-            quantity, // Максимальна кількість, щоб видалити всі
-            variation_id: variationId, // Враховуємо варіацію
+            quantity,
+            variation_id: variationId,
           },
         },
         headers: { Authorization: `Bearer ${token}` },
@@ -223,7 +217,7 @@ const cartSlice = createSlice({
       )
 
       .addCase(clearCart.fulfilled, (state) => {
-        state.items = []; // Очищаємо кошик
+        state.items = [];
       })
 
       .addCase(mergeCart.fulfilled, (state) => {

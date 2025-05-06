@@ -15,7 +15,7 @@ export const RegisterModal: React.FC<{ onClose: () => void }> = ({
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
-  const [isRegister, setIsRegister] = useState(true); // Стан для перемикання між формами
+  const [isRegister, setIsRegister] = useState(true);
 
   const modalRef = useRef<HTMLDivElement>(null);
 
@@ -25,7 +25,6 @@ export const RegisterModal: React.FC<{ onClose: () => void }> = ({
     e.preventDefault();
 
     if (!email || !password || (isRegister && !firstName)) {
-      // Можна зробити вивід помилки в інтерфейсі замість alert
       return;
     }
 
@@ -56,7 +55,7 @@ export const RegisterModal: React.FC<{ onClose: () => void }> = ({
         modalRef.current &&
         !modalRef.current.contains(event.target as Node)
       ) {
-        onClose(); // Якщо клік був за межами модалки — закриваємо
+        onClose();
       }
     };
 
@@ -82,11 +81,11 @@ export const RegisterModal: React.FC<{ onClose: () => void }> = ({
         transition={{
           duration: 0.5,
           ease: "easeOut",
-          delay: 0.3, // для анімації входу
+          delay: 0.3,
         }}
         exit={{
           x: "500%",
-          transition: { duration: 0.5, ease: "easeOut", delay: 0 }, // окремо для виходу
+          transition: { duration: 0.5, ease: "easeOut", delay: 0 },
         }}
       >
         <img src="/images/popup-side-img.avif" alt="before" />

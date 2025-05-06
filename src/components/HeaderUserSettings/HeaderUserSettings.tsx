@@ -16,34 +16,13 @@ export const HeaderUserSettings: React.FC<HeaderProps> = ({
   isMobile,
 }) => {
   const wishlist = useSelector(
-    (state: RootState) => state?.user?.user?.meta.preferences || []
+    (state: RootState) => state.wishlist.preferences
   );
 
   const cart = useSelector((state: RootState) => state.cart || []);
 
-  const { user } = useSelector((state: RootState) => state.user);
-
   return (
     <div className={s.userSettings}>
-      {/* <button>
-        <span>Укр</span>
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 20 20"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M5 7.5L10 12.5L15 7.5"
-            stroke="white"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </button> */}
-
       {!isMobile && (
         <button onClick={() => openRegister(true)}>
           <svg
@@ -61,7 +40,7 @@ export const HeaderUserSettings: React.FC<HeaderProps> = ({
         </button>
       )}
 
-      <button onClick={() => (user ? openWishList(true) : openRegister(true))}>
+      <button onClick={() => openWishList(true)}>
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
             d="M16.1111 3C19.6333 3 22 6.3525 22 9.48C22 15.8138 12.1778 21 12 21C11.8222 21 2 15.8138 2 9.48C2 6.3525 4.36667 3 7.88889 3C9.91111 3 11.2333 4.02375 12 4.92375C12.7667 4.02375 14.0889 3 16.1111 3Z"

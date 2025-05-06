@@ -1,6 +1,7 @@
 export interface Category {
   id: number;
   name: string;
+  yoast_head_json: { og_url: string };
   slug: string;
   parent: number;
   description: string;
