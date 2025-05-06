@@ -117,7 +117,8 @@ textarea {
   .breadcrumbs {
     margin-bottom: 6.6vw !important;
 
-    a {
+    a,
+    span {
       font-size: 3.2vw;
       line-height: 3.7vw;
       white-space: nowrap;
