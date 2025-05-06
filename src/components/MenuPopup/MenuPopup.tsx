@@ -156,7 +156,7 @@ export const MenuPopup: React.FC<{
               modifiedUrl = "about";
             } else if (modifiedUrl.endsWith("my-account")) {
               modifiedUrl = "account";
-            } else if (modifiedUrl.endsWith("podarunkovi-sertyfikaty-20")) {
+            } else if (modifiedUrl.endsWith("certificate")) {
               modifiedUrl = "podarunkovi-sertyfikaty-20";
             } else {
               const supportMatch = modifiedUrl.match(/support\/(.+)$/);

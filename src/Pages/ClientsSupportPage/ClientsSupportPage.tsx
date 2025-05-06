@@ -311,19 +311,15 @@ export const ClientsSupportPage = () => {
     <main className={s.page}>
       <Layout>
         <Breadcrumbs aria-label="breadcrumb" className="breadcrumbs">
-          <Breadcrumbs aria-label="breadcrumb" className="breadcrumbs">
-            {breadcrumbs.map((breadcrumb, index) => (
-              <li>
-                {breadcrumb.link ? (
-                  <Link key={index} to={breadcrumb.link}>
-                    {breadcrumb.name}
-                  </Link>
-                ) : (
-                  <span key={index}>{breadcrumb.name}</span>
-                )}
-              </li>
-            ))}
-          </Breadcrumbs>
+          {breadcrumbs.map((breadcrumb, index) =>
+            breadcrumb.link ? (
+              <Link key={index} to={breadcrumb.link}>
+                {breadcrumb.name}
+              </Link>
+            ) : (
+              <span key={index}>{breadcrumb.name}</span>
+            )
+          )}
         </Breadcrumbs>
       </Layout>
 
