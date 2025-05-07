@@ -9,10 +9,13 @@ import { Pagination, Autoplay, Navigation } from "swiper/modules"; // ✅ дод
 import "./HomeHero.css";
 import { useTranslation } from "react-i18next";
 import { useRef } from "react";
+import { useWindowSize } from "../../hooks/useWindowSize";
 
 export const HomeHero = () => {
   const { items: banners } = useSelector((state: RootState) => state.banner);
   const { t } = useTranslation();
+  const { width } = useWindowSize();
+  const isMobile = width < 1024;
 
   // ✅ Додаємо рефи для кастомних кнопок
   const prevRef = useRef<HTMLDivElement | null>(null);
@@ -93,34 +96,38 @@ export const HomeHero = () => {
           )
         )}
 
-        <div ref={prevRef} className={s.navBtn + " " + s.prevBtn}>
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M15 18L9 12L15 6"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-        </div>
-        <div ref={nextRef} className={s.navBtn + " " + s.nextBtn}>
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M9 18L15 12L9 6"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-        </div>
+        {!isMobile && (
+          <>
+            <div ref={prevRef} className={s.navBtn + " " + s.prevBtn}>
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M15 18L9 12L15 6"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+            <div ref={nextRef} className={s.navBtn + " " + s.nextBtn}>
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M9 18L15 12L9 6"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+          </>
+        )}
       </Swiper>
     </section>
   );

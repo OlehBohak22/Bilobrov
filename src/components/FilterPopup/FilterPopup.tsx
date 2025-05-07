@@ -17,6 +17,7 @@ import {
 } from "../../store/slices/filterSlice";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
+import { createPortal } from "react-dom";
 
 export const Filters: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const dispatch = useAppDispatch();
@@ -186,7 +187,7 @@ export const Filters: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     };
   }, [onClose]);
 
-  return (
+  return createPortal(
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -456,6 +457,7 @@ export const Filters: React.FC<{ onClose: () => void }> = ({ onClose }) => {
           </svg>
         </button>
       </motion.div>
-    </motion.div>
+    </motion.div>,
+    document.body
   );
 };
