@@ -5,11 +5,13 @@ import { Layout } from "../Layout/Layout";
 import { MailingFormBlock } from "../MailingFormBlock/MailingFormBlock";
 import s from "./Footer.module.css";
 import { useWindowSize } from "../../hooks/useWindowSize";
+import { Trans, useTranslation } from "react-i18next";
 
 export const Footer = () => {
   const location = useLocation();
   const { width } = useWindowSize();
   const isMobile = width < 1024;
+  const { t } = useTranslation();
 
   if (location.pathname === "/order") {
     return;
@@ -24,7 +26,7 @@ export const Footer = () => {
             <div>
               <span>@bilobrov_cosmetics</span>
               <span>
-                Підписатися
+                {t("footer.instagramBlock.subscribe")}
                 <svg
                   viewBox="0 0 24 24"
                   fill="none"
@@ -32,7 +34,6 @@ export const Footer = () => {
                 >
                   <path
                     d="M6 18L18 6M18 6H10M18 6V14"
-                    stroke="white"
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -43,8 +44,8 @@ export const Footer = () => {
           </a>
 
           <div className={s.instaTitle}>
-            <span>Instagram</span>
-            <p>слідкуйте за нашим брендом у соцмережах</p>
+            <span>{t("footer.instagramBlock.label")}</span>
+            <p>{t("footer.instagramBlock.description")}</p>
           </div>
         </div>
 
@@ -86,8 +87,8 @@ export const Footer = () => {
               </div>
 
               <div className={s.scheduleBlock}>
-                <span>Режим роботи підтримки:</span>
-                <p>Пн-Пт: 09:00 - 22:00 Сб-Нд: 10:00 - 20:00</p>
+                <span>{t("footer.support.workTimeLabel")}</span>
+                <p>{t("footer.support.workTime")}</p>
               </div>
 
               <a className={s.tgLink} href="">
@@ -113,15 +114,18 @@ export const Footer = () => {
         </div>
         <div className={s.paymentBlock}>
           <div className={s.paymentLinks}>
-            <a href="">Політика конфіденційності</a>
-            <a href="">Оферта</a>
+            <a href="">{t("footer.privacyPolicy")}</a>
+            <a href="">{t("footer.offer")}</a>
           </div>
 
           {isMobile && (
             <div className={s.footerBottomBlock}>
-              <p>©2024 Bilobrov Cosmetics. All Rights Reserved.</p>
+              <p>{t("footer.rights")}</p>
               <p>
-                Сайт розроблено агенством: <a href="">Before/After </a>
+                <Trans
+                  i18nKey="footer.developedBy"
+                  components={{ 1: <a href="" /> }}
+                />
               </p>
             </div>
           )}
@@ -157,9 +161,12 @@ export const Footer = () => {
 
         {!isMobile && (
           <div className={s.footerBottomBlock}>
-            <p>©2024 Bilobrov Cosmetics. All Rights Reserved.</p>
+            <p>{t("footer.rights")}</p>
             <p>
-              Сайт розроблено агенством: <a href="">Before/After </a>
+              <Trans
+                i18nKey="footer.developedBy"
+                components={{ 1: <a href="" /> }}
+              />
             </p>
           </div>
         )}

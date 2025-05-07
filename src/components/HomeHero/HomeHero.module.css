@@ -59,6 +59,41 @@
   }
 }
 
+.navBtn {
+  position: absolute;
+  top: 50%;
+  z-index: 10;
+  cursor: pointer;
+  display: flex;
+  transform: translateY(-50%);
+  transition: all 0.3s ease;
+  padding: 0.6vw;
+  border: 1px solid #ffffff1a;
+}
+
+.prevBtn {
+  left: 5vw;
+}
+
+.nextBtn {
+  right: 5vw;
+}
+
+.navBtn:hover {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.navBtn svg {
+  width: 1.2vw;
+  height: 1.2vw;
+  stroke: rgb(255, 255, 255);
+  transition: stroke 0.3s;
+}
+
+.navBtn:hover svg {
+  stroke: rgb(0, 0, 0);
+}
+
 .slideContent {
   padding-left: 4vw;
 }

@@ -11,6 +11,7 @@ import { Loader } from "../Loader/Loader";
 import { ProductList } from "../ProductList/ProductList";
 import { Layout } from "../Layout/Layout";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 interface CartPopupProps {
   onClose: () => void;
@@ -22,7 +23,7 @@ export const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
   const [loading, setLoading] = useState(false);
   const [hasMounted, setHasMounted] = useState(false);
   const { pathname } = useLocation();
-
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const [cartProducts, setCartProducts] = useState<ProductInfo[]>([]);
 
@@ -111,7 +112,7 @@ export const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
           onClick={(e) => e.stopPropagation()}
         >
           <div className={s.popupHeader}>
-            <h2 className={s.popupTitle}>Кошик</h2>
+            <h2 className={s.popupTitle}>{t("cartPopup.title")}</h2>
             <button className={s.closeButton} onClick={onClose}>
               <svg
                 viewBox="0 0 52 52"
@@ -144,7 +145,7 @@ export const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
                     />
                   ))
                 ) : (
-                  <div className={s.emptyCart}>Кошик порожній</div>
+                  <div className={s.emptyCart}>{t("cartPopup.empty")}</div>
                 )}
               </ul>
             </div>
@@ -153,15 +154,15 @@ export const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
               <div>
                 <div className={s.orderDetails}>
                   <p>
-                    <span>Сума замовлення:</span>
+                    <span>{t("cartPopup.orderAmount")}</span>
                     <span>{regularPrice} ₴</span>
                   </p>
                   <p>
-                    <span>Сума знижки:</span>
+                    <span>{t("cartPopup.discountAmount")}</span>
                     <span className={s.discount}>{discount} ₴</span>
                   </p>
                   <p>
-                    <span>Вартість доставки:</span>
+                    <span>{t("cartPopup.deliveryCost")}</span>
                     <span>
                       <svg
                         viewBox="0 0 20 21"
@@ -175,12 +176,12 @@ export const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
                           strokeLinejoin="round"
                         />
                       </svg>
-                      Безкоштовна
+                      {t("cartPopup.free")}
                     </span>
                   </p>
                 </div>
                 <div className={s.totalAmount}>
-                  <p>РАЗОМ:</p>
+                  <p>{t("cartPopup.total")}</p>
                   <span>{totalAmount} ₴</span>
                 </div>
               </div>
@@ -190,7 +191,7 @@ export const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
                   className={cart.length < 1 ? s.disabled : ""}
                   onClick={() => navigate("/order")}
                 >
-                  Оформити замовлення
+                  {t("cartPopup.checkout")}
                   <svg
                     viewBox="0 0 24 24"
                     fill="none"
@@ -200,7 +201,9 @@ export const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
                   </svg>
                 </button>
 
-                <button onClick={() => onClose()}>Продовжити покупки</button>
+                <button onClick={onClose}>
+                  {t("cartPopup.continueShopping")}
+                </button>
               </div>
             </div>
           </div>
@@ -211,7 +214,7 @@ export const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
               defaultCategory="Бестселлери"
               mini={true}
             >
-              <h2>Тобі може сподобатись:</h2>
+              <h2>{t("cartPopup.youMayLike")}</h2>
             </ProductList>
           </div>
         </motion.div>

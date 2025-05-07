@@ -14,6 +14,8 @@ import {
 } from "../../store/slices/filterSlice";
 import { useEffect, useState } from "react";
 import "./Header.css";
+import { useTranslation } from "react-i18next";
+import { LanguageSelect } from "../LanguageSelect/LanguageSelect";
 
 interface HeaderProps {
   openRegister: () => void;
@@ -96,6 +98,8 @@ export const Header: React.FC<HeaderProps> = ({
       openSearch();
     }
   }, [foundProducts, searchQuery]);
+
+  const { i18n } = useTranslation();
 
   return (
     <header
@@ -218,6 +222,10 @@ export const Header: React.FC<HeaderProps> = ({
               )}
             </div>
           </Link>
+
+          {!isMobile && (
+            <LanguageSelect i18n={i18n} changeLanguage={i18n.changeLanguage} />
+          )}
 
           <HeaderUserSettings
             isMobile={isMobile}

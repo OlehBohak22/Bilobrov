@@ -5,16 +5,23 @@ import "swiper/css";
 import "swiper/css/pagination";
 import s from "./HomeHero.module.css";
 import { Layout } from "../Layout/Layout";
-import { Pagination, Autoplay } from "swiper/modules";
+import { Pagination, Autoplay, Navigation } from "swiper/modules"; // ✅ додали Navigation
 import "./HomeHero.css";
+import { useTranslation } from "react-i18next";
+import { useRef } from "react";
 
 export const HomeHero = () => {
   const { items: banners } = useSelector((state: RootState) => state.banner);
+  const { t } = useTranslation();
+
+  // ✅ Додаємо рефи для кастомних кнопок
+  const prevRef = useRef<HTMLDivElement | null>(null);
+  const nextRef = useRef<HTMLDivElement | null>(null);
 
   return (
     <section className={s.sliderContainer}>
       <Swiper
-        modules={[Pagination, Autoplay]}
+        modules={[Pagination, Autoplay, Navigation]} // ✅ додали Navigation
         pagination={{
           clickable: true,
         }}
@@ -22,6 +29,19 @@ export const HomeHero = () => {
         autoplay={{ delay: 5000 }}
         slidesPerView={1}
         className="banners-swiper"
+        navigation={{
+          prevEl: prevRef.current,
+          nextEl: nextRef.current,
+        }}
+        onBeforeInit={(swiper) => {
+          // ✅ фікс для кастомних кнопок
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          //@ts-expect-error
+          swiper.params.navigation.prevEl = prevRef.current;
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          //@ts-expect-error
+          swiper.params.navigation.nextEl = nextRef.current;
+        }}
       >
         {banners.map(
           (banner: {
@@ -46,7 +66,7 @@ export const HomeHero = () => {
                     <p>{banner.input_description}</p>
                   </div>
                   <a href={banner.input_link}>
-                    <span>Детальніше</span>
+                    <span>{t("details")}</span>
                     <svg
                       viewBox="0 0 25 24"
                       fill="none"
@@ -72,6 +92,35 @@ export const HomeHero = () => {
             </SwiperSlide>
           )
         )}
+
+        <div ref={prevRef} className={s.navBtn + " " + s.prevBtn}>
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M15 18L9 12L15 6"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </div>
+        <div ref={nextRef} className={s.navBtn + " " + s.nextBtn}>
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M9 18L15 12L9 6"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </div>
       </Swiper>
     </section>
   );

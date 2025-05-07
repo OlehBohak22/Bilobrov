@@ -1,6 +1,7 @@
 import s from "./MainAccountTab.module.css";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
+import { useTranslation } from "react-i18next";
 
 type MainAccountTabProps = {
   setTab: (tab: string) => void;
@@ -110,42 +111,36 @@ const arrow = (
 const categories = [
   {
     id: "bonus",
-    label: "Бонусна карта",
     image: "/images/main-tab-images/bonus.avif",
     icon: arrow,
   },
 
   {
     id: "order",
-    label: "Мої замовлення",
     image: "/images/main-tab-images/order.avif",
     icon: arrow,
   },
 
   {
     id: "wishlist",
-    label: "Список побажань",
     image: "/images/main-tab-images/wishlist.avif",
     icon: arrow,
   },
 
   {
     id: "contact",
-    label: "Контактні дані",
     image: "/images/main-tab-images/contact.avif",
     icon: arrow,
   },
 
   {
     id: "password",
-    label: "Зміна пароля",
     image: "/images/main-tab-images/password.avif",
     icon: arrow,
   },
 
   {
     id: "address",
-    label: "Мої адреси",
     image: "/images/main-tab-images/address.avif",
     icon: arrow,
   },
@@ -153,23 +148,25 @@ const categories = [
 
 export const MainAccountTab: React.FC<MainAccountTabProps> = ({ setTab }) => {
   const user = useSelector((state: RootState) => state.user?.user);
+  const { t } = useTranslation();
+  const namePart = user?.name ? vocativeCase(user.name) : null;
 
   return (
     <div className={s.tab}>
       <h2>
-        {user?.name ? <span>{vocativeCase(user.name)},</span> : ""}
-        <span>вітаємо!</span>
+        {namePart ? (
+          <>
+            <span>{namePart},</span>
+            <span>{t("accountPage.welcome.hello")}</span>
+          </>
+        ) : (
+          <span>{t("accountPage.welcome.helloNoName")}</span>
+        )}
       </h2>
 
-      <p className={s.welcomeText}>
-        Ласкаво просимо до вашого особистого кабінету BILOBROV CLUB!
-      </p>
+      <p className={s.welcomeText}>{t("accountPage.welcome.welcomeText")}</p>
 
-      <p className={s.descText}>
-        Тут ви можете переглядати свої бонуси, контролювати замовлення,
-        слідкувати за накопиченими знижками та першими дізнаватися про новинки
-        та акції. Всі привілеї клубу — у вашому розпорядженні!
-      </p>
+      <p className={s.descText}>{t("accountPage.welcome.descText")}</p>
 
       <ul className={s.list}>
         {categories.map((item) => (
@@ -179,7 +176,7 @@ export const MainAccountTab: React.FC<MainAccountTabProps> = ({ setTab }) => {
             style={{ "--bg": `url(${item.image})` } as React.CSSProperties}
           >
             <p>
-              {item.label}
+              {t(`accountPage.tabs.${item.id}`)}
               {item.icon}
             </p>
           </li>

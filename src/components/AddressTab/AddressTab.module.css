@@ -119,6 +119,7 @@
         line-height: 0.8vw;
         letter-spacing: 0%;
         flex-shrink: 0;
+        text-transform: uppercase;
       }
 
       p {

@@ -1,8 +1,7 @@
 import { FC, useState } from "react";
 import s from "./OrdersTab.module.css";
 import { Order } from "../../store/slices/userSlice";
-// import { useSelector } from "react-redux";
-// import { RootState } from "../../store";
+import { useTranslation } from "react-i18next";
 
 interface OrderTabProp {
   info: Order;
@@ -10,15 +9,13 @@ interface OrderTabProp {
 
 export const OrderItem: FC<OrderTabProp> = ({ info }) => {
   const [isOpen, setIsOpen] = useState(false);
-
-  // const { token } = useSelector((state: RootState) => state.user);
+  const { t, i18n } = useTranslation();
 
   let STATUS: string;
   let CLASS: string;
 
   const date = new Date(info.status_date);
-
-  const formattedDate = date.toLocaleDateString("uk-UA");
+  const formattedDate = date.toLocaleDateString(i18n.language);
 
   function formatNumber(num: number): string {
     return Number.isInteger(num) ? num.toString() : num.toFixed(1);
@@ -26,22 +23,19 @@ export const OrderItem: FC<OrderTabProp> = ({ info }) => {
 
   switch (info.status) {
     case "pending":
-      STATUS = "формуємо замовлення";
+      STATUS = t("orders.pending");
       CLASS = "pending";
       break;
-
     case "processing":
-      STATUS = "Замовлення у дорозі";
+      STATUS = t("orders.processing");
       CLASS = "processing";
       break;
-
     case "completed":
-      STATUS = "Замовлення вже у вас";
+      STATUS = t("orders.completed");
       CLASS = "completed";
       break;
-
     default:
-      STATUS = "невідомий статус";
+      STATUS = t("orders.unknown");
       CLASS = "unknown";
       break;
   }
@@ -52,12 +46,12 @@ export const OrderItem: FC<OrderTabProp> = ({ info }) => {
         <div>
           <p className={`${s[CLASS]} ${s.status}`}>{STATUS}</p>
           <p className={s.orderDate}>
-            №{info.order_id} від {formattedDate}
+            №{info.order_id} {t("orders.from")} {formattedDate}
           </p>
         </div>
 
         <div className={s.orderPrice}>
-          <p>Сума замовлення:</p>
+          <p>{t("orders.orderSum")}</p>
           <span>{info.grand_total} ₴</span>
         </div>
 
@@ -66,9 +60,8 @@ export const OrderItem: FC<OrderTabProp> = ({ info }) => {
             {info.products.length > 3 && (
               <span>+ {info.products.length - 3}</span>
             )}
-
-            {info.products.slice(0, 3).map((product) => (
-              <img src={product.image} alt="" />
+            {info.products.slice(0, 3).map((product, idx) => (
+              <img key={idx} src={product.image} alt={product.name} />
             ))}
           </div>
         )}
@@ -81,8 +74,8 @@ export const OrderItem: FC<OrderTabProp> = ({ info }) => {
           >
             <path
               d="M19 8.5L12 15.5L5 8.5"
-              stroke-width="1.6"
-              stroke-linecap="square"
+              strokeWidth="1.6"
+              strokeLinecap="square"
             />
           </svg>
         </button>
@@ -91,20 +84,16 @@ export const OrderItem: FC<OrderTabProp> = ({ info }) => {
       {isOpen && (
         <div className={s.backdropContent}>
           <div className={s.orderInfo}>
-            <span>Інформація про замовлення:</span>
-
-            <h4>Доставка</h4>
+            <span>{t("orders.orderInfo")}</span>
+            <h4>{t("orders.delivery")}</h4>
             <div className="mb-[1vw]">
               <p>{info.shipping_type}</p>
-
               <p>{info.shipping_address}</p>
             </div>
 
-            <h4>Одержувач</h4>
-
+            <h4>{t("orders.recipient")}</h4>
             <div>
               <p>{info.customer_name}</p>
-
               <p>{info.customer_phone}</p>
             </div>
           </div>
@@ -112,15 +101,15 @@ export const OrderItem: FC<OrderTabProp> = ({ info }) => {
           <div className={s.rightBlock}>
             <div className={s.cartListBox}>
               <ul className={s.popupList}>
-                {info.products.map((item) => (
-                  <li>
+                {info.products.map((item, idx) => (
+                  <li key={idx}>
                     <div className={s.imageBlock}>
                       <img src={item.image} alt={item.name} />
                     </div>
 
                     <div className={s.productInfo}>
                       <p className={s.code}>
-                        Код товару: <span>{item.sku}</span>
+                        {t("orders.productCode")}: <span>{item.sku}</span>
                       </p>
                       <p className={s.brandName}>{item.brand}</p>
                       <p className={s.productName}>{item.name}</p>
@@ -131,7 +120,6 @@ export const OrderItem: FC<OrderTabProp> = ({ info }) => {
                           {formatNumber(item.price / item.quantity)} ₴
                           <span> x {item.quantity}</span>
                         </div>
-
                         <div>{item.price} ₴</div>
                       </div>
                     </div>
@@ -143,17 +131,17 @@ export const OrderItem: FC<OrderTabProp> = ({ info }) => {
             <div className={s.totalInfo}>
               <div className={s.orderDetails}>
                 <p>
-                  <span>Сума замовлення:</span>
+                  <span>{t("orders.orderAmount")}</span>
                   <span>{info.total_price} ₴</span>
                 </p>
                 <p>
-                  <span>Сума знижки:</span>
+                  <span>{t("orders.discountAmount")}</span>
                   <span className={s.discount}>{info.discount_total} ₴</span>
                 </p>
                 <p>
-                  <span>Вартість доставки:</span>
+                  <span>{t("orders.shippingCost")}</span>
                   {info.shipping_cost ? (
-                    <span>{info.shipping_cost}₴</span>
+                    <span>{info.shipping_cost} ₴</span>
                   ) : (
                     <div>
                       <span>
@@ -169,14 +157,14 @@ export const OrderItem: FC<OrderTabProp> = ({ info }) => {
                             strokeLinejoin="round"
                           />
                         </svg>
-                        Безкоштовна
+                        {t("orders.free")}
                       </span>
                     </div>
                   )}
                 </p>
               </div>
               <div className={s.totalAmount}>
-                <p>РАЗОМ:</p>
+                <p>{t("orders.total")}:</p>
                 <span>{info.grand_total} ₴</span>
               </div>
             </div>

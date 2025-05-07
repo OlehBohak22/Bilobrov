@@ -8,6 +8,7 @@ import { Layout } from "../Layout/Layout";
 import { Link } from "react-router";
 import { Loader } from "../Loader/Loader";
 import { useWindowSize } from "../../hooks/useWindowSize";
+import { useTranslation } from "react-i18next";
 
 interface CategoriesSectionProps {
   parentId: number;
@@ -48,6 +49,8 @@ export const CategoriesSection: React.FC<CategoriesSectionProps> = ({
     .filter((item) => item.name !== largePlate)
     .slice(0, 4);
 
+  const { t } = useTranslation();
+
   if (loading) {
     return <Loader />;
   }
@@ -67,7 +70,7 @@ export const CategoriesSection: React.FC<CategoriesSectionProps> = ({
 
         {!isMobile && (
           <Link className={s.categoryLink} to={`/catalog/${parentSlug}`}>
-            <span>Перейти до категорії</span>
+            <span>{t("categoryLink")}</span>
             <svg
               viewBox="0 0 25 25"
               fill="none"

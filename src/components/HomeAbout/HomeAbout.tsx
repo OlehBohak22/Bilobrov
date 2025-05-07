@@ -1,7 +1,9 @@
 import s from "./HomeAbout.module.css";
 import { Link } from "react-router";
+import { useTranslation } from "react-i18next";
 
 export const HomeAbout = () => {
+  const { t } = useTranslation();
   return (
     <section className={s.section}>
       <div>
@@ -9,15 +11,11 @@ export const HomeAbout = () => {
       </div>
 
       <div className={s.aboutInfo}>
-        <h2>Про наш бренд</h2>
-        <p>
-          “Ми створюємо продукти, що дарують турботу, впевненість і комфорт
-          кожній жінці. Кожна деталь — це натхнення любов’ю до себе та прагнення
-          зробити красу доступною для всіх!”
-        </p>
+        <h2>{t("homeAbout.title")}</h2>
+        <p>{t("homeAbout.description")}</p>
 
         <Link className={s.brandLink} to="/about">
-          <span>Детальніше про нас</span>
+          <span>{t("homeAbout.moreLink")}</span>
           <svg
             className={s.arrow}
             viewBox="0 0 32 32"
@@ -59,8 +57,8 @@ export const HomeAbout = () => {
         </Link>
 
         <div className={s.viktoria}>
-          <span>Вікторія</span>
-          <span>Білобров</span>
+          <span>{t("homeAbout.author.firstName")}</span>
+          <span>{t("homeAbout.author.lastName")}</span>
         </div>
 
         <svg

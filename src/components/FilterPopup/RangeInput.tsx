@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState, useRef } from "react";
 import styles from "./RangeInput.module.css";
+import { useTranslation } from "react-i18next";
 
 interface RangeInputProps {
   min: number;
@@ -17,14 +18,13 @@ export const RangeInput: React.FC<RangeInputProps> = ({
   const minValRef = useRef<number>(min);
   const maxValRef = useRef<number>(max);
   const range = useRef<HTMLDivElement | null>(null);
+  const { t } = useTranslation();
 
-  // Convert to percentage
   const getPercent = useCallback(
     (value: number): number => Math.round(((value - min) / (max - min)) * 100),
     [min, max]
   );
 
-  // Set width of the range to decrease from the left side
   useEffect(() => {
     const minPercent = getPercent(minVal);
     const maxPercent = getPercent(maxValRef.current);
@@ -35,7 +35,6 @@ export const RangeInput: React.FC<RangeInputProps> = ({
     }
   }, [minVal, getPercent]);
 
-  // Set width of the range to decrease from the right side
   useEffect(() => {
     const minPercent = getPercent(minValRef.current);
     const maxPercent = getPercent(maxVal);
@@ -45,7 +44,6 @@ export const RangeInput: React.FC<RangeInputProps> = ({
     }
   }, [maxVal, getPercent]);
 
-  // Get min and max values when their state changes
   useEffect(() => {
     onChange({ min: minVal, max: maxVal });
   }, [minVal, maxVal, onChange]);
@@ -55,10 +53,10 @@ export const RangeInput: React.FC<RangeInputProps> = ({
       <div className={styles.slider}>
         <div className={styles.valuesContainer}>
           <div className={styles.slider__leftValue}>
-            Від <span>₴ {minVal}</span>
+            {t("catalog.from")} <span>₴ {minVal}</span>
           </div>
           <div className={styles.slider__rightValue}>
-            До <span>₴ {maxVal}</span>
+            {t("catalog.to")} <span>₴ {maxVal}</span>
           </div>
         </div>
         <div className={styles.slider__track} />

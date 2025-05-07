@@ -9,15 +9,17 @@ import { useEffect } from "react";
 import { API_URL } from "../../constants/api";
 import { usePageData } from "../../hooks/usePageData";
 import { Helmet } from "react-helmet";
+import { useTranslation } from "react-i18next";
 
 export const BrandsPage = () => {
   const brands = useSelector((state: RootState) => state.brands);
   const { width } = useWindowSize();
   const isMobile = width < 1024;
+  const { t } = useTranslation();
 
   const breadcrumbs = [
-    { name: "Головна", link: "/" },
-    { name: "Бренди", link: "/brendy" },
+    { name: t("breadCrumbs.main"), link: "/" },
+    { name: t("breadCrumbs.brands"), link: "/brendy" },
   ];
 
   const groupedBrands = brands.items.reduce(
@@ -41,11 +43,9 @@ export const BrandsPage = () => {
       if (container && scrollbar) {
         const maxScroll = container.scrollWidth - container.clientWidth;
 
-        // уникнути ділення на 0
         const rawProgress =
           maxScroll > 0 ? (container.scrollLeft / maxScroll) * 100 : 0;
 
-        // гарантувати мінімум 5%
         const scrollProgress = Math.max(rawProgress, 15);
 
         scrollbar.style.width = `${scrollProgress}%`;
@@ -117,8 +117,10 @@ export const BrandsPage = () => {
       </Layout>
       <section>
         <Layout>
-          <h1>Бренди</h1>
-          <span className={s.qty}>{brands.items.length} брендів</span>
+          <h1>{t("brands.title")}</h1>
+          <span className={s.qty}>
+            {t("brands.total", { count: brands.items.length })}
+          </span>
         </Layout>
 
         {isMobile && (
@@ -149,7 +151,7 @@ export const BrandsPage = () => {
             <Layout>
               <div className={s.scroller}>
                 <div className={s.scrollbarContainer}>
-                  <div className={s.scrollbar}></div>і
+                  <div className={s.scrollbar}></div>
                 </div>
               </div>
             </Layout>

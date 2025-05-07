@@ -10,6 +10,7 @@ import { ReviewItem } from "../ReviewItem/ReviewItem";
 import { StarRatingRed } from "../StarRating/StarRating";
 import { Pagination } from "../Pagination/Pagination"; // твоя власна пагінація для desktop
 import s from "./ReviewsList.module.css";
+import { useTranslation } from "react-i18next";
 
 interface ReviewerType {
   reviewer: string;
@@ -46,6 +47,7 @@ export const ReviewsList: FC<ReviewsListPropType> = ({
     (currentPage - 1) * REVIEWS_PER_PAGE,
     currentPage * REVIEWS_PER_PAGE
   );
+  const { t } = useTranslation();
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -65,8 +67,8 @@ export const ReviewsList: FC<ReviewsListPropType> = ({
       <div className={s.titleContainer}>
         <div>
           <h2>
-            <span>Відгуки</span>
-            <span>покупців</span>
+            <span>{t("reviews.titlePart1")}</span>
+            <span>{t("reviews.titlePart2")}</span>
           </h2>
 
           <div className="flex items-center lg:gap-[0.3vw] gap-[13vw] lg:mb-[0] mb-[10vw]">
@@ -76,7 +78,7 @@ export const ReviewsList: FC<ReviewsListPropType> = ({
         </div>
 
         <button onClick={openReview} className={s.brandLink}>
-          <span>Залишити відгук</span>
+          <span>{t("reviews.addReview")}</span>
           <svg
             className={s.arrow}
             viewBox="0 0 32 32"

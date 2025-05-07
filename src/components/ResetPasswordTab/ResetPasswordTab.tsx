@@ -4,6 +4,7 @@ import { resetPassword } from "../../store/slices/resetPasswordSlice"; // Шля
 import { RootState } from "../../store"; // Шлях до вашого store
 import s from "./ResetPasswordTab.module.css";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { useTranslation } from "react-i18next";
 
 interface FormValues {
   oldPassword: string;
@@ -16,13 +17,14 @@ export const ResetPasswordTab = () => {
   const { status, error, message } = useSelector(
     (state: RootState) => state.resetPassword
   );
+  const { t } = useTranslation();
 
   const handleSubmit = (
     values: FormValues,
     { resetForm }: { resetForm: () => void }
   ) => {
     if (values.newPassword !== values.confirmPassword) {
-      alert("Паролі не співпадають");
+      alert(t("resetPassword.errors.passwordsMismatch"));
       return;
     }
 
@@ -39,8 +41,8 @@ export const ResetPasswordTab = () => {
   return (
     <div className={s.tab}>
       <h2>
-        <span>Зміна</span>
-        <span>пароля</span>
+        <span>{t("resetPassword.change")}</span>
+        <span>{t("resetPassword.password")}</span>
       </h2>
 
       <div></div>
@@ -56,7 +58,8 @@ export const ResetPasswordTab = () => {
           <Form className={s.form}>
             <div className={`${s.field} lg:mb-[1.8vw] mb-[4.2vw]`}>
               <label htmlFor="oldPassword">
-                Поточний пароль<span>*</span>
+                {t("resetPassword.currentPassword")}
+                <span>*</span>
               </label>
               <Field
                 type="password"
@@ -64,20 +67,20 @@ export const ResetPasswordTab = () => {
                 id="oldPassword"
                 value={values.oldPassword}
                 onChange={handleChange}
-                placeholder="Твій поточний пароль"
+                placeholder={t("resetPassword.currentPasswordPlaceholder")}
               />
               <ErrorMessage
                 name="oldPassword"
                 component="div"
                 className={s.error}
               />
-              <div className={s.forget}>Забули пароль?</div>
+              <div className={s.forget}>{t("resetPassword.forgot")}</div>
             </div>
 
             <div className={s.inputContainer}>
               <div className={s.field}>
                 <label htmlFor="newPassword">
-                  Новий пароль
+                  {t("resetPassword.newPassword")}
                   <span>*</span>
                 </label>
                 <Field
@@ -86,7 +89,7 @@ export const ResetPasswordTab = () => {
                   id="newPassword"
                   value={values.newPassword}
                   onChange={handleChange}
-                  placeholder="Введи новий пароль"
+                  placeholder={t("resetPassword.newPasswordPlaceholder")}
                 />
                 <ErrorMessage
                   name="newPassword"
@@ -97,7 +100,7 @@ export const ResetPasswordTab = () => {
 
               <div className={s.field}>
                 <label htmlFor="confirmPassword">
-                  Повторіть новий пароль
+                  {t("resetPassword.confirmPassword")}
                   <span>*</span>
                 </label>
                 <Field
@@ -106,7 +109,7 @@ export const ResetPasswordTab = () => {
                   id="confirmPassword"
                   value={values.confirmPassword}
                   onChange={handleChange}
-                  placeholder="Повтори новий пароль"
+                  placeholder={t("resetPassword.confirmPasswordPlaceholder")}
                 />
                 <ErrorMessage
                   name="confirmPassword"
@@ -120,9 +123,9 @@ export const ResetPasswordTab = () => {
             {message && <div className={s.success}>{message}</div>}
 
             <button className={s.submitBtn} type="submit">
-              {(status === "loading" && <p>Завантаження...</p>) || (
-                <p>Зберегти зміни</p>
-              )}
+              {(status === "loading" && (
+                <p>{t("resetPassword.loading")}</p>
+              )) || <p>{t("resetPassword.save")}</p>}
               <svg
                 width="25"
                 height="24"

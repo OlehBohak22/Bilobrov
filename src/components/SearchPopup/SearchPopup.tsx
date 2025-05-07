@@ -11,6 +11,7 @@ import { ProductList } from "../ProductList/ProductList";
 import { Link, useLocation } from "react-router";
 import { motion } from "framer-motion";
 import { Loader } from "../Loader/Loader";
+import { useTranslation } from "react-i18next";
 
 interface SearchPopupProps {
   close: () => void;
@@ -19,7 +20,6 @@ interface SearchPopupProps {
 export const SearchPopup: React.FC<SearchPopupProps> = ({ close }) => {
   const dispatch = useDispatch<AppDispatch>();
   const products = useSelector((state: RootState) => state.filters.products);
-  const { categories } = useSelector((state: RootState) => state.categories);
   const location = useLocation();
   const initialPathname = useRef(location.pathname);
   const loading = useSelector((state: RootState) => state.filters.loading);
@@ -63,9 +63,7 @@ export const SearchPopup: React.FC<SearchPopupProps> = ({ close }) => {
     ).values()
   );
 
-  console.log(categories);
-
-  console.log(productCategories);
+  const { t } = useTranslation();
 
   return (
     <motion.div
@@ -101,7 +99,7 @@ export const SearchPopup: React.FC<SearchPopupProps> = ({ close }) => {
             type="text"
             value={searchQuery}
             onChange={handleInputChange}
-            placeholder="Введіть товар для пошуку"
+            placeholder={t("searchPlaceholder", "Введіть товар для пошуку")}
             className={s.input}
           />
 
@@ -125,18 +123,15 @@ export const SearchPopup: React.FC<SearchPopupProps> = ({ close }) => {
             />
           </svg>
         </div>
-
         <ProductList products={products.slice(0, 10)} mini={true}>
           <h2>
             <span></span>
             <span className="lg:-translate-x-[2vw] -translate-x-[6vw]">
-              Товари
+              {t("products", "Товари")} {/* ✅ переклад */}
             </span>
           </h2>
         </ProductList>
-
-        <h3>Категорії</h3>
-
+        <h3>{t("categories", "Категорії")}</h3> {/* ✅ переклад */}
         {loading ? (
           <Loader />
         ) : (

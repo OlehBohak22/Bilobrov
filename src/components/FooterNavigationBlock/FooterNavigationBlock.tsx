@@ -1,46 +1,53 @@
 import s from "./FooterNavigationBlock.module.css";
 import { Link } from "react-router";
+import { useTranslation } from "react-i18next";
 
 export const FooterNavigationBlock = () => {
+  const { t } = useTranslation();
+
   return (
     <div className={s.navigationBlock}>
       <div className={s.block}>
-        <h3>Клієнтам</h3>
+        <h3>{t("footerNavigation.customers.title")}</h3>
 
         <ul>
           <li>
-            <Link to="/">Питання – відповіді</Link>
+            <Link to="/faq">{t("footerNavigation.customers.faq")}</Link>
           </li>
           <li>
-            <Link to="/">Доставка</Link>
+            <Link to="/delivery">
+              {t("footerNavigation.customers.delivery")}
+            </Link>
           </li>
           <li>
-            <Link to="/">Оплата</Link>
+            <Link to="/payment">{t("footerNavigation.customers.payment")}</Link>
           </li>
           <li>
-            <Link to="/">Обмін та повернення</Link>
+            <Link to="/returns">{t("footerNavigation.customers.returns")}</Link>
           </li>
           <li>
-            <Link to="/">Бонусна програма</Link>
+            <Link to="/bonus-program">
+              {t("footerNavigation.customers.bonusProgram")}
+            </Link>
           </li>
         </ul>
       </div>
 
       <div className={s.block}>
-        <h3>Bilobrov cosmetics</h3>
+        <h3>{t("footerNavigation.company.title")}</h3>
 
         <ul>
           <li>
-            <Link to="/">Bilobrov cosmetics</Link>
+            <Link to="/about">{t("footerNavigation.company.about")}</Link>
           </li>
           <li>
-            <Link to="/">Блог</Link>
+            <Link to="/blog">{t("footerNavigation.company.blog")}</Link>
           </li>
           <li>
-            <Link to="/">Особистий кабінет</Link>
+            <Link to="/account">{t("footerNavigation.company.account")}</Link>
           </li>
           <li>
-            <Link to="/">Контакти</Link>
+            <Link to="/contacts">{t("footerNavigation.company.contacts")}</Link>
           </li>
         </ul>
       </div>

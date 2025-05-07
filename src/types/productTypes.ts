@@ -16,6 +16,7 @@ export interface ProductInfo {
   variation_id: number;
   description: string;
   quantity: number;
+  brands: { name: string }[];
   short_description?: string;
   categories: Category[];
   variations: number[];

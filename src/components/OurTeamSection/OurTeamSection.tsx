@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { Layout } from "../Layout/Layout";
 import s from "./OurTeamSection.module.css";
@@ -63,19 +64,21 @@ export const OurTeamSection = () => {
     groupedMembers.push(teamMembers.slice(i, i + 2));
   }
 
+  const { t } = useTranslation();
+
   return (
     <section className={s.section}>
       <Layout className={s.container}>
         <div className={s.leftSide}>
           <div className={s.titleContainer}>
-            <span>Команда</span>
-            <span>Bilobrov</span>
-            <span>Cosmetics & Clinics</span>
+            <span>{t("ourTeam.title1")}</span>
+            <span>{t("ourTeam.title2")}</span>
+            <span>{t("ourTeam.title3")}</span>
           </div>
 
           <div className={s.teamCount}>
             <span>45+</span>
-            <p>Профі в команді</p>
+            <p>{t("ourTeam.count")}</p>
           </div>
         </div>
 

@@ -7,8 +7,10 @@ import { CartProductItemMemo } from "../CartProductItem/CartProductItem";
 import { fetchCartProducts } from "../../store/slices/productsSlice";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { Loader } from "../Loader/Loader";
+import { useTranslation } from "react-i18next";
 
 export const OrderSidePanel = () => {
+  const { t } = useTranslation();
   const { items } = useSelector((state: RootState) => state.cart);
   const token = useSelector((state: RootState) => state.user.token);
   const dispatch = useAppDispatch();
@@ -47,7 +49,6 @@ export const OrderSidePanel = () => {
 
       return null;
     })
-
     .filter(
       (item): item is ProductInfo & { variation: number; quantity: number } =>
         item !== null
@@ -75,7 +76,7 @@ export const OrderSidePanel = () => {
   return (
     <div className={s.sidePanel}>
       <div className={s.sideHeading}>
-        <p>всього До оплати</p>
+        <p>{t("orderPanel.totalToPay")}</p>
         <span>{totalAmount}₴</span>
       </div>
 
@@ -94,7 +95,7 @@ export const OrderSidePanel = () => {
               />
             ))
           ) : (
-            <div className={s.emptyCart}>Кошик порожній</div>
+            <div className={s.emptyCart}>{t("orderPanel.emptyCart")}</div>
           )}
         </ul>
       </div>
@@ -103,15 +104,15 @@ export const OrderSidePanel = () => {
         <div>
           <div className={s.orderDetails}>
             <p>
-              <span>Сума замовлення:</span>
+              <span>{t("orderPanel.orderAmount")}:</span>
               <span>{regularPrice} ₴</span>
             </p>
             <p>
-              <span>Сума знижки:</span>
+              <span>{t("orderPanel.discountAmount")}:</span>
               <span className={s.discount}>{discount} ₴</span>
             </p>
             <p>
-              <span>Вартість доставки:</span>
+              <span>{t("orderPanel.deliveryCost")}:</span>
               <span>
                 <svg
                   viewBox="0 0 20 21"
@@ -125,12 +126,12 @@ export const OrderSidePanel = () => {
                     strokeLinejoin="round"
                   />
                 </svg>
-                Безкоштовна
+                {t("orderPanel.free")}
               </span>
             </p>
           </div>
           <div className={s.totalAmount}>
-            <p>РАЗОМ:</p>
+            <p>{t("orderPanel.total")}:</p>
             <span>{totalAmount} ₴</span>
           </div>
         </div>

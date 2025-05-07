@@ -5,11 +5,13 @@ import { fetchFaqs } from "../../store/slices/faqSlice";
 import { motion } from "framer-motion";
 import s from "./FaqTab.module.css";
 import { Loader } from "../Loader/Loader";
+import { useTranslation } from "react-i18next";
 
 export const FaqTab = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { faqs, loading } = useSelector((state: RootState) => state.faq);
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     dispatch(fetchFaqs());
@@ -26,8 +28,8 @@ export const FaqTab = () => {
   return (
     <div className={s.tab}>
       <h2>
-        <span>Часті</span>
-        <span>питання</span>
+        <span>{t("faqTab.title1")}</span>
+        <span>{t("faqTab.title2")}</span>
       </h2>
 
       <ul className={s.faqList}>
@@ -39,7 +41,6 @@ export const FaqTab = () => {
           >
             <h3 className={s.accordionTitle}>
               {faq.faq_question}
-
               <div>
                 <motion.svg
                   animate={{ rotate: openIndex === index ? 180 : 0 }}

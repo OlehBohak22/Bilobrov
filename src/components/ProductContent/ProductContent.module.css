@@ -161,6 +161,7 @@
     line-height: 0.8vw;
     letter-spacing: 0.1vw;
     transition: 0.3s;
+    text-transform: uppercase;
   }
 
   .notAvailable {

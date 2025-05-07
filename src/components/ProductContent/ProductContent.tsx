@@ -12,6 +12,7 @@ import { StylesConfig } from "react-select";
 import { addToCart } from "../../store/slices/cartSlice";
 import { selectUserMetaPreferences } from "../../store/selectors/userSelectors";
 import { toggleWishlistItem } from "../../store/slices/wishlistSlice";
+import { useTranslation } from "react-i18next";
 
 interface VariationAttribute {
   id: number;
@@ -43,6 +44,8 @@ export const ProductContent: React.FC<ProductItemProps> = ({
   variations,
   reviewsQty,
 }) => {
+  const { t } = useTranslation();
+
   const { token } = useSelector((state: RootState) => state.user);
 
   const [selectedVariation, setSelectedVariation] = useState<number | null>(
@@ -157,16 +160,7 @@ export const ProductContent: React.FC<ProductItemProps> = ({
   const preferences = useSelector(selectUserMetaPreferences);
   const isInWishlist = preferences.includes(info.id);
 
-  const brandMeta = info.meta_data.find((item) => item.key === "brands");
-
-  const brandName =
-    Array.isArray(brandMeta?.value) &&
-    brandMeta.value.length > 0 &&
-    typeof brandMeta.value[0] === "object"
-      ? (brandMeta.value[0] as { name: string }).name
-      : typeof brandMeta?.value === "string"
-      ? brandMeta.value
-      : null;
+  const brandName = info.brands[0]?.name || "";
 
   const components = (info.meta_data.find(
     (item) => item.key === "_product_composition" && item.value
@@ -255,7 +249,7 @@ export const ProductContent: React.FC<ProductItemProps> = ({
     <div className={s.content}>
       <div className={s.ratingBlock}>
         <StarRatingRed rating={localAverage} />
-        <span>{reviewsQty} відгуків</span>
+        <span>{t("reviewsCount", { count: reviewsQty })}</span>
       </div>
 
       {brandName && <p className={s.productBrand}>{brandName}</p>}
@@ -449,8 +443,8 @@ export const ProductContent: React.FC<ProductItemProps> = ({
             <path d="M10 4V19" strokeWidth="1.7" />
           </svg>
 
-          <span>авторизуйся </span>
-          <p> і отримуй бонуси</p>
+          <span>{t("authorize")}</span>
+          <p>{t("getBonuses")}</p>
         </div>
       )}
 
@@ -500,8 +494,8 @@ export const ProductContent: React.FC<ProductItemProps> = ({
             </button>
           </div>
 
-          <button onClick={handleAddToCart} className={`${s.cart} `}>
-            ДОДАТИ В КОШИК
+          <button onClick={handleAddToCart} className={`${s.cart}`}>
+            {t("addToCart")}
           </button>
 
           <button
@@ -530,17 +524,17 @@ export const ProductContent: React.FC<ProductItemProps> = ({
               >
                 <path d="M4.5325 11.6668C4.30103 11.6673 4.07174 11.6232 3.85781 11.5369C3.64388 11.4507 3.44953 11.3241 3.28592 11.1644L0 7.95899L0.830667 7.14811L4.11658 10.3535C4.22684 10.461 4.37634 10.5213 4.53221 10.5213C4.68808 10.5213 4.83757 10.461 4.94783 10.3535L13.1693 2.3335L14 3.14437L5.7785 11.1644C5.615 11.3241 5.42074 11.4507 5.20691 11.5369C4.99308 11.6231 4.76388 11.6673 4.5325 11.6668Z" />
               </svg>
-              В наявності
+              {t("inStock")}
             </p>
           </div>
         ) : (
           <div className={s.available}>
-            <p>Немає в наявності</p>
+            <p>{t("outOfStock")}</p>
           </div>
         )}
 
         <div className={s.code}>
-          <p>Код товару: </p> <span> {info.sku}</span>
+          <p>{t("productCode")}: </p> <span>{info.sku}</span>
         </div>
       </div>
 
@@ -599,8 +593,8 @@ export const ProductContent: React.FC<ProductItemProps> = ({
         </div>
 
         <div className={s.text}>
-          <p>потрібна допомога?</p>
-          <span>отримати консультацію</span>
+          <p>{t("needHelp")}</p>
+          <span>{t("getConsultation")}</span>
         </div>
       </div>
 

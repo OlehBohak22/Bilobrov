@@ -43,6 +43,8 @@
           svg {
             width: 1.3vw;
             height: 1.3vw;
+            stroke: white;
+            transition: stroke 0.3s;
           }
         }
       }
@@ -55,6 +57,12 @@
     svg {
       width: 6.6vw;
       height: 6.6vw;
+    }
+  }
+
+  .instaBlock:hover {
+    svg {
+      stroke: #ffc43a !important;
     }
   }
 

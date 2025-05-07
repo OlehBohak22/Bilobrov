@@ -1,24 +1,23 @@
 import { Link } from "react-router";
 import { Layout } from "../Layout/Layout";
 import s from "./CashbackSection.module.css";
+import { useTranslation } from "react-i18next";
 
 export const CashbackSection = () => {
+  const { t } = useTranslation();
+
   return (
     <section>
       <Layout className={s.container}>
         <div className={s.descContainers}>
           <div className={s.titleContainer}>
-            <span>Спеціальні умови</span>
-            <h2>Кешбек на покупки</h2>
-            <p>
-              Кожна ваша покупка приносить більше, ніж просто задоволення.
-              Накопичуйте кешбек на кожному етапі покупок з Bilobrov та
-              використовуйте його для ще вигідніших замовлень у майбутньому.
-            </p>
+            <span>{t("cashbackSection.label")}</span>
+            <h2>{t("cashbackSection.title")}</h2>
+            <p>{t("cashbackSection.description")}</p>
           </div>
 
           <Link className={s.details} to="/bilobrov-club">
-            <span>Детальніше</span>
+            <span>{t("cashbackSection.details")}</span>
             <svg
               width="25"
               height="24"
@@ -43,7 +42,7 @@ export const CashbackSection = () => {
           </Link>
         </div>
         <div>
-          <img src="/images/cashback.jpg" alt="" />
+          <img src="/images/cashback.jpg" alt="Cashback" />
         </div>
       </Layout>
     </section>

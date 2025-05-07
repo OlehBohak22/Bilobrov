@@ -12,6 +12,7 @@ import { ProductItem } from "../ProductItem/ProductItem";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router";
+import { useTranslation } from "react-i18next";
 
 export const WishListPopup: React.FC<{ onClose: () => void }> = ({
   onClose,
@@ -21,7 +22,7 @@ export const WishListPopup: React.FC<{ onClose: () => void }> = ({
   const { pathname } = useLocation();
   const { width } = useWindowSize();
   const isMobile = width < 1024;
-
+  const { t } = useTranslation();
   const wishlist = useSelector(
     (state: RootState) => state.wishlist.preferences
   );
@@ -64,7 +65,7 @@ export const WishListPopup: React.FC<{ onClose: () => void }> = ({
         <div className={s.swiperController}>
           {isMobile ? (
             <>
-              <h2>Список побажань</h2>
+              <h2>{t("wishlistPopup.titleMobile")}</h2>
               {wishlistProducts.length > 0 && (
                 <button className={s.clear} onClick={handleClearWishlist}>
                   <svg
@@ -91,14 +92,14 @@ export const WishListPopup: React.FC<{ onClose: () => void }> = ({
                       stroke-linecap="square"
                     />
                   </svg>
-                  <span>Видалити все</span>
+                  <span>{t("deleteAll")}</span>
                 </button>
               )}
             </>
           ) : (
             <h2>
-              <span>Список</span>
-              <span>побажань</span>
+              <span>{t("wishlistPopup.titleDesktopPart1")}</span>
+              <span>{t("wishlistPopup.titleDesktopPart2")}</span>
             </h2>
           )}
 
@@ -214,12 +215,12 @@ export const WishListPopup: React.FC<{ onClose: () => void }> = ({
                     stroke-linecap="square"
                   />
                 </svg>
-                <span>Видалити все</span>
+                <span>{t("deleteAll")}</span>
               </button>
             )}
           </>
         ) : (
-          <div className={s.emptyWishlist}>Ваш список бажань порожній</div>
+          <div className={s.emptyWishlist}>{t("wishlistPopup.empty")}</div>
         )}
       </motion.div>
     </motion.div>

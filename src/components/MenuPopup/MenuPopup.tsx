@@ -58,8 +58,6 @@ export const MenuPopup: React.FC<{
     };
   }, [onClose]);
 
-  console.log(asideBottomMenuTree);
-
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -93,56 +91,6 @@ export const MenuPopup: React.FC<{
             </svg>
           </button>
         </div>
-
-        {/* <ul className={s.asideTop}>
-          {asideTopMenuTree.map((item) => (
-            <li key={item.id}>
-              {item.children.length > 0 ? (
-                <div
-                  className={`${s.toggle} ${openMenu && s.active}`}
-                  onClick={() => toggleSubMenu(item.id)}
-                >
-                  {item.title}
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <g opacity="0.4">
-                      <path
-                        d="M19 8.5L12 15.5L5 8.5"
-                        strokeWidth="2"
-                        strokeLinecap="square"
-                      />
-                    </g>
-                  </svg>
-                </div>
-              ) : (
-                <a href={item.url}>{item.title}</a>
-              )}
-
-              {item.children.length > 0 && openMenu === item.id && (
-                <motion.ul
-                  className={s.subMenu}
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{
-                    height: openMenu === item.id ? "auto" : 0,
-                    opacity: openMenu === item.id ? 1 : 0,
-                  }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.3 }}
-                  style={{ overflow: "hidden" }} // Приховуємо вміст, поки анімація відбувається
-                >
-                  {item.children.map((child) => (
-                    <li key={child.id}>
-                      <a href={child.url}>{child.title}</a>
-                    </li>
-                  ))}
-                </motion.ul>
-              )}
-            </li>
-          ))}
-        </ul> */}
 
         <ul className={s.asideTop}>
           {asideTopMenuTree.map((item) => {

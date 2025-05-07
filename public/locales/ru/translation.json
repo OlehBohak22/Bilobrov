@@ -1,0 +1,554 @@
+{
+  "details": "Подробнее",
+  "categoryLink": "Перейти к категории",
+  "deleteAll": "Удалить все",
+  "delete": "Удалить",
+
+  "productList": {
+    "sales": "Акции",
+    "novelty": "Новинки",
+    "bestsellers": "Бестселлеры"
+  },
+  "homePage": {
+    "newArrivals": {
+      "first": "Новые",
+      "second": "поступления"
+    },
+    "bestsellers": {
+      "first": "Хиты",
+      "second": "продаж"
+    },
+    "faceCare": {
+      "title": {
+        "first": "Уход",
+        "second": "за лицом"
+      },
+      "largePlate": "Кремы"
+    },
+    "decorative": {
+      "title": {
+        "first": "Декоративная",
+        "second": "косметика"
+      },
+      "largePlate": "Помада для губ"
+    }
+  },
+  "brandsSection": {
+    "brandsTitle": {
+      "first": "Популярные",
+      "second": "бренды"
+    },
+    "allBrands": "Все бренды"
+  },
+
+  "homeAbout": {
+    "title": "О нашем бренде",
+    "description": "Мы создаем продукты, которые дарят заботу, уверенность и комфорт каждой женщине. Каждая деталь — это вдохновение любовью к себе и стремление сделать красоту доступной для всех!",
+    "moreLink": "Подробнее о нас",
+    "author": {
+      "firstName": "Виктория",
+      "lastName": "Билобров"
+    }
+  },
+  "homeServices": {
+    "services": [
+      {
+        "icon": "icon-free-shipping",
+        "title": "Бесплатная доставка по Украине",
+        "description": "Ваши любимые продукты Bilobrov с доставкой без лишних затрат в любой уголок Украины."
+      },
+      {
+        "icon": "icon-psychiatry",
+        "title": "Поддержка и консультация",
+        "description": "Наши менеджеры всегда готовы помочь подобрать нужное средство и ответить на ваши вопросы."
+      },
+      {
+        "icon": "icon-gift-card",
+        "title": "Накопительная кешбэк-система",
+        "description": "С каждой покупки в Bilobrov вы накапливаете кешбэк, который делает ваши будущие заказы выгоднее."
+      },
+      {
+        "icon": "icon-return-box",
+        "title": "Лёгкий обмен и возврат товаров",
+        "description": "Мы ценим ваше доверие и гарантируем лёгкий обмен и возврат. Если продукт не подошёл, мы быстро заменим его на другой."
+      }
+    ]
+  },
+  "cashbackSection": {
+    "label": "Специальные условия",
+    "title": "Кешбэк на покупки",
+    "description": "Каждая ваша покупка приносит больше, чем просто удовольствие. Накапливайте кешбэк на каждом этапе покупок с Bilobrov и используйте его для ещё более выгодных заказов в будущем.",
+    "details": "Подробнее"
+  },
+  "footer": {
+    "instagramBlock": {
+      "label": "Instagram",
+      "description": "следите за нашим брендом в соцсетях",
+      "subscribe": "Подписаться"
+    },
+    "support": {
+      "workTimeLabel": "Режим работы поддержки:",
+      "workTime": "Пн-Пт: 09:00 - 22:00 Сб-Вс: 10:00 - 20:00",
+      "telegram": "ТELEGRAM"
+    },
+    "privacyPolicy": "Политика конфиденциальности",
+    "offer": "Оферта",
+    "rights": "©2024 Bilobrov Cosmetics. Все права защищены.",
+    "developedBy": "Сайт разработан агентством: <1>Before/After</1>"
+  },
+  "footerNavigation": {
+    "customers": {
+      "title": "Клиентам",
+      "faq": "Вопросы – ответы",
+      "delivery": "Доставка",
+      "payment": "Оплата",
+      "returns": "Обмен и возврат",
+      "bonusProgram": "Бонусная программа"
+    },
+    "company": {
+      "title": "Bilobrov cosmetics",
+      "about": "О Bilobrov cosmetics",
+      "blog": "Блог",
+      "account": "Личный кабинет",
+      "contacts": "Контакты"
+    }
+  },
+  "mailingForm": {
+    "subscribe": "Подписаться",
+    "newsletter": "на рассылку",
+    "placeholder": "Введите ваш e-mail"
+  },
+  "cartPopup": {
+    "title": "Корзина",
+    "empty": "Корзина пуста",
+    "orderAmount": "Сумма заказа:",
+    "discountAmount": "Сумма скидки:",
+    "deliveryCost": "Стоимость доставки:",
+    "free": "Бесплатно",
+    "total": "ИТОГО:",
+    "checkout": "Оформить заказ",
+    "continueShopping": "Продолжить покупки",
+    "youMayLike": "Вам может понравиться:"
+  },
+  "wishlistPopup": {
+    "titleMobile": "Список желаний",
+    "titleDesktopPart1": "Список",
+    "titleDesktopPart2": "желаний",
+    "empty": "Ваш список желаний пуст"
+  },
+  "accountPage": {
+    "welcome": {
+      "hello": "добро пожаловать!",
+      "helloNoName": "Добро пожаловать!",
+      "welcomeText": "Добро пожаловать в ваш личный кабинет BILOBROV CLUB!",
+      "descText": "Здесь вы можете просматривать свои бонусы, контролировать заказы, следить за накопленными скидками и первыми узнавать о новинках и акциях. Все привилегии клуба — в вашем распоряжении!"
+    },
+    "tabs": {
+      "main": "Главная",
+      "bonus": "Бонусная карта",
+      "order": "Мои заказы",
+      "wishlist": "Список желаний",
+      "contact": "Контактные данные",
+      "password": "Смена пароля",
+      "address": "Мои адреса"
+    },
+    "logout": {
+      "button": "Выйти",
+      "confirmText": "Выйти",
+      "titleText": "Уже уходишь?",
+      "descText": "Твои губы ещё не сказали «спасибо» за новую помаду!",
+      "cancelText": "Остаться"
+    }
+  },
+  "bonus": {
+    "title1": "Бонусная",
+    "title2": "карта",
+    "description1": "Это твоя бонусная карта BILOBROV CLUB!",
+    "description2": " Она создана, чтобы каждая твоя покупка была ещё приятнее. Собирай бонусы за покупки, отзывы и активность в соцсетях, а затем используй их для выгодных скидок. С этой картой ты всегда на шаг ближе к своим любимым продуктам.",
+    "cardBalance": "Баланс карты:",
+    "bonuses": "бонусов",
+    "transactions": "Транзакции по карте:"
+  },
+  "orders": {
+    "title1": "Мои",
+    "title2": "заказы",
+    "pending": "Формируем заказ",
+    "processing": "Заказ в пути",
+    "completed": "Заказ уже у вас",
+    "unknown": "Неизвестный статус",
+    "orderSum": "Сумма заказа:",
+    "more": "еще",
+    "orderInfo": "Информация о заказе:",
+    "delivery": "Доставка",
+    "recipient": "Получатель",
+    "productCode": "Код товара",
+    "orderAmount": "Сумма заказа:",
+    "discountAmount": "Сумма скидки:",
+    "shippingCost": "Стоимость доставки:",
+    "free": "Бесплатно",
+    "total": "ИТОГО:",
+    "from": "от"
+  },
+  "updateInfo": {
+    "contact": "Контактные",
+    "data": "данные",
+    "personalInfo": "Личная информация",
+    "name": "Имя",
+    "secondName": "Фамилия",
+    "birthday": "Дата рождения",
+    "contacts": "Контакты",
+    "phone": "Номер телефона",
+    "namePlaceholder": "Твоё имя",
+    "secondNamePlaceholder": "Твоя фамилия",
+    "save": "Сохранить изменения",
+    "saved": "Изменения сохранены",
+    "errors": {
+      "nameRequired": "Имя обязательно",
+      "nameMin": "Имя должно быть не менее 2 символов",
+      "secondNameRequired": "Фамилия обязательна",
+      "secondNameMin": "Фамилия должна быть не менее 2 символов",
+      "birthdayRequired": "Дата рождения обязательна",
+      "birthdayMax": "Дата рождения не может быть в будущем",
+      "phoneRequired": "Номер телефона обязателен",
+      "phoneValid": "Введите правильный номер телефона",
+      "emailValid": "Некорректная почта"
+    }
+  },
+  "resetPassword": {
+    "change": "Смена",
+    "password": "пароля",
+    "currentPassword": "Текущий пароль",
+    "currentPasswordPlaceholder": "Твой текущий пароль",
+    "newPassword": "Новый пароль",
+    "newPasswordPlaceholder": "Введи новый пароль",
+    "confirmPassword": "Повторите новый пароль",
+    "confirmPasswordPlaceholder": "Повтори новый пароль",
+    "forgot": "Забыли пароль?",
+    "save": "Сохранить изменения",
+    "loading": "Загрузка...",
+    "errors": {
+      "passwordsMismatch": "Пароли не совпадают"
+    },
+    "success": {
+      "passwordChanged": "Пароль успешно изменен"
+    }
+  },
+  "address": {
+    "my": "Мои",
+    "addresses": "адреса",
+    "addNew": "Добавить новый адрес",
+    "noSaved": "У вас еще нет сохраненных адресов",
+    "addressNumber": "Адрес #{{number}}",
+    "city": "г.",
+    "department": "отделение",
+    "street": "ул.",
+    "house": "д.",
+    "entrance": "подъезд",
+    "apartment": "кв.",
+    "recipient": "Получатель",
+    "main": "Основной адрес",
+    "delete": "Удалить",
+    "cancel": "Оставить",
+    "confirmTitle": "Уверены?",
+    "confirmDesc": "Ваша косметика уже полюбила этот адрес!"
+  },
+  "addAddress": {
+    "editTitle": "Редактирование адреса",
+    "newTitle": "Адрес #{{number}}",
+    "mainAddress": "Основной адрес",
+    "recipientName": "Имя получателя",
+    "recipientSurname": "Фамилия получателя",
+    "recipientMiddlename": "Отчество получателя",
+    "recipientPhone": "Телефон получателя",
+    "deliveryMethod": "Способ доставки",
+    "city": "Город",
+    "street": "Улица",
+    "branchNumber": "№ Отделения",
+
+    "placeholderName": "Имя получателя",
+    "placeholderSurname": "Фамилия получателя",
+    "placeholderMiddlename": "Отчество получателя",
+
+    "selectOnMap": "Выбрать на карте",
+    "house": "Дом",
+    "entrance": "Подъезд",
+    "apartment": "Квартира",
+    "instructions": "Дополнительные инструкции для курьера",
+    "instructionsPlaceholder": "Помогите курьеру быстрее найти вас",
+    "saveChanges": "Сохранить изменения"
+  },
+  "delivery": {
+    "department": "На отделение",
+    "courier": "Курьер",
+    "locker": "Почтомат"
+  },
+
+  "order": {
+    "makeMain": "Сделать этот адрес основным",
+    "next": "Далее",
+    "contactDetails": "Контактные данные",
+    "delivery": "Доставка",
+    "payment": "Оплата",
+    "firstTime": "Заказываю впервые",
+    "regularCustomer": "Я постоянная клиентка",
+    "fields": {
+      "firstName": "Имя",
+      "lastName": "Фамилия",
+      "middleName": "Отчество",
+      "phone": "Номер телефона",
+      "email": "E-mail"
+    },
+    "placeholders": {
+      "firstName": "Твоё имя",
+      "lastName": "Фамилия",
+      "middleName": "Твоё имя отчество",
+      "phone": "Твой номер телефона",
+      "email": "Твой e-mail"
+    },
+    "recipientContactDetails": "Контактные данные получателя",
+    "checkboxes": {
+      "receiver": "Я получатель",
+      "register": "Зарегистрироваться на сайте и получить доступ к специальным бонусам"
+    },
+    "onlinePayment": "Онлайн-оплата WayForPay",
+    "cod": "Накладений платіж"
+  },
+  "orderSuccess": {
+    "thankYou": "Спасибо, что вы с нами!",
+    "yourOrder": "Ваш заказ",
+    "success": "успешно принят",
+    "orderNumber": "Заказ №",
+    "orderDate": "Дата заказа",
+    "deliveryAddress": "Адрес доставки",
+    "paymentMethod": "Способ оплаты",
+    "recipient": "Получатель",
+    "contactNumber": "Контактный номер",
+    "orderTotal": "Сумма заказа",
+    "discountTotal": "Сумма скидки",
+    "deliveryCost": "Стоимость доставки",
+    "free": "Бесплатно",
+    "totalToPay": "К оплате",
+    "backHome": "Вернуться на главную"
+  },
+  "orderPanel": {
+    "totalToPay": "Всего к оплате",
+    "emptyCart": "Корзина пуста",
+    "orderAmount": "Сумма заказа",
+    "discountAmount": "Сумма скидки",
+    "deliveryCost": "Стоимость доставки",
+    "free": "Бесплатно",
+    "total": "ИТОГО"
+  },
+  "orderFooter": {
+    "supportTime": "Режим работы поддержки 12:00 - 18:00",
+    "telegram": "TELEGRAM",
+    "deliveryTerms": "Условия доставки",
+    "paymentTerms": "Условия оплаты"
+  },
+  "clientsSupport": {
+    "customers": "Покупателям",
+    "returnExchange": "Обмен и возврат",
+    "faq": "Частые вопросы",
+    "contacts": "Наши контакты",
+    "legal": "Юридическая информация",
+    "offer": "Договор оферты",
+    "offerText": "Текст договора оферты..."
+  },
+  "breadcrumbs": {
+    "home": "Главная"
+  },
+  "returnTab": {
+    "title1": "Обмен и",
+    "title2": "возврат",
+    "description": "Мы предлагаем удобный обмен и возврат товаров в следующих случаях:",
+    "reason1": "Если есть повреждение упаковки при доставке Новой Почтой, возможен возврат или обмен товара.",
+    "reason2": "В случае, если не работают дозаторы или другие механизмы упаковки, мы обеспечим обмен или возврат товара.",
+    "reason3": "Если приобретённое активное средство не подошло, и его использование было рекомендовано нашим врачом или менеджером, возможен возврат или обмен."
+  },
+  "faqTab": {
+    "title1": "Частые",
+    "title2": "вопросы"
+  },
+  "contactTab": {
+    "title1": "Наши",
+    "title2": "контакты",
+    "sendLetter": "Отправить письмо",
+    "contactUs": "Свяжитесь с нами",
+    "callUs": "Позвонить",
+    "supportChat": "Свяжитесь с поддержкой",
+    "visitUs": "Приходите к нам",
+    "viewOnMap": "Посмотреть на Google Maps",
+    "error": "Ошибка"
+  },
+  "brands": {
+    "title": "Бренды",
+    "total": "{{count}} брендов",
+    "breadcrumbs": {
+      "home": "Главная",
+      "brands": "Бренды"
+    },
+    "noBrands": "Бренды отсутствуют",
+    "alphabet": "А-Я",
+    "viewBrand": "Посмотреть бренд",
+    "scrollHint": "Прокрутите для навигации по брендам"
+  },
+  "breadCrumbs": {
+    "main": "Главная",
+    "brands": "Бренды",
+    "about": "О нас",
+
+    "certificates": "Подарочные сертификаты"
+  },
+  "product": {
+    "similarProductsTitle1": "Похожие",
+    "similarProductsTitle2": "товары"
+  },
+  "reviews": {
+    "titlePart1": "Отзывы",
+    "titlePart2": "о товаре",
+    "addReview": "Оставить отзыв"
+  },
+
+  "reviewsCount": "{{count}} отзывов",
+  "addToCart": "Добавить в корзину",
+  "inStock": "В наличии",
+  "outOfStock": "Нет в наличии",
+  "productCode": "Код товара",
+  "authorize": "Авторизуйся",
+  "getBonuses": "и получай бонусы",
+  "needHelp": "Нужна помощь?",
+  "getConsultation": "Получить консультацию",
+  "selectColor": "Выберите цвет",
+  "selectVolume": "Выберите объем",
+
+  "productAccordion": {
+    "description": "Описание товара",
+    "characteristics": "Характеристики",
+    "appointment": "Назначение",
+    "skinType": "Тип кожи",
+    "contraindication": "Противопоказания",
+    "activeIngredients": "Активные ингредиенты",
+    "components": "Состав товара"
+  },
+
+  "reviewPopup": {
+    "title": "Оставить отзыв",
+    "name": "Имя",
+    "namePlaceholder": "Ваше имя",
+    "phone": "Номер телефона",
+    "phonePlaceholder": "Ваш номер телефона",
+    "reviewLabel": "Отзыв для публикации",
+    "reviewPlaceholder": "Текст отзыва",
+    "attachPhoto": "Прикрепить фотографию",
+    "submit": "Отправить отзыв",
+    "thanks": "Спасибо за отзыв!",
+    "success": "Ваш отзыв успешно опубликован!",
+    "backHome": "Вернуться на главную",
+    "error": "Не указано имя или email",
+    "errorDefault": "Что-то пошло не так"
+  },
+  "catalog": {
+    "productsLength": "товары",
+    "filters": "Фильтры",
+    "filterSale": "Со скидкой",
+    "filterInStock": "В наличии",
+    "filterApply": "Применить фильтры",
+    "filterCat": "Категории",
+    "filterBrands": "Бренды",
+    "popularity": "Популярные",
+    "date": "По новизне",
+    "asc": "Сначала дешевле",
+    "desc": "Сначала дороже",
+    "from": "От",
+    "to": "До"
+  },
+  "register": {
+    "welcomeTitle": "Привет, красавица!",
+    "loginTitle": "С возвращением!",
+    "welcomeText": "Мы рады приветствовать тебя в пространстве Bilobrov - давай создадим твой аккаунт",
+    "loginText": "Мы рады снова видеть тебя в пространстве Bilobrov. Желаем приятных покупок!",
+    "email": "Электронная почта",
+    "emailPlaceholder": "Твоя электронная почта",
+    "name": "Твоё имя",
+    "namePlaceholder": "Введи своё имя",
+    "password": "Пароль",
+    "passwordPlaceholder": "Введи пароль",
+    "loading": "Пожалуйста, подождите...",
+    "registerButton": "Зарегистрироваться",
+    "loginButton": "Войти",
+    "haveAccount": "Уже есть аккаунт? ",
+    "noAccount": "Ещё нет аккаунта? ",
+    "switchToLogin": " Войти",
+    "switchToRegister": " Зарегистрироваться"
+  },
+  "variationPopup": {
+    "select": "Выберите параметры",
+    "apply": "ДОБАВИТЬ В КОРЗИНУ"
+  },
+  "certificatePage": {
+    "titleLine1": "Подарочные",
+    "titleLine2": "сертификаты"
+  },
+  "bonusHero": "Выгодные покупки, кешбэк и подарки с виртуальной картой лояльности",
+
+  "bonusSection": {
+    "title1": "Присоединяйтесь",
+    "title2": "к Bilobrov club",
+    "description": "Вас ждут скидки по карте до 50%, кешбэк* бонусами с каждой покупкой от 3500 грн, который можно обменять на дополнительную скидку в онлайн и офлайн магазинах, а также возможность первыми узнавать о новинках и акциях.",
+    "bonusNote": "*1 БОНУС = 1 грн",
+    "register": "Зарегистрироваться"
+  },
+
+  "bonusSystem": {
+    "title1": "Как работает наша",
+    "title2": "бонусная система",
+    "buyFrom": "На покупки от",
+    "cashback": "Кэшбэк",
+    "also": "А также",
+    "birthday": "Ко Дню рождения",
+    "story": "За отметку в сторис",
+    "review": "За отзыв",
+    "points": "бонусов"
+  },
+  "bonusFaq": {
+    "title1": "Остались",
+    "title2": "вопросы?"
+  },
+  "aboutHero": {
+    "subtitle": "Ты у себя на первом месте",
+    "title": "С Bilobrov Cosmetics"
+  },
+  "bilobrovToday": {
+    "title": "сегодня",
+    "brands": "брендов",
+    "experience": "опыта",
+    "team": "человек в команде",
+    "clients": "в базе клиентов",
+    "years": "лет"
+  },
+  "philosophy": {
+    "subtitle": "Суть бренда Bilobrov глазами основательницы",
+    "title": "Bilobrov Cosmetics — ",
+    "desc": "это моя философия красоты, где каждый продукт — это шаг к уверенности и комфорту.",
+    "name": "Виктория",
+    "surname": "Билобров"
+  },
+  "ourTeam": {
+    "title1": "Команда",
+    "title2": "Bilobrov",
+    "title3": "Cosmetics & Clinics",
+    "count": "Профи в команде"
+  },
+  "valuables": {
+    "title": "Наши ценности",
+    "clientCareTitle": "Забота о клиенте",
+    "clientCareText": "Мы ставим клиентов на первое место, предоставляя индивидуальные консультации и помощь в выборе. Каждый наш клиент может рассчитывать на профессиональную поддержку и теплое обслуживание.",
+    "personalTitle": "Индивидуальный подход",
+    "personalText": "Мы учитываем ваши особенности и предлагаем продукцию, которая соответствует вашим потребностям и ожиданиям. Наши менеджеры и врачи-консультанты помогут выбрать лучшее именно для вас.",
+    "qualityTitle": "Качество продукции",
+    "qualityText": "Мы тщательно отбираем каждое средство, чтобы обеспечить его эффективность и безопасность для вашего ухода. Вы можете быть уверены, что все товары соответствуют самым высоким стандартам."
+  },
+  "searchPlaceholder": "Введите товар для поиска",
+  "products": "Товары",
+  "categories": "Категории"
+}

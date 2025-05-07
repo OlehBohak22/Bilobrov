@@ -10,6 +10,7 @@ import {
   updateAddress,
 } from "../../store/slices/addressSlice";
 import { NovaPoshtaMapPopup } from "../MapPopup/MapPopup";
+import { useTranslation } from "react-i18next";
 
 interface AddAddressFormProps {
   closeForm: () => void;
@@ -20,15 +21,18 @@ export const AddAddressForm: FC<AddAddressFormProps> = ({
   closeForm,
   initialValues,
 }) => {
+  const { t } = useTranslation();
+
   const { cities } = useSelector((state: RootState) => state.cities);
   const allCities = cities.map((city) => city.name);
   const [selectedCity, setSelectedCity] = useState("");
-  const [departmentSelect, setDepartmentSelect] = useState("На відділення");
+  const [departmentSelect, setDepartmentSelect] = useState(
+    t("delivery.department")
+  );
   const [selectedStreet, setSelectedStreet] = useState("");
   const dispatch = useAppDispatch();
   const [showMapPopup, setShowMapPopup] = useState(false);
   const [, setSelectedWarehouse] = useState<string | null>(null);
-
   const token = useSelector((state: RootState) => state.user.token) || "";
 
   const { user } = useSelector((state: RootState) => state.user) ?? {};
@@ -36,12 +40,12 @@ export const AddAddressForm: FC<AddAddressFormProps> = ({
   const [tab, setTab] = useState<"PostOffice" | "ParcelLocker">("PostOffice");
 
   useEffect(() => {
-    if (departmentSelect === "Поштомат") {
+    if (departmentSelect === t("delivery.locker")) {
       setTab("ParcelLocker");
-    } else if (departmentSelect === "На відділення") {
+    } else if (departmentSelect === t("delivery.department")) {
       setTab("PostOffice");
     }
-  }, [departmentSelect]);
+  }, [departmentSelect, t]);
 
   useEffect(() => {
     if (initialValues) {
@@ -53,13 +57,13 @@ export const AddAddressForm: FC<AddAddressFormProps> = ({
       setSelectedCity(initialValues.city);
       setDepartmentSelect(
         initialValues.delivery_type === "department"
-          ? "На відділення"
-          : "Кур'єр"
+          ? t("delivery.department")
+          : t("delivery.courier")
       );
       setSelectedStreet(initialValues.street);
       setWarehouse(initialValues.department);
     }
-  }, [initialValues]);
+  }, [initialValues, t]);
 
   const warehouses = selectedCity
     ? cities
@@ -104,7 +108,7 @@ export const AddAddressForm: FC<AddAddressFormProps> = ({
 
   useEffect(() => {
     const currentType =
-      departmentSelect === "На відділення" ? "department" : "courier";
+      departmentSelect === t("delivery.department") ? "department" : "courier";
 
     setAddress((prev) => ({
       ...prev,
@@ -113,13 +117,15 @@ export const AddAddressForm: FC<AddAddressFormProps> = ({
       street: selectedStreet,
       department: warehouse,
     }));
-  }, [departmentSelect, selectedCity, selectedStreet, warehouse]);
+  }, [departmentSelect, selectedCity, selectedStreet, warehouse, t]);
 
   const handleSubmit = () => {
     const fixedAddress = {
       ...address,
       delivery_type:
-        departmentSelect === "На відділення" ? "department" : "courier",
+        departmentSelect === t("delivery.department")
+          ? "department"
+          : "courier",
     };
 
     const payload = {
@@ -138,14 +144,27 @@ export const AddAddressForm: FC<AddAddressFormProps> = ({
     closeForm();
   };
 
+  const isDepartment =
+    departmentSelect === t("delivery.department") ||
+    departmentSelect === "Отделение";
+  const isLocker =
+    departmentSelect === t("delivery.locker") ||
+    departmentSelect === "Поштомат";
+  const isCourier =
+    departmentSelect === t("delivery.courier") ||
+    departmentSelect === "Кур'єр" ||
+    departmentSelect === "Курьер";
+
   return (
     <div>
       <div>
         <div className={s.heading}>
           <p>
             {initialValues?.id
-              ? "Редагування адреси"
-              : `Адреса #${(user?.meta.address?.length || 0) + 1}`}
+              ? t("addAddress.editTitle")
+              : t("addAddress.newTitle", {
+                  number: (user?.meta.address?.length || 0) + 1,
+                })}
           </p>
 
           <div className={s.headingContoller}>
@@ -190,7 +209,7 @@ export const AddAddressForm: FC<AddAddressFormProps> = ({
                   </svg>
                 )}
               </span>
-              <span>Основна адреса</span>
+              <span>{t("addAddress.mainAddress")}</span>
             </div>
 
             <svg
@@ -212,7 +231,7 @@ export const AddAddressForm: FC<AddAddressFormProps> = ({
         <form>
           <div className={s.inputContainer}>
             <label>
-              Ім'я одержувача <span>*</span>
+              {t("addAddress.recipientName")} <span>*</span>
               <input
                 value={address.first_name}
                 onChange={(e) =>
@@ -222,12 +241,12 @@ export const AddAddressForm: FC<AddAddressFormProps> = ({
                   })
                 }
                 type="text"
-                placeholder="Ім'я одержувача"
+                placeholder={t("addAddress.placeholderName")}
               />
             </label>
 
             <label>
-              Прізвище одержувача <span>*</span>
+              {t("addAddress.recipientSurname")} <span>*</span>
               <input
                 value={address.last_name}
                 onChange={(e) =>
@@ -237,12 +256,13 @@ export const AddAddressForm: FC<AddAddressFormProps> = ({
                   })
                 }
                 type="text"
-                placeholder="Прізвище одержувача"
+                placeholder={t("addAddress.placeholderSurname")}
               />
             </label>
 
             <label>
-              По-батькові одержувача <span>*</span>
+              {t("addAddress.recipientMiddlename")}
+              <span>*</span>
               <input
                 value={address.middle_name}
                 onChange={(e) =>
@@ -252,12 +272,12 @@ export const AddAddressForm: FC<AddAddressFormProps> = ({
                   })
                 }
                 type="text"
-                placeholder="По-батькові одержувача"
+                placeholder={t("addAddress.placeholderMiddlename")}
               />
             </label>
 
             <label>
-              Номер телефону одержувача <span>*</span>
+              {t("addAddress.recipientPhone")} <span>*</span>
               <input
                 value={address.phone}
                 onChange={(e) =>
@@ -275,18 +295,23 @@ export const AddAddressForm: FC<AddAddressFormProps> = ({
           <div className={`${s.inputContainer} ${s.flex}`}>
             <div className={s.selectContainer}>
               <p>
-                Спосіб доставки <span>*</span>
+                {t("addAddress.deliveryMethod")} <span>*</span>
               </p>
               <CustomSelect
                 novaIcon={true}
-                options={["На відділення", "Кур'єр", "Поштомат"]}
+                options={[
+                  t("delivery.department"),
+                  t("delivery.courier"),
+                  t("delivery.locker"),
+                ]}
                 value={departmentSelect}
                 onChange={setDepartmentSelect}
               />
             </div>
             <div className={s.selectContainer}>
               <p>
-                Місто <span>*</span>
+                {t("addAddress.city")}
+                <span>*</span>
               </p>
               <CustomSelect
                 novaIcon={false}
@@ -296,10 +321,11 @@ export const AddAddressForm: FC<AddAddressFormProps> = ({
               />
             </div>
 
-            {selectedCity && departmentSelect === "Кур'єр" ? (
+            {selectedCity &&
+            (departmentSelect === "Кур'єр" || departmentSelect === "Курьер") ? (
               <div className={s.selectContainer}>
                 <p>
-                  Вулиця <span>*</span>
+                  {t("addAddress.street")} <span>*</span>
                 </p>
                 <CustomSelect
                   isStreet={true}
@@ -317,19 +343,18 @@ export const AddAddressForm: FC<AddAddressFormProps> = ({
             ) : null}
           </div>
 
-          {(selectedCity && departmentSelect === "На відділення") ||
-          departmentSelect === "Поштомат" ? (
-            <div className={`${s.inputContainer} `}>
+          {(selectedCity && isDepartment) || isLocker ? (
+            <div className={`${s.inputContainer}`}>
               <div className={s.selectContainer}>
                 <p>
-                  № Відділення <span>*</span>
+                  {t("addAddress.branchNumber")} <span>*</span>
                 </p>
                 <CustomSelect
                   isWarehouses={true}
                   novaIcon={false}
                   options={warehouses}
                   value={warehouse}
-                  onChange={(value) => setWarehouse(value)} // ✅ value - це рядок
+                  onChange={(value) => setWarehouse(value)}
                 />
               </div>
               <button
@@ -337,15 +362,15 @@ export const AddAddressForm: FC<AddAddressFormProps> = ({
                 onClick={() => setShowMapPopup(true)}
                 className={s.mapSelect}
               >
-                Обрати на мапі
+                {t("addAddress.selectOnMap")}
               </button>
             </div>
-          ) : selectedCity && departmentSelect === "Кур'єр" ? (
+          ) : selectedCity && isCourier ? (
             <div>
               <div className={`${s.inputContainer} items-end`}>
                 <div className={s.addressIndo}>
                   <label>
-                    Будинок <span>*</span>
+                    {t("addAddress.house")} <span>*</span>
                     <input
                       onChange={(e) =>
                         setAddress({
@@ -360,7 +385,7 @@ export const AddAddressForm: FC<AddAddressFormProps> = ({
                   </label>
 
                   <label>
-                    Підʼїзд
+                    {t("addAddress.entrance")}
                     <input
                       onChange={(e) =>
                         setAddress({
@@ -375,7 +400,7 @@ export const AddAddressForm: FC<AddAddressFormProps> = ({
                   </label>
 
                   <label>
-                    Квартира
+                    {t("addAddress.apartment")}
                     <input
                       onChange={(e) =>
                         setAddress({
@@ -393,9 +418,9 @@ export const AddAddressForm: FC<AddAddressFormProps> = ({
 
               <div className={s.textArea}>
                 <label>
-                  Додаткові інструкції для курʼєра
+                  {t("addAddress.instructions")}
                   <textarea
-                    placeholder="Допоможіть курʼєру швидше знайти вас"
+                    placeholder={t("addAddress.instructionsPlaceholder")}
                     value={instructions}
                     onChange={handleChange}
                   />
@@ -413,7 +438,7 @@ export const AddAddressForm: FC<AddAddressFormProps> = ({
             <NovaPoshtaMapPopup
               selectedCity={selectedCity}
               tab={tab}
-              setTab={setTab} // ⬅️ додай
+              setTab={setTab}
               onClose={() => setShowMapPopup(false)}
               onSelect={(warehouseName) => {
                 setSelectedWarehouse(warehouseName);
@@ -424,18 +449,21 @@ export const AddAddressForm: FC<AddAddressFormProps> = ({
                 }));
                 setShowMapPopup(false);
 
-                // автоматично оновлюємо тип доставки:
-                if (warehouseName.toLowerCase().includes("поштомат")) {
-                  setDepartmentSelect("Поштомат");
+                if (
+                  warehouseName
+                    .toLowerCase()
+                    .includes(t("delivery.locker").toLowerCase())
+                ) {
+                  setDepartmentSelect(t("delivery.locker"));
                 } else {
-                  setDepartmentSelect("На відділення");
+                  setDepartmentSelect(t("delivery.department"));
                 }
               }}
             />
           )}
 
           <button onClick={handleSubmit} className={s.submitBtn} type="submit">
-            <p>Зберегти зміни</p>
+            <p>{t("addAddress.saveChanges")}</p>
             <svg
               viewBox="0 0 25 24"
               fill="none"

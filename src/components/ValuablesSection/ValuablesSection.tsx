@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { Layout } from "../Layout/Layout";
 import s from "./ValuablesSection.module.css";
@@ -6,27 +7,21 @@ export const ValuablesSection = () => {
   const { width } = useWindowSize();
   const isMobile = width < 1024;
 
+  const { t } = useTranslation();
+
   return (
     <section className={s.section}>
       <Layout>
-        <h2>Наші цінності</h2>
+        <h2>{t("valuables.title")}</h2>
 
         <ul>
           <li className={s.red}>
-            <h3>Турбота про клієнта</h3>
-            <p>
-              Ми ставимо клієнтів на перше місце, надаючи індивідуальні
-              консультації та допомогу у виборі. Кожен наш клієнт може
-              розраховувати на професійну підтримку та тепле обслуговування.
-            </p>
+            <h3>{t("valuables.clientCareTitle")}</h3>
+            <p>{t("valuables.clientCareText")}</p>
           </li>
           <li className={s.white}>
-            <h3>Індивідуальний підхід</h3>
-            <p>
-              Ми враховуємо ваші особливості та пропонуємо продукцію, що
-              відповідають вашим потребам і очікуванням. Наші менеджери та
-              лікарі-консультанти допоможуть обрати найкраще саме для вас.
-            </p>
+            <h3>{t("valuables.personalTitle")}</h3>
+            <p>{t("valuables.personalText")}</p>
           </li>
 
           {!isMobile && (
@@ -36,12 +31,8 @@ export const ValuablesSection = () => {
           )}
 
           <li className={s.rose}>
-            <h3>Якість продукції</h3>
-            <p>
-              Ми ретельно відбираємо кожен засіб, щоб забезпечити його
-              ефективність та безпеку для вашого догляду. Ви можете бути
-              впевнені, що всі товари відповідають найвищим стандартам.
-            </p>
+            <h3>{t("valuables.qualityTitle")}</h3>
+            <p>{t("valuables.qualityText")}</p>
           </li>
         </ul>
       </Layout>

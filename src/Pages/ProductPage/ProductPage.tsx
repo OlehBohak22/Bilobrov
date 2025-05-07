@@ -15,6 +15,7 @@ import { ProductList } from "../../components/ProductList/ProductList";
 import { Breadcrumbs } from "@mui/material";
 import { usePageData } from "../../hooks/usePageData";
 import { Helmet } from "react-helmet";
+import { useTranslation } from "react-i18next";
 
 interface HeaderProps {
   openRegister: () => void;
@@ -32,7 +33,7 @@ export const ProductPage: React.FC<HeaderProps> = ({
     (state: any) => state.products
   );
 
-  console.log(currentProduct);
+  const { t } = useTranslation();
 
   const { id } = useParams();
 
@@ -52,7 +53,7 @@ export const ProductPage: React.FC<HeaderProps> = ({
 
   const categories = currentProduct?.categories || [];
   const breadcrumbs = [
-    { name: "Головна", link: "/" },
+    { name: t("breadCrumbs.main"), link: "/" },
     ...(categories.length > 0
       ? [
           {
@@ -147,8 +148,8 @@ export const ProductPage: React.FC<HeaderProps> = ({
               defaultCategory={currentProduct.categories[0]?.id || "Новинки"}
             >
               <h2>
-                <span>Схожі</span>
-                <span>товари</span>
+                <span>{t("product.similarProductsTitle1")}</span>
+                <span>{t("product.similarProductsTitle2")}</span>
               </h2>
             </ProductList>
           </Layout>

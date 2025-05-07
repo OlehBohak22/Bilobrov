@@ -2,9 +2,11 @@ import React, { useState, useEffect, useRef } from "react";
 import "./ProductSlider.css";
 import s from "./ProductSlider.module.css";
 import { ProductInfo } from "../../types/productTypes";
+import { ImageGalleryModal } from "../ImageGalleryModal/ImageGalleryModal";
+import { useWindowSize } from "../../hooks/useWindowSize";
 
 interface ProductSliderProps {
-  images: string[]; // масив з URL-адрес зображень
+  images: string[];
   info: ProductInfo;
 }
 
@@ -14,6 +16,14 @@ export const ProductSlider: React.FC<ProductSliderProps> = ({
 }) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [displayImages, setDisplayImages] = useState<string[]>([]);
+  const { width } = useWindowSize();
+  const isMobile = width < 1024;
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  const handleClose = () => {
+    setModalOpen(false);
+    document.body.style.overflow = "";
+  };
 
   const thumbnailsRef = useRef<HTMLDivElement>(null);
 
@@ -134,7 +144,13 @@ export const ProductSlider: React.FC<ProductSliderProps> = ({
           </svg>
         </button>
       </div>
-      <div className="slider-main">
+      <div
+        onClick={() => {
+          setModalOpen(true);
+          document.body.style.overflow = "hidden";
+        }}
+        className="slider-main"
+      >
         <div className={s.markersBlock}>
           {info.featured && (
             <div className={s.bestMarker}>
@@ -170,6 +186,16 @@ export const ProductSlider: React.FC<ProductSliderProps> = ({
           className="slider-image"
         />
       </div>
+
+      {!isMobile && (
+        <ImageGalleryModal
+          images={images}
+          info={info}
+          currentIndex={currentIndex}
+          onClose={handleClose}
+          isVisible={isModalOpen}
+        />
+      )}
     </div>
   );
 };

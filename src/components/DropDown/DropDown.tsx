@@ -1,13 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import styles from "./DropDown.module.css";
-
-const options = [
-  { value: "popularity", label: "Популярні" },
-  { value: "date", label: "За новизною" },
-  { value: "price_asc", label: "Спочатку дешевше" },
-  { value: "price_desc", label: "Спочатку дорожче" },
-];
+import { useTranslation } from "react-i18next";
 
 type Props = {
   sort: string;
@@ -18,6 +12,14 @@ export const CustomSortDropdown: React.FC<Props> = ({ sort }) => {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const location = useLocation();
+  const { t } = useTranslation();
+
+  const options = [
+    { value: "popularity", label: t("catalog.popularity") },
+    { value: "date", label: t("catalog.date") },
+    { value: "price_asc", label: t("catalog.asc") },
+    { value: "price_desc", label: t("catalog.desc") },
+  ];
 
   const handleSelect = (selected: string) => {
     const currentParams = new URLSearchParams(location.search);

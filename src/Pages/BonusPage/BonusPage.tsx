@@ -11,8 +11,6 @@ import { Helmet } from "react-helmet";
 export const BonusPage = ({ openRegister }: { openRegister: () => void }) => {
   const { state } = useLocation();
 
-  console.log(state);
-
   const metaUrl = state || `${API_URL}/bonusna-systema`;
 
   const seoData = usePageData(metaUrl);

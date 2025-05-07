@@ -2,6 +2,7 @@ import { Layout } from "../Layout/Layout";
 import s from "./BonusSection.module.css";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
+import { useTranslation } from "react-i18next";
 
 export const BonusSection = ({
   openRegister,
@@ -9,22 +10,18 @@ export const BonusSection = ({
   openRegister: () => void;
 }) => {
   const { user } = useSelector((state: RootState) => state.user);
+  const { t } = useTranslation();
 
   return (
     <section className={s.section}>
       <Layout className={s.container}>
         <div>
           <h2>
-            <span>Приєднуйтесь</span>
-            <span>до Bilobrov club </span>
+            <span>{t("bonusSection.title1")}</span>
+            <span>{t("bonusSection.title2")}</span>
           </h2>
 
-          <p>
-            На вас чекають знижки за карткою до 50%, кешбек* бонусами з кожною
-            покупкою від 3500 грн, який можна обміняти на додаткову знижку в
-            онлайн та офлайн магазинах, а також можливість раніше за інших
-            дізнаватися про новинки та акції.
-          </p>
+          <p>{t("bonusSection.description")}</p>
 
           <div className={s.bonus}>
             <svg
@@ -60,12 +57,12 @@ export const BonusSection = ({
               />
             </svg>
 
-            <span>*1 БОНУС = 1 грн</span>
+            <span>{t("bonusSection.bonusNote")}</span>
           </div>
 
           {!user && (
             <button onClick={openRegister}>
-              <span>Зареєструватись</span>
+              <span>{t("bonusSection.register")}</span>
               <svg
                 viewBox="0 0 25 24"
                 fill="none"

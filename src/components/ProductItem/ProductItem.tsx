@@ -56,15 +56,7 @@ export const ProductItem: React.FC<ProductItemProps> = ({
 
   const isMobile = width < 1024;
 
-  const brandMeta = info.meta_data.find((item) => item.key === "brands");
-  const brandName =
-    Array.isArray(brandMeta?.value) &&
-    brandMeta.value.length > 0 &&
-    typeof brandMeta.value[0] === "object"
-      ? (brandMeta.value[0] as { name: string }).name
-      : typeof brandMeta?.value === "string"
-      ? brandMeta.value
-      : null;
+  const brandName = info.brands[0]?.name || "";
 
   const handleAddToCart = () => {
     if (info.variations && info.variations.length > 1) {
@@ -96,7 +88,9 @@ export const ProductItem: React.FC<ProductItemProps> = ({
     <>
       <li
         key={info.id}
-        className={`${s.productItem} ${mini && s.miniProductItem}`}
+        className={`${s.productItem} ${mini && s.miniProductItem} ${
+          info.stock_quantity < 1 && s.notAvailable
+        } `}
       >
         <Link className={s.link} to={`/product/${info.slug}/${info.id}`} />
 

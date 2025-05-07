@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { registerUser, loginUser } from "../../store/actions/userActions";
 import { AppDispatch } from "../../store/index";
 import { RootState } from "../../store";
 import s from "./Register.module.css";
-import { useRef } from "react";
-
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 export const RegisterModal: React.FC<{ onClose: () => void }> = ({
   onClose,
 }) => {
   const dispatch = useDispatch<AppDispatch>();
+  const { t } = useTranslation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -118,21 +118,22 @@ export const RegisterModal: React.FC<{ onClose: () => void }> = ({
         </button>
 
         <div className={s.content}>
-          <h2>{isRegister ? "Привіт, красуне!" : "З поверненням!"}</h2>
+          <h2>
+            {isRegister ? t("register.welcomeTitle") : t("register.loginTitle")}
+          </h2>
           <p>
-            {isRegister
-              ? "Ми раді тебе вітати у просторі Bilobrov - давай створимо твій акаунт"
-              : "Ми раді тебе знов бачити у просторі Bilobrov. Бажаємо приємних покупок!"}
+            {isRegister ? t("register.welcomeText") : t("register.loginText")}
           </p>
 
           <form onSubmit={handleSubmit} className={s.form}>
             <label htmlFor="email">
-              Електронна пошта<span>*</span>
+              {t("register.email")}
+              <span>*</span>
             </label>
             <input
               id="email"
               type="email"
-              placeholder="Твоя електронна пошта"
+              placeholder={t("register.emailPlaceholder")}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="lg:mb-[1.2vw] mb-[5.3vw]"
@@ -141,12 +142,12 @@ export const RegisterModal: React.FC<{ onClose: () => void }> = ({
             {isRegister && (
               <>
                 <label htmlFor="name">
-                  Твоє ім'я <span>*</span>
+                  {t("register.name")} <span>*</span>
                 </label>
                 <input
                   id="name"
                   type="text"
-                  placeholder="Введи своє ім'я"
+                  placeholder={t("register.namePlaceholder")}
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
                   className="lg:mb-[1.2vw] mb-[5.3vw]"
@@ -155,12 +156,13 @@ export const RegisterModal: React.FC<{ onClose: () => void }> = ({
             )}
 
             <label htmlFor="password">
-              Пароль<span>*</span>
+              {t("register.password")}
+              <span>*</span>
             </label>
             <input
               id="password"
               type="password"
-              placeholder="Введи пароль"
+              placeholder={t("register.passwordPlaceholder")}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="lg:mb-[2vw] mb-[8vw]"
@@ -169,10 +171,10 @@ export const RegisterModal: React.FC<{ onClose: () => void }> = ({
             {error && <p className={s.error}>{error}</p>}
             <button className={s.registerBtn} type="submit" disabled={loading}>
               {loading
-                ? "Зачекайте..."
+                ? t("register.loading")
                 : isRegister
-                ? "Зареєструватись"
-                : "Увійти"}
+                ? t("register.registerButton")
+                : t("register.loginButton")}
               <svg
                 viewBox="0 0 24 25"
                 fill="none"
@@ -184,9 +186,11 @@ export const RegisterModal: React.FC<{ onClose: () => void }> = ({
           </form>
 
           <div className={s.controller}>
-            {isRegister ? "Вже є акаунт? " : "Ще немає акаунта? "}
+            {isRegister ? t("register.haveAccount") : t("register.noAccount")}
             <button onClick={() => setIsRegister(!isRegister)}>
-              {isRegister ? " Увійти" : " Зареєструватись"}
+              {isRegister
+                ? t("register.switchToLogin")
+                : t("register.switchToRegister")}
             </button>
           </div>
         </div>

@@ -4,36 +4,17 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import { useState } from "react";
 import { useWindowSize } from "../../hooks/useWindowSize";
-
-const services = [
-  {
-    icon: "icon-free-shipping",
-    title: "Безкоштовна доставка по Україні",
-    description:
-      "Ваші улюблені продукти Bilobrov з доставкою без зайвих витрат у будь-який куточок України.",
-  },
-  {
-    icon: "icon-psychiatry",
-    title: "Підтримка та консультація",
-    description:
-      "Наші менеджери завжди готові допомогти підібрати потрібний засіб та відповісти на ваші запитання.",
-  },
-  {
-    icon: "icon-gift-card",
-    title: "Накопичуваний кешбек на покупки",
-    description:
-      "З кожної покупки в Bilobrov ви накопичуєте кешбек, який робить ваші майбутні замовлення вигіднішими.",
-  },
-  {
-    icon: "icon-return-box",
-    title: "Легкий обмін та повернення товарів",
-    description:
-      "Ми цінуємо вашу довіру та гарантуємо легкий обмін і повернення. Якщо продукт не підійшов, ми швидко замінимо його на інший",
-  },
-];
+import { useTranslation } from "react-i18next";
 
 export const HomeServices = () => {
   const { width } = useWindowSize();
+  const { t } = useTranslation();
+  const services = t("homeServices.services", { returnObjects: true }) as {
+    icon: string;
+    title: string;
+    description: string;
+  }[];
+
   const isMobile = width < 1024;
   const [progress, setProgress] = useState(0);
 

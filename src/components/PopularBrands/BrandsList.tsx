@@ -9,6 +9,7 @@ import { Navigation } from "swiper/modules";
 import { Link } from "react-router";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const BrandsList = () => {
   const { items } = useSelector((state: RootState) => state.brands);
@@ -26,13 +27,15 @@ const BrandsList = () => {
     setProgress((swiper.realIndex + 1) / total);
   };
 
+  const { t } = useTranslation();
+
   return (
     <section className={s.section}>
       <Layout>
         <div className={s.brandsContainer}>
           <h2>
-            <span>Популярні</span>
-            <span>бренди</span>
+            <span>{t("brandsSection.brandsTitle.first")}</span>
+            <span>{t("brandsSection.brandsTitle.second")}</span>
           </h2>
 
           <Swiper
@@ -81,7 +84,7 @@ const BrandsList = () => {
 
         <div className={s.bottomController}>
           <Link className={s.brandLink} to="/brendy">
-            <span>Всі бренди</span>
+            <span>{t("brandsSection.allBrands")}</span>
             <svg
               className={s.svg}
               viewBox="0 0 32 32"

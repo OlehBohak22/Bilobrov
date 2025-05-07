@@ -1,19 +1,23 @@
 import { Layout } from "../Layout/Layout";
 import s from "./BonusSystem.module.css";
 
+import { useTranslation } from "react-i18next";
+
 export const BonusSystem = () => {
+  const { t } = useTranslation();
+
   return (
     <section className={s.section}>
       <Layout>
         <h2>
-          <span>Як працює наша</span>
-          <span>бонусна система</span>
+          <span>{t("bonusSystem.title1")}</span>
+          <span>{t("bonusSystem.title2")}</span>
         </h2>
 
         <ul className={s.list}>
           <li>
             <div className={s.price}>
-              <h4>На покупки від</h4>
+              <h4>{t("bonusSystem.buyFrom")}</h4>
               <p>
                 3500
                 <span>грн</span>
@@ -22,13 +26,13 @@ export const BonusSystem = () => {
 
             <div className={s.cashback}>
               <span>5%</span>
-              <p>Кешбек</p>
+              <p>{t("bonusSystem.cashback")}</p>
             </div>
           </li>
 
           <li>
             <div className={s.price}>
-              <h4>На покупки від</h4>
+              <h4>{t("bonusSystem.buyFrom")}</h4>
               <p>
                 7000
                 <span>грн</span>
@@ -37,13 +41,13 @@ export const BonusSystem = () => {
 
             <div className={s.cashback}>
               <span>7%</span>
-              <p>Кешбек</p>
+              <p>{t("bonusSystem.cashback")}</p>
             </div>
           </li>
 
           <li>
             <div className={s.price}>
-              <h4>На покупки від</h4>
+              <h4>{t("bonusSystem.buyFrom")}</h4>
               <p>
                 10 000
                 <span>грн</span>
@@ -52,12 +56,12 @@ export const BonusSystem = () => {
 
             <div className={s.cashback}>
               <span>10%</span>
-              <p>Кешбек</p>
+              <p>{t("bonusSystem.cashback")}</p>
             </div>
           </li>
         </ul>
 
-        <p className={s.subTitle}>А також</p>
+        <p className={s.subTitle}>{t("bonusSystem.also")}</p>
 
         <ul className={s.bonusList}>
           <li>
@@ -105,10 +109,10 @@ export const BonusSystem = () => {
             <div className={s.info}>
               <p>
                 250
-                <span>бонусів</span>
+                <span>{t("bonusSystem.points")}</span>
               </p>
 
-              <span>До Дня народження</span>
+              <span>{t("bonusSystem.birthday")}</span>
             </div>
           </li>
 
@@ -133,10 +137,10 @@ export const BonusSystem = () => {
             <div className={s.info}>
               <p>
                 50
-                <span>бонусів</span>
+                <span>{t("bonusSystem.points")}</span>
               </p>
 
-              <span>За відмітку в сторіс</span>
+              <span>{t("bonusSystem.story")}</span>
             </div>
           </li>
           <li>
@@ -160,10 +164,10 @@ export const BonusSystem = () => {
             <div className={s.info}>
               <p>
                 50
-                <span>бонусів</span>
+                <span>{t("bonusSystem.points")}</span>
               </p>
 
-              <span>За відгук</span>
+              <span>{t("bonusSystem.review")}</span>
             </div>
           </li>
         </ul>

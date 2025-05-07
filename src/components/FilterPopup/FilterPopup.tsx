@@ -16,6 +16,7 @@ import {
   setSelectedAttributes,
 } from "../../store/slices/filterSlice";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 export const Filters: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const dispatch = useAppDispatch();
@@ -50,6 +51,8 @@ export const Filters: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const allCategories = useSelector(
     (state: RootState) => state.categories.categories
   );
+
+  const { t } = useTranslation();
 
   const allBrands = useSelector((state: RootState) => state.brands.items);
 
@@ -201,7 +204,7 @@ export const Filters: React.FC<{ onClose: () => void }> = ({ onClose }) => {
       >
         <div>
           <div className={s.menuHeader}>
-            <p>Фільтри</p>
+            <p>{t("catalog.filters")}</p>
             <button onClick={onClose}>
               <svg
                 viewBox="0 0 52 52"
@@ -220,7 +223,7 @@ export const Filters: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 
           <div className={s.switchController}>
             <label>
-              Зі знижкою
+              {t("catalog.filterSale")}
               <input
                 className={s.switch}
                 type="checkbox"
@@ -230,7 +233,8 @@ export const Filters: React.FC<{ onClose: () => void }> = ({ onClose }) => {
             </label>
 
             <label>
-              В наявності
+              {t("catalog.filterInStock")}
+
               <input
                 className={s.switch}
                 type="checkbox"
@@ -287,7 +291,8 @@ export const Filters: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                     </defs>
                   </svg>
                 )}
-                Бренди <span className={s.qty}>{allBrands.length}</span>
+                {t("catalog.filterBrands")}
+                <span className={s.qty}>{allBrands.length}</span>
               </label>
 
               {brandsIsOpen && (
@@ -344,7 +349,8 @@ export const Filters: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                     </defs>
                   </svg>
                 )}
-                Категорії <span className={s.qty}>{allCategories.length}</span>
+                {t("catalog.filterCat")}
+                <span className={s.qty}>{allCategories.length}</span>
               </label>
 
               {categoryIsOpen && (
@@ -438,7 +444,7 @@ export const Filters: React.FC<{ onClose: () => void }> = ({ onClose }) => {
         </div>
 
         <button className={s.btn} onClick={applyFilters}>
-          Застосувати фільтри
+          {t("catalog.filterApply")}
           <svg
             width="24"
             height="24"

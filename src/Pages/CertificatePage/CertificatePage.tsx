@@ -16,6 +16,7 @@ import { Navigation } from "swiper/modules";
 import { API_URL } from "../../constants/api";
 import { usePageData } from "../../hooks/usePageData";
 import { Helmet } from "react-helmet";
+import { useTranslation } from "react-i18next";
 
 export const CertificatePage = () => {
   const dispatch = useAppDispatch();
@@ -37,13 +38,16 @@ export const CertificatePage = () => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const { certificates } = useSelector((state: RootState) => state.filters);
-
+  const { t } = useTranslation();
   const { width } = useWindowSize();
   const isMobile = width < 1024;
 
   const breadcrumbs = [
-    { name: "Головна", link: "/" },
-    { name: "Подарункові сертифікати", link: "/podarunkovi-sertyfikaty-20" },
+    { name: t("breadCrumbs.main"), link: "/" },
+    {
+      name: t("breadCrumbs.certificates"),
+      link: "/podarunkovi-sertyfikaty-20",
+    },
   ];
 
   return (
@@ -105,8 +109,8 @@ export const CertificatePage = () => {
 
         <div className={s.certificates}>
           <h2>
-            <span>Подарункові</span>
-            <span>сертифікати</span>
+            <span>{t("certificatePage.titleLine1")}</span>
+            <span>{t("certificatePage.titleLine2")}</span>
           </h2>
 
           {isMobile ? (

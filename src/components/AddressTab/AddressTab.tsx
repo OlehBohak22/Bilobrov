@@ -8,6 +8,7 @@ import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { deleteAddress } from "../../store/slices/addressSlice";
 import { checkUserSession } from "../../store/actions/userActions";
 import { ConfirmLogoutModal } from "../ConfirmLogoutModal/ConfirmLogoutModal";
+import { useTranslation } from "react-i18next";
 
 interface AddressTabProps {
   user: UserData | null; // Типізуємо пропс user
@@ -19,7 +20,7 @@ export const AddressTab = ({ user }: AddressTabProps) => {
   const dispatch = useAppDispatch();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [addressToDelete, setAddressToDelete] = useState<number | null>(null);
-
+  const { t } = useTranslation();
   const handleCLoseForm = () => {
     setFormOpen(false);
 
@@ -64,8 +65,8 @@ export const AddressTab = ({ user }: AddressTabProps) => {
     <div className={s.tab}>
       <div className={s.heading}>
         <h3>
-          <span>Мої</span>
-          <span>адреси</span>
+          <span>{t("address.my")}</span>
+          <span>{t("address.addresses")}</span>
         </h3>
 
         <button
@@ -88,13 +89,13 @@ export const AddressTab = ({ user }: AddressTabProps) => {
               </clipPath>
             </defs>
           </svg>
-          Додати нову адресу
+          {t("address.addNew")}
         </button>
       </div>
 
       {!user?.meta.address.length && !formOpen && (
         <div className={s.noneAddress}>
-          <p>У вас ще немає збережених адрес</p>
+          <p>{t("address.noSaved")}</p>
           <img src="/icons/none.svg" alt="None address" />
         </div>
       )}
@@ -104,23 +105,27 @@ export const AddressTab = ({ user }: AddressTabProps) => {
           {user?.meta.address.map((address, index) => (
             <li key={address.id || index}>
               <div className={s.infoBlock}>
-                <span>Адреса #{++index}</span>
+                <span>{t("address.addressNumber", { number: index + 1 })}</span>
 
                 <div className={s.addressInfo}>
                   <p>
-                    {address.city && `м. ${address.city} `}
-                    {address.department && `м. ${address.department} `}
-                    {address.street && `вул. ${address.street} `}
-                    {address.house && `буд. ${address.house} `}
-                    {address.entrance && `під'їзд ${address.entrance} `}
-                    {address.apartment && `кв. ${address.apartment} `}
+                    {address.city && `${t("address.city")} ${address.city} `}
+                    {address.department &&
+                      `${t("address.department")} ${address.department} `}
+                    {address.street &&
+                      `${t("address.street")} ${address.street} `}
+                    {address.house && `${t("address.house")} ${address.house} `}
+                    {address.entrance &&
+                      `${t("address.entrance")} ${address.entrance} `}
+                    {address.apartment &&
+                      `${t("address.apartment")} ${address.apartment} `}
                   </p>
 
                   <p>
-                    Одержувач:
-                    {address.last_name && ` ${address.last_name} `}
-                    {address.first_name && ` ${address.first_name} `}
-                    {address.middle_name && ` ${address.middle_name} `}
+                    {t("address.recipient")}:
+                    {address.last_name && ` ${address.last_name}`}
+                    {address.first_name && ` ${address.first_name}`}
+                    {address.middle_name && ` ${address.middle_name}`}
                   </p>
                 </div>
               </div>
@@ -159,7 +164,7 @@ export const AddressTab = ({ user }: AddressTabProps) => {
                       </svg>
                     )}
                   </span>
-                  <span>Основна адреса</span>
+                  <span>{t("address.main")}</span>
                 </div>
 
                 <div
@@ -213,10 +218,10 @@ export const AddressTab = ({ user }: AddressTabProps) => {
         isOpen={isDeleteModalOpen}
         onConfirm={confirmDelete}
         onCancel={cancelDelete}
-        confirmText="Видалити"
-        cancelText="Залишити"
-        titleText="Впевнена?"
-        descText="Твоя косметика вже полюбила цю адресу!"
+        confirmText={t("address.delete")}
+        cancelText={t("address.cancel")}
+        titleText={t("address.confirmTitle")}
+        descText={t("address.confirmDesc")}
       />
     </div>
   );

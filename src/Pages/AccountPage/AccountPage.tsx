@@ -17,11 +17,11 @@ import { ConfirmLogoutModal } from "../../components/ConfirmLogoutModal/ConfirmL
 import { AnimatePresence } from "framer-motion";
 import { Loader } from "../../components/Loader/Loader";
 import { useWindowSize } from "../../hooks/useWindowSize";
+import { useTranslation } from "react-i18next";
 
 const categories = [
   {
     id: "main",
-    label: "Головна",
     icon: (
       <svg
         width="20"
@@ -42,7 +42,6 @@ const categories = [
   },
   {
     id: "bonus",
-    label: "Бонусна карта",
     icon: (
       <svg
         viewBox="0 0 24 18"
@@ -103,7 +102,6 @@ const categories = [
   },
   {
     id: "order",
-    label: "Мої замовлення",
     icon: (
       <svg
         width="24"
@@ -122,7 +120,6 @@ const categories = [
   },
   {
     id: "wishlist",
-    label: "Список побажань",
     icon: (
       <svg
         width="22"
@@ -143,7 +140,6 @@ const categories = [
   },
   {
     id: "contact",
-    label: "Контактні дані",
     icon: (
       <svg
         width="22"
@@ -163,7 +159,6 @@ const categories = [
   },
   {
     id: "password",
-    label: "Зміна пароля",
     icon: (
       <svg
         width="24"
@@ -184,7 +179,6 @@ const categories = [
   },
   {
     id: "address",
-    label: "Мої адреси",
     icon: (
       <svg
         width="24"
@@ -210,7 +204,7 @@ export const AccountPage = () => {
   const navigate = useNavigate();
   const { width } = useWindowSize();
   const isMobile = width < 1024;
-
+  const { t } = useTranslation();
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
 
   const wishlist = useSelector(
@@ -226,8 +220,6 @@ export const AccountPage = () => {
   const [loading, setLoading] = useState(false);
 
   const location = useLocation();
-
-  console.log(location);
 
   useEffect(() => {
     if (location.hash === "#main") {
@@ -267,7 +259,7 @@ export const AccountPage = () => {
 
     setTimeout(() => {
       setLoading(false);
-    }, 500); // Імітація завантаження
+    }, 500);
 
     setActiveTab(tabId);
     window.location.hash = tabId;
@@ -318,7 +310,7 @@ export const AccountPage = () => {
                     onClick={() => handleTabChange(category.id)}
                   >
                     {category.icon}
-                    {category.label}
+                    {t(`accountPage.tabs.${category.id}`)}
                   </button>
 
                   {category.id === "wishlist" && (
@@ -347,7 +339,7 @@ export const AccountPage = () => {
                   strokeLinejoin="round"
                 />
               </svg>
-              Вийти
+              {t("accountPage.logout.button")}
             </button>
           </div>
 
@@ -362,10 +354,10 @@ export const AccountPage = () => {
               isOpen={isLogoutModalOpen}
               onConfirm={confirmLogout}
               onCancel={cancelLogout}
-              confirmText="Вийти"
-              titleText="Вже йдеш?"
-              descText="Твої губи ще не сказали «дякую» за нову помаду!"
-              cancelText="Залишитись"
+              confirmText={t("accountPage.logout.confirmText")}
+              titleText={t("accountPage.logout.titleText")}
+              descText={t("accountPage.logout.descText")}
+              cancelText={t("accountPage.logout.cancelText")}
             />
           </AnimatePresence>
         </Layout>

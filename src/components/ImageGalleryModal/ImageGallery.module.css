@@ -1,0 +1,184 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(255, 255, 255, 0);
+  z-index: 99999999999999999999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-y: hidden;
+  pointer-events: none;
+  transition: all 0.5s ease;
+  transition-delay: 0.3s;
+}
+
+.overlay.active {
+  background: rgba(255, 255, 255, 1);
+  pointer-events: auto;
+  transition-delay: 0s;
+}
+
+.modal {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  max-height: 100vh;
+  animation: fadeIn 0.3s ease-in-out;
+  opacity: 0;
+  transform: translateY(10%);
+  transition: all 0.5s ease;
+  transition-delay: 0s;
+}
+.overlay.active .modal {
+  opacity: 1;
+  transform: translateY(0%);
+  transition-delay: 0.3s;
+}
+
+.closeBtn {
+  position: absolute;
+  top: 2.08vw;
+  right: 8.33vw;
+  cursor: pointer;
+  z-index: 999;
+  flex-shrink: 0;
+
+  svg {
+    width: 2.7vw;
+    stroke: black;
+    transition: stroke 0.3s;
+  }
+}
+.closeBtn:hover {
+  svg {
+    stroke: var(--primary);
+  }
+}
+
+.header {
+  text-align: center;
+  padding: 1.5rem 0 0.5rem;
+  position: relative;
+  top: 0px;
+  left: 0px;
+  width: 100vw;
+  height: 20vh;
+  background: #fff;
+
+  .title {
+    font-family: Manrope;
+    font-weight: 600;
+    font-size: 0.8vw;
+    line-height: 100%;
+    letter-spacing: 1px;
+    margin-bottom: 0.8vw;
+  }
+
+  .productName {
+    font-family: Manrope;
+    font-weight: 600;
+    font-size: 1.6vw;
+    line-height: 130%;
+    letter-spacing: 0%;
+    text-align: center;
+    vertical-align: middle;
+    margin-bottom: 1.2vw;
+  }
+
+  .shortDesc {
+    font-family: Manrope;
+    font-weight: 600;
+    font-size: 0.8vw;
+    line-height: 120%;
+    letter-spacing: 0%;
+  }
+}
+
+.galleryLayout {
+  display: flex;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.thumbnails {
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 40px 0; /* щоб стрілки не перекривали */
+}
+
+.thumbnail {
+  width: 100%;
+  height: auto;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+}
+
+.thumbnail:hover {
+  opacity: 1;
+}
+
+.imageList {
+  flex-grow: 1;
+  margin: 0 auto;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  display: flex;
+  flex-direction: column;
+  gap: 0.625vw;
+  max-width: 41.6vw;
+  padding: 0;
+  max-height: 80vh;
+  height: 80vh;
+}
+
+.imageList::-webkit-scrollbar {
+  display: none;
+}
+.mainImage {
+  max-width: 100%;
+  height: 70vh;
+}
+
+.thumbnailsWrapper {
+  position: absolute;
+  left: 8.33vw;
+  top: 0%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 5vw;
+  height: max-content;
+}
+
+.navUp,
+.navDown {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.navUp {
+  top: 0;
+}
+
+.navDown {
+  bottom: 0;
+}
+
+.thumbnail {
+  border: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.thumbnail.active {
+  opacity: 1 !important;
+  border: 1px solid black;
+}

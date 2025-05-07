@@ -32,13 +32,14 @@ import { Loader } from "../../components/Loader/Loader";
 import { usePageData } from "../../hooks/usePageData";
 import { Helmet } from "react-helmet";
 import { API_URL } from "../../constants/api";
+import { useTranslation } from "react-i18next";
 
 export const CatalogPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const productsRef = useRef<HTMLUListElement | null>(null);
-
+  const { t } = useTranslation();
   const location = useLocation();
   const query = new URLSearchParams(location.search);
 
@@ -235,7 +236,7 @@ export const CatalogPage: React.FC = () => {
   }, [slug, selectedCategories, allCategories, query, brands]);
 
   const breadcrumbs = useMemo(() => {
-    const list = [{ name: "Головна", link: "/" }];
+    const list = [{ name: t("breadCrumbs.main"), link: "/" }];
 
     if (!slug) {
       list.push({ name: "Каталог", link: "/catalog" });
@@ -367,7 +368,9 @@ export const CatalogPage: React.FC = () => {
         <div className={s.categoryHeader}>
           <h1>{pageTitle}</h1>
 
-          <span>{totalCount} продукти</span>
+          <span>
+            {totalCount} {t("catalog.productsLength")}
+          </span>
         </div>
       </Layout>
       {selectedCategories.length === 1 &&
@@ -443,7 +446,7 @@ export const CatalogPage: React.FC = () => {
                 strokeLinejoin="round"
               />
             </svg>
-            Фільтри
+            {t("catalog.filters")}
           </button>
           <div className={s.sort}>
             <CustomSortDropdown sort={sort} />
@@ -468,7 +471,6 @@ export const CatalogPage: React.FC = () => {
               dispatch(setPage(newPage));
               dispatch(fetchProducts());
 
-              // Скролимо до початку товарів або секції каталогу
               const catalogTop = document.querySelector(`.${s.list}`);
               catalogTop?.scrollIntoView({
                 block: "start",

@@ -6,22 +6,7 @@ import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { updateUserInfo } from "../../store/actions/userActions";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
-
-const validationSchema = Yup.object({
-  name: Yup.string()
-    .required("Ім'я є обов'язковим")
-    .min(2, "Ім'я повинно бути не менше 2 символів"),
-  secondName: Yup.string()
-    .required("Прізвище є обов'язковим")
-    .min(2, "Прізвище повинно бути не менше 2 символів"),
-  birthday: Yup.date()
-    .required("Дата народження є обов'язковою")
-    .max(new Date(), "Дата народження не може бути в майбутньому"),
-  phone: Yup.string()
-    .required("Номер телефону є обов'язковим")
-    .matches(/^\+?\d{10,15}$/, "Введіть правильний номер телефону"),
-  email: Yup.string().email("Невірна пошта"),
-});
+import { useTranslation } from "react-i18next";
 
 interface FormValues {
   name: string;
@@ -34,8 +19,24 @@ interface FormValues {
 export const UpdateForm: React.FC = () => {
   const dispatch = useAppDispatch();
   const user = useSelector((state: RootState) => state.user?.user);
-
   const [isSaved, setIsSaved] = useState(false); // Стан кнопки
+  const { t } = useTranslation();
+
+  const validationSchema = Yup.object({
+    name: Yup.string()
+      .required(t("updateInfo.errors.nameRequired"))
+      .min(2, t("updateInfo.errors.nameMin")),
+    secondName: Yup.string()
+      .required(t("updateInfo.errors.secondNameRequired"))
+      .min(2, t("updateInfo.errors.secondNameMin")),
+    birthday: Yup.date()
+      .required(t("updateInfo.errors.birthdayRequired"))
+      .max(new Date(), t("updateInfo.errors.birthdayMax")),
+    phone: Yup.string()
+      .required(t("updateInfo.errors.phoneRequired"))
+      .matches(/^\+?\d{10,15}$/, t("updateInfo.errors.phoneValid")),
+    email: Yup.string().email(t("updateInfo.errors.emailValid")),
+  });
 
   const handleSubmit = async (values: FormValues) => {
     const userData: {
@@ -93,16 +94,17 @@ export const UpdateForm: React.FC = () => {
               />
             </svg>
 
-            <p>Особиста інформація</p>
+            <p>{t("updateInfo.personalInfo")}</p>
           </div>
 
           <div className={s.inputLine}>
             <div>
               <label htmlFor="name">
-                Ім'я<span>*</span>
+                {t("updateInfo.name")}
+                <span>*</span>
               </label>
               <Field
-                placeholder="Твоє імʼя"
+                placeholder={t("updateInfo.namePlaceholder")}
                 type="text"
                 id="name"
                 name="name"
@@ -112,10 +114,11 @@ export const UpdateForm: React.FC = () => {
 
             <div>
               <label htmlFor="secondName">
-                Прізвище<span>*</span>
+                {t("updateInfo.secondName")}
+                <span>*</span>
               </label>
               <Field
-                placeholder="Твоє прізвище"
+                placeholder={t("updateInfo.secondNamePlaceholder")}
                 type="text"
                 id="secondName"
                 name="secondName"
@@ -129,7 +132,8 @@ export const UpdateForm: React.FC = () => {
 
             <div>
               <label htmlFor="birthday">
-                Дата народження<span>*</span>
+                {t("updateInfo.birthday")}
+                <span>*</span>
               </label>
               <Field type="date" id="birthday" name="birthday" />
               <ErrorMessage name="birthday" component="div" className="error" />
@@ -150,13 +154,14 @@ export const UpdateForm: React.FC = () => {
               />
             </svg>
 
-            <p>Контакти</p>
+            <p>{t("updateInfo.contacts")}</p>
           </div>
 
           <div className={s.inputLine}>
             <div>
               <label htmlFor="phone">
-                Номер телефону<span>*</span>
+                {t("updateInfo.phone")}
+                <span>*</span>
               </label>
               <Field type="text" id="phone" name="phone" />
               <ErrorMessage name="phone" component="div" className="error" />
@@ -172,7 +177,7 @@ export const UpdateForm: React.FC = () => {
           </div>
 
           <button className={s.btn} type="submit">
-            {isSaved ? "Зміни збережено" : "Зберегти зміни"}
+            {isSaved ? t("updateInfo.saved") : t("updateInfo.save")}
 
             <svg
               viewBox="0 0 25 24"

@@ -1,44 +1,31 @@
+import { useSelector } from "react-redux";
 import { Layout } from "../Layout/Layout";
 import s from "./BonusFaq.module.css";
 import { motion } from "framer-motion";
 import { useState } from "react";
-
-const faqs = [
-  {
-    id: 1,
-    faq_question: "Як стати учасником?",
-    faq_answer: "Ніяк",
-  },
-  {
-    id: 2,
-    faq_question: "Як отримати бонуси?",
-    faq_answer: "Ніяк",
-  },
-  {
-    id: 3,
-    faq_question: "Як витратити бонуси?",
-    faq_answer: "Ніяк",
-  },
-  {
-    id: 4,
-    faq_question: "Як дізнатися кількість бонусів на картці?",
-    faq_answer: "Ніяк",
-  },
-];
+import { RootState } from "../../store";
+import { Loader } from "../Loader/Loader";
+import { useTranslation } from "react-i18next";
 
 export const BonusFaq = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const { faqs, loading } = useSelector((state: RootState) => state.faq);
+  const { t } = useTranslation();
 
   const toggleAccordion = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
+  if (loading) {
+    return <Loader />;
+  }
+
   return (
     <section className={s.section}>
       <Layout>
         <h2>
-          <span>Залишились</span>
-          <span>запитання?</span>
+          <span>{t("bonusFaq.title1")}</span>
+          <span>{t("bonusFaq.title2")}</span>
         </h2>
 
         <ul className={s.faqList}>

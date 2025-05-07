@@ -19,10 +19,14 @@ body {
 }
 
 main {
+  position: relative;
+  z-index: 9999;
   flex: 1;
   flex-shrink: 0;
   min-height: 100vh;
   padding-top: 10.1vw;
+  transition: filter 0.3s ease;
+  background-color: white;
 }
 
 @media (max-width: 1024px) {

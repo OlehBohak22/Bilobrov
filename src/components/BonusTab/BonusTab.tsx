@@ -2,11 +2,12 @@ import s from "./BonusTab.module.css";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { useWindowSize } from "../../hooks/useWindowSize";
+import { useTranslation } from "react-i18next";
 
 export const BonusTab = () => {
   const user = useSelector((state: RootState) => state.user?.user?.meta);
   const username = useSelector((state: RootState) => state.user?.user);
-
+  const { t } = useTranslation();
   const { width } = useWindowSize();
   const isMobile = width < 10244;
 
@@ -18,16 +19,13 @@ export const BonusTab = () => {
     <div className={s.tab}>
       <div className={s.titleContainer}>
         <h2>
-          <span>Бонусна</span>
-          <span>карта</span>
+          <span>{t("bonus.title1")}</span>
+          <span>{t("bonus.title2")}</span>
         </h2>
 
         <p>
-          <span>Це твоя бонусна карта BILOBROV CLUB!</span> Вона створена, щоб
-          кожна твоя покупка була ще приємнішою. Збирай бонуси за покупки,
-          відгуки та активність у соцмережах, а потім використовуй їх для
-          вигідних знижок. З цією картою ти завжди на крок ближче до своїх
-          улюблених продуктів.
+          <span>{t("bonus.description1")}</span>
+          {t("bonus.description2")}
         </p>
       </div>
       <div className={s.flex}>
@@ -73,9 +71,9 @@ export const BonusTab = () => {
             </svg>
 
             <div className={s.balance}>
-              <p>Баланс картки:</p>
+              <p>{t("bonus.cardBalance")}</p>
               <span className={s.qty}>{user.bonus}</span>
-              <span className={s.text}>бонусів</span>
+              <span className={s.text}>{t("bonus.bonuses")}</span>
             </div>
           </div>
 
@@ -86,7 +84,7 @@ export const BonusTab = () => {
         </div>
 
         <div className={s.bonusTransactionList}>
-          <h4>Транзакції по картці:</h4>
+          <h4>{t("bonus.transactions")}</h4>
 
           {user?.bonus_history ? (
             <ul className={s.list}>

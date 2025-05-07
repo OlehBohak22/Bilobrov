@@ -1,15 +1,17 @@
 import { useWindowSize } from "../../hooks/useWindowSize";
 import s from "./AboutHeroSection.module.css";
+import { useTranslation } from "react-i18next";
 
 export const AboutHeroSection = () => {
   const { width } = useWindowSize();
   const isMobile = width < 1024;
+  const { t } = useTranslation();
 
   return (
     <section className={s.section}>
       <div className={s.titleContainer}>
-        <p>Ти у себе на першому місці</p>
-        <h1>З Bilobrov Cosmetics</h1>
+        <p>{t("aboutHero.subtitle")}</p>
+        <h1>{t("aboutHero.title")}</h1>
       </div>
 
       <div className={s.heroBg}>
@@ -19,7 +21,7 @@ export const AboutHeroSection = () => {
               ? "/images/mobile-about-hero-girl.avif"
               : "/images/about-hero-girl.avif"
           }
-          alt="Beaty girl"
+          alt="Beauty girl"
         />
       </div>
     </section>

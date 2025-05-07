@@ -9,6 +9,7 @@ import {
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { memo } from "react";
 import { useWindowSize } from "../../hooks/useWindowSize";
+import { useTranslation } from "react-i18next";
 
 interface ProductItemProps {
   info: ProductInfo;
@@ -26,7 +27,7 @@ const CartProductItem: React.FC<ProductItemProps> = ({
   const dispatch = useAppDispatch();
   const { width } = useWindowSize();
   const isMobile = width < 1024;
-
+  const { t } = useTranslation();
   const isNewProduct = (dateCreated: string) => {
     if (!dateCreated) return false;
 
@@ -40,16 +41,7 @@ const CartProductItem: React.FC<ProductItemProps> = ({
     return daysDiff <= 14;
   };
 
-  const brandMeta = info.meta_data.find((item) => item.key === "brands");
-
-  const brandName =
-    Array.isArray(brandMeta?.value) &&
-    brandMeta.value.length > 0 &&
-    typeof brandMeta.value[0] === "object"
-      ? (brandMeta.value[0] as { name: string }).name
-      : typeof brandMeta?.value === "string"
-      ? brandMeta.value
-      : null;
+  const brandName = info.brands[0]?.name || "";
 
   const handleDecrease = () => {
     if (info.quantity <= 1) return;
@@ -172,7 +164,7 @@ const CartProductItem: React.FC<ProductItemProps> = ({
             </div>
 
             <div className={s.code}>
-              <p>Код товару: </p> <span> {info.sku}</span>
+              <p>{t("productCode")}</p> <span> {info.sku}</span>
             </div>
           </div>
           {brandName && <p className={s.productBrand}>{brandName}</p>}
@@ -264,7 +256,7 @@ const CartProductItem: React.FC<ProductItemProps> = ({
                 />
               </svg>
 
-              <span>Видалити</span>
+              <span>{t("delete")}</span>
             </button>
           )}
         </div>

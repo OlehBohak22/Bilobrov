@@ -13,9 +13,17 @@ import { Layout } from "../../components/Layout/Layout";
 import { API_URL } from "../../constants/api";
 import { usePageData } from "../../hooks/usePageData";
 import { Helmet } from "react-helmet";
+import { useTranslation } from "react-i18next";
 
 export const HomePage = () => {
   const seoData = usePageData(API_URL);
+
+  const { t } = useTranslation();
+  const productCategories = t("productList", { returnObjects: true }) as {
+    sales: string;
+    novelty: string;
+    bestsellers: string;
+  };
 
   return (
     <main className={s.page}>
@@ -52,61 +60,64 @@ export const HomePage = () => {
         />
       </Helmet>
 
-      <HomeHero></HomeHero>
-
+      <HomeHero />
       <Layout>
         <ProductList
-          categories={["Акції", "Новинки", "Бестселлери"]}
-          defaultCategory="Новинки"
+          categories={[
+            productCategories.sales,
+            productCategories.novelty,
+            productCategories.bestsellers,
+          ]}
+          defaultCategory={productCategories.sales}
         />
       </Layout>
-
       <BrandsList />
-
       <Layout>
-        <ProductList categories={["Новинки"]} defaultCategory="Новинки">
+        <ProductList
+          categories={[productCategories.novelty]}
+          defaultCategory={productCategories.novelty}
+        >
           <h2>
-            <span>Нові</span>
-            <span>надходження</span>
+            <span>{t("homePage.newArrivals.first")}</span>
+            <span>{t("homePage.newArrivals.second")}</span>
           </h2>
         </ProductList>
       </Layout>
-
-      <CategoriesSection largePlate="Креми" parentId={1160}>
+      <CategoriesSection
+        largePlate={t("homePage.faceCare.largePlate")}
+        parentId={1160}
+      >
         <h2>
-          <span>Догляд</span>
-          <span>за обличчям</span>
+          <span>{t("homePage.faceCare.title.first")}</span>
+          <span>{t("homePage.faceCare.title.second")}</span>
         </h2>
       </CategoriesSection>
-
       <Layout>
-        <ProductList categories={["Бестселлери"]} defaultCategory="Бестселлери">
+        <ProductList
+          categories={[productCategories.bestsellers]}
+          defaultCategory={productCategories.bestsellers}
+        >
           <h2>
-            <span>Хіти</span>
-            <span>продажів</span>
+            <span>{t("homePage.bestsellers.first")}</span>
+            <span>{t("homePage.bestsellers.second")}</span>
           </h2>
         </ProductList>
       </Layout>
-
       <div className="lg:mb-[8.3vw] mb-[21.3vw]">
         <CategoriesSection
-          largePlate="Помада для губ"
+          largePlate={t("homePage.decorative.largePlate")}
           parentId={1161}
           reverse={true}
         >
           <h2>
-            <span>Декоративна</span>
-            <span>косметика</span>
+            <span>{t("homePage.decorative.title.first")}</span>
+            <span>{t("homePage.decorative.title.second")}</span>
           </h2>
         </CategoriesSection>
       </div>
-
       <HomeAbout />
-
       <HomeServices />
-
       <CashbackSection />
-
       <BlogSection />
     </main>
   );

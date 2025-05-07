@@ -5,6 +5,7 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { FC } from "react";
 import s from "./ProductPageAccordion.module.css";
+import { useTranslation } from "react-i18next";
 
 const CustomAccordion = styled(Accordion)(() => ({
   backgroundColor: "white",
@@ -54,6 +55,8 @@ export const ProductPageAccordion: FC<ProductAccordionPropType> = ({
   characteristics,
   ingredients,
 }) => {
+  const { t } = useTranslation();
+
   const formattedDesc = desc
     .replace(/- /g, "<br />- ")
     .replace(/\n/g, "<br />");
@@ -75,7 +78,7 @@ export const ProductPageAccordion: FC<ProductAccordionPropType> = ({
             aria-controls="panel1-content"
             id="panel1-header"
           >
-            Опис товару
+            {t("productAccordion.description")}
           </AccordionSummary>
           <AccordionDetails>
             <div
@@ -93,12 +96,12 @@ export const ProductPageAccordion: FC<ProductAccordionPropType> = ({
             aria-controls="panel2-content"
             id="panel2-header"
           >
-            ХАРАКТЕРИСТИКИ
+            {t("productAccordion.characteristics")}
           </AccordionSummary>
           <AccordionDetails>
             <div className={s.characteristics}>
               <p>
-                Призначення:
+                {t("productAccordion.appointment")}:
                 {characteristics.appointment.length > 0
                   ? characteristics.appointment.map((item, index) => (
                       <span key={index}> {item},</span>
@@ -106,7 +109,7 @@ export const ProductPageAccordion: FC<ProductAccordionPropType> = ({
                   : "-"}
               </p>
               <p>
-                Тип шкіри:
+                {t("productAccordion.skinType")}:
                 {characteristics.skinType.length > 0
                   ? characteristics.skinType.map((item, index) => (
                       <span key={index}> {item},</span>
@@ -114,7 +117,7 @@ export const ProductPageAccordion: FC<ProductAccordionPropType> = ({
                   : "-"}
               </p>
               <p>
-                Протипоказання:
+                {t("productAccordion.contraindication")}:
                 {characteristics.contraindication.length > 0
                   ? characteristics.contraindication.map((item, index) => (
                       <span key={index}> {item},</span>
@@ -133,7 +136,7 @@ export const ProductPageAccordion: FC<ProductAccordionPropType> = ({
             aria-controls="panel3-content"
             id="panel3-header"
           >
-            Активні інгрідієнти
+            {t("productAccordion.activeIngredients")}
           </AccordionSummary>
 
           <AccordionDetails>
@@ -155,7 +158,7 @@ export const ProductPageAccordion: FC<ProductAccordionPropType> = ({
             aria-controls="panel5-content"
             id="panel5-header"
           >
-            Склад товару
+            {t("productAccordion.components")}
           </AccordionSummary>
           <AccordionDetails>
             <div className={s.components}>{components}</div>

@@ -60,12 +60,12 @@ export const ProductList = ({
           per_page: "10",
         });
 
-        if (activeTab === "Акції") {
+        if (activeTab === "Акції" || activeTab === "Акции") {
           params.set("on_sale", "true");
         } else if (activeTab === "Новинки") {
           params.set("orderby", "date");
           params.set("order", "desc");
-        } else if (activeTab === "Бестселлери") {
+        } else if (activeTab === "Бестселлери" || activeTab === "Бестселлеры") {
           params.set("orderby", "popularity");
         } else {
           params.set("category", activeTab); // Можна передавати slug

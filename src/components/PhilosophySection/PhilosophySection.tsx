@@ -1,7 +1,10 @@
+import { useTranslation } from "react-i18next";
 import { Layout } from "../Layout/Layout";
 import s from "./PhilosophySection.module.css";
 
 export const PhilosophySection = () => {
+  const { t } = useTranslation();
+
   return (
     <section className={s.section}>
       <Layout className={s.container}>
@@ -10,15 +13,12 @@ export const PhilosophySection = () => {
         </div>
 
         <div className={s.blockDesc}>
-          <span>Суть бренду Bilobrov через очі засновниці</span>
-          <h3>Bilobrov Cosmetics — </h3>
-          <p>
-            це моя філософія краси, де кожен продукт — це крок до впевненості та
-            комфорту.
-          </p>
+          <span>{t("philosophy.subtitle")}</span>
+          <h3>{t("philosophy.title")}</h3>
+          <p>{t("philosophy.desc")}</p>
           <div className={s.viktoria}>
-            <span>Вікторія</span>
-            <span>Білобров</span>
+            <span>{t("philosophy.name")}</span>
+            <span>{t("philosophy.surname")}</span>
           </div>
         </div>
       </Layout>

@@ -13,6 +13,7 @@ import { ProductInfo } from "../../types/productTypes";
 import { CartProductItemMemo } from "../CartProductItem/CartProductItem";
 import { Loader } from "../Loader/Loader";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 interface VariationsPopupProps {
   onSelect: (variationId: number) => void;
@@ -32,6 +33,7 @@ export const VariationsPopup: React.FC<VariationsPopupProps> = ({
   const { variations, loading } = useSelector(
     (state: RootState) => state.products
   );
+  const { t } = useTranslation();
 
   const uniqueAttributes = [
     ...new Map(
@@ -167,7 +169,7 @@ export const VariationsPopup: React.FC<VariationsPopupProps> = ({
       >
         <div>
           <div className={s.header}>
-            <h3 id="variation-popup">Оберіть параметри</h3>
+            <h3 id="variation-popup">{t("variationPopup.select")}</h3>
 
             <button onClick={() => onClose()}>
               <svg
@@ -328,7 +330,7 @@ export const VariationsPopup: React.FC<VariationsPopupProps> = ({
           disabled={selectedVariation === null}
           className={s.btn}
         >
-          додати в кошик
+          {t("variationPopup.apply")}
           <svg
             width="25"
             height="24"

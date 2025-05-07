@@ -10,11 +10,14 @@ import { Link, useLocation } from "react-router";
 import Helmet from "react-helmet";
 import { usePageData } from "../../hooks/usePageData";
 import { API_URL } from "../../constants/api";
+import { useTranslation } from "react-i18next";
 
 export const AboutPage = () => {
+  const { t } = useTranslation();
+
   const breadcrumbs = [
-    { name: "Головна", link: "/" },
-    { name: "Про нас", link: "/about" },
+    { name: t("breadCrumbs.main"), link: "/" },
+    { name: t("breadCrumbs.about"), link: "/about" },
   ];
 
   const { state } = useLocation();

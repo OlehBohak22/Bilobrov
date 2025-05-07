@@ -36,6 +36,7 @@ import { AnimatePresence } from "framer-motion";
 import { fetchReviews } from "./store/slices/productsSlice";
 import { SearchPopup } from "./components/SearchPopup/SearchPopup";
 import { setSearchQuery } from "./store/slices/filterSlice";
+import "./utils/i18n";
 
 function App() {
   const dispatch = useAppDispatch();

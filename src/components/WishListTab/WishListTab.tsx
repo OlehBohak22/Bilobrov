@@ -9,12 +9,13 @@ import "swiper/css/pagination";
 import { Navigation } from "swiper/modules";
 import { clearWishlist } from "../../store/slices/wishlistSlice"; // локальний екшен
 import { useWindowSize } from "../../hooks/useWindowSize";
+import { useTranslation } from "react-i18next";
 
 export const WishListTab = () => {
   const dispatch = useDispatch();
   const { width } = useWindowSize();
   const isMobile = width < 1024;
-
+  const { t } = useTranslation();
   const wishlist = useSelector(
     (state: RootState) => state.wishlist.preferences
   );
@@ -34,8 +35,8 @@ export const WishListTab = () => {
     <div className={s.tab}>
       <div className={s.swiperController}>
         <h2>
-          <span>Список</span>
-          <span>побажань</span>
+          <span>{t("wishlistPopup.titleDesktopPart1")}</span>
+          <span>{t("wishlistPopup.titleDesktopPart2")}</span>
         </h2>
 
         {!isMobile && (
@@ -129,7 +130,7 @@ export const WishListTab = () => {
                 strokeLinecap="square"
               />
             </svg>
-            <span>Видалити все</span>
+            <span>{t("deleteAll")}</span>
           </button>
 
           {isMobile && (
@@ -141,7 +142,7 @@ export const WishListTab = () => {
           )}
         </>
       ) : (
-        <p>Список бажань порожній</p>
+        <div className={s.emptyWishlist}>{t("wishlistPopup.empty")}</div>
       )}
     </div>
   );
