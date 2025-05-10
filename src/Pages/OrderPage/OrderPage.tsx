@@ -17,8 +17,11 @@ import { NovaPoshtaMapPopup } from "../../components/MapPopup/MapPopup";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { addAddress } from "../../store/slices/addressSlice";
 import { useTranslation } from "react-i18next";
+import axios from "axios";
+import { API_URL_WP } from "../../constants/api";
+import { fetchCities } from "../../store/slices/citiesSlice";
 
-export const OrderPage: React.FC = () => {
+const OrderPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const cart = useSelector((state: RootState) => state.cart.items);
   const [step, setStep] = useState(1);
@@ -34,7 +37,23 @@ export const OrderPage: React.FC = () => {
   const [selectedAddressId, setSelectedAddressId] = useState<number | null>(
     null
   );
+
+  useEffect(() => {
+    dispatch(fetchCities());
+  }, [dispatch]);
+
+  // Керування бонусами
+  const [useBonus, setUseBonus] = useState(0);
+  const userData = useSelector((state: RootState) => state.user.user);
+
   const { t } = useTranslation();
+  // Доступні бонуси користувача (отримуємо з userData)
+  const availableBonuses = Number(userData?.meta?.bonus) || 0;
+
+  const [appliedCoupon, setAppliedCoupon] = useState<{
+    code: string;
+    discountAmount: number;
+  } | null>(null);
 
   const [tab, setTab] = useState<"PostOffice" | "ParcelLocker">("PostOffice");
 
@@ -164,8 +183,6 @@ export const OrderPage: React.FC = () => {
 
     return Object.keys(newErrors).length === 0;
   };
-
-  const userData = useSelector((state: RootState) => state.user.user);
 
   const { token } = useSelector((state: RootState) => state.user);
 
@@ -365,6 +382,17 @@ export const OrderPage: React.FC = () => {
           key: "courier_note",
           value: instructions,
         },
+        appliedCoupon
+          ? [
+              {
+                key: "applied_coupon",
+                value: JSON.stringify({
+                  code: appliedCoupon.code,
+                  discount: appliedCoupon.discountAmount,
+                }),
+              },
+            ]
+          : [],
       ],
     };
 
@@ -404,6 +432,26 @@ export const OrderPage: React.FC = () => {
         dispatch(clearCart(token));
         setOrderSucces(resultAction.payload);
         console.log("Замовлення успішно створено:", resultAction.payload);
+
+        if (user && useBonus > 0) {
+          try {
+            await axios.post(
+              `${API_URL_WP}user_edit_bonus`,
+              {
+                bonus: -useBonus, // списання бонусів
+                bonus_type: "ordering",
+              },
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              }
+            );
+            console.log(`✅ Списано ${useBonus} бонусів`);
+          } catch (err) {
+            console.error("Помилка при списанні бонусів:", err);
+          }
+        }
       } else {
         console.error(
           "Помилка при створенні замовлення:",
@@ -1162,15 +1210,13 @@ export const OrderPage: React.FC = () => {
                   {step === 3 ? (
                     <div className={s.orderBtn}>
                       <button onClick={handleOrderSubmit}>
-                        Підтвердити замовлення
+                        {t("orderStep.confirmOrder")}
                       </button>
 
                       <p>
-                        Підтверджуючи замовлення, я приймаю умови:
-                        <a href="">
-                          положення про обробку і захист персональних даних
-                          угоди користувача.
-                        </a>
+                        {t("orderStep.acceptTerms")}
+
+                        <a href="">{t("orderStep.privacyPolicy")}</a>
                       </p>
                     </div>
                   ) : (
@@ -1203,10 +1249,22 @@ export const OrderPage: React.FC = () => {
               </div>
             </div>
 
-            <OrderSidePanel />
+            <OrderSidePanel
+              useBonus={useBonus}
+              setUseBonus={setUseBonus}
+              availableBonuses={availableBonuses}
+              appliedCoupon={appliedCoupon}
+              setAppliedCoupon={setAppliedCoupon}
+            />
           </div>
         </Layout>
-      )) || <OrderSucces data={orderSucces} />}
+      )) || (
+        <OrderSucces
+          data={orderSucces}
+          usedBonuses={useBonus}
+          appliedCoupon={appliedCoupon}
+        />
+      )}
 
       <OrderFooter />
 
@@ -1216,3 +1274,5 @@ export const OrderPage: React.FC = () => {
     </div>
   );
 };
+
+export default OrderPage;

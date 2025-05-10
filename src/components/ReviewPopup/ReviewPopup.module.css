@@ -172,6 +172,7 @@
 }
 
 .thanksContent {
+  padding-bottom: 2.2vw;
   svg {
     margin: 0 auto;
     width: 2.9vw;
@@ -228,6 +229,10 @@
 }
 
 @media (max-width: 1024px) {
+  .popupContent:has(.thanksContent) {
+    height: 104vw;
+  }
+
   .popupContent {
     min-width: auto;
     max-width: none;
@@ -290,6 +295,41 @@
       align-items: start;
       gap: 5.3vw;
       margin-bottom: 10vw;
+    }
+  }
+
+  .thanksContent {
+    padding-bottom: 2.2vw;
+    svg {
+      margin: 0 auto;
+      width: 15vw;
+      height: 15vw;
+      margin-bottom: 6.4vw;
+    }
+
+    p {
+      margin-bottom: 3.2vw;
+      font-size: 3.7vw;
+      line-height: 100%;
+    }
+
+    h3 {
+      font-size: 7vw;
+      line-height: 120%;
+      width: auto;
+      margin-bottom: 6.4vw;
+    }
+
+    a {
+      width: auto;
+      padding: 5.8vw 0;
+      font-size: 4.2vw;
+      line-height: 4.2vw;
+    }
+
+    a:hover {
+      background-color: rgba(255, 196, 58, 1);
+      color: black;
     }
   }
 

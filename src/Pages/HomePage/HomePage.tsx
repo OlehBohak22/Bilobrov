@@ -15,7 +15,7 @@ import { usePageData } from "../../hooks/usePageData";
 import { Helmet } from "react-helmet";
 import { useTranslation } from "react-i18next";
 
-export const HomePage = () => {
+const HomePage = () => {
   const seoData = usePageData(API_URL);
 
   const { t } = useTranslation();
@@ -122,3 +122,5 @@ export const HomePage = () => {
     </main>
   );
 };
+
+export default HomePage;

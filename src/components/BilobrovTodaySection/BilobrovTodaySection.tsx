@@ -27,7 +27,7 @@ export const BilobrovTodaySection = () => {
             <p>{t("bilobrovToday.team")}</p>
           </li>
           <li>
-            <span>3500</span>
+            <span>{">"}3500</span>
             <p>{t("bilobrovToday.clients")}</p>
           </li>
         </ul>

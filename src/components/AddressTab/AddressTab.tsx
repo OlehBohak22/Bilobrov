@@ -1,6 +1,6 @@
 import s from "./AddressTab.module.css";
 import { UserData } from "../../store/slices/userSlice"; // імпорт типу UserData
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AddAddressForm } from "./AddAddressForm";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
@@ -9,6 +9,7 @@ import { deleteAddress } from "../../store/slices/addressSlice";
 import { checkUserSession } from "../../store/actions/userActions";
 import { ConfirmLogoutModal } from "../ConfirmLogoutModal/ConfirmLogoutModal";
 import { useTranslation } from "react-i18next";
+import { fetchCities } from "../../store/slices/citiesSlice";
 
 interface AddressTabProps {
   user: UserData | null; // Типізуємо пропс user
@@ -28,6 +29,10 @@ export const AddressTab = ({ user }: AddressTabProps) => {
       dispatch(checkUserSession());
     }, 1000);
   };
+
+  useEffect(() => {
+    dispatch(fetchCities());
+  }, [dispatch]);
 
   const token = useSelector((state: RootState) => state.user.token) || "";
 

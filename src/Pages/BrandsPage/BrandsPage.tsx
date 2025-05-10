@@ -11,7 +11,7 @@ import { usePageData } from "../../hooks/usePageData";
 import { Helmet } from "react-helmet";
 import { useTranslation } from "react-i18next";
 
-export const BrandsPage = () => {
+const BrandsPage = () => {
   const brands = useSelector((state: RootState) => state.brands);
   const { width } = useWindowSize();
   const isMobile = width < 1024;
@@ -217,3 +217,5 @@ export const BrandsPage = () => {
     </main>
   );
 };
+
+export default BrandsPage;

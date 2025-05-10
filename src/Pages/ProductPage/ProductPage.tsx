@@ -23,7 +23,7 @@ interface HeaderProps {
   openCart: () => void;
 }
 
-export const ProductPage: React.FC<HeaderProps> = ({
+const ProductPage: React.FC<HeaderProps> = ({
   openRegister,
   openReview,
   openCart,
@@ -162,3 +162,5 @@ export const ProductPage: React.FC<HeaderProps> = ({
     </>
   );
 };
+
+export default ProductPage;

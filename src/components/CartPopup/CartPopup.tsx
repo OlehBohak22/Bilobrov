@@ -17,7 +17,7 @@ interface CartPopupProps {
   onClose: () => void;
 }
 
-export const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
+const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
   const cartItems = useSelector((state: RootState) => state.cart.items);
   const token = useSelector((state: RootState) => state.user.token);
   const [loading, setLoading] = useState(false);
@@ -26,6 +26,8 @@ export const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const [cartProducts, setCartProducts] = useState<ProductInfo[]>([]);
+
+  console.log(cartItems);
 
   const productIds = cartItems.map((item) => item.id);
   const productIdsString = productIds.sort((a, b) => a - b).join(",");
@@ -222,3 +224,5 @@ export const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
     </Layout>
   );
 };
+
+export default CartPopup;

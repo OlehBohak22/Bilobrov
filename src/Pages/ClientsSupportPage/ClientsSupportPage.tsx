@@ -9,7 +9,7 @@ import { useWindowSize } from "../../hooks/useWindowSize";
 import { Breadcrumbs } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
-export const ClientsSupportPage = () => {
+const ClientsSupportPage = () => {
   const { t } = useTranslation();
 
   const categories = [
@@ -262,3 +262,5 @@ export const ClientsSupportPage = () => {
     </main>
   );
 };
+
+export default ClientsSupportPage;

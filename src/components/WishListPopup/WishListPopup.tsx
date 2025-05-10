@@ -1,4 +1,4 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import s from "./WishListPopup.module.css";
 import { ProductInfo } from "../../types/productTypes";
@@ -13,11 +13,12 @@ import { useWindowSize } from "../../hooks/useWindowSize";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import { useTranslation } from "react-i18next";
+import { fetchCartProducts } from "../../store/slices/productsSlice";
+import { Loader } from "../Loader/Loader";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
 
-export const WishListPopup: React.FC<{ onClose: () => void }> = ({
-  onClose,
-}) => {
-  const dispatch = useDispatch();
+const WishListPopup: React.FC<{ onClose: () => void }> = ({ onClose }) => {
+  const dispatch = useAppDispatch();
   const [hasMounted, setHasMounted] = useState(false);
   const { pathname } = useLocation();
   const { width } = useWindowSize();
@@ -26,14 +27,29 @@ export const WishListPopup: React.FC<{ onClose: () => void }> = ({
   const wishlist = useSelector(
     (state: RootState) => state.wishlist.preferences
   );
-  const products: ProductInfo[] = useSelector(
-    (state: RootState) => state.products.items
-  );
+  const [cartProducts, setCartProducts] = useState<ProductInfo[]>([]);
+  const [loading, setLoading] = useState(false);
 
-  // Фільтруємо продукти
-  const wishlistProducts = products.filter((product) =>
-    wishlist.includes(product.id)
-  );
+  const productIdsString = wishlist
+    .slice()
+    .sort((a, b) => a - b)
+    .join(",");
+
+  useEffect(() => {
+    if (wishlist.length) {
+      setLoading(true);
+
+      dispatch(fetchCartProducts(wishlist)).then((res) => {
+        if (fetchCartProducts.fulfilled.match(res)) {
+          setCartProducts(res.payload);
+        }
+        setLoading(false);
+      });
+    } else {
+      setCartProducts([]);
+      setLoading(false);
+    }
+  }, [productIdsString]);
 
   useEffect(() => {
     if (hasMounted) {
@@ -66,7 +82,7 @@ export const WishListPopup: React.FC<{ onClose: () => void }> = ({
           {isMobile ? (
             <>
               <h2>{t("wishlistPopup.titleMobile")}</h2>
-              {wishlistProducts.length > 0 && (
+              {cartProducts.length > 0 && (
                 <button className={s.clear} onClick={handleClearWishlist}>
                   <svg
                     viewBox="0 0 20 20"
@@ -103,7 +119,7 @@ export const WishListPopup: React.FC<{ onClose: () => void }> = ({
             </h2>
           )}
 
-          {wishlistProducts.length > 0 && !isMobile && (
+          {cartProducts.length > 0 && !isMobile && (
             <div className={s.navigationContainer}>
               <button className={s.prevButton}>
                 <svg
@@ -162,11 +178,13 @@ export const WishListPopup: React.FC<{ onClose: () => void }> = ({
           </svg>
         </button>
 
-        {wishlistProducts.length > 0 ? (
+        {loading ? (
+          <Loader />
+        ) : cartProducts.length > 0 ? (
           <>
             {isMobile ? (
               <div className={s.mobileList}>
-                {wishlistProducts.map((product) => (
+                {cartProducts.map((product) => (
                   <ProductItem info={product} key={product.id} />
                 ))}
               </div>
@@ -181,7 +199,7 @@ export const WishListPopup: React.FC<{ onClose: () => void }> = ({
                 }}
                 className={s.productListSwiper}
               >
-                {wishlistProducts.map((product) => (
+                {cartProducts.map((product) => (
                   <SwiperSlide className={s.slide} key={product.id}>
                     <ProductItem info={product} />
                   </SwiperSlide>
@@ -199,20 +217,20 @@ export const WishListPopup: React.FC<{ onClose: () => void }> = ({
                   <path
                     d="M3.43359 5.37598H16.5679L15.3868 17.7086H4.61476L3.43359 5.37598Z"
                     stroke="#D63D44"
-                    stroke-width="1.6"
-                    stroke-linecap="square"
+                    strokeWidth="1.6"
+                    strokeLinecap="square"
                   />
                   <path
                     d="M10 9.46973L10 13.6138"
                     stroke="#D63D44"
-                    stroke-width="1.6"
-                    stroke-linecap="square"
+                    strokeWidth="1.6"
+                    strokeLinecap="square"
                   />
                   <path
                     d="M13.7298 4.99811L12.8392 2.29199H7.16014L6.26953 4.99811"
                     stroke="#D63D44"
-                    stroke-width="1.6"
-                    stroke-linecap="square"
+                    strokeWidth="1.6"
+                    strokeLinecap="square"
                   />
                 </svg>
                 <span>{t("deleteAll")}</span>
@@ -226,3 +244,5 @@ export const WishListPopup: React.FC<{ onClose: () => void }> = ({
     </motion.div>
   );
 };
+
+export default WishListPopup;

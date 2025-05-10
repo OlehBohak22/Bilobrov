@@ -8,7 +8,7 @@ import { API_URL } from "../../constants/api";
 import { usePageData } from "../../hooks/usePageData";
 import { Helmet } from "react-helmet";
 
-export const BonusPage = ({ openRegister }: { openRegister: () => void }) => {
+const BonusPage = ({ openRegister }: { openRegister: () => void }) => {
   const { state } = useLocation();
 
   const metaUrl = state || `${API_URL}/bonusna-systema`;
@@ -57,3 +57,5 @@ export const BonusPage = ({ openRegister }: { openRegister: () => void }) => {
     </main>
   );
 };
+
+export default BonusPage;

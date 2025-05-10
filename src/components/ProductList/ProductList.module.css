@@ -38,8 +38,9 @@
   cursor: pointer;
   font-size: 16px;
   color: #333;
-  transition: background-color 0.3s ease;
-
+  border-radius: 50%;
+  transition: 0.3s ease;
+  border: none;
   svg {
     fill: black;
     width: 1.2vw;
@@ -51,6 +52,7 @@
   .prevBtn:hover,
   .nextBtn:hover {
     background-color: var(--primary);
+    border-radius: 0;
 
     svg {
       fill: white;

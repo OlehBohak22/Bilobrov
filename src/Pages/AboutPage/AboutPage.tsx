@@ -12,7 +12,7 @@ import { usePageData } from "../../hooks/usePageData";
 import { API_URL } from "../../constants/api";
 import { useTranslation } from "react-i18next";
 
-export const AboutPage = () => {
+const AboutPage = () => {
   const { t } = useTranslation();
 
   const breadcrumbs = [
@@ -79,3 +79,5 @@ export const AboutPage = () => {
     </main>
   );
 };
+
+export default AboutPage;

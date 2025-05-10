@@ -1,5 +1,5 @@
 import s from "./WishList.module.css";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { ProductItem } from "../ProductItem/ProductItem";
 import { ProductInfo } from "../../types/productTypes";
@@ -10,22 +10,43 @@ import { Navigation } from "swiper/modules";
 import { clearWishlist } from "../../store/slices/wishlistSlice"; // локальний екшен
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { useTranslation } from "react-i18next";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { useEffect, useState } from "react";
+import { fetchCartProducts } from "../../store/slices/productsSlice";
+import { Loader } from "../Loader/Loader";
 
 export const WishListTab = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+  const [wishlistProducts, setWishlistProducts] = useState<ProductInfo[]>([]);
+  const [loading, setLoading] = useState(false);
+
   const { width } = useWindowSize();
   const isMobile = width < 1024;
   const { t } = useTranslation();
+
   const wishlist = useSelector(
     (state: RootState) => state.wishlist.preferences
   );
-  const products: ProductInfo[] = useSelector(
-    (state: RootState) => state.products.items
-  );
 
-  const wishlistProducts = products.filter((product) =>
-    wishlist.includes(product.id)
-  );
+  const productIdsString = wishlist
+    .slice()
+    .sort((a, b) => a - b)
+    .join(",");
+
+  useEffect(() => {
+    if (wishlist.length) {
+      setLoading(true);
+      dispatch(fetchCartProducts(wishlist)).then((res) => {
+        if (fetchCartProducts.fulfilled.match(res)) {
+          setWishlistProducts(res.payload);
+        }
+        setLoading(false);
+      });
+    } else {
+      setWishlistProducts([]);
+      setLoading(false);
+    }
+  }, [productIdsString, dispatch]);
 
   const handleClearWishlist = () => {
     dispatch(clearWishlist());
@@ -87,7 +108,11 @@ export const WishListTab = () => {
         )}
       </div>
 
-      {wishlistProducts.length > 0 ? (
+      {loading ? (
+        <div className={s.loaderWrapper}>
+          <Loader />
+        </div>
+      ) : wishlistProducts.length > 0 ? (
         <>
           {!isMobile && (
             <Swiper

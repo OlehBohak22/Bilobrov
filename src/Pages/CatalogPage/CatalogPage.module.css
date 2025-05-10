@@ -6,7 +6,8 @@
 .list {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 0.7vw;
+  column-gap: 0.7vw;
+  row-gap: 1.6vw;
   margin-bottom: 3vw;
 
   li {

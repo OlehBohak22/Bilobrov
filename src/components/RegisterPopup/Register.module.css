@@ -12,6 +12,38 @@
   z-index: 9999999;
 }
 
+.forgotPasswordLink {
+  margin-left: auto;
+  width: 100%;
+  text-align: right;
+  transform: translateY(-2vw);
+  font-family: Manrope;
+  font-weight: 500;
+  font-size: 0.7vw;
+  line-height: 130%;
+  color: #757575;
+}
+
+.backLink {
+  display: flex;
+  align-items: center;
+  gap: 0.6vw;
+  cursor: pointer;
+
+  svg {
+    width: 1.2vw;
+    height: 1.2vw;
+    stroke: black;
+  }
+}
+
+.backLink:hover {
+  color: var(--primary);
+  svg {
+    stroke: var(--primary);
+  }
+}
+
 .modal::-webkit-scrollbar {
   width: 0.2vw;
 }
@@ -282,6 +314,24 @@
     svg {
       width: 13.8vw;
       height: 13.8vw;
+    }
+  }
+
+  .forgotPasswordLink {
+    font-size: 4.2vw;
+    transform: translateY(-6vw);
+  }
+
+  .backLink {
+    display: flex;
+    align-items: center;
+    gap: 4.2vw;
+    cursor: pointer;
+
+    svg {
+      width: 4.2vw;
+      height: 4.2vw;
+      stroke: black;
     }
   }
 }

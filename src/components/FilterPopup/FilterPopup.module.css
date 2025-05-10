@@ -314,7 +314,7 @@
 }
 
 .btn:hover {
-  background-color: rgba(255, 196, 58, 1);
+  background-color: #ffc43a;
   color: black;
 
   svg {

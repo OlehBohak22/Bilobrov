@@ -5,15 +5,17 @@ import { RootState } from "../../store";
 import { useEffect, useRef, useState } from "react";
 import { buildMenuTree } from "../../utils/buildMenuTree";
 import { Link, useLocation } from "react-router";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { resetFilters } from "../../store/slices/filterSlice";
 
-export const MenuPopup: React.FC<{
+const MenuPopup: React.FC<{
   onClose: () => void;
   openPopup: () => void;
 }> = ({ onClose, openPopup }) => {
   const [hasMounted, setHasMounted] = useState(false);
 
   const modalRef = useRef<HTMLDivElement>(null);
-
+  const dispatch = useAppDispatch();
   const asideTopMenu = useSelector(
     (state: RootState) => state.menu.asideTopMenu?.items || []
   );
@@ -32,6 +34,10 @@ export const MenuPopup: React.FC<{
   const asideTopMenuTree = buildMenuTree(asideTopMenu);
 
   const { pathname } = useLocation(); // Отримуємо поточний шлях
+
+  const handleReset = () => {
+    dispatch(resetFilters());
+  };
 
   useEffect(() => {
     if (hasMounted) {
@@ -150,7 +156,14 @@ export const MenuPopup: React.FC<{
                     {item.title}
                   </button>
                 ) : (
-                  <Link state={item.url} onClick={onClose} to={modifiedUrl}>
+                  <Link
+                    state={item.url}
+                    onClick={() => {
+                      onClose?.();
+                      handleReset?.();
+                    }}
+                    to={modifiedUrl}
+                  >
                     {item.title}
                   </Link>
                 )}
@@ -327,3 +340,5 @@ export const MenuPopup: React.FC<{
     </motion.div>
   );
 };
+
+export default MenuPopup;

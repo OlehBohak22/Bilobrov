@@ -5,9 +5,7 @@ import { RootState } from "../../store";
 import { ProductItem } from "../../components/ProductItem/ProductItem";
 import { Breadcrumbs } from "@mui/material";
 import { Link, useLocation } from "react-router";
-import { useAppDispatch } from "../../hooks/useAppDispatch";
-import { useEffect, useRef, useState } from "react";
-import { fetchCertificates } from "../../store/slices/filterSlice";
+import { useRef, useState } from "react";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -18,13 +16,7 @@ import { usePageData } from "../../hooks/usePageData";
 import { Helmet } from "react-helmet";
 import { useTranslation } from "react-i18next";
 
-export const CertificatePage = () => {
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(fetchCertificates());
-  }, [dispatch]);
-
+const CertificatePage = () => {
   const { state } = useLocation();
 
   const metaUrl = state || `${API_URL}/certificate`;
@@ -212,3 +204,5 @@ export const CertificatePage = () => {
     </main>
   );
 };
+
+export default CertificatePage;

@@ -17,7 +17,7 @@ interface SearchPopupProps {
   close: () => void;
 }
 
-export const SearchPopup: React.FC<SearchPopupProps> = ({ close }) => {
+const SearchPopup: React.FC<SearchPopupProps> = ({ close }) => {
   const dispatch = useDispatch<AppDispatch>();
   const products = useSelector((state: RootState) => state.filters.products);
   const location = useLocation();
@@ -153,3 +153,5 @@ export const SearchPopup: React.FC<SearchPopupProps> = ({ close }) => {
     </motion.div>
   );
 };
+
+export default SearchPopup;

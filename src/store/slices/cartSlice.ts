@@ -5,9 +5,12 @@ import { API_URL_WP } from "../../constants/api";
 const API_URL = `${API_URL_WP}cart`;
 
 interface Product {
+  sale_price?: number;
+  price?: number;
   id: number;
   quantity: number;
   variation_id?: number;
+  meta_data?: object[];
 }
 
 interface CartState {
@@ -82,6 +85,9 @@ export const addToCart = createAsyncThunk<
       { product },
       { headers: { Authorization: `Bearer ${token}` } }
     );
+    console.log(product);
+    console.log(data.cart);
+
     return data.cart;
   } catch (error: any) {
     return rejectWithValue(error.response?.data || error.message);

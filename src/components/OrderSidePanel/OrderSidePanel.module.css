@@ -112,6 +112,198 @@
   }
 }
 
+.bonusAccordion {
+  padding-bottom: 0.8vw;
+}
+
+.bonusToggle {
+  display: flex;
+  align-items: center;
+  gap: 0.8vw;
+  font-family: Manrope;
+  font-weight: 600;
+  font-size: 0.8vw;
+  line-height: 137%;
+  color: var(--primary);
+
+  cursor: pointer;
+}
+
+.bonusToggle span svg {
+  width: 0.8vw;
+  height: 0.8vw;
+}
+
+.bonusContent {
+  margin-top: 1rem;
+
+  p {
+    font-family: Manrope;
+    font-weight: 600;
+    font-size: 0.8vw;
+    line-height: 137%;
+  }
+}
+
+.bonusNote {
+  font-size: 0.6vw;
+  color: #666;
+  margin-top: 0.5rem;
+}
+
+.bonusCount {
+  color: var(--primary);
+  font-family: Manrope;
+  font-weight: 700;
+  font-size: 1.1vw;
+  line-height: 100%;
+  text-transform: uppercase;
+}
+
+.bonusControls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.qty {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  margin-right: 2vw;
+
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  svg {
+    width: 0.8vw;
+    height: 0.8vw;
+  }
+
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+}
+
+.qty button {
+  background: none;
+  border: none;
+  font-size: 1.5vw;
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+.qty input {
+  text-align: center;
+  border: none;
+  outline: none;
+  width: fit-content;
+  counter-reset: none;
+  font-family: Manrope;
+  font-weight: 500;
+  font-size: 1vw;
+  line-height: 1vw;
+}
+
+.applyAll {
+  font-family: Manrope;
+  font-weight: 700;
+  font-size: 0.8vw;
+  line-height: 100%;
+}
+
+.applyAll,
+.reset {
+  padding: 0.9vw 1.2vw;
+  cursor: pointer;
+  border: none;
+  background: #d63d44;
+  color: white;
+  cursor: pointer;
+}
+
+.reset {
+  font-family: Manrope;
+  font-weight: 500;
+  font-size: 0.8vw;
+  line-height: 100%;
+  letter-spacing: 0%;
+  background: #bababa;
+}
+
+.reset:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.promoAccordion {
+  padding: 0.8vw 0;
+  border-bottom: 1px solid rgba(239, 237, 238, 1);
+  padding-bottom: 1.6vw;
+  margin-bottom: 1.6vw;
+}
+
+.promoToggle {
+  display: flex;
+  align-items: center;
+  gap: 0.8vw;
+  font-weight: 600;
+  font-size: 0.8vw;
+  line-height: 137%;
+  color: var(--primary);
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.promoToggle span svg {
+  width: 0.8vw;
+  height: 0.8vw;
+}
+
+.promoContent {
+  margin-top: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.promoInput {
+  padding: 1.1vw 1.2vw;
+  border: 1px dashed #b9b9b9 !important;
+  width: 100%;
+  font-size: 14px;
+  font-family: Manrope;
+  font-weight: 600;
+  font-size: 0.8vw;
+  line-height: 0.8vw;
+  letter-spacing: 0%;
+  vertical-align: middle;
+  margin-top: 1.2vw;
+}
+
+.applyPromoBtn {
+  background: #d63d44;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  font-family: Manrope;
+
+  font-size: 0.8vw;
+  text-transform: uppercase;
+}
+
+.applyPromoBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 @media (max-width: 1024px) {
   .sidePanel {
     padding: 0;
@@ -208,5 +400,176 @@
         margin-bottom: 2.1vw;
       }
     }
+  }
+
+  .bonusAccordion {
+    padding-bottom: 4vw;
+  }
+
+  .bonusToggle {
+    gap: 4.2vw;
+    font-size: 4.2vw;
+  }
+
+  .bonusToggle span svg {
+    width: 4.2vw;
+    height: 4.2vw;
+  }
+
+  .bonusContent {
+    margin-top: 1rem;
+
+    p {
+      font-family: Manrope;
+      font-weight: 600;
+      font-size: 4.2vw;
+      line-height: 137%;
+    }
+  }
+
+  .bonusNote {
+    font-size: 0.6vw;
+    color: #666;
+    margin-top: 0.5rem;
+  }
+
+  .bonusCount {
+    font-size: 4.2vw;
+  }
+
+  .bonusControls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .qty {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    margin-right: 2vw;
+
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    svg {
+      width: 4.2vw;
+      height: 4.2vw;
+    }
+
+    input[type="number"] {
+      -moz-appearance: textfield;
+    }
+  }
+
+  .qty button {
+    background: none;
+    border: none;
+    font-size: 4.2vw;
+    padding: 0.5rem;
+    cursor: pointer;
+  }
+
+  .qty input {
+    text-align: center;
+    border: none;
+    outline: none;
+    width: fit-content;
+    counter-reset: none;
+    font-family: Manrope;
+    font-weight: 500;
+    font-size: 4.2vw;
+    line-height: 1vw;
+  }
+
+  .applyAll {
+    font-family: Manrope;
+    font-weight: 700;
+    font-size: 3vw;
+    line-height: 100%;
+  }
+
+  .applyAll,
+  .reset {
+    padding: 3vw 4vw;
+    cursor: pointer;
+    border: none;
+    background: #d63d44;
+    color: white;
+    cursor: pointer;
+  }
+
+  .reset {
+    font-family: Manrope;
+    font-weight: 500;
+    font-size: 3vw;
+    line-height: 100%;
+    letter-spacing: 0%;
+    background: #bababa;
+  }
+
+  .reset:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+
+  .promoAccordion {
+    padding: 4vw 0;
+    border-bottom: 1px solid rgba(239, 237, 238, 1);
+    padding-bottom: 8vw;
+    margin-bottom: 8vw;
+  }
+
+  .promoToggle {
+    gap: 4.2vw;
+    font-size: 4.2vw;
+  }
+
+  .promoToggle span svg {
+    width: 4.2vw;
+    height: 4.2vw;
+  }
+
+  .promoContent {
+    margin-top: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 5vw;
+  }
+
+  .promoInput {
+    padding: 3vw 4vw;
+    border: 1px dashed #b9b9b9 !important;
+    width: 100%;
+    font-size: 14px;
+    font-family: Manrope;
+    font-weight: 600;
+    font-size: 4.2vw;
+    line-height: 0.8vw;
+    letter-spacing: 0%;
+    vertical-align: middle;
+    margin-top: 5vw;
+  }
+
+  .applyPromoBtn {
+    background: #d63d44;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-family: Manrope;
+
+    font-size: 4.2vw;
+    text-transform: uppercase;
+  }
+
+  .applyPromoBtn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
   }
 }

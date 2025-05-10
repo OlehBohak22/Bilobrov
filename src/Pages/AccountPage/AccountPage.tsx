@@ -199,7 +199,7 @@ const categories = [
   },
 ];
 
-export const AccountPage = () => {
+const AccountPage = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { width } = useWindowSize();
@@ -365,3 +365,5 @@ export const AccountPage = () => {
     </main>
   );
 };
+
+export default AccountPage;

@@ -10,9 +10,11 @@ import { ProductPageAccordion } from "../ProductPageAccordion/ProductPageAccordi
 import Select from "react-select";
 import { StylesConfig } from "react-select";
 import { addToCart } from "../../store/slices/cartSlice";
-import { selectUserMetaPreferences } from "../../store/selectors/userSelectors";
 import { toggleWishlistItem } from "../../store/slices/wishlistSlice";
 import { useTranslation } from "react-i18next";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { Link } from "react-router";
 
 interface VariationAttribute {
   id: number;
@@ -51,10 +53,26 @@ export const ProductContent: React.FC<ProductItemProps> = ({
   const [selectedVariation, setSelectedVariation] = useState<number | null>(
     null
   );
+  const [instructions, setInstructions] = useState("");
+  const maxLength = 150;
+
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const value = e.target.value;
+    if (value.length <= maxLength) {
+      setInstructions(value); // Оновлюємо значення інструкцій
+    }
+  };
 
   const stockQuantity = info.stock_quantity;
 
   const [quantity, setQuantity] = useState(1);
+
+  const { preferences: items } = useSelector(
+    (state: RootState) => state.wishlist
+  );
+  const cartIds = items.map((item) => item);
+
+  const isInWishlist = cartIds.includes(info.id);
 
   const handleAddToCart = () => {
     dispatch(
@@ -63,6 +81,8 @@ export const ProductContent: React.FC<ProductItemProps> = ({
           id: info.id,
           quantity,
           variation_id: selectedVariation || info.variations?.[0],
+          sale_price: 0,
+          price: 0,
         },
         token,
       })
@@ -157,9 +177,6 @@ export const ProductContent: React.FC<ProductItemProps> = ({
     dispatch(toggleWishlistItem(info.id));
   };
 
-  const preferences = useSelector(selectUserMetaPreferences);
-  const isInWishlist = preferences.includes(info.id);
-
   const brandName = info.brands[0]?.name || "";
 
   const components = (info.meta_data.find(
@@ -189,6 +206,10 @@ export const ProductContent: React.FC<ProductItemProps> = ({
   };
 
   const { reviews } = useSelector((state: any) => state.products);
+
+  const isGiftCertificate = info?.categories?.some(
+    (cat) => cat.slug === "podarunkovi-sertyfikaty-20"
+  );
 
   const customStyles: StylesConfig<any, false> = {
     control: (provided, state) => ({
@@ -243,7 +264,54 @@ export const ProductContent: React.FC<ProductItemProps> = ({
         ) / currentReviews.length
       : 0;
 
-  if (!info.attributes) return <p>Loading...</p>;
+  const giftSchema = Yup.object().shape({
+    giftFrom: Yup.string().required("Введіть ім'я відправника"),
+    giftTo: Yup.string().required("Введіть ім'я отримувача"),
+    giftEmail: Yup.string()
+      .email("Некоректний email")
+      .required("Введіть email отримувача"),
+    giftMessage: Yup.string(),
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      giftFrom: "",
+      giftTo: "",
+      giftEmail: "",
+      giftMessage: "",
+    },
+    validationSchema: giftSchema,
+    validateOnBlur: true,
+    validateOnChange: false,
+
+    onSubmit: (values) => {
+      if (!info) return;
+
+      dispatch(
+        addToCart({
+          product: {
+            id: info.id,
+            quantity,
+            variation_id: 0,
+            meta_data: isGiftCertificate
+              ? [
+                  { key: "gift_from", value: values.giftFrom },
+                  { key: "gift_to", value: values.giftTo },
+                  { key: "gift_email", value: values.giftEmail },
+                  { key: "gift_message", value: values.giftMessage },
+                ]
+              : [],
+          },
+          token,
+        })
+      );
+      openCart();
+    },
+  });
+
+  const { certificates } = useSelector((state: RootState) => state.filters);
+
+  if (!info.attributes || !certificates) return <p>Loading...</p>;
 
   return (
     <div className={s.content}>
@@ -254,7 +322,7 @@ export const ProductContent: React.FC<ProductItemProps> = ({
 
       {brandName && <p className={s.productBrand}>{brandName}</p>}
 
-      <p className={s.productName}>{info.name}</p>
+      <p className={s.productName}>{info.name} </p>
 
       {typeof info.short_description === "string" ? (
         <p
@@ -264,6 +332,8 @@ export const ProductContent: React.FC<ProductItemProps> = ({
       ) : (
         <>{info.short_description}</>
       )}
+
+      {isGiftCertificate && <p className={s.shortDesc}>Gift Card</p>}
 
       <div>
         {uniqueAttributes.map((attribute) => {
@@ -388,6 +458,112 @@ export const ProductContent: React.FC<ProductItemProps> = ({
         })}
       </div>
 
+      {isGiftCertificate && certificates?.length > 0 && (
+        <div className={s.nominalContainer}>
+          <p className={s.title}>{t("gift.nominal")}</p>
+
+          <ul className={s.nominals}>
+            {certificates
+              .slice()
+              .sort((a, b) => Number(a.price) - Number(b.price))
+              .map((cert) => {
+                const isActive = cert.id === info.id;
+                return (
+                  <li key={cert.id}>
+                    <Link
+                      to={`/product/${cert.slug}/${cert.id}`}
+                      className={`${isActive ? s.active : ""}`}
+                    >
+                      {Number(cert.price).toLocaleString()} ₴
+                    </Link>
+                  </li>
+                );
+              })}
+          </ul>
+        </div>
+      )}
+
+      {isGiftCertificate && (
+        <form
+          id="giftForm"
+          onSubmit={formik.handleSubmit}
+          className={s.giftForm}
+        >
+          <div className={`${s.inputContainer} lg:mb-[1.2vw]`}>
+            <label>
+              {t("gift.fromName")} <span>*</span>
+              <input
+                type="text"
+                name="giftFrom"
+                placeholder={t("gift.fromNamePlaceholder")}
+                value={formik.values.giftFrom}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              />
+              {formik.touched.giftFrom && formik.errors.giftFrom && (
+                <div className={s.error}>{formik.errors.giftFrom}</div>
+              )}
+            </label>
+
+            <label>
+              {t("gift.toName")} <span>*</span>
+              <input
+                type="text"
+                name="giftTo"
+                placeholder={t("gift.toNamePlaceholder")}
+                value={formik.values.giftTo}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              />
+              {formik.touched.giftTo && formik.errors.giftTo && (
+                <div className={s.error}>{formik.errors.giftTo}</div>
+              )}
+            </label>
+          </div>
+
+          <div className="lg:mb-[1.2vw]">
+            <label>
+              {t("gift.toEmail")} <span>*</span>
+              <input
+                type="email"
+                name="giftEmail"
+                placeholder={t("gift.toEmailPlaceholder")}
+                value={formik.values.giftEmail}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              />
+            </label>
+            {formik.touched.giftEmail && formik.errors.giftEmail && (
+              <div className={s.error}>{formik.errors.giftEmail}</div>
+            )}
+          </div>
+
+          <div className="lg:mb-[2vw] mb-[8.5vw]">
+            <label>
+              {t("gift.message")}
+              <textarea
+                name="giftMessage"
+                placeholder={t("gift.messagePlaceholder")}
+                value={formik.values.giftMessage}
+                onChange={(e) => {
+                  formik.handleChange(e);
+                  handleChange(e);
+                }}
+                onBlur={formik.handleBlur}
+              />
+            </label>
+            <div className={s.characterCount}>
+              <span>
+                {instructions.length}/{maxLength}
+              </span>
+            </div>
+            {formik.touched.giftMessage && formik.errors.giftMessage && (
+              <div className={s.error}>{formik.errors.giftMessage}</div>
+            )}
+          </div>
+        </form>
+      )}
+
       <div className="flex lg:mb-[1vw] mb-[4.2vw]">
         {info.sale_price && info.sale_price !== "0" ? (
           <>
@@ -494,7 +670,21 @@ export const ProductContent: React.FC<ProductItemProps> = ({
             </button>
           </div>
 
-          <button onClick={handleAddToCart} className={`${s.cart}`}>
+          <button
+            type="button"
+            onClick={() => {
+              if (isGiftCertificate) {
+                formik.handleSubmit();
+              } else {
+                handleAddToCart();
+              }
+            }}
+            disabled={
+              (isGiftCertificate && !formik.isValid) ||
+              info.stock_quantity === 0
+            }
+            className={`${s.cart}`}
+          >
             {t("addToCart")}
           </button>
 

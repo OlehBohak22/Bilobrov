@@ -9,6 +9,7 @@ import { buildMenuTree } from "../../utils/buildMenuTree";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import {
   fetchProducts,
+  resetFilters,
   resetPage,
   setSearchQuery,
 } from "../../store/slices/filterSlice";
@@ -77,6 +78,10 @@ export const Header: React.FC<HeaderProps> = ({
   const menuTree = buildMenuTree(menu);
 
   const dispatch = useDispatch<AppDispatch>();
+
+  const handleReset = () => {
+    dispatch(resetFilters());
+  };
 
   const searchQuery = useSelector(
     (state: RootState) => state.filters.searchQuery
@@ -308,7 +313,11 @@ export const Header: React.FC<HeaderProps> = ({
 
                   return (
                     <li className={s.menuItem} key={item.id}>
-                      <Link state={item.url} to={modifiedUrl}>
+                      <Link
+                        onClick={handleReset}
+                        state={item.url}
+                        to={modifiedUrl}
+                      >
                         {item.title}
                       </Link>
                       {item.children.length > 0 && (
@@ -339,6 +348,7 @@ export const Header: React.FC<HeaderProps> = ({
                             return (
                               <li key={child.id}>
                                 <Link
+                                  onClick={handleReset}
                                   state={child.url}
                                   to={`${modifiedChildUrl}?id=${child.id}`}
                                 >
@@ -391,7 +401,10 @@ export const Header: React.FC<HeaderProps> = ({
 
                 return (
                   <li className={s.menuItem} key={item.id}>
-                    <Link to={`${modifiedUrl}?id=${item.id}`}>
+                    <Link
+                      onClick={handleReset}
+                      to={`${modifiedUrl}?id=${item.id}`}
+                    >
                       {item.title}
                     </Link>
 
@@ -422,7 +435,10 @@ export const Header: React.FC<HeaderProps> = ({
 
                           return (
                             <li key={child.id}>
-                              <Link to={`${modifiedChildUrl}?id=${item.id}`}>
+                              <Link
+                                onClick={handleReset}
+                                to={`${modifiedChildUrl}?id=${item.id}`}
+                              >
                                 {child.title}
                               </Link>
                             </li>

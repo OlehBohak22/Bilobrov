@@ -107,10 +107,7 @@ interface CartPopupProps {
   product_id: number;
 }
 
-export const ReviewPopup: React.FC<CartPopupProps> = ({
-  onClose,
-  product_id,
-}) => {
+const ReviewPopup: React.FC<CartPopupProps> = ({ onClose, product_id }) => {
   const user = useSelector((state: RootState) => state.user.token);
   const dispatch = useAppDispatch();
   const [isSubmitted, setIsSubmitted] = useState(false); // Стан для показу подяки
@@ -309,3 +306,5 @@ export const ReviewPopup: React.FC<CartPopupProps> = ({
     </div>
   );
 };
+
+export default ReviewPopup;

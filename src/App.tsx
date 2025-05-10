@@ -1,57 +1,93 @@
 import { Route, Routes, useNavigate } from "react-router-dom";
 import "./App.css";
 import { Header } from "./components/Header/Header";
-import { HomePage } from "./Pages/HomePage/HomePage";
 import { Footer } from "./components/Footer/Footer";
-import { AboutPage } from "./Pages/AboutPage/AboutPage";
-import { ClientsSupportPage } from "./Pages/ClientsSupportPage/ClientsSupportPage";
-import { BonusPage } from "./Pages/BonusPage/BonusPage";
-import { AccountPage } from "./Pages/AccountPage/AccountPage";
+import { CartInitializer } from "./components/CartInitializer";
 import { checkUserSession } from "./store/actions/userActions";
 import { useAppDispatch } from "./hooks/useAppDispatch";
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import { useSelector } from "react-redux";
-import { RegisterModal } from "./components/RegisterPopup/Register";
 import { RootState } from "./store/index";
-import { fetchProducts } from "./store/slices/productsSlice";
-import { WishListPopup } from "./components/WishListPopup/WishListPopup";
-import { CartPopup } from "./components/CartPopup/CartPopup";
-import { ProductPage } from "./Pages/ProductPage/ProductPage";
-import { ReviewPopup } from "./components/ReviewPopup/ReviewPopup";
-import { MenuPopup } from "./components/MenuPopup/MenuPopup";
-import { CertificatePage } from "./Pages/CertificatePage/CertificatePage";
-import { CartInitializer } from "./components/CartInitializer";
 import { fetchMenus } from "./store/slices/menuSlice";
-import { CatalogPage } from "./Pages/CatalogPage/CatalogPage";
-import { BrandsPage } from "./Pages/BrandsPage/BrandsPage";
 import { fetchBrands } from "./store/slices/popularBrandsSlice";
 import { fetchCategories } from "./store/slices/categorySlice";
-import { OrderPage } from "./Pages/OrderPage/OrderPage";
-import { fetchCities } from "./store/slices/citiesSlice";
 import { fetchBanner } from "./store/slices/bannerSlice";
 import LoadingBar from "./components/LoadingBar/LoadingBar";
-import {} from "./store/slices/wishlistSlice";
 import { GlobalPropsContext } from "./GlobalPropContext";
 import { AnimatePresence } from "framer-motion";
 import { fetchReviews } from "./store/slices/productsSlice";
-import { SearchPopup } from "./components/SearchPopup/SearchPopup";
-import { setSearchQuery } from "./store/slices/filterSlice";
+import {
+  fetchCertificates,
+  resetFilters,
+  setSearchQuery,
+} from "./store/slices/filterSlice";
 import "./utils/i18n";
+
+const HomePage = lazy(() => import("./Pages/HomePage/HomePage"));
+const AboutPage = lazy(() => import("./Pages/AboutPage/AboutPage"));
+const ClientsSupportPage = lazy(
+  () => import("./Pages/ClientsSupportPage/ClientsSupportPage")
+);
+const BonusPage = lazy(() => import("./Pages/BonusPage/BonusPage"));
+const AccountPage = lazy(() => import("./Pages/AccountPage/AccountPage"));
+const BrandsPage = lazy(() => import("./Pages/BrandsPage/BrandsPage"));
+const OrderPage = lazy(() => import("./Pages/OrderPage/OrderPage"));
+const CatalogPage = lazy(() => import("./Pages/CatalogPage/CatalogPage"));
+const CertificatePage = lazy(
+  () => import("./Pages/CertificatePage/CertificatePage")
+);
+const ProductPage = lazy(() => import("./Pages/ProductPage/ProductPage"));
+
+const RegisterModal = lazy(() => import("./components/RegisterPopup/Register"));
+const WishListPopup = lazy(
+  () => import("./components/WishListPopup/WishListPopup")
+);
+const CartPopup = lazy(() => import("./components/CartPopup/CartPopup"));
+const ReviewPopup = lazy(() => import("./components/ReviewPopup/ReviewPopup"));
+const MenuPopup = lazy(() => import("./components/MenuPopup/MenuPopup"));
+const SearchPopup = lazy(() => import("./components/SearchPopup/SearchPopup"));
 
 function App() {
   const dispatch = useAppDispatch();
+  const { loading } = useSelector((state: RootState) => state.banner);
   const navigate = useNavigate();
-  // const location = useLocation();
+
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isWishList, setIsWishList] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isReview, setIsReview] = useState(false);
-  const [isSearchOpen, setSearchOpen] = useState(false); // 🔥
+  const [isSearchOpen, setSearchOpen] = useState(false);
 
   const { user } = useSelector((state: RootState) => state.user);
-
   const { currentProduct } = useSelector((state: any) => state.products);
+
+  const [showLoading, setShowLoading] = useState(true);
+
+  useEffect(() => {
+    if (!loading) {
+      const timeout = setTimeout(() => {
+        setShowLoading(false);
+      }, 150);
+
+      return () => clearTimeout(timeout);
+    } else {
+      setShowLoading(true);
+    }
+  }, [loading]);
+
+  useEffect(() => {
+    dispatch(checkUserSession());
+    dispatch(fetchCategories());
+    dispatch(fetchMenus());
+    dispatch(fetchBrands());
+    dispatch(fetchBanner());
+
+    requestIdleCallback(() => {
+      dispatch(fetchReviews());
+      dispatch(fetchCertificates());
+    });
+  }, [dispatch]);
 
   useEffect(() => {
     document.body.style.overflow =
@@ -59,16 +95,6 @@ function App() {
         ? "hidden"
         : "visible";
   }, [isRegisterOpen, isWishList, isCartOpen, isMenuOpen, isSearchOpen]);
-
-  useEffect(() => {
-    dispatch(checkUserSession());
-    dispatch(fetchProducts());
-    dispatch(fetchCategories());
-    dispatch(fetchMenus());
-    dispatch(fetchReviews());
-    dispatch(fetchCities());
-    dispatch(fetchBrands());
-  }, [dispatch]);
 
   useEffect(() => {
     if (user) {
@@ -85,34 +111,28 @@ function App() {
     }
   };
 
-  const handleOpenWishList = () => {
-    setIsWishList(true);
-  };
-
+  const handleOpenWishList = () => setIsWishList(true);
   const handleOpenSearch = () => {
     setSearchOpen(true);
+    dispatch(resetFilters());
   };
-
-  const handleOpenCart = () => {
-    setIsCartOpen(true);
-  };
-
-  const handleOpenReview = () => {
-    setIsReview(true);
-  };
+  const handleOpenCart = () => setIsCartOpen(true);
+  const handleOpenReview = () => setIsReview(true);
 
   const handleCloseModals = () => {
     setIsRegisterOpen(false);
     setIsWishList(false);
     setIsCartOpen(false);
     setIsReview(false);
-    setIsCartOpen(false);
-
     setIsMenuOpen(false);
+    setSearchOpen(false);
     document.body.style.overflow = "visible";
   };
 
-  const { loading } = useSelector((state: RootState) => state.banner);
+  const globalProps = {
+    openCart: handleOpenCart,
+    openRegister: handleOpenRegister,
+  };
 
   useEffect(() => {
     if (loading) {
@@ -120,14 +140,10 @@ function App() {
     }
   }, [dispatch, loading]);
 
-  const globalProps = {
-    openCart: handleOpenCart,
-    openRegister: handleOpenRegister,
-  };
   return (
     <GlobalPropsContext.Provider value={globalProps}>
       <>
-        {loading ? (
+        {showLoading ? (
           <LoadingBar />
         ) : (
           <>
@@ -139,71 +155,80 @@ function App() {
               openCart={handleOpenCart}
               openMenu={() => setIsMenuOpen(true)}
             />
+
             <AnimatePresence>
-              {isRegisterOpen && <RegisterModal onClose={handleCloseModals} />}
-              {isWishList && <WishListPopup onClose={handleCloseModals} />}
-              {isCartOpen && <CartPopup onClose={handleCloseModals} />}
-              {isSearchOpen && (
-                <SearchPopup
-                  close={() => {
-                    setSearchOpen(false);
-                    dispatch(setSearchQuery(""));
-                  }}
-                />
-              )}
-
-              {isMenuOpen && (
-                <MenuPopup
-                  openPopup={() => {
-                    handleOpenRegister();
-                    setIsMenuOpen(false);
-                  }}
-                  onClose={handleCloseModals}
-                />
-              )}
-              {isReview && (
-                <ReviewPopup
-                  onClose={handleCloseModals}
-                  product_id={currentProduct?.id}
-                />
-              )}
-            </AnimatePresence>
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/about" element={<AboutPage />} />
-              <Route path="/support" element={<ClientsSupportPage />} />
-              <Route
-                path="/bilobrov-club"
-                element={<BonusPage openRegister={handleOpenRegister} />}
-              />
-              <Route
-                path="/podarunkovi-sertyfikaty-20"
-                element={<CertificatePage />}
-              />
-              <Route path="/account" element={<AccountPage />} />
-              <Route path="/brendy" element={<BrandsPage />} />
-              <Route path="/order" element={<OrderPage />} />
-
-              <Route path="/catalog" element={<CatalogPage />}>
-                <Route index element={<CatalogPage />} />
-                <Route path=":slug" element={<CatalogPage />} />
-                <Route
-                  path=":parentSlug/:childSlug"
-                  element={<CatalogPage />}
-                />
-              </Route>
-
-              <Route
-                path="/product/:slug/:id"
-                element={
-                  <ProductPage
-                    openReview={handleOpenReview}
-                    openRegister={handleOpenRegister}
-                    openCart={handleOpenCart}
+              <Suspense fallback={null}>
+                {isRegisterOpen && (
+                  <RegisterModal onClose={handleCloseModals} />
+                )}
+                {isWishList && <WishListPopup onClose={handleCloseModals} />}
+                {isCartOpen && <CartPopup onClose={handleCloseModals} />}
+                {isSearchOpen && (
+                  <SearchPopup
+                    close={() => {
+                      setSearchOpen(false);
+                      dispatch(setSearchQuery(""));
+                    }}
                   />
-                }
-              />
-            </Routes>
+                )}
+                {isMenuOpen && (
+                  <MenuPopup
+                    openPopup={() => {
+                      handleOpenRegister();
+                      setIsMenuOpen(false);
+                    }}
+                    onClose={handleCloseModals}
+                  />
+                )}
+                {isReview && (
+                  <ReviewPopup
+                    onClose={handleCloseModals}
+                    product_id={currentProduct?.id}
+                  />
+                )}
+              </Suspense>
+            </AnimatePresence>
+
+            <div style={{ minHeight: "100vh" }}>
+              <Suspense fallback={<LoadingBar />}>
+                <Routes>
+                  <Route path="/" element={<HomePage />} />
+                  <Route path="/about" element={<AboutPage />} />
+                  <Route path="/support" element={<ClientsSupportPage />} />
+                  <Route
+                    path="/bilobrov-club"
+                    element={<BonusPage openRegister={handleOpenRegister} />}
+                  />
+                  <Route
+                    path="/podarunkovi-sertyfikaty-20"
+                    element={<CertificatePage />}
+                  />
+                  <Route path="/account" element={<AccountPage />} />
+                  <Route path="/brendy" element={<BrandsPage />} />
+                  <Route path="/order" element={<OrderPage />} />
+
+                  <Route path="/catalog" element={<CatalogPage />}>
+                    <Route index element={<CatalogPage />} />
+                    <Route path=":slug" element={<CatalogPage />} />
+                    <Route
+                      path=":parentSlug/:childSlug"
+                      element={<CatalogPage />}
+                    />
+                  </Route>
+
+                  <Route
+                    path="/product/:slug/:id"
+                    element={
+                      <ProductPage
+                        openReview={handleOpenReview}
+                        openRegister={handleOpenRegister}
+                        openCart={handleOpenCart}
+                      />
+                    }
+                  />
+                </Routes>
+              </Suspense>
+            </div>
 
             <Footer />
           </>

@@ -482,3 +482,5 @@ export const CatalogPage: React.FC = () => {
     </main>
   );
 };
+
+export default CatalogPage;
