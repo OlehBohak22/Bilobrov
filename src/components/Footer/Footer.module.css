@@ -189,13 +189,13 @@
 
     ul {
       display: flex;
-      gap: 1.2vw;
+      gap: 2vw;
 
-      li svg {
+      /* li svg {
         transform: scale(1);
         width: 3vw;
         height: 2vw;
-      }
+      } */
     }
 
     .paymentLinks {

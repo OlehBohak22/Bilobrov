@@ -59,7 +59,7 @@
 }
 
 @media (min-width: 1024px) {
-  .header:hover ~ main {
+  .header:hover ~ div > main {
     filter: brightness(0.7);
     transition: filter 0.3s ease;
   }
@@ -301,7 +301,7 @@ body {
 @media (max-width: 1024px) {
   .header {
     position: static;
-    padding-bottom: 5.3vw;
+    /* padding-bottom: 5.3vw; */
   }
 
   .headerTopLine {

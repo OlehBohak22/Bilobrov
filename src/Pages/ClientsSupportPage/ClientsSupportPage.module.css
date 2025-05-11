@@ -11,6 +11,9 @@
   display: flex;
   flex-direction: column;
   min-width: 16.6vw;
+  height: max-content;
+  position: sticky;
+  top: 2vw;
 }
 
 .category {

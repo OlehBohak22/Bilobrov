@@ -19,7 +19,9 @@ interface ProductListProps {
   defaultCategory?: string;
   children?: ReactNode;
   mini?: boolean;
-  products?: ProductInfo[]; // 🔥 новий проп
+  products?: ProductInfo[];
+  buyWith?: boolean;
+  centered?: boolean;
 }
 
 export const ProductList = ({
@@ -28,6 +30,8 @@ export const ProductList = ({
   children,
   mini,
   products,
+  buyWith = false,
+  centered,
 }: ProductListProps) => {
   const [activeTab, setActiveTab] = useState(defaultCategory);
   const [localProducts, setLocalProducts] = useState<ProductInfo[]>([]);
@@ -94,8 +98,10 @@ export const ProductList = ({
   }, [activeTab]);
 
   return (
-    <div className={`${s.section} ${mini ? s.mini : ""}`}>
-      <div className={s.navigationContainer}>
+    <div
+      className={`${s.section} ${mini ? s.mini : ""} ${buyWith && "pt-0!"} `}
+    >
+      <div className={`${s.navigationContainer} ${centered && s.centered}`}>
         <div className={s.swiperController}>
           {children || (
             <ul className={s.tabsController}>
@@ -120,7 +126,7 @@ export const ProductList = ({
         </div>
 
         {!isMobile && (
-          <div className="flex">
+          <div className={`flex ${centered && "absolute right-0"}`}>
             <div
               ref={prevButtonRef}
               className={`${s.prevBtn} ${s.navigationButton}`}

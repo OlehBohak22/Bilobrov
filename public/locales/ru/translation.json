@@ -107,7 +107,7 @@
     },
     "company": {
       "title": "Bilobrov cosmetics",
-      "about": "О Bilobrov cosmetics",
+      "about": "О нас",
       "blog": "Блог",
       "account": "Личный кабинет",
       "contacts": "Контакты"
@@ -405,7 +405,9 @@
   },
   "product": {
     "similarProductsTitle1": "Похожие",
-    "similarProductsTitle2": "товары"
+    "similarProductsTitle2": "товары",
+    "buyWithProductsTitle1": "С этим товаром",
+    "buyWithProductsTitle2": "покупают"
   },
   "reviews": {
     "titlePart1": "Отзывы",

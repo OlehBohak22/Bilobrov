@@ -1,0 +1,56 @@
+.tab {
+  h2 {
+    color: #000000;
+    margin-bottom: 3.1vw;
+
+    span:nth-child(1) {
+      font-family: Playfair display;
+      font-size: 3.2vw;
+      font-style: italic;
+      font-weight: 400;
+      line-height: 3.2vw;
+    }
+
+    span:nth-child(2) {
+      display: block;
+      margin-top: -0.7vw;
+      font-family: Manrope;
+      font-size: 3.2vw;
+      font-weight: 500;
+      line-height: 3.2vw;
+      text-indent: 3.5vw;
+    }
+  }
+
+  .content {
+    font-size: 0.8vw;
+    line-height: 150%;
+    font-family: Manrope;
+    font-weight: 600;
+  }
+}
+
+@media (max-width: 1024px) {
+  .tab {
+    h2 {
+      margin-bottom: 10vw;
+
+      span:nth-child(1) {
+        font-size: 9.6vw;
+        line-height: 9.6vw;
+      }
+
+      span:nth-child(2) {
+        margin-top: -0.5vw;
+        font-size: 8.5vw;
+        line-height: 8.5vw;
+        text-indent: 10vw;
+      }
+    }
+
+    .content {
+      font-size: 4.2vw;
+      font-weight: 600;
+    }
+  }
+}

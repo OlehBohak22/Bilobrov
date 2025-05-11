@@ -1,4 +1,4 @@
-import { useLocation } from "react-router";
+import { Link, useLocation } from "react-router";
 import { FooterInstList } from "../FooterInstList/FooterInstList";
 import { FooterNavigationBlock } from "../FooterNavigationBlock/FooterNavigationBlock";
 import { Layout } from "../Layout/Layout";
@@ -115,7 +115,7 @@ export const Footer = () => {
         <div className={s.paymentBlock}>
           <div className={s.paymentLinks}>
             <a href="">{t("footer.privacyPolicy")}</a>
-            <a href="">{t("footer.offer")}</a>
+            <Link to="/support#offer">{t("footer.offer")}</Link>
           </div>
 
           {isMobile && (
@@ -132,27 +132,27 @@ export const Footer = () => {
 
           <ul>
             <li>
-              <svg>
+              <svg className="lg:w-[3.8vw]">
                 <use href="/icons/payment-icons.svg#icon-24"></use>
               </svg>
             </li>
             <li>
-              <svg>
+              <svg className="lg:w-[3.2vw]">
                 <use href="/icons/payment-icons.svg#icon-apple"></use>
               </svg>
             </li>
             <li>
-              <svg>
+              <svg className="lg:w-[3.2vw]">
                 <use href="/icons/payment-icons.svg#icon-gpay"></use>
               </svg>
             </li>
             <li>
-              <svg>
+              <svg className="lg:w-[1.8vw]">
                 <use href="/icons/payment-icons.svg#icon-mastercard"></use>
               </svg>
             </li>
             <li>
-              <svg>
+              <svg className="lg:w-[3vw]">
                 <use href="/icons/payment-icons.svg#icon-visa"></use>
               </svg>
             </li>

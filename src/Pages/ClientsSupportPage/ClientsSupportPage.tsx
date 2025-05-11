@@ -8,6 +8,7 @@ import { ContactTab } from "../../components/ContactTab/ContactTab";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { Breadcrumbs } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import { OffertTab } from "../../components/OffertTab/OffertTab";
 
 const ClientsSupportPage = () => {
   const { t } = useTranslation();
@@ -195,7 +196,7 @@ const ClientsSupportPage = () => {
       case "contacts":
         return <ContactTab />;
       case "offer":
-        return <p>Текст договору оферти...</p>;
+        return <OffertTab />;
       default:
         return null;
     }

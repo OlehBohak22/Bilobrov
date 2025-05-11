@@ -2,19 +2,25 @@ import { useSelector } from "react-redux";
 import { Layout } from "../Layout/Layout";
 import s from "./BonusFaq.module.css";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { RootState } from "../../store";
 import { Loader } from "../Loader/Loader";
 import { useTranslation } from "react-i18next";
+import { fetchFaqs } from "../../store/slices/faqSlice";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
 
 export const BonusFaq = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const { faqs, loading } = useSelector((state: RootState) => state.faq);
   const { t } = useTranslation();
-
+  const dispatch = useAppDispatch();
   const toggleAccordion = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
   };
+
+  useEffect(() => {
+    dispatch(fetchFaqs());
+  }, []);
 
   if (loading) {
     return <Loader />;

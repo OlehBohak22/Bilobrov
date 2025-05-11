@@ -130,7 +130,7 @@ export const ProductItem: React.FC<ProductItemProps> = ({
             <WishlistButton productId={info.id} />
 
             {info.stock_quantity > 0 &&
-              info.categories[0].slug !== "podarunkovi-sertyfikaty-20" && (
+              info.categories[0]?.slug !== "podarunkovi-sertyfikaty-20" && (
                 <div
                   className={`${s.cart} ${isInCart && s.inCart}`}
                   onClick={handleAddToCart}

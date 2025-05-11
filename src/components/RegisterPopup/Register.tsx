@@ -6,6 +6,7 @@ import { RootState } from "../../store";
 import s from "./Register.module.css";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
+import { API_URL_WP } from "../../constants/api";
 
 const RegisterModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const dispatch = useDispatch<AppDispatch>();
@@ -67,14 +68,11 @@ const RegisterModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     setResetStatus(null);
 
     try {
-      const res = await fetch(
-        "https://bilobrov.projection-learn.website/wp-json/responses/v1/users_send_reset_mail",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: resetEmail }),
-        }
-      );
+      const res = await fetch(`${API_URL_WP}users_send_reset_mail`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: resetEmail }),
+      });
 
       const data = await res.json();
       if (data.status === "success") {
@@ -105,17 +103,14 @@ const RegisterModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     setResetDone(null);
 
     try {
-      const res = await fetch(
-        "https://bilobrov.projection-learn.website/wp-json/responses/v1/users_reset_password",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${resetToken}`,
-          },
-          body: JSON.stringify({ password: newPassword }),
-        }
-      );
+      const res = await fetch(`${API_URL_WP}users_reset_password`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${resetToken}`,
+        },
+        body: JSON.stringify({ password: newPassword }),
+      });
 
       const data = await res.json();
       if (data.status === "success") {

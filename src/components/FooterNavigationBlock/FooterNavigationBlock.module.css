@@ -23,7 +23,7 @@
     }
 
     li:not(:last-child) {
-      margin-bottom: 1.25vw;
+      margin-bottom: 0.8vw;
     }
   }
 }

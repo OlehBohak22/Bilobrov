@@ -131,10 +131,15 @@
 }
 
 .backDropCOntaienr {
-  margin-bottom: 5vw;
+  max-height: 50vh;
+  overflow-y: auto;
   .backDrop:not(:last-child) {
     margin-bottom: 1vw;
   }
+}
+
+.backDropCOntaienr::-webkit-scrollbar {
+  display: none;
 }
 
 .backDrop {
@@ -289,7 +294,7 @@
 }
 
 .btn {
-  width: 100%;
+  /* width: 85%; */
   background-color: var(--primary);
   padding: 1vw 0;
   text-transform: uppercase;

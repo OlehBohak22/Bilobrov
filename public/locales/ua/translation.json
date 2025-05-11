@@ -105,7 +105,7 @@
     },
     "company": {
       "title": "Bilobrov cosmetics",
-      "about": "Bilobrov cosmetics",
+      "about": "Про нас",
       "blog": "Блог",
       "account": "Особистий кабінет",
       "contacts": "Контакти"
@@ -401,7 +401,9 @@
   },
   "product": {
     "similarProductsTitle1": "Схожі",
-    "similarProductsTitle2": "товари"
+    "similarProductsTitle2": "товари",
+    "buyWithProductsTitle1": "З цим товаром",
+    "buyWithProductsTitle2": "купують"
   },
   "reviews": {
     "titlePart1": "Відгуки",
@@ -575,6 +577,11 @@
     "confirmOrder": "Подтвердить заказ",
     "acceptTerms": "Подтверждая заказ, я принимаю условия:",
     "privacyPolicy": "положения об обработке и защите персональных данных пользовательского соглашения."
+  },
+
+  "offertTab": {
+    "title1": "Договір",
+    "title2": "оферти"
   },
 
   "forgot": {

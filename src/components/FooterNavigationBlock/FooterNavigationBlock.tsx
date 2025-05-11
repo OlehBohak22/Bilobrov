@@ -12,21 +12,23 @@ export const FooterNavigationBlock = () => {
 
         <ul>
           <li>
-            <Link to="/faq">{t("footerNavigation.customers.faq")}</Link>
+            <Link to="/support#faq">{t("footerNavigation.customers.faq")}</Link>
           </li>
           <li>
-            <Link to="/delivery">
+            {/* <Link to="/delivery">
               {t("footerNavigation.customers.delivery")}
+            </Link> */}
+          </li>
+          <li>
+            {/* <Link to="/payment">{t("footerNavigation.customers.payment")}</Link> */}
+          </li>
+          <li>
+            <Link to="/support#obmin-ta-povernennya">
+              {t("footerNavigation.customers.returns")}
             </Link>
           </li>
           <li>
-            <Link to="/payment">{t("footerNavigation.customers.payment")}</Link>
-          </li>
-          <li>
-            <Link to="/returns">{t("footerNavigation.customers.returns")}</Link>
-          </li>
-          <li>
-            <Link to="/bonus-program">
+            <Link to="/bilobrov-club">
               {t("footerNavigation.customers.bonusProgram")}
             </Link>
           </li>
@@ -41,13 +43,15 @@ export const FooterNavigationBlock = () => {
             <Link to="/about">{t("footerNavigation.company.about")}</Link>
           </li>
           <li>
-            <Link to="/blog">{t("footerNavigation.company.blog")}</Link>
+            {/* <Link to="/blog">{t("footerNavigation.company.blog")}</Link> */}
           </li>
           <li>
             <Link to="/account">{t("footerNavigation.company.account")}</Link>
           </li>
           <li>
-            <Link to="/contacts">{t("footerNavigation.company.contacts")}</Link>
+            <Link to="/support#contacts">
+              {t("footerNavigation.company.contacts")}
+            </Link>
           </li>
         </ul>
       </div>

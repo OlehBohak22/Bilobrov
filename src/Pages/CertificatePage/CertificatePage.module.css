@@ -15,6 +15,7 @@
     width: auto;
     margin: 0 auto;
     margin-bottom: 3vw;
+    text-align: center;
 
     span:nth-child(1) {
       font-family: Playfair display;
@@ -88,9 +89,10 @@
 @media (max-width: 1024px) {
   .certificates {
     padding-bottom: 21vw;
+    padding-top: 21vw;
     h2 {
       margin-bottom: 8.8vw;
-
+      text-align: start;
       span:nth-child(1) {
         font-size: 9.6vw;
         line-height: 9.6vw;

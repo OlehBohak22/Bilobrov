@@ -146,15 +146,14 @@ export const Filters: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     });
 
     dispatch(setSelectedAttributes(localSelectedAttributes));
-
     // 🧭 Навігація з новим URL
     let pathname = "/catalog";
 
-    if (localSelectedCategories.length === 1) {
+    if (localSelectedCategories.length === 1 && allCategories.length > 0) {
       const matchedCategory = allCategories.find(
         (cat) => cat.id.toString() === localSelectedCategories[0]
       );
-      if (matchedCategory) {
+      if (matchedCategory?.slug) {
         pathname += `/${matchedCategory.slug}`;
       }
     }

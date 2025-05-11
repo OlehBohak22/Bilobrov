@@ -457,9 +457,11 @@ export const CatalogPage: React.FC = () => {
           <Loader />
         ) : (
           <ul ref={productsRef} className={s.list}>
-            {products.map((product) => (
-              <ProductItem key={product.id} info={product} />
-            ))}
+            {products
+              .filter((product) => product && product.slug && product.id)
+              .map((product) => (
+                <ProductItem key={product.id} info={product} />
+              ))}
           </ul>
         )}
 

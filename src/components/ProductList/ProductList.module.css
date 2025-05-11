@@ -28,6 +28,11 @@
   margin-bottom: 2vw;
 }
 
+.centered {
+  position: relative;
+  justify-content: center;
+}
+
 .prevBtn,
 .nextBtn {
   display: block;
@@ -114,7 +119,7 @@
 
 .swiperController h2 {
   color: #000000;
-  width: 13vw;
+  width: auto;
 
   span:nth-child(1) {
     font-family: Playfair, serif;
@@ -183,8 +188,6 @@
   }
 
   .swiperController h2 {
-    width: 13vw;
-
     span:nth-child(1) {
       font-size: 9.6vw;
       line-height: 100%;

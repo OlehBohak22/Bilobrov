@@ -1,5 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
+  fetchCartProducts,
   fetchProductById,
   fetchProductVariations,
 } from "../../store/slices/productsSlice";
@@ -16,6 +17,7 @@ import { Breadcrumbs } from "@mui/material";
 import { usePageData } from "../../hooks/usePageData";
 import { Helmet } from "react-helmet";
 import { useTranslation } from "react-i18next";
+import { ProductInfo } from "../../types/productTypes";
 
 interface HeaderProps {
   openRegister: () => void;
@@ -32,6 +34,24 @@ const ProductPage: React.FC<HeaderProps> = ({
   const { currentProduct, reviews, variations } = useSelector(
     (state: any) => state.products
   );
+
+  const [related, setRelated] = useState<ProductInfo[]>([]);
+
+  useEffect(() => {
+    if (
+      currentProduct &&
+      Array.isArray(currentProduct.related_ids) &&
+      currentProduct.related_ids.length > 0
+    ) {
+      dispatch(fetchCartProducts(currentProduct.related_ids)).then((res) => {
+        if (fetchCartProducts.fulfilled.match(res)) {
+          setRelated(res.payload);
+        }
+      });
+    } else {
+      setRelated([]);
+    }
+  }, [currentProduct, dispatch]);
 
   const { t } = useTranslation();
 
@@ -144,6 +164,7 @@ const ProductPage: React.FC<HeaderProps> = ({
 
           <Layout>
             <ProductList
+              centered={true}
               categories={[currentProduct.categories[0]?.id || "Новинки"]}
               defaultCategory={currentProduct.categories[0]?.id || "Новинки"}
             >
@@ -152,6 +173,15 @@ const ProductPage: React.FC<HeaderProps> = ({
                 <span>{t("product.similarProductsTitle2")}</span>
               </h2>
             </ProductList>
+
+            {currentProduct.related_ids.length > 0 && (
+              <ProductList buyWith={true} products={related} centered={true}>
+                <h2>
+                  <span>{t("product.buyWithProductsTitle1")}</span>
+                  <span>{t("product.buyWithProductsTitle2")}</span>
+                </h2>
+              </ProductList>
+            )}
           </Layout>
 
           <Layout>
