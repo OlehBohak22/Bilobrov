@@ -42,7 +42,7 @@ export const Header: React.FC<HeaderProps> = ({
   const header = document.querySelector(".header");
 
   window.addEventListener("scroll", () => {
-    if (window.scrollY < 100) {
+    if (window.scrollY < 101) {
       header?.classList.remove("hide");
       return;
     }
