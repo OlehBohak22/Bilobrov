@@ -34,10 +34,10 @@ const SearchPopup: React.FC<SearchPopupProps> = ({ close }) => {
     (state: RootState) => state.filters.searchQuery
   );
 
-  useEffect(() => {
-    dispatch(resetPage());
-    dispatch(fetchProducts());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(resetPage());
+  //   dispatch(fetchProducts());
+  // }, [dispatch]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;

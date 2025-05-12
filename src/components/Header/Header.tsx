@@ -9,7 +9,6 @@ import { buildMenuTree } from "../../utils/buildMenuTree";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import {
   fetchProducts,
-  resetFilters,
   resetPage,
   setSearchQuery,
 } from "../../store/slices/filterSlice";
@@ -80,7 +79,7 @@ export const Header: React.FC<HeaderProps> = ({
   const dispatch = useDispatch<AppDispatch>();
 
   const handleReset = () => {
-    dispatch(resetFilters());
+    // dispatch(resetFilters());
   };
 
   const searchQuery = useSelector(

@@ -16,11 +16,7 @@ import LoadingBar from "./components/LoadingBar/LoadingBar";
 import { GlobalPropsContext } from "./GlobalPropContext";
 import { AnimatePresence } from "framer-motion";
 import { fetchReviews } from "./store/slices/productsSlice";
-import {
-  fetchCertificates,
-  resetFilters,
-  setSearchQuery,
-} from "./store/slices/filterSlice";
+import { fetchCertificates, setSearchQuery } from "./store/slices/filterSlice";
 import "./utils/i18n";
 
 const HomePage = lazy(() => import("./Pages/HomePage/HomePage"));
@@ -112,7 +108,7 @@ function App() {
   const handleOpenWishList = () => setIsWishList(true);
   const handleOpenSearch = () => {
     setSearchOpen(true);
-    dispatch(resetFilters());
+    // dispatch(resetFilters());
   };
   const handleOpenCart = () => setIsCartOpen(true);
   const handleOpenReview = () => setIsReview(true);
