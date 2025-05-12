@@ -41,6 +41,16 @@
     padding-top: 80vw;
   }
 
+  .loader::after {
+    content: "";
+    width: 20vw;
+    height: 20vw;
+    border: 1vw solid rgba(0, 0, 0, 0.2);
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+
   .contentFlex {
     display: block;
   }

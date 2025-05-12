@@ -203,12 +203,10 @@ export const CatalogPage: React.FC = () => {
   const brands = useSelector((state: RootState) => state.brands);
 
   const pageTitle = useMemo(() => {
-    if (slug === "sales") return "Акції";
+    if (slug === "sales") return t("sales");
     if (slug === "news") return "Новинки";
 
     const brandId = query.get("brand");
-
-    // Витягуємо бренди з Redux
 
     if (brandId) {
       const brand = brands.items.find((b) => b.id.toString() === brandId);
@@ -216,20 +214,20 @@ export const CatalogPage: React.FC = () => {
     }
 
     if (selectedCategories.length !== 1) {
-      return "Всі товари";
+      return t("all");
     }
 
     const selectedCategory = allCategories.find(
       (cat) => cat.id.toString() === selectedCategories[0]
     );
 
-    if (!selectedCategory) return "Всі товари";
+    if (!selectedCategory) return t("all");
 
     if (selectedCategory.parent !== 0) {
       const parent = allCategories.find(
         (cat) => cat.id === selectedCategory.parent
       );
-      return parent?.name || "Всі товари";
+      return parent?.name || t("all");
     }
 
     return selectedCategory.name;
@@ -241,7 +239,7 @@ export const CatalogPage: React.FC = () => {
     if (!slug) {
       list.push({ name: "Каталог", link: "/catalog" });
     } else if (slug === "sales") {
-      list.push({ name: "Акції", link: "/catalog/sales" });
+      list.push({ name: t("sales"), link: "/catalog/sales" });
     } else if (slug === "news") {
       list.push({ name: "Новинки", link: "/catalog/news" });
     } else if (parentCategory) {

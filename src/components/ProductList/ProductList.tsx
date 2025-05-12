@@ -48,6 +48,12 @@ export const ProductList = ({
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
+    if (defaultCategory) {
+      setActiveTab(defaultCategory);
+    }
+  }, [defaultCategory]);
+
+  useEffect(() => {
     if (products) {
       setLocalProducts(products);
       setloader(false);
@@ -72,7 +78,7 @@ export const ProductList = ({
         } else if (activeTab === "Бестселлери" || activeTab === "Бестселлеры") {
           params.set("orderby", "popularity");
         } else {
-          params.set("category", activeTab); // Можна передавати slug
+          params.set("category", activeTab);
         }
 
         const res = await axios.get(
