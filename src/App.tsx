@@ -15,7 +15,7 @@ import { fetchBanner } from "./store/slices/bannerSlice";
 import LoadingBar from "./components/LoadingBar/LoadingBar";
 import { GlobalPropsContext } from "./GlobalPropContext";
 import { AnimatePresence } from "framer-motion";
-import { fetchReviews } from "./store/slices/productsSlice";
+import { fetchProducts, fetchReviews } from "./store/slices/productsSlice";
 import { fetchCertificates, setSearchQuery } from "./store/slices/filterSlice";
 import "./utils/i18n";
 
@@ -108,6 +108,8 @@ function App() {
   const handleOpenWishList = () => setIsWishList(true);
   const handleOpenSearch = () => {
     setSearchOpen(true);
+    setSearchQuery("");
+    fetchProducts();
     // dispatch(resetFilters());
   };
   const handleOpenCart = () => setIsCartOpen(true);
