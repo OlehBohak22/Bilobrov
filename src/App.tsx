@@ -83,10 +83,8 @@ function App() {
     dispatch(fetchBrands());
     dispatch(fetchBanner());
 
-    requestIdleCallback(() => {
-      dispatch(fetchReviews());
-      dispatch(fetchCertificates());
-    });
+    dispatch(fetchReviews());
+    dispatch(fetchCertificates());
   }, [dispatch]);
 
   useEffect(() => {
