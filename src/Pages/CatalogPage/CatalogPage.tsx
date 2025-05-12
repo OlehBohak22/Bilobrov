@@ -271,11 +271,9 @@ export const CatalogPage: React.FC = () => {
       if (container && scrollbar) {
         const maxScroll = container.scrollWidth - container.clientWidth;
 
-        // уникнути ділення на 0
         const rawProgress =
           maxScroll > 0 ? (container.scrollLeft / maxScroll) * 100 : 0;
 
-        // гарантувати мінімум 5%
         const scrollProgress = Math.max(rawProgress, 15);
 
         scrollbar.style.width = `${scrollProgress}%`;
@@ -285,7 +283,7 @@ export const CatalogPage: React.FC = () => {
     const container = document.querySelector(`.${s.scroller}`);
     if (container) {
       container.addEventListener("scroll", handleScroll);
-      handleScroll(); // 👉 виклик одразу для початкового значення
+      handleScroll();
     }
 
     return () => {
@@ -309,7 +307,7 @@ export const CatalogPage: React.FC = () => {
     } else if (slug) {
       metaUrl = `${API_URL}/product-category/${slug}`;
     } else {
-      metaUrl = `${API_URL}/product-category`; // fallback
+      metaUrl = `${API_URL}/product-category`;
     }
   }
 
@@ -465,7 +463,7 @@ export const CatalogPage: React.FC = () => {
           </ul>
         )}
 
-        {!loading && products.length > 0 && (
+        {!loading && totalCount > 20 && (
           <Pagination
             currentPage={page}
             totalPages={totalPages}

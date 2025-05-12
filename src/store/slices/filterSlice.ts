@@ -2,8 +2,8 @@ import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { ProductInfo } from "../../types/productTypes";
 import {
+  API_URL_BASE,
   API_URL_WC,
-  API_URL_WP,
   consumerKey,
   consumerSecret,
 } from "../../constants/api";
@@ -62,7 +62,7 @@ const initialState: ProductState = {
 export const fetchAttributes = createAsyncThunk(
   "filters/fetchAttributes",
   async () => {
-    const response = await axios.get(`${API_URL_WP}attributes`, {
+    const response = await axios.get(`${API_URL_BASE}response/v1/attributes`, {
       headers: {
         Authorization: "Basic " + btoa(`${consumerKey}:${consumerSecret}`),
       },
