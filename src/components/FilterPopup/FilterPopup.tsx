@@ -246,8 +246,9 @@ export const Filters: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 
           <div className={s.rangeContainer}>
             <RangeInput
-              min={minPrice}
-              max={maxPrice}
+              min={0}
+              max={10000}
+              value={{ min: localMinPrice, max: localMaxPrice }}
               onChange={({ min, max }) => {
                 setLocalMinPrice(min);
                 setLocalMaxPrice(max);

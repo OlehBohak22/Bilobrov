@@ -191,11 +191,9 @@
       display: flex;
       gap: 2vw;
 
-      /* li svg {
-        transform: scale(1);
-        width: 3vw;
+      li svg {
         height: 2vw;
-      } */
+      }
     }
 
     .paymentLinks {

@@ -1,7 +1,12 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { ProductInfo } from "../../types/productTypes";
-import { API_URL_WC, consumerKey, consumerSecret } from "../../constants/api";
+import {
+  API_URL_WC,
+  API_URL_WP,
+  consumerKey,
+  consumerSecret,
+} from "../../constants/api";
 
 interface option {
   id: number;
@@ -47,8 +52,8 @@ const initialState: ProductState = {
   minPrice: 0,
   maxPrice: 10000,
   attributes: [],
-  page: 1, // 🔥 додаємо
-  hasMore: true, // 🔥 додаємо
+  page: 1,
+  hasMore: true,
   totalCount: 0,
   certificates: [],
   searchQuery: "",
@@ -57,14 +62,11 @@ const initialState: ProductState = {
 export const fetchAttributes = createAsyncThunk(
   "filters/fetchAttributes",
   async () => {
-    const response = await axios.get(
-      "https://www.bilobrov.projection-learn.website/wp-json/response/v1/attributes",
-      {
-        headers: {
-          Authorization: "Basic " + btoa(`${consumerKey}:${consumerSecret}`),
-        },
-      }
-    );
+    const response = await axios.get(`${API_URL_WP}attributes`, {
+      headers: {
+        Authorization: "Basic " + btoa(`${consumerKey}:${consumerSecret}`),
+      },
+    });
 
     return response.data;
   }
@@ -74,8 +76,8 @@ export const fetchCertificates = createAsyncThunk(
   "filters/fetchCertificates",
   async () => {
     const params = new URLSearchParams({
-      per_page: "100", // або більше, якщо треба всі
-      category: "1159", // тут вказуємо слаг категорії!
+      per_page: "100",
+      category: "1159",
     });
 
     const url = `${API_URL_WC}products?${params.toString()}`;

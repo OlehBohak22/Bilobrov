@@ -1,4 +1,3 @@
-// types/productTypes.ts
 interface Category {
   id: number;
   name: string;
@@ -25,7 +24,7 @@ export interface ProductInfo {
     options: string[];
     slug: string;
     option: string;
-  }[]; // Додано правильний тип для options
+  }[];
   price: string;
   featured: boolean;
   regular_price: string;
@@ -34,11 +33,11 @@ export interface ProductInfo {
   total_sales: number;
   sale_price: string;
   date_created: string;
-  images: { src: string; alt: string; id: number }[]; // Масив зображень
-  image: { src: string; alt: string; id: number }; // Окреме зображення, яке приходить в payload
+  images: { src: string; alt: string; id: number }[];
+  image: { src: string; alt: string; id: number };
   purchasable: boolean;
   meta_data: {
     key: string;
-    value: string | string[]; // Враховано можливість масиву
+    value: string | string[];
   }[];
 }
