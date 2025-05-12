@@ -63,7 +63,7 @@ export const ProductSlider: React.FC<ProductSliderProps> = ({
 
   // Перевірка на випадок порожнього масиву images
   if (!images || images.length === 0) {
-    return <div>No images available</div>; // Якщо немає зображень, вивести відповідне повідомлення
+    return <div className="slider">No images available</div>; // Якщо немає зображень, вивести відповідне повідомлення
   }
 
   const prevSlide = () => {
