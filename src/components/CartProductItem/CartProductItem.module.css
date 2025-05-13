@@ -219,6 +219,11 @@
       }
     }
 
+    .productBrand {
+      font-size: 3.2vw;
+      margin-bottom: 2.1vw;
+    }
+
     .markersBlock {
       gap: 2vw;
       margin-right: 2vw;

@@ -7,18 +7,23 @@ import { buildMenuTree } from "../../utils/buildMenuTree";
 import { Link, useLocation } from "react-router";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { resetFilters } from "../../store/slices/filterSlice";
+import { useWindowSize } from "../../hooks/useWindowSize";
+import { LanguageSelect } from "../LanguageSelect/LanguageSelect";
+import { useTranslation } from "react-i18next";
 
 const MenuPopup: React.FC<{
   onClose: () => void;
   openPopup: () => void;
 }> = ({ onClose, openPopup }) => {
   const [hasMounted, setHasMounted] = useState(false);
-
+  const { width } = useWindowSize();
+  const isMobile = width < 1024;
   const modalRef = useRef<HTMLDivElement>(null);
   const dispatch = useAppDispatch();
   const asideTopMenu = useSelector(
     (state: RootState) => state.menu.asideTopMenu?.items || []
   );
+  const { i18n } = useTranslation();
 
   const [openMenu, setOpenMenu] = useState<number | null>(null);
 
@@ -82,6 +87,11 @@ const MenuPopup: React.FC<{
       >
         <div className={s.menuHeader}>
           <p>Меню</p>
+
+          {isMobile && (
+            <LanguageSelect i18n={i18n} changeLanguage={i18n.changeLanguage} />
+          )}
+
           <button onClick={onClose}>
             <svg
               viewBox="0 0 52 52"

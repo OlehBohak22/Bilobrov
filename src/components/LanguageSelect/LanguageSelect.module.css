@@ -61,3 +61,33 @@
 .activeOption {
   color: white;
 }
+
+@media (max-width: 1024px) {
+  .langSelectWrapper {
+    position: absolute;
+    left: 65%;
+    width: auto;
+    transform: translateX(-50%);
+  }
+
+  .langSelected {
+    color: black;
+    gap: 2vw;
+    padding: 2vw 4vw;
+
+    p {
+      font-family: Manrope !important;
+      font-weight: 600;
+      font-style: normal !important;
+      font-size: 4.2vw !important;
+      line-height: 100%;
+    }
+
+    svg {
+      width: 3.3vw !important;
+      stroke: black !important;
+      height: 3.3vw !important;
+      flex-shrink: 0;
+    }
+  }
+}

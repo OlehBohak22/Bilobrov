@@ -658,6 +658,32 @@
     }
   }
 
+  .addressIndo {
+    gap: 4.2vw;
+  }
+
+  .textArea {
+    margin-bottom: 4.2vw;
+    padding-bottom: 4.2vw;
+
+    label {
+      font-size: 4.2vw;
+    }
+
+    textarea {
+      font-size: 4.2vw;
+      padding: 4.2vw;
+      height: 36.5vw;
+      margin-top: 3.2vw;
+    }
+
+    .characterCount {
+      font-size: 3.7vw;
+      line-height: 140%;
+      margin-top: 3.2vw;
+    }
+  }
+
   .navTabs {
     justify-content: start;
     overflow-x: auto;
@@ -886,7 +912,7 @@
   }
 
   .stepController {
-    flex-direction: column-reverse;
+    /* flex-direction: column-reverse; */
     gap: 8.5vw;
 
     .prevBtn {
@@ -894,6 +920,10 @@
       width: 34vw;
       height: 16vw;
       line-height: 100%;
+    }
+
+    .nextBtn {
+      gap: 2vw;
     }
   }
 

@@ -45,7 +45,8 @@
 }
 
 .slider__track {
-  background-color: var(--primary);
+  background-color: #bababa;
+  opacity: 0.5;
   width: 100%;
   z-index: 1;
 }

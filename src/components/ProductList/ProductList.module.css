@@ -94,8 +94,10 @@
   transition: background-color 0.3s, color 0.3s;
 }
 
-.tabItem:hover {
-  text-decoration: underline;
+@media (min-width: 1024px) {
+  .tabItem:hover {
+    text-decoration: underline;
+  }
 }
 
 .activeTab {
@@ -194,7 +196,7 @@
     }
 
     span:nth-child(2) {
-      margin-top: -3vw;
+      margin-top: -1.5vw;
       font-size: 8.5vw;
       line-height: 100%;
       text-indent: 6vw;

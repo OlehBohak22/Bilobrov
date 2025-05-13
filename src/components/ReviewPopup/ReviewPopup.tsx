@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Formik, Field, Form } from "formik";
 import { RootState } from "../../store";
-import { FaStar } from "react-icons/fa";
+import { IoIosStar } from "react-icons/io";
 import s from "./ReviewPopup.module.css";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { addReview } from "../../store/slices/productsSlice";
@@ -89,11 +89,11 @@ const StarRating: React.FC<StarRatingProps> = ({ setFieldValue, values }) => {
   return (
     <div className="flex space-x-1">
       {[1, 2, 3, 4, 5].map((star) => (
-        <FaStar
+        <IoIosStar
           key={star}
           className="cursor-pointer"
           style={{
-            color: values.rating >= star ? "#D63D44" : "#D1D5DB", // "#D1D5DB" — це приблизно Tailwind text-gray-300
+            color: values.rating >= star ? "#D63D44" : "#D1D5DB",
           }}
           onClick={() => setFieldValue("rating", star)}
         />

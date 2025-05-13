@@ -1,0 +1,70 @@
+.sectioon {
+  padding-bottom: 7vw;
+}
+
+.title {
+  font-family: Manrope;
+  font-weight: 500;
+  font-size: 2.1vw;
+  line-height: 100%;
+  margin-bottom: 1.2vw;
+}
+
+.text {
+  font-family: Manrope;
+  font-weight: 400;
+  font-size: 0.9vw;
+  line-height: 140%;
+  margin-bottom: 1.2vw;
+}
+
+.toggleButton {
+  font-family: Manrope;
+  font-weight: 500;
+  font-size: 0.9vw;
+  line-height: 100%;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.3s;
+
+  svg {
+    width: 1.6vw;
+    height: 1.6vw;
+    stroke: black;
+    transition: 0.3s;
+  }
+}
+
+.toggleButton:hover {
+  color: var(--primary);
+
+  svg {
+    stroke: var(--primary);
+  }
+}
+
+@media (max-width: 1024px) {
+  .sectioon {
+    padding-bottom: 28vw;
+  }
+
+  .title {
+    font-size: 8.5vw;
+    margin-bottom: 6.4vw;
+  }
+
+  .text {
+    font-size: 3.7vw;
+    margin-bottom: 6.4vw;
+  }
+
+  .toggleButton {
+    font-size: 4.2vw;
+
+    svg {
+      width: 6.4vw;
+      height: 6.4vw;
+    }
+  }
+}

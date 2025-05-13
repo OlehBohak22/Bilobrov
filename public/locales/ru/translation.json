@@ -437,7 +437,8 @@
     "skinType": "Тип кожи",
     "contraindication": "Противопоказания",
     "activeIngredients": "Активные ингредиенты",
-    "components": "Состав товара"
+    "components": "Состав товара",
+    "conditions": "Условия использования"
   },
 
   "reviewPopup": {

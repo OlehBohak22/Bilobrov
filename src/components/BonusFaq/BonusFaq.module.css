@@ -64,6 +64,7 @@
       width: 2.7vw;
       height: 2.7vw;
       transition: background-color 0.3s;
+      flex-shrink: 0;
     }
 
     svg {

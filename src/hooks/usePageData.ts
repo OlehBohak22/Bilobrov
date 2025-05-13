@@ -10,6 +10,8 @@ export const usePageData = (pathname: string | null) => {
   useEffect(() => {
     if (!pathname) return;
 
+    console.log(html);
+
     const fetchData = async () => {
       setLoading(true);
       try {

@@ -250,6 +250,8 @@
     svg {
       width: 15vw;
       height: 15vw;
+      min-height: 15vw;
+      min-width: 15vw;
       margin-bottom: 6.4vw;
     }
 
@@ -280,10 +282,19 @@
   .imageList {
     margin-bottom: 12.8vw;
     li {
+      span {
+        font-size: 2.1vw;
+        width: 6.4vw;
+        height: 6.4vw;
+      }
       img {
         width: 26.6vw;
       }
     }
+  }
+
+  .succesCard::before {
+    background-image: url(/images/order-succes-image-mob.avif);
   }
 
   .orderInfo {

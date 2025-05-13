@@ -17,7 +17,8 @@ export const HomeHero = () => {
   const { width } = useWindowSize();
   const isMobile = width < 1024;
 
-  // ✅ Додаємо рефи для кастомних кнопок
+  console.log(banners);
+
   const prevRef = useRef<HTMLDivElement | null>(null);
   const nextRef = useRef<HTMLDivElement | null>(null);
 
@@ -48,6 +49,7 @@ export const HomeHero = () => {
       >
         {banners.map(
           (banner: {
+            load_image_text_img_mobile: string;
             id: number;
             load_image_text_img_desktop: string;
             input_title: string;
@@ -58,7 +60,11 @@ export const HomeHero = () => {
               <div
                 className={s.slide}
                 style={{
-                  backgroundImage: `url(${banner.load_image_text_img_desktop})`,
+                  backgroundImage: `url(${
+                    isMobile
+                      ? banner.load_image_text_img_mobile
+                      : banner.load_image_text_img_desktop
+                  })`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                 }}

@@ -17,6 +17,7 @@
 }
 
 .acardion {
+  border-bottom: 1px solid #1a1a1a0d;
   h3 {
     font-family: Manrope;
     font-weight: 600;

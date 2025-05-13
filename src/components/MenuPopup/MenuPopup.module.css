@@ -197,6 +197,7 @@
   .menuHeader {
     padding: 4.2vw 4.2vw 0 4.2vw;
     margin-bottom: 8.5vw;
+    position: relative;
 
     p {
       font-size: 7.4vw;
@@ -215,6 +216,7 @@
 
   .asideTop {
     padding: 0 4.2vw 4.2vw 4.2vw;
+    padding-bottom: 8.5vw;
 
     li {
       a,

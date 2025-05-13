@@ -1064,7 +1064,7 @@ const OrderPage: React.FC = () => {
                           <div>
                             <div className={s.inputContainer}>
                               <div className={s.selectContainer}>
-                                <p className="mb-[0.6vw]">
+                                <p className="lg:mb-[0.6vw] mb-[3.2vw]">
                                   {t("addAddress.street")} <span>*</span>
                                 </p>
                                 <CustomSelect
@@ -1199,7 +1199,10 @@ const OrderPage: React.FC = () => {
                   </div>
                 )}
 
-                <div className={s.stepController}>
+                <div
+                  className={s.stepController}
+                  style={step === 3 ? { flexDirection: "column-reverse" } : {}}
+                >
                   <div
                     onClick={handlePrevStep}
                     className={`${s.prevBtn} ${step === 1 && s.disabled}`}

@@ -47,6 +47,7 @@ interface ProductAccordionPropType {
   components: string;
   ingredients: string[];
   characteristics: CharacteristicsType;
+  conditions: boolean;
 }
 
 export const ProductPageAccordion: FC<ProductAccordionPropType> = ({
@@ -54,6 +55,7 @@ export const ProductPageAccordion: FC<ProductAccordionPropType> = ({
   components,
   characteristics,
   ingredients,
+  conditions,
 }) => {
   const { t } = useTranslation();
 
@@ -71,6 +73,24 @@ export const ProductPageAccordion: FC<ProductAccordionPropType> = ({
 
   return (
     <div className={s.acardion}>
+      {conditions && (
+        <CustomAccordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1-content"
+            id="panel1-header"
+          >
+            {t("productAccordion.conditions")}
+          </AccordionSummary>
+          <AccordionDetails>
+            <div
+              className={s.desc}
+              dangerouslySetInnerHTML={{ __html: formattedDesc }}
+            />
+          </AccordionDetails>
+        </CustomAccordion>
+      )}
+
       {hasDesc && (
         <CustomAccordion>
           <AccordionSummary

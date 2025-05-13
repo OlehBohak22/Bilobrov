@@ -14,9 +14,12 @@ import { API_URL } from "../../constants/api";
 import { usePageData } from "../../hooks/usePageData";
 import { Helmet } from "react-helmet";
 import { useTranslation } from "react-i18next";
+import { ProductDescription } from "../../components/ProductDescription/ProductDescription";
 
 const HomePage = () => {
   const seoData = usePageData(API_URL);
+
+  console.log(seoData);
 
   const { t } = useTranslation();
   const productCategories = t("productList", { returnObjects: true }) as {
@@ -119,6 +122,7 @@ const HomePage = () => {
       <HomeServices />
       <CashbackSection />
       <BlogSection />
+      <ProductDescription />
     </main>
   );
 };

@@ -69,6 +69,7 @@
     svg:nth-child(2) {
       opacity: 0;
       transition: opacity 0.3s;
+      transform: translateY(0.1vw);
     }
   }
 }
@@ -161,7 +162,7 @@
 
   .aboutInfo {
     padding: 10.6vw 4.2vw;
-    height: 80vh;
+    height: 170vw;
 
     h2 {
       font-size: 4.8vw;

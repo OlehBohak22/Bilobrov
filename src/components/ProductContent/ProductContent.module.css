@@ -280,13 +280,16 @@
     }
   }
 
-  .wishList:hover {
-    background-color: var(--primary);
+  @media (min-width: 1024px) {
+    .wishList:hover {
+      background-color: rgba(255, 196, 58, 1);
 
-    svg {
-      fill: white;
+      svg {
+        fill: black;
+      }
     }
   }
+
   .wishList.active {
     background-color: var(--primary);
 
@@ -491,6 +494,7 @@
   .shortDesc {
     font-size: 3.2vw;
     line-height: 120%;
+    margin-bottom: 8.5vw;
   }
 
   .title {
@@ -636,6 +640,7 @@
     margin-bottom: 6.4vw;
     align-items: baseline;
     flex-wrap: wrap;
+    gap: 3vw;
 
     .available {
       p {
