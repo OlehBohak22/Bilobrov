@@ -19,8 +19,6 @@ import { ProductDescription } from "../../components/ProductDescription/ProductD
 const HomePage = () => {
   const seoData = usePageData(API_URL);
 
-  console.log(seoData);
-
   const { t } = useTranslation();
   const productCategories = t("productList", { returnObjects: true }) as {
     sales: string;

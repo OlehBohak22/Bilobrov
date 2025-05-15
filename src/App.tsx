@@ -32,9 +32,11 @@ const CatalogPage = lazy(() => import("./Pages/CatalogPage/CatalogPage"));
 const CertificatePage = lazy(
   () => import("./Pages/CertificatePage/CertificatePage")
 );
+
 const ProductPage = lazy(() => import("./Pages/ProductPage/ProductPage"));
 
 const RegisterModal = lazy(() => import("./components/RegisterPopup/Register"));
+
 const WishListPopup = lazy(
   () => import("./components/WishListPopup/WishListPopup")
 );

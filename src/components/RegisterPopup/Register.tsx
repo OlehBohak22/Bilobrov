@@ -7,6 +7,7 @@ import s from "./Register.module.css";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { API_URL_WP } from "../../constants/api";
+import { useNavigate } from "react-router";
 
 const RegisterModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const dispatch = useDispatch<AppDispatch>();
@@ -31,6 +32,7 @@ const RegisterModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const [resetDone, setResetDone] = useState<"success" | "error" | null>(null);
 
   const { loading, error } = useSelector((state: RootState) => state.user);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -47,6 +49,7 @@ const RegisterModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 
         if (result) {
           onClose();
+          navigate("/account");
         }
       } catch (err) {
         console.error("❌ Реєстрація помилка:", err);
@@ -54,6 +57,7 @@ const RegisterModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     } else {
       try {
         await dispatch(loginUser({ email, password })).unwrap();
+        navigate("/account");
       } catch (err) {
         console.error("❌ Логін помилка:", err);
       }
@@ -78,7 +82,7 @@ const RegisterModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
       if (data.status === "success") {
         setResetStatus("success");
         setResetToken(data.reset_token);
-        setIsResettingPassword(true); // 👈 переключаємо форму на зміну паролю
+        setIsResettingPassword(true);
         console.log("✅ Token для зміни пароля:", data.reset_token);
       } else {
         setResetStatus("error");

@@ -319,7 +319,7 @@ const AccountPage = () => {
 
                   {category.id === "order" && (
                     <div className={s.wishLength}>
-                      {user?.meta.orders.length}
+                      {user?.meta?.orders?.length || 0}
                     </div>
                   )}
                 </li>

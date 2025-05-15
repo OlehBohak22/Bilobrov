@@ -130,6 +130,39 @@
   }
 }
 
+.inputContainer {
+  position: relative;
+  width: 90%;
+
+  input {
+    width: 100%;
+    padding: 1vw 0.7vw;
+    margin: 0 auto;
+    border-radius: 83px;
+    background: rgba(26, 26, 26, 0.03);
+    color: var(--Black-40, #a7a9aa);
+    font-variant-numeric: lining-nums proportional-nums;
+    font-family: Raleway;
+    font-size: 0.7vw;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: -0.28px;
+    padding-left: 3vw;
+    margin-bottom: 1vw;
+  }
+
+  svg {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 0.7vw;
+    width: 1.2vw;
+    height: 1.2vw;
+    stroke: black;
+  }
+}
+
 .backDropCOntaienr {
   max-height: 50vh;
   overflow-y: auto;
@@ -178,7 +211,7 @@
     margin-top: 1vw;
     overflow-y: auto;
     overflow-x: visible;
-    max-height: 50vh;
+    max-height: 15vw;
 
     label {
       font-size: 10vw;
@@ -396,6 +429,7 @@
 
     .list {
       margin-top: 4.2vw;
+      min-height: 58vw;
       label:not(:last-child) {
         margin-bottom: 4.2vw;
       }
@@ -425,5 +459,21 @@
     line-height: 3.2vw;
     width: 5.3vw;
     height: 5.3vw;
+  }
+
+  .inputContainer {
+    width: 100%;
+    margin-bottom: 7vw;
+
+    input {
+      font-size: 3.7vw;
+      padding: 4.8vw 4.8vw 4.8vw 15.4vw;
+    }
+
+    svg {
+      width: 6.4vw;
+      height: 6.4vw;
+      left: 3.7vw;
+    }
   }
 }

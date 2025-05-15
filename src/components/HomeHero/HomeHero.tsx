@@ -17,8 +17,6 @@ export const HomeHero = () => {
   const { width } = useWindowSize();
   const isMobile = width < 1024;
 
-  console.log(banners);
-
   const prevRef = useRef<HTMLDivElement | null>(null);
   const nextRef = useRef<HTMLDivElement | null>(null);
 

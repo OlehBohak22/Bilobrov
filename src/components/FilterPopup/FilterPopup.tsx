@@ -23,6 +23,11 @@ export const Filters: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+  const [brandSearch, setBrandSearch] = useState("");
+  const [categorySearch, setCategorySearch] = useState("");
+  const [attributeSearch, setAttributeSearch] = useState<
+    Record<string, string>
+  >({});
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -298,19 +303,55 @@ export const Filters: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 
               {brandsIsOpen && (
                 <div className={s.list}>
-                  {allBrands.map((brand) => (
-                    <label key={brand.id} className={s.customCheckbox}>
+                  {allBrands.length > 20 && (
+                    <div className={s.inputContainer}>
                       <input
-                        type="checkbox"
-                        checked={localSelectedBrands.includes(
-                          brand.id.toString()
-                        )}
-                        onChange={() => toggleBrand(brand.id.toString())}
-                        className={s.hiddenCheckbox}
+                        type="text"
+                        className={s.searchInput}
+                        placeholder={t("catalog.searchAttr")}
+                        value={brandSearch}
+                        onChange={(e) =>
+                          setBrandSearch(e.target.value.toLowerCase())
+                        }
                       />
-                      <span className={s.checkboxLabel}>{brand.name}</span>
-                    </label>
-                  ))}
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <ellipse
+                          cx="10.9995"
+                          cy="10.7885"
+                          rx="8.03854"
+                          ry="8.03854"
+                          stroke-width="1.6"
+                          stroke-linecap="square"
+                        />
+                        <path
+                          d="M16.4863 16.708L21.0398 21.2497"
+                          stroke-width="1.6"
+                          stroke-linecap="square"
+                        />
+                      </svg>
+                    </div>
+                  )}
+                  {allBrands
+                    .filter((brand) =>
+                      brand.name.toLowerCase().includes(brandSearch)
+                    )
+                    .map((brand) => (
+                      <label key={brand.id} className={s.customCheckbox}>
+                        <input
+                          type="checkbox"
+                          checked={localSelectedBrands.includes(
+                            brand.id.toString()
+                          )}
+                          onChange={() => toggleBrand(brand.id.toString())}
+                          className={s.hiddenCheckbox}
+                        />
+                        <span className={s.checkboxLabel}>{brand.name}</span>
+                      </label>
+                    ))}
                 </div>
               )}
             </div>
@@ -356,19 +397,55 @@ export const Filters: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 
               {categoryIsOpen && (
                 <div className={s.list}>
-                  {allCategories.map((cat) => (
-                    <label key={cat.id} className={s.customCheckbox}>
+                  {allCategories.length > 2 && (
+                    <div className={s.inputContainer}>
                       <input
-                        type="checkbox"
-                        checked={localSelectedCategories.includes(
-                          cat.id.toString()
-                        )}
-                        onChange={() => toggleCategory(cat.id.toString())}
-                        className={s.hiddenCheckbox}
+                        type="text"
+                        className={s.searchInput}
+                        placeholder={t("catalog.searchAttr")}
+                        value={categorySearch}
+                        onChange={(e) =>
+                          setCategorySearch(e.target.value.toLowerCase())
+                        }
                       />
-                      <span className={s.checkboxLabel}>{cat.name}</span>
-                    </label>
-                  ))}
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <ellipse
+                          cx="10.9995"
+                          cy="10.7885"
+                          rx="8.03854"
+                          ry="8.03854"
+                          stroke-width="1.6"
+                          stroke-linecap="square"
+                        />
+                        <path
+                          d="M16.4863 16.708L21.0398 21.2497"
+                          stroke-width="1.6"
+                          stroke-linecap="square"
+                        />
+                      </svg>
+                    </div>
+                  )}
+                  {allCategories
+                    .filter((cat) =>
+                      cat.name.toLowerCase().includes(categorySearch)
+                    )
+                    .map((cat) => (
+                      <label key={cat.id} className={s.customCheckbox}>
+                        <input
+                          type="checkbox"
+                          checked={localSelectedCategories.includes(
+                            cat.id.toString()
+                          )}
+                          onChange={() => toggleCategory(cat.id.toString())}
+                          className={s.hiddenCheckbox}
+                        />
+                        <span className={s.checkboxLabel}>{cat.name}</span>
+                      </label>
+                    ))}
                 </div>
               )}
             </div>
@@ -418,24 +495,69 @@ export const Filters: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 
                   {openAttributes[attrSlug] && (
                     <div className={s.list}>
-                      {attr.options.map((option: any) => (
-                        <label key={option.id} className={s.customCheckbox}>
+                      {attr.options.length > 20 && (
+                        <div className={s.inputContainer}>
                           <input
-                            type="checkbox"
-                            className={s.hiddenCheckbox}
-                            checked={localSelectedAttributes[
-                              attrSlug
-                            ]?.includes(option.id.toString())}
-                            onChange={() =>
-                              toggleAttributeOption(
-                                attrSlug,
-                                option.id.toString()
-                              )
+                            type="text"
+                            className={s.searchInput}
+                            placeholder={t("catalog.searchAttr")}
+                            value={attributeSearch[attrSlug] || ""}
+                            onChange={(e) =>
+                              setAttributeSearch((prev) => ({
+                                ...prev,
+                                [attrSlug]: e.target.value.toLowerCase(),
+                              }))
                             }
                           />
-                          <span className={s.checkboxLabel}>{option.name}</span>
-                        </label>
-                      ))}
+                          <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <ellipse
+                              cx="10.9995"
+                              cy="10.7885"
+                              rx="8.03854"
+                              ry="8.03854"
+                              stroke-width="1.6"
+                              stroke-linecap="square"
+                            />
+                            <path
+                              d="M16.4863 16.708L21.0398 21.2497"
+                              stroke-width="1.6"
+                              stroke-linecap="square"
+                            />
+                          </svg>
+                        </div>
+                      )}
+                      {attr.options
+                        .filter((opt) =>
+                          opt.name
+                            .toLowerCase()
+                            .includes(
+                              attributeSearch[attrSlug]?.toLowerCase() || ""
+                            )
+                        )
+                        .map((option) => (
+                          <label key={option.id} className={s.customCheckbox}>
+                            <input
+                              type="checkbox"
+                              className={s.hiddenCheckbox}
+                              checked={localSelectedAttributes[
+                                attrSlug
+                              ]?.includes(option.id.toString())}
+                              onChange={() =>
+                                toggleAttributeOption(
+                                  attrSlug,
+                                  option.id.toString()
+                                )
+                              }
+                            />
+                            <span className={s.checkboxLabel}>
+                              {option.name}
+                            </span>
+                          </label>
+                        ))}
                     </div>
                   )}
                 </div>

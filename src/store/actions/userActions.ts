@@ -40,20 +40,25 @@ export const registerUser = createAsyncThunk(
   "user/register",
   async (data: { email: string; password: string; name: string }, thunkAPI) => {
     try {
+      // 1. Реєстрація
+      await axiosInstance.post("/responses/v1/user_registration", data);
+
+      // 2. Логін (як у loginUser)
       const response = await axiosInstance.post(
-        "/responses/v1/user_registration",
-        data
+        "/responses/v1/user_authorization",
+        { email: data.email, password: data.password }
       );
 
-      const tokenResponse = await axiosInstance.post("/jwt-auth/v1/token", {
-        username: data.email,
-        password: data.password,
-      });
+      const token = response.data?.jwt;
+      if (!token) throw new Error("Не вдалося отримати токен");
 
-      const { token } = tokenResponse.data;
       localStorage.setItem("token", token);
 
-      return { token, user: response.data };
+      const userResponse = await axiosInstance.get("/responses/v1/user_info", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      return { token, user: userResponse.data };
     } catch (error: any) {
       const axiosError = error as AxiosError<ErrorResponse>;
       return thunkAPI.rejectWithValue(
