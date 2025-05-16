@@ -342,6 +342,10 @@ body {
     padding-left: 4.5vw;
     width: 100vw;
 
+    nav {
+      width: max-content;
+    }
+
     .navMenu {
       .menuItem {
         a {
