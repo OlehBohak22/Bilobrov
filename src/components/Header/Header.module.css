@@ -340,7 +340,7 @@ body {
     overflow-x: scroll;
     overflow-y: visible;
     padding-left: 4.5vw;
-    height: 15.5vw;
+    width: 100vw;
 
     .navMenu {
       .menuItem {
