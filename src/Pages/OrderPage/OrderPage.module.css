@@ -327,27 +327,37 @@
     font-size: 0.8vw;
     line-height: 100%;
     letter-spacing: -0.01vw;
-    color: rgba(117, 117, 117, 1);
+    color: white;
     padding: 0.9vw 0;
     width: 12.5vw;
-    background-color: rgba(249, 247, 248, 1);
+    background-color: rgba(214, 61, 68, 1);
     transition: 0.3s;
     cursor: pointer;
 
     svg {
-      fill: rgba(117, 117, 117, 1);
+      fill: white;
       width: 1.2vw;
       height: 1.2vw;
       transition: fill 0.3s;
     }
   }
 
-  .nextBtn:hover {
-    background-color: var(--primary);
-    color: white;
+  .disabledNext {
+    background-color: rgba(249, 247, 248, 1) !important;
+    /* pointer-events: none !important; */
+    color: rgba(117, 117, 117, 1) !important;
 
     svg {
-      fill: white;
+      fill: rgba(117, 117, 117, 1) !important;
+    }
+  }
+
+  .nextBtn:hover {
+    background-color: rgba(255, 196, 58, 1);
+    color: black;
+
+    svg {
+      fill: black;
     }
   }
 

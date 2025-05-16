@@ -443,9 +443,15 @@ const RegisterModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 
                 {error && <p className={s.error}>{error}</p>}
                 <button
-                  className={s.registerBtn}
+                  className={`${s.registerBtn} ${
+                    !email || !password || (isRegister && !firstName)
+                      ? s.disabled
+                      : ""
+                  }`}
                   type="submit"
-                  disabled={loading}
+                  disabled={
+                    loading || !email || !password || (isRegister && !firstName)
+                  }
                 >
                   {loading
                     ? t("register.loading")

@@ -12,6 +12,16 @@
   z-index: 9999999;
 }
 
+.disabled {
+  background-color: rgba(249, 247, 248, 1) !important;
+  pointer-events: none !important;
+  color: rgba(117, 117, 117, 1) !important;
+
+  svg {
+    fill: rgba(117, 117, 117, 1) !important;
+  }
+}
+
 .forgotPasswordLink {
   margin-left: auto;
   width: 100%;

@@ -366,6 +366,6 @@ body {
   }
 
   .headerBottomLine::after {
-    width: 250vw;
+    display: none;
   }
 }

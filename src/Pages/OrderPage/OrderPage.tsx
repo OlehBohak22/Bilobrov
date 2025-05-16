@@ -37,6 +37,8 @@ const OrderPage: React.FC = () => {
   const [selectedAddressId, setSelectedAddressId] = useState<number | null>(
     null
   );
+  const [isStepOneValid, setIsStepOneValid] = useState(true);
+  const [isStepTwoValid, setIsStepTwoValid] = useState(true);
 
   useEffect(() => {
     dispatch(fetchCities());
@@ -305,8 +307,16 @@ const OrderPage: React.FC = () => {
   const [paymentMethod, setPaymentMethod] = useState("cod");
 
   const handleNextStep = () => {
-    if (step === 1 && !validateStepOne()) return;
-    if (step === 2 && !validateStepTwo()) return;
+    if (step === 1) {
+      const valid = validateStepOne();
+      setIsStepOneValid(valid);
+      if (!valid) return;
+    }
+    if (step === 2) {
+      const valid = validateStepTwo();
+      setIsStepTwoValid(valid);
+      if (!valid) return;
+    }
     setStep((prev) => prev + 1);
   };
 
@@ -464,6 +474,34 @@ const OrderPage: React.FC = () => {
       alert("Невідомий збій. Спробуйте ще раз.");
     }
   };
+
+  useEffect(() => {
+    if (step === 1) {
+      const isValid =
+        billing.first_name.trim() &&
+        billing.last_name.trim() &&
+        billing.middle_name.trim() &&
+        /^\+380\d{9}$/.test(billing.phone) &&
+        billing.email.trim();
+
+      if (shipper) {
+        setIsStepOneValid(!!isValid);
+      } else {
+        const shippingValid =
+          shipping.first_name.trim() &&
+          shipping.last_name.trim() &&
+          shipping.middle_name.trim() &&
+          /^\+380\d{9}$/.test(shipping.phone) &&
+          shipping.email.trim();
+
+        setIsStepOneValid(!!(isValid && shippingValid));
+      }
+    }
+  }, [step, billing, shipping, shipper]);
+
+  useEffect(() => {
+    setErrors({});
+  }, [step]);
 
   return (
     <div className={s.page}>
@@ -1223,7 +1261,15 @@ const OrderPage: React.FC = () => {
                       </p>
                     </div>
                   ) : (
-                    <div onClick={handleNextStep} className={s.nextBtn}>
+                    <div
+                      onClick={handleNextStep}
+                      className={`${s.nextBtn} ${
+                        (step === 1 && !isStepOneValid) ||
+                        (step === 2 && !isStepTwoValid)
+                          ? s.disabledNext
+                          : ""
+                      }`}
+                    >
                       {t("order.next")}
                       <svg
                         width="25"
