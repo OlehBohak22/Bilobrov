@@ -341,6 +341,7 @@ body {
     overflow-y: visible;
     padding-left: 4.5vw;
     width: 100vw;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 
     nav {
       width: max-content;
@@ -370,6 +371,5 @@ body {
   }
 
   .headerBottomLine::after {
-    display: none;
   }
 }
