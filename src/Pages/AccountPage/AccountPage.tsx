@@ -207,8 +207,8 @@ const AccountPage = () => {
   const { t } = useTranslation();
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
 
-  const wishlist = useSelector(
-    (state: RootState) => state.user?.user?.meta?.preferences || []
+  const { preferences: wishlist } = useSelector(
+    (state: RootState) => state.wishlist || []
   );
   const user = useSelector((state: RootState) => state.user.user);
 

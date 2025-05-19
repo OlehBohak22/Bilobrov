@@ -22,6 +22,30 @@
   }
 }
 
+.inputWrapper {
+  position: relative;
+}
+
+.inputWrapper input {
+  width: 100%;
+}
+
+.eyeToggleBtn {
+  position: absolute;
+  right: 0.8vw;
+  transform: translateY(80%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+
+  img {
+    width: 1.2vw !important;
+    height: 1.2vw !important;
+    margin-bottom: 0 !important;
+  }
+}
+
 .forgotPasswordLink {
   margin-left: auto;
   width: 100%;
@@ -342,6 +366,21 @@
       width: 4.2vw;
       height: 4.2vw;
       stroke: black;
+    }
+  }
+
+  .eyeToggleBtn {
+    position: absolute;
+    right: 4.2vw;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+
+    img {
+      width: 6.4vw !important;
+      height: 6.4vw !important;
+      margin-bottom: 0 !important;
     }
   }
 }

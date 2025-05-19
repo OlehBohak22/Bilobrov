@@ -12,6 +12,8 @@ export const OffertTab = () => {
       try {
         const res = await fetch(`${API_URL_WP_V2}pages/8989`);
         const data = await res.json();
+
+        console.log(data);
         setContent(data.content.rendered);
       } catch (err) {
         console.error("Помилка при завантаженні оферти:", err);

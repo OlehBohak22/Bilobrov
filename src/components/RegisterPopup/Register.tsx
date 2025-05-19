@@ -17,6 +17,9 @@ const RegisterModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const [firstName, setFirstName] = useState("");
   const [isRegister, setIsRegister] = useState(true);
   const modalRef = useRef<HTMLDivElement>(null);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const [isForgotPassword, setIsForgotPassword] = useState(false);
   const [resetEmail, setResetEmail] = useState("");
@@ -302,30 +305,60 @@ const RegisterModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 
                   <form onSubmit={handleSetNewPassword} className={s.form}>
                     <label htmlFor="newPassword">
-                      {t("forgot.newPassword")}
-                      <span>*</span>
+                      {t("forgot.newPassword")} <span>*</span>
                     </label>
-                    <input
-                      id="newPassword"
-                      type="password"
-                      placeholder={t("forgot.newPasswordPlaceholder")}
-                      value={newPassword}
-                      onChange={(e) => setNewPassword(e.target.value)}
-                      className="lg:mb-[1.2vw] mb-[5.3vw]"
-                    />
+                    <div className={s.inputWrapper}>
+                      <input
+                        id="newPassword"
+                        type={showNewPassword ? "text" : "password"}
+                        placeholder={t("forgot.newPasswordPlaceholder")}
+                        value={newPassword}
+                        onChange={(e) => setNewPassword(e.target.value)}
+                        className="lg:mb-[1.2vw] mb-[5.3vw]"
+                      />
+                      <button
+                        type="button"
+                        className={s.eyeToggleBtn}
+                        onClick={() => setShowNewPassword((prev) => !prev)}
+                      >
+                        <img
+                          src={
+                            showNewPassword
+                              ? "/icons/eye.svg"
+                              : "/icons/eye.svg"
+                          }
+                          alt="toggle password"
+                        />
+                      </button>
+                    </div>
 
                     <label htmlFor="confirmPassword">
-                      {t("forgot.confirmPassword")}
-                      <span>*</span>
+                      {t("forgot.confirmPassword")} <span>*</span>
                     </label>
-                    <input
-                      id="confirmPassword"
-                      type="password"
-                      placeholder={t("forgot.confirmPasswordPlaceholder")}
-                      value={confirmPassword}
-                      onChange={(e) => setConfirmPassword(e.target.value)}
-                      className="lg:mb-[2vw] mb-[8vw]"
-                    />
+                    <div className={s.inputWrapper}>
+                      <input
+                        id="confirmPassword"
+                        type={showConfirmPassword ? "text" : "password"}
+                        placeholder={t("forgot.confirmPasswordPlaceholder")}
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        className="lg:mb-[2vw] mb-[8vw]"
+                      />
+                      <button
+                        type="button"
+                        className={s.eyeToggleBtn}
+                        onClick={() => setShowConfirmPassword((prev) => !prev)}
+                      >
+                        <img
+                          src={
+                            showConfirmPassword
+                              ? "/icons/eye.svg"
+                              : "/icons/eye.svg"
+                          }
+                          alt="toggle password"
+                        />
+                      </button>
+                    </div>
 
                     {resetDone === "error" && (
                       <p className={s.error}>{t("forgot.resetError")}</p>
@@ -419,14 +452,29 @@ const RegisterModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                   {t("register.password")}
                   <span>*</span>
                 </label>
-                <input
-                  id="password"
-                  type="password"
-                  placeholder={t("register.passwordPlaceholder")}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="lg:mb-[2vw] mb-[8vw]"
-                />
+
+                <div className={s.inputWrapper}>
+                  <input
+                    id="password"
+                    type={showPassword ? "text" : "password"}
+                    placeholder={t("register.passwordPlaceholder")}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="lg:mb-[2vw] mb-[8vw]"
+                  />
+
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                    className={s.eyeToggleBtn}
+                  >
+                    {showPassword ? (
+                      <img src="/icons/eye.svg" alt="Показати" />
+                    ) : (
+                      <img src="/icons/eye.svg" alt="Показати" />
+                    )}
+                  </button>
+                </div>
 
                 {!isRegister && (
                   <button
