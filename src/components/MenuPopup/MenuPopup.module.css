@@ -26,7 +26,8 @@
 /* Вікно модалки */
 .modal {
   position: relative;
-  background: white;
+  background-color: var(--primary);
+
   height: 100%;
   width: 23.4vw;
   /* padding: 2vw; */
@@ -37,8 +38,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2.2vw;
+  background-color: white;
   padding: 2vw 2vw 0 2vw;
+  padding-bottom: 2.2vw;
 
   p {
     font-family: Playfair Display;
@@ -64,6 +66,7 @@
 
 .asideTop {
   padding: 0 2vw 2vw 2vw;
+  background-color: white;
 
   li {
     a,
@@ -196,7 +199,7 @@
 
   .menuHeader {
     padding: 4.2vw 4.2vw 0 4.2vw;
-    margin-bottom: 8.5vw;
+    padding-bottom: 8.5vw;
     position: relative;
 
     p {
