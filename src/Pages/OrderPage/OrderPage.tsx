@@ -18,7 +18,12 @@ import { useWindowSize } from "../../hooks/useWindowSize";
 import { addAddress } from "../../store/slices/addressSlice";
 import { useTranslation } from "react-i18next";
 import axios from "axios";
-import { API_URL_WP } from "../../constants/api";
+import {
+  API_URL_BASE,
+  API_URL_WP,
+  consumerKey,
+  consumerSecret,
+} from "../../constants/api";
 import { fetchCities } from "../../store/slices/citiesSlice";
 
 const OrderPage: React.FC = () => {
@@ -267,12 +272,14 @@ const OrderPage: React.FC = () => {
 
   const { user } = useSelector((state: RootState) => state.user);
 
+  const addresses = Array.isArray(user?.meta?.address) ? user.meta.address : [];
+
   const [billing, setBilling] = useState({
     first_name: user?.name || "",
     last_name: user?.secondName || "",
     middle_name:
-      user?.meta.address.find((item) => item.selected)?.middle_name ||
-      user?.meta.address[0]?.middle_name ||
+      addresses.find((item) => item.selected)?.middle_name ||
+      addresses[0]?.middle_name ||
       "",
     address_1: "",
     city: "",
@@ -280,8 +287,7 @@ const OrderPage: React.FC = () => {
     postcode: "",
     country: "UA",
     email: user?.email || "",
-    // eslint-disable-next-line no-constant-binary-expression
-    phone: user?.meta.phone ? `+38${user.meta.phone}` : "",
+    phone: user?.meta?.phone ? `+38${user.meta.phone}` : "",
   });
 
   const [shipping, setShipping] = useState({ ...billing });
@@ -373,6 +379,16 @@ const OrderPage: React.FC = () => {
       customer_id: userData ? userData.ID : 0,
       shipping_type: departmentSelect,
 
+      fee_lines:
+        useBonus > 0
+          ? [
+              {
+                name: "Списання бонусів",
+                total: `-${useBonus}`,
+              },
+            ]
+          : [],
+
       billing: finalBilling,
       shipping: finalShipping,
       line_items: cart.map((item) => ({
@@ -380,29 +396,38 @@ const OrderPage: React.FC = () => {
         quantity: item.quantity,
         variation_id: item.variation_id,
       })),
-      shipping_lines: [
-        {
-          method_id: "flat_rate",
-          method_title: "Доставка кур'єром",
-          total: "50",
-        },
-      ],
+      // shipping_lines: [
+      //   {
+      //     method_id: "flat_rate",
+      //     method_title: "Доставка кур'єром",
+      //     total: "50",
+      //   },
+      // ],
       meta_data: [
         {
           key: "courier_note",
           value: instructions,
         },
-        appliedCoupon
-          ? [
-              {
-                key: "applied_coupon",
-                value: JSON.stringify({
-                  code: appliedCoupon.code,
-                  discount: appliedCoupon.discountAmount,
-                }),
-              },
-            ]
-          : [],
+        {
+          key: "bonus",
+          value: useBonus,
+        },
+        {
+          key: "coupon",
+          value: appliedCoupon?.code,
+        },
+
+        // appliedCoupon
+        //   ? [
+        //       {
+        //         key: "applied_coupon",
+        //         value: JSON.stringify({
+        //           code: appliedCoupon.code,
+        //           discount: appliedCoupon.discountAmount,
+        //         }),
+        //       },
+        //     ]
+        //   : [],
       ],
     };
 
@@ -438,9 +463,41 @@ const OrderPage: React.FC = () => {
 
     try {
       const resultAction = await dispatch(createOrder(orderData));
+
+      console.log(resultAction);
+
       if (createOrder.fulfilled.match(resultAction)) {
         dispatch(clearCart(token));
         setOrderSucces(resultAction.payload);
+
+        if (paymentMethod === "online payment") {
+          const basicAuth = btoa(`${consumerKey}:${consumerSecret}`);
+
+          try {
+            const payRes = await axios.post(
+              `${API_URL_BASE}pay/v1/payment-link`,
+              {
+                order_id: resultAction.payload.id,
+              },
+              {
+                headers: {
+                  Authorization: `Basic ${basicAuth}`,
+                },
+              }
+            );
+
+            const paymentUrl = payRes.data?.paymentUrl;
+
+            if (paymentUrl) {
+              window.location.href = paymentUrl;
+            } else {
+              alert("Не вдалося отримати посилання на оплату.");
+            }
+          } catch (err) {
+            console.error("Помилка при отриманні WayForPay даних:", err);
+            alert("Помилка при переході до оплати.");
+          }
+        }
         console.log("Замовлення успішно створено:", resultAction.payload);
 
         if (user && useBonus > 0) {
@@ -533,7 +590,7 @@ const OrderPage: React.FC = () => {
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
-                  <g clip-path="url(#clip0_3306_31391)">
+                  <g clipPath="url(#clip0_3306_31391)">
                     <path
                       d="M104.276 0C98.4193 0 93.5066 2.01475 89.5378 6.04351C85.5689 10.0723 83.5844 15.0478 83.5844 20.97C83.5844 26.9326 85.5689 31.9285 89.5378 35.9573C93.5066 39.9861 98.4193 42 104.276 42C110.172 42 115.085 40.0062 119.015 36.0179C122.946 31.9488 124.911 26.9326 124.911 20.97C124.911 15.0478 122.946 10.0723 119.015 6.04351C115.124 2.01475 110.21 0 104.276 0ZM220.684 0C214.826 0 209.913 2.01475 205.946 6.04351C201.976 10.0723 199.992 15.0478 199.992 20.97C199.992 26.9326 201.976 31.9285 205.946 35.9573C209.913 39.9861 214.826 42 220.684 42C226.579 42 231.492 40.0062 235.422 36.0179C239.354 31.9488 241.319 26.9326 241.319 20.97C241.319 15.0478 239.354 10.0723 235.422 6.04351C231.531 2.01475 226.618 0 220.684 0ZM10.0967 0.604435V11.1198H22.144C22.7605 11.1198 23.2806 11.3611 23.7045 11.8446C24.1283 12.2877 24.3406 12.8721 24.3406 13.5973C24.3406 13.8793 24.3209 14.0605 24.2824 14.1411C24.2054 14.7051 23.9552 15.1684 23.5314 15.531C23.1075 15.8936 22.6449 16.0748 22.144 16.0748H10.0967V25.5026H23.3003C23.9552 25.5026 24.5141 25.7641 24.9765 26.2879C25.4389 26.7713 25.6697 27.3955 25.6697 28.161C25.6697 28.9265 25.4389 29.5719 24.9765 30.0956C24.5141 30.6193 23.9552 30.8811 23.3003 30.8811H10.0967V41.3955H23.5314C27.346 41.3955 30.5634 40.2479 33.1836 37.9515C35.7653 35.6553 37.0564 32.7943 37.0564 29.3699C37.0564 25.6232 35.5344 22.582 32.4903 20.2453C34.6482 18.0697 35.727 15.4503 35.727 12.3884C35.727 9.00425 34.4554 6.20442 31.9122 3.98861C29.3305 1.7325 26.1706 0.604435 22.4331 0.604435H10.0967ZM40.0042 0.604435V41.3955H50.9278V0.604435H40.0042ZM54.2804 0.604435V41.3955H82.8331V30.8811H65.2041V0.604435H54.2804ZM127.859 0.604435V41.3955H148.435C152.25 41.3955 155.467 40.2479 158.088 37.9515C160.669 35.6553 161.96 32.7943 161.96 29.3699C161.96 25.6232 160.438 22.582 157.394 20.2453C159.551 18.0697 160.63 15.4503 160.63 12.3884C160.63 9.00425 159.359 6.20442 156.815 3.98861C154.234 1.7325 151.075 0.604435 147.337 0.604435H127.859ZM164.907 0.604435V41.3955H175.832V29.6115H181.265L187.623 41.3955H199.819L192.131 27.1339C194.134 25.8044 195.695 24.0921 196.812 21.9971C197.97 19.9022 198.547 17.6062 198.547 15.1084C198.547 10.9588 197.103 7.51358 194.212 4.77403C191.361 1.99417 187.796 0.604435 183.519 0.604435H164.907ZM239.238 0.604435L254.959 41.3955H264.033L279.813 0.604435H268.425L259.523 24.8375L250.624 0.604435H239.238ZM104.276 10.9388C106.896 10.9388 109.093 11.9051 110.866 13.8389C112.677 15.813 113.582 18.1902 113.582 20.97C113.582 23.7498 112.677 26.1272 110.866 28.1012C109.093 30.035 106.896 31.0015 104.276 31.0015C101.656 31.0015 99.4406 30.0545 97.6295 28.161C95.857 26.2675 94.971 23.8709 94.971 20.97C94.971 18.1097 95.857 15.7324 97.6295 13.8389C99.4406 11.9051 101.656 10.9388 104.276 10.9388ZM220.684 10.9388C223.303 10.9388 225.5 11.9051 227.273 13.8389C229.084 15.813 229.99 18.1902 229.99 20.97C229.99 23.7498 229.084 26.1272 227.273 28.1012C225.5 30.035 223.303 31.0015 220.684 31.0015C218.062 31.0015 215.848 30.0545 214.036 28.161C212.263 26.2675 211.377 23.8709 211.377 20.97C211.377 18.1097 212.263 15.7324 214.036 13.8389C215.848 11.9051 218.062 10.9388 220.684 10.9388ZM138.782 11.1198H147.048C147.665 11.1198 148.185 11.3612 148.608 11.8446C149.032 12.2878 149.245 12.8721 149.245 13.5973C149.245 13.8793 149.225 14.0606 149.187 14.1411C149.109 14.7052 148.859 15.1684 148.435 15.531C148.011 15.8936 147.549 16.0748 147.048 16.0748H138.782V11.1198ZM175.832 11.1198H183.519C184.598 11.1198 185.484 11.5026 186.177 12.2681C186.871 12.9932 187.218 13.9401 187.218 15.1084C187.218 16.2768 186.871 17.243 186.177 18.0085C185.484 18.774 184.598 19.1568 183.519 19.1568H175.832V11.1198ZM138.782 25.5026H148.203C148.858 25.5026 149.417 25.7641 149.88 26.2881C150.342 26.7715 150.574 27.3957 150.574 28.161C150.574 28.9265 150.342 29.5719 149.88 30.0956C149.417 30.6193 148.858 30.8811 148.203 30.8811H138.782V25.5026Z"
                       fill="#1A1A1A"
@@ -911,7 +968,7 @@ const OrderPage: React.FC = () => {
                 {step === 2 &&
                   (regularCustomer ? (
                     <ul className={s.addressList}>
-                      {address?.map((address, index) => (
+                      {addresses?.map((address, index) => (
                         <li
                           onClick={() => handleAddressSelect(address.id)}
                           className={
@@ -978,9 +1035,9 @@ const OrderPage: React.FC = () => {
                             >
                               <path
                                 d="M11 4.00023H6.8C5.11984 4.00023 4.27976 4.00023 3.63803 4.32721C3.07354 4.61483 2.6146 5.07377 2.32698 5.63826C2 6.27999 2 7.12007 2 8.80023V17.2002C2 18.8804 2 19.7205 2.32698 20.3622C2.6146 20.9267 3.07354 21.3856 3.63803 21.6732C4.27976 22.0002 5.11984 22.0002 6.8 22.0002H15.2C16.8802 22.0002 17.7202 22.0002 18.362 21.6732C18.9265 21.3856 19.3854 20.9267 19.673 20.3622C20 19.7205 20 18.8804 20 17.2002V13.0002M7.99997 16.0002H9.67452C10.1637 16.0002 10.4083 16.0002 10.6385 15.945C10.8425 15.896 11.0376 15.8152 11.2166 15.7055C11.4184 15.5818 11.5914 15.4089 11.9373 15.063L21.5 5.50023C22.3284 4.6718 22.3284 3.32865 21.5 2.50023C20.6716 1.6718 19.3284 1.6718 18.5 2.50022L8.93723 12.063C8.59133 12.4089 8.41838 12.5818 8.29469 12.7837C8.18504 12.9626 8.10423 13.1577 8.05523 13.3618C7.99997 13.5919 7.99997 13.8365 7.99997 14.3257V16.0002Z"
-                                stroke-width="1.3"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
+                                strokeWidth="1.3"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
                               />
                             </svg>
                           </div>
@@ -1239,7 +1296,11 @@ const OrderPage: React.FC = () => {
 
                 <div
                   className={s.stepController}
-                  style={step === 3 ? { flexDirection: "column-reverse" } : {}}
+                  style={
+                    step === 3 && isMobile
+                      ? { flexDirection: "column-reverse" }
+                      : {}
+                  }
                 >
                   <div
                     onClick={handlePrevStep}
@@ -1278,7 +1339,7 @@ const OrderPage: React.FC = () => {
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
                       >
-                        <g clip-path="url(#clip0_3012_20566)">
+                        <g clipPath="url(#clip0_3012_20566)">
                           <path d="M17.9177 5L16.8487 6.05572L21.6059 10.7535H0.5V12.2465H21.6059L16.8487 16.9443L17.9177 18L24.5 11.5L17.9177 5Z" />
                         </g>
                         <defs>

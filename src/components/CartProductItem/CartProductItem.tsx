@@ -111,7 +111,7 @@ const CartProductItem: React.FC<ProductItemProps> = ({
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                <g clip-path="url(#clip0_2700_8776)">
+                <g clipPath="url(#clip0_2700_8776)">
                   <path d="M16 7.33333H8.66667V0H7.33333V7.33333H0V8.66667H7.33333V16H8.66667V8.66667H16V7.33333Z" />
                 </g>
                 <defs>
@@ -218,7 +218,7 @@ const CartProductItem: React.FC<ProductItemProps> = ({
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                   >
-                    <g clip-path="url(#clip0_2700_8776)">
+                    <g clipPath="url(#clip0_2700_8776)">
                       <path d="M16 7.33333H8.66667V0H7.33333V7.33333H0V8.66667H7.33333V16H8.66667V8.66667H16V7.33333Z" />
                     </g>
                     <defs>

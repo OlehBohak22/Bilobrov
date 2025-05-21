@@ -195,7 +195,7 @@ const CertificatePage = () => {
           ) : (
             <ul className={s.list}>
               {certificates.map((item) => (
-                <ProductItem certificate={true} info={item} />
+                <ProductItem key={item.id} certificate={true} info={item} />
               ))}
             </ul>
           )}

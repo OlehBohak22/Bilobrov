@@ -114,7 +114,7 @@ export const Footer = () => {
         </div>
         <div className={s.paymentBlock}>
           <div className={s.paymentLinks}>
-            <a href="">{t("footer.privacyPolicy")}</a>
+            <Link to="/support#policy">{t("footer.privacyPolicy")}</Link>
             <Link to="/support#offer">{t("footer.offer")}</Link>
           </div>
 

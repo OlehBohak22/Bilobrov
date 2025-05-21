@@ -95,32 +95,32 @@ export const ResetPasswordTab = () => {
                       <path
                         d="M21.25 7.40714C19.289 11.5352 15.806 14.0117 11.998 14.0117H12.002C8.194 14.0117 4.711 11.5352 2.75 7.40714"
                         stroke="#212121"
-                        stroke-width="1.6"
-                        stroke-linecap="square"
+                        strokeWidth="1.6"
+                        strokeLinecap="square"
                       />
                       <path
                         d="M8.74338 16.5931L9.58789 13.6836"
                         stroke="#212121"
-                        stroke-width="1.6"
-                        stroke-linecap="square"
+                        strokeWidth="1.6"
+                        strokeLinecap="square"
                       />
                       <path
                         d="M15.1765 16.5931L14.332 13.6836"
                         stroke="#212121"
-                        stroke-width="1.6"
-                        stroke-linecap="square"
+                        strokeWidth="1.6"
+                        strokeLinecap="square"
                       />
                       <path
                         d="M18.5898 11.2773L20.701 13.3885"
                         stroke="#212121"
-                        stroke-width="1.6"
-                        stroke-linecap="square"
+                        strokeWidth="1.6"
+                        strokeLinecap="square"
                       />
                       <path
                         d="M5.33203 11.2773L3.22092 13.3885"
                         stroke="#212121"
-                        stroke-width="1.6"
-                        stroke-linecap="square"
+                        strokeWidth="1.6"
+                        strokeLinecap="square"
                       />
                     </svg>
                   ) : (
@@ -134,32 +134,32 @@ export const ResetPasswordTab = () => {
                       <path
                         d="M21.25 7.40714C19.289 11.5352 15.806 14.0117 11.998 14.0117H12.002C8.194 14.0117 4.711 11.5352 2.75 7.40714"
                         stroke="#212121"
-                        stroke-width="1.6"
-                        stroke-linecap="square"
+                        strokeWidth="1.6"
+                        strokeLinecap="square"
                       />
                       <path
                         d="M8.74338 16.5931L9.58789 13.6836"
                         stroke="#212121"
-                        stroke-width="1.6"
-                        stroke-linecap="square"
+                        strokeWidth="1.6"
+                        strokeLinecap="square"
                       />
                       <path
                         d="M15.1765 16.5931L14.332 13.6836"
                         stroke="#212121"
-                        stroke-width="1.6"
-                        stroke-linecap="square"
+                        strokeWidth="1.6"
+                        strokeLinecap="square"
                       />
                       <path
                         d="M18.5898 11.2773L20.701 13.3885"
                         stroke="#212121"
-                        stroke-width="1.6"
-                        stroke-linecap="square"
+                        strokeWidth="1.6"
+                        strokeLinecap="square"
                       />
                       <path
                         d="M5.33203 11.2773L3.22092 13.3885"
                         stroke="#212121"
-                        stroke-width="1.6"
-                        stroke-linecap="square"
+                        strokeWidth="1.6"
+                        strokeLinecap="square"
                       />
                     </svg>
                   )}
@@ -203,32 +203,32 @@ export const ResetPasswordTab = () => {
                         <path
                           d="M21.25 7.40714C19.289 11.5352 15.806 14.0117 11.998 14.0117H12.002C8.194 14.0117 4.711 11.5352 2.75 7.40714"
                           stroke="#212121"
-                          stroke-width="1.6"
-                          stroke-linecap="square"
+                          strokeWidth="1.6"
+                          strokeLinecap="square"
                         />
                         <path
                           d="M8.74338 16.5931L9.58789 13.6836"
                           stroke="#212121"
-                          stroke-width="1.6"
-                          stroke-linecap="square"
+                          strokeWidth="1.6"
+                          strokeLinecap="square"
                         />
                         <path
                           d="M15.1765 16.5931L14.332 13.6836"
                           stroke="#212121"
-                          stroke-width="1.6"
-                          stroke-linecap="square"
+                          strokeWidth="1.6"
+                          strokeLinecap="square"
                         />
                         <path
                           d="M18.5898 11.2773L20.701 13.3885"
                           stroke="#212121"
-                          stroke-width="1.6"
-                          stroke-linecap="square"
+                          strokeWidth="1.6"
+                          strokeLinecap="square"
                         />
                         <path
                           d="M5.33203 11.2773L3.22092 13.3885"
                           stroke="#212121"
-                          stroke-width="1.6"
-                          stroke-linecap="square"
+                          strokeWidth="1.6"
+                          strokeLinecap="square"
                         />
                       </svg>
                     ) : (
@@ -242,32 +242,32 @@ export const ResetPasswordTab = () => {
                         <path
                           d="M21.25 7.40714C19.289 11.5352 15.806 14.0117 11.998 14.0117H12.002C8.194 14.0117 4.711 11.5352 2.75 7.40714"
                           stroke="#212121"
-                          stroke-width="1.6"
-                          stroke-linecap="square"
+                          strokeWidth="1.6"
+                          strokeLinecap="square"
                         />
                         <path
                           d="M8.74338 16.5931L9.58789 13.6836"
                           stroke="#212121"
-                          stroke-width="1.6"
-                          stroke-linecap="square"
+                          strokeWidth="1.6"
+                          strokeLinecap="square"
                         />
                         <path
                           d="M15.1765 16.5931L14.332 13.6836"
                           stroke="#212121"
-                          stroke-width="1.6"
-                          stroke-linecap="square"
+                          strokeWidth="1.6"
+                          strokeLinecap="square"
                         />
                         <path
                           d="M18.5898 11.2773L20.701 13.3885"
                           stroke="#212121"
-                          stroke-width="1.6"
-                          stroke-linecap="square"
+                          strokeWidth="1.6"
+                          strokeLinecap="square"
                         />
                         <path
                           d="M5.33203 11.2773L3.22092 13.3885"
                           stroke="#212121"
-                          stroke-width="1.6"
-                          stroke-linecap="square"
+                          strokeWidth="1.6"
+                          strokeLinecap="square"
                         />
                       </svg>
                     )}
@@ -308,32 +308,32 @@ export const ResetPasswordTab = () => {
                         <path
                           d="M21.25 7.40714C19.289 11.5352 15.806 14.0117 11.998 14.0117H12.002C8.194 14.0117 4.711 11.5352 2.75 7.40714"
                           stroke="#212121"
-                          stroke-width="1.6"
-                          stroke-linecap="square"
+                          strokeWidth="1.6"
+                          strokeLinecap="square"
                         />
                         <path
                           d="M8.74338 16.5931L9.58789 13.6836"
                           stroke="#212121"
-                          stroke-width="1.6"
-                          stroke-linecap="square"
+                          strokeWidth="1.6"
+                          strokeLinecap="square"
                         />
                         <path
                           d="M15.1765 16.5931L14.332 13.6836"
                           stroke="#212121"
-                          stroke-width="1.6"
-                          stroke-linecap="square"
+                          strokeWidth="1.6"
+                          strokeLinecap="square"
                         />
                         <path
                           d="M18.5898 11.2773L20.701 13.3885"
                           stroke="#212121"
-                          stroke-width="1.6"
-                          stroke-linecap="square"
+                          strokeWidth="1.6"
+                          strokeLinecap="square"
                         />
                         <path
                           d="M5.33203 11.2773L3.22092 13.3885"
                           stroke="#212121"
-                          stroke-width="1.6"
-                          stroke-linecap="square"
+                          strokeWidth="1.6"
+                          strokeLinecap="square"
                         />
                       </svg>
                     ) : (
@@ -347,32 +347,32 @@ export const ResetPasswordTab = () => {
                         <path
                           d="M21.25 7.40714C19.289 11.5352 15.806 14.0117 11.998 14.0117H12.002C8.194 14.0117 4.711 11.5352 2.75 7.40714"
                           stroke="#212121"
-                          stroke-width="1.6"
-                          stroke-linecap="square"
+                          strokeWidth="1.6"
+                          strokeLinecap="square"
                         />
                         <path
                           d="M8.74338 16.5931L9.58789 13.6836"
                           stroke="#212121"
-                          stroke-width="1.6"
-                          stroke-linecap="square"
+                          strokeWidth="1.6"
+                          strokeLinecap="square"
                         />
                         <path
                           d="M15.1765 16.5931L14.332 13.6836"
                           stroke="#212121"
-                          stroke-width="1.6"
-                          stroke-linecap="square"
+                          strokeWidth="1.6"
+                          strokeLinecap="square"
                         />
                         <path
                           d="M18.5898 11.2773L20.701 13.3885"
                           stroke="#212121"
-                          stroke-width="1.6"
-                          stroke-linecap="square"
+                          strokeWidth="1.6"
+                          strokeLinecap="square"
                         />
                         <path
                           d="M5.33203 11.2773L3.22092 13.3885"
                           stroke="#212121"
-                          stroke-width="1.6"
-                          stroke-linecap="square"
+                          strokeWidth="1.6"
+                          strokeLinecap="square"
                         />
                       </svg>
                     )}

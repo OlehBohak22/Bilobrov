@@ -85,9 +85,9 @@ export const ImageGalleryModal: React.FC<Props> = ({
           >
             <path
               d="M39 13L13 39M13 13L39 39"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
           </svg>
         </button>
@@ -124,8 +124,8 @@ export const ImageGalleryModal: React.FC<Props> = ({
                 <path
                   d="M19 15.5L12 8.5L5 15.5"
                   stroke="#212121"
-                  stroke-width="1.6"
-                  stroke-linecap="square"
+                  strokeWidth="1.6"
+                  strokeLinecap="square"
                 />
               </svg>
             </button>
@@ -162,8 +162,8 @@ export const ImageGalleryModal: React.FC<Props> = ({
                 <path
                   d="M19 8.5L12 15.5L5 8.5"
                   stroke="#212121"
-                  stroke-width="1.6"
-                  stroke-linecap="square"
+                  strokeWidth="1.6"
+                  strokeLinecap="square"
                 />
               </svg>
             </button>

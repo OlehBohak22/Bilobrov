@@ -35,9 +35,9 @@ export const ProductDescription: React.FC<ProductDescriptionProps> = ({
           >
             <path
               d="M9.33301 9.3335L22.6663 22.6668M22.6663 22.6668V9.3335M22.6663 22.6668H9.33301"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
           </svg>
         </button>

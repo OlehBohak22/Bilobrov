@@ -110,9 +110,9 @@ export const HomeHero = () => {
               >
                 <path
                   d="M15 18L9 12L15 6"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 />
               </svg>
             </div>
@@ -124,9 +124,9 @@ export const HomeHero = () => {
               >
                 <path
                   d="M9 18L15 12L9 6"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 />
               </svg>
             </div>

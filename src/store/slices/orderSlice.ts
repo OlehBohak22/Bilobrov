@@ -3,6 +3,7 @@ import axios from "axios";
 import { API_URL_WC, consumerKey, consumerSecret } from "../../constants/api";
 
 export interface OrderData {
+  id?: number;
   payment_method: string;
   payment_method_title: string;
   set_paid: boolean;
@@ -40,11 +41,11 @@ export interface OrderData {
     variation_id?: number;
     image?: { src: string };
   }[];
-  shipping_lines: {
-    method_id: string;
-    method_title: string;
-    total: string;
-  }[];
+  // shipping_lines: {
+  //   method_id: string;
+  //   method_title: string;
+  //   total: string;
+  // }[];
 }
 
 interface OrderState {
@@ -64,8 +65,7 @@ const initialState: OrderState = {
 export const createOrder = createAsyncThunk<OrderData, OrderData>(
   "order/createOrder",
   async (orderData, { rejectWithValue }) => {
-    console.log(orderData);
-
+    console.log("Клієнт", orderData);
     try {
       const response = await axios.post(`${API_URL_WC}orders`, orderData, {
         headers: {
@@ -73,7 +73,7 @@ export const createOrder = createAsyncThunk<OrderData, OrderData>(
           "Content-Type": "application/json",
         },
       });
-      console.log(response.data);
+      console.log("Сервер", response.data);
       return response.data;
     } catch (error: any) {
       return rejectWithValue(

@@ -213,8 +213,8 @@ export const NovaPoshtaMapPopup: React.FC<NovaPoshtaMapPopupProps> = ({
               <path
                 d="M39 13L13 39M13 13L39 39"
                 stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
             </svg>
           </button>

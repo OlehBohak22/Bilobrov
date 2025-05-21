@@ -27,8 +27,6 @@ const CartPopup: React.FC<CartPopupProps> = ({ onClose }) => {
   const dispatch = useAppDispatch();
   const [cartProducts, setCartProducts] = useState<ProductInfo[]>([]);
 
-  console.log(cartItems);
-
   const productIds = cartItems.map((item) => item.id);
   const productIdsString = productIds.sort((a, b) => a - b).join(",");
 

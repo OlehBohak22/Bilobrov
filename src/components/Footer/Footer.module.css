@@ -182,7 +182,7 @@
   .paymentBlock {
     display: flex;
     justify-content: space-between;
-    padding: 1.2vw 0;
+    padding: 1.5vw 0 1.2vw 0;
     border-top: 1px solid rgba(255, 255, 255, 0.2);
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     margin-bottom: 2.9vw;

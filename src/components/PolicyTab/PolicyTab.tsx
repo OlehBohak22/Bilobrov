@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import s from "./OffertTab.module.css";
+import s from "../OffertTab/OffertTab.module.css";
 import { Loader } from "../Loader/Loader";
 import { useTranslation } from "react-i18next";
 import { API_URL_WP_V2 } from "../../constants/api";
@@ -15,7 +15,7 @@ interface OfferItem {
   };
 }
 
-export const OffertTab = () => {
+export const PolicyTab = () => {
   const [content, setContent] = useState<OfferItem[] | null>();
 
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -27,12 +27,16 @@ export const OffertTab = () => {
   useEffect(() => {
     const fetchPage = async () => {
       try {
-        const res = await fetch(`${API_URL_WP_V2}offer_agreement`);
+        const res = await fetch(`${API_URL_WP_V2}privacy_policy`);
         const data = await res.json();
 
+        console.log(data);
         setContent(data);
       } catch (err) {
-        console.error("Помилка при завантаженні оферти:", err);
+        console.error(
+          "Помилка при завантаженні політики кофіденційності :",
+          err
+        );
       }
     };
 
@@ -44,8 +48,8 @@ export const OffertTab = () => {
   return (
     <div className={s.tab}>
       <h2>
-        <span>{t("offertTab.title1")}</span>
-        <span>{t("offertTab.title2")}</span>
+        <span>{t("policyTab.title1")}</span>
+        <span>{t("policyTab.title2")}</span>
       </h2>
 
       {content ? (

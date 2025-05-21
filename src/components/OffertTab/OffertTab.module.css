@@ -21,13 +21,64 @@
       text-indent: 3.5vw;
     }
   }
+}
 
-  .content {
-    font-size: 0.8vw;
-    line-height: 150%;
-    font-family: Manrope;
-    font-weight: 600;
+.faqList {
+  max-width: 61.5vw;
+  margin: 0 auto;
+
+  li {
+    padding: 1.25vw;
+    background-color: #f9f7f8;
+    cursor: pointer;
+    overflow: hidden;
   }
+
+  li:not(:last-child) {
+    margin-bottom: 0.6vw;
+  }
+
+  li:hover h3 div {
+    background-color: #ffc43a;
+  }
+}
+
+.accordionTitle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: Manrope;
+  font-size: 1.2vw;
+  font-weight: 700;
+  line-height: 1.5vw;
+  margin-bottom: 0.8vw;
+
+  div {
+    background-color: #1a1a1a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 2.7vw;
+    height: 2.7vw;
+    transition: background-color 0.3s;
+    flex-shrink: 0;
+  }
+
+  svg {
+    stroke: #ffffff;
+  }
+}
+
+.accordionContent {
+  max-width: 53vw;
+  /* padding: 1vw; */
+  /* background-color: #000000; */
+  color: black;
+  font-family: Manrope;
+  font-size: 0.9vw;
+  font-weight: 600;
+  line-height: 1.4vw;
+  letter-spacing: -0.02em;
 }
 
 @media (max-width: 1024px) {

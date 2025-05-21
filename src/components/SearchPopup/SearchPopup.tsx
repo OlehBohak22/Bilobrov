@@ -88,9 +88,9 @@ const SearchPopup: React.FC<SearchPopupProps> = ({ close }) => {
           >
             <path
               d="M39 13L13 39M13 13L39 39"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
           </svg>
         </button>
@@ -113,13 +113,13 @@ const SearchPopup: React.FC<SearchPopupProps> = ({ close }) => {
               cy="10.7885"
               rx="8.03854"
               ry="8.03854"
-              stroke-width="1.6"
-              stroke-linecap="square"
+              strokeWidth="1.6"
+              strokeLinecap="square"
             />
             <path
               d="M16.4863 16.708L21.0398 21.2497"
-              stroke-width="1.6"
-              stroke-linecap="square"
+              strokeWidth="1.6"
+              strokeLinecap="square"
             />
           </svg>
         </div>

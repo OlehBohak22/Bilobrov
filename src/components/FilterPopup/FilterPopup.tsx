@@ -283,7 +283,7 @@ export const Filters: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                   >
-                    <g clip-path="url(#clip0_2926_15592)">
+                    <g clipPath="url(#clip0_2926_15592)">
                       <path d="M16 7.83333H8.66667V0.5H7.33333V7.83333H0V9.16667H7.33333V16.5H8.66667V9.16667H16V7.83333Z" />
                     </g>
                     <defs>
@@ -324,13 +324,13 @@ export const Filters: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                           cy="10.7885"
                           rx="8.03854"
                           ry="8.03854"
-                          stroke-width="1.6"
-                          stroke-linecap="square"
+                          strokeWidth="1.6"
+                          strokeLinecap="square"
                         />
                         <path
                           d="M16.4863 16.708L21.0398 21.2497"
-                          stroke-width="1.6"
-                          stroke-linecap="square"
+                          strokeWidth="1.6"
+                          strokeLinecap="square"
                         />
                       </svg>
                     </div>
@@ -377,7 +377,7 @@ export const Filters: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                   >
-                    <g clip-path="url(#clip0_2926_15592)">
+                    <g clipPath="url(#clip0_2926_15592)">
                       <path d="M16 7.83333H8.66667V0.5H7.33333V7.83333H0V9.16667H7.33333V16.5H8.66667V9.16667H16V7.83333Z" />
                     </g>
                     <defs>
@@ -418,13 +418,13 @@ export const Filters: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                           cy="10.7885"
                           rx="8.03854"
                           ry="8.03854"
-                          stroke-width="1.6"
-                          stroke-linecap="square"
+                          strokeWidth="1.6"
+                          strokeLinecap="square"
                         />
                         <path
                           d="M16.4863 16.708L21.0398 21.2497"
-                          stroke-width="1.6"
-                          stroke-linecap="square"
+                          strokeWidth="1.6"
+                          strokeLinecap="square"
                         />
                       </svg>
                     </div>
@@ -519,13 +519,13 @@ export const Filters: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                               cy="10.7885"
                               rx="8.03854"
                               ry="8.03854"
-                              stroke-width="1.6"
-                              stroke-linecap="square"
+                              strokeWidth="1.6"
+                              strokeLinecap="square"
                             />
                             <path
                               d="M16.4863 16.708L21.0398 21.2497"
-                              stroke-width="1.6"
-                              stroke-linecap="square"
+                              strokeWidth="1.6"
+                              strokeLinecap="square"
                             />
                           </svg>
                         </div>

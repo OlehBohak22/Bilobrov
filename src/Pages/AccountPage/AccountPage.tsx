@@ -18,6 +18,7 @@ import { AnimatePresence } from "framer-motion";
 import { Loader } from "../../components/Loader/Loader";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { useTranslation } from "react-i18next";
+import { Helmet } from "react-helmet";
 
 const categories = [
   {
@@ -290,6 +291,15 @@ const AccountPage = () => {
 
   return (
     <main className={s.page}>
+      <Helmet>
+        <title>{activeTab}</title>
+
+        <meta
+          name="robots"
+          content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
+        />
+      </Helmet>
+
       <div className={s.section}>
         <Layout className={s.container}>
           <div className={`${tabsMenuHidden && s.hidden} ${s.tabsMenu}`}>

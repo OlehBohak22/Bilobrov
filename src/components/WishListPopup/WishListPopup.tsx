@@ -92,20 +92,20 @@ const WishListPopup: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                     <path
                       d="M3.43359 5.37598H16.5679L15.3868 17.7086H4.61476L3.43359 5.37598Z"
                       stroke="#D63D44"
-                      stroke-width="1.6"
-                      stroke-linecap="square"
+                      strokeWidth="1.6"
+                      strokeLinecap="square"
                     />
                     <path
                       d="M10 9.46973L10 13.6138"
                       stroke="#D63D44"
-                      stroke-width="1.6"
-                      stroke-linecap="square"
+                      strokeWidth="1.6"
+                      strokeLinecap="square"
                     />
                     <path
                       d="M13.7298 4.99811L12.8392 2.29199H7.16014L6.26953 4.99811"
                       stroke="#D63D44"
-                      stroke-width="1.6"
-                      stroke-linecap="square"
+                      strokeWidth="1.6"
+                      strokeLinecap="square"
                     />
                   </svg>
                   <span>{t("deleteAll")}</span>

@@ -1,6 +1,6 @@
 import { FC, useEffect, useState, useMemo } from "react";
 import { OrderData } from "../../store/slices/orderSlice";
-import s from "./OrderSucces.module.css";
+import s from "../../components/OrderSucces/OrderSucces.module.css";
 import { ProductInfo } from "../../types/productTypes";
 import { Link } from "react-router";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
@@ -37,7 +37,7 @@ const month = months[now.getMonth()];
 const year = now.getFullYear();
 const formattedDate = `${day} ${month} ${year} року`;
 
-export const OrderSucces: FC<SuccesProps> = ({
+export const OrderSuccesPage: FC<SuccesProps> = ({
   data,
   usedBonuses = 0,
   appliedCoupon = null,

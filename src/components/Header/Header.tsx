@@ -162,9 +162,9 @@ export const Header: React.FC<HeaderProps> = ({
                 >
                   <path
                     d="M21 21L16.65 16.65M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11Z"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   />
                 </svg>
               </button>
@@ -260,14 +260,14 @@ export const Header: React.FC<HeaderProps> = ({
                 rx="8.03854"
                 ry="8.03854"
                 stroke="#1A1A1A"
-                stroke-width="1.6"
-                stroke-linecap="square"
+                strokeWidth="1.6"
+                strokeLinecap="square"
               />
               <path
                 d="M16.4863 16.708L21.0398 21.2497"
                 stroke="#1A1A1A"
-                stroke-width="1.6"
-                stroke-linecap="square"
+                strokeWidth="1.6"
+                strokeLinecap="square"
               />
             </svg>
           </div>

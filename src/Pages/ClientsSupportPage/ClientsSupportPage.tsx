@@ -9,10 +9,11 @@ import { useWindowSize } from "../../hooks/useWindowSize";
 import { Breadcrumbs } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { OffertTab } from "../../components/OffertTab/OffertTab";
+import { PolicyTab } from "../../components/PolicyTab/PolicyTab";
+import { Helmet } from "react-helmet";
 
 const ClientsSupportPage = () => {
   const { t } = useTranslation();
-
   const categories = [
     {
       title: t("clientsSupport.customers"),
@@ -26,7 +27,7 @@ const ClientsSupportPage = () => {
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <g clip-path="url(#clip0_1937_23273)">
+              <g clipPath="url(#clip0_1937_23273)">
                 <path
                   d="M9 4H15"
                   strokeWidth="2"
@@ -71,7 +72,7 @@ const ClientsSupportPage = () => {
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <g clip-path="url(#clip0_1937_23293)">
+              <g clipPath="url(#clip0_1937_23293)">
                 <path
                   d="M1 6.72057C1 4.71818 1 3.71699 1.39964 2.95218C1.75118 2.27943 2.31211 1.73247 3.00203 1.38969C3.78638 1 4.81314 1 6.86667 1H17.1333C19.1869 1 20.2136 1 20.998 1.38969C21.6879 1.73247 22.2488 2.27943 22.6004 2.95218C23 3.71699 23 4.71819 23 6.72057V13.1562C23 15.1586 23 16.1598 22.6004 16.9246C22.2488 17.5974 21.6879 18.1443 20.998 18.4871C20.2136 18.8768 19.1869 18.8768 17.1333 18.8768H14.0579C13.2952 18.8768 12.9138 18.8768 12.549 18.9498C12.2254 19.0146 11.9122 19.1217 11.618 19.2682C11.2864 19.4334 10.9886 19.6657 10.393 20.1303L7.47748 22.4047C6.96893 22.8014 6.71466 22.9998 6.50066 23C6.31455 23.0002 6.13849 22.9177 6.02239 22.7759C5.88889 22.6128 5.88889 22.2953 5.88889 21.6602V18.8768C4.75226 18.8768 4.18394 18.8768 3.71766 18.755C2.45233 18.4244 1.46398 17.4606 1.12494 16.2268C1 15.7721 1 15.218 1 14.1096V6.72057Z"
                   strokeWidth="2"
@@ -122,6 +123,25 @@ const ClientsSupportPage = () => {
         {
           id: "offer",
           label: t("clientsSupport.offer"),
+
+          icon: (
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12.6176 1H15.6353C17.5131 1 18.452 1 19.1693 1.35968C19.8002 1.67606 20.3131 2.1809 20.6346 2.80183C21 3.50774 21 4.43183 21 6.28V17.72C21 19.5682 21 20.4923 20.6346 21.1982C20.3131 21.8191 19.8002 22.3239 19.1693 22.6403C18.452 23 17.5131 23 15.6353 23H8.48235C6.60453 23 5.66562 23 4.94838 22.6403C4.31749 22.3239 3.80455 21.8191 3.4831 21.1982C3.11765 20.4923 3.11765 19.5682 3.11765 17.72V16.95M16.5294 13.1H11.5M16.5294 8.7H12.6176M16.5294 17.5H7.58824M5.35294 9.8V3.75C5.35294 2.83873 6.10352 2.1 7.02941 2.1C7.9553 2.1 8.70588 2.83873 8.70588 3.75V9.8C8.70588 11.6225 7.20472 13.1 5.35294 13.1C3.50116 13.1 2 11.6225 2 9.8V5.4"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          ),
+        },
+        {
+          id: "policy",
+          label: t("clientsSupport.policy"),
 
           icon: (
             <svg
@@ -197,6 +217,8 @@ const ClientsSupportPage = () => {
         return <ContactTab />;
       case "offer":
         return <OffertTab />;
+      case "policy":
+        return <PolicyTab />;
       default:
         return null;
     }
@@ -209,6 +231,15 @@ const ClientsSupportPage = () => {
 
   return (
     <main className={s.page}>
+      <Helmet>
+        <title>{activeHash}</title>
+
+        <meta
+          name="robots"
+          content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
+        />
+      </Helmet>
+
       <Layout>
         <Breadcrumbs aria-label="breadcrumb" className="breadcrumbs">
           {breadcrumbs.map((breadcrumb, index) =>
