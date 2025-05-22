@@ -10,6 +10,63 @@
   }
 }
 
+.emptyWishlist {
+  margin: 0 auto;
+  width: fit-content;
+
+  p {
+    font-family: Manrope;
+    font-weight: 500;
+    font-size: 0.9vw;
+    line-height: 125%;
+    letter-spacing: 0%;
+    text-align: center;
+    color: rgba(117, 117, 117, 1);
+    margin-bottom: 2vw;
+  }
+
+  svg {
+    width: 6.3vw;
+    height: auto;
+    margin: 0 auto;
+    margin-bottom: 2vw;
+  }
+
+  a {
+    color: black;
+    background-color: var(--primary);
+    padding: 1vw 3.4vw;
+    display: flex;
+    align-items: center;
+    gap: 0.5vw;
+    font-family: Manrope;
+    font-weight: 700;
+    font-size: 0.8vw;
+    line-height: 100%;
+    letter-spacing: -2%;
+    vertical-align: middle;
+    color: white;
+    transition: 0.3s;
+
+    svg {
+      width: 1.2vw;
+      height: auto;
+      margin-bottom: 0;
+      fill: white;
+      transition: fill 0.3s;
+    }
+  }
+
+  a:hover {
+    background-color: rgba(255, 196, 58, 1);
+    color: black;
+
+    svg {
+      fill: black;
+    }
+  }
+}
+
 .prevButton,
 .nextButton {
   display: block;
@@ -170,6 +227,32 @@
     svg {
       width: 5.3vw;
       height: 5.3vw;
+    }
+  }
+
+  .emptyWishlist {
+    margin-top: 10vw;
+    p {
+      font-size: 7vw;
+      margin-bottom: 10vw;
+    }
+
+    svg {
+      width: 20vw;
+      margin-bottom: 10vw;
+    }
+
+    a {
+      max-width: 50vw;
+      padding: 5vw 7vw;
+      gap: 1vw;
+      font-size: 5vw;
+      margin: 0 auto;
+
+      svg {
+        width: 5vw;
+        height: auto;
+      }
     }
   }
 }

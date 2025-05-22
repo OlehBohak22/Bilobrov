@@ -18,6 +18,7 @@ import { usePageData } from "../../hooks/usePageData";
 import { Helmet } from "react-helmet";
 import { useTranslation } from "react-i18next";
 import { ProductInfo } from "../../types/productTypes";
+import { Loader } from "../../components/Loader/Loader";
 
 interface HeaderProps {
   openRegister: () => void;
@@ -101,7 +102,7 @@ const ProductPage: React.FC<HeaderProps> = ({
   return (
     <>
       {!currentProduct ? (
-        <div className={s.loader}></div>
+        <Loader product={true} />
       ) : (
         <main className={s.page}>
           <Helmet>

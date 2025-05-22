@@ -14,6 +14,8 @@ import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { useEffect, useState } from "react";
 import { fetchCartProducts } from "../../store/slices/productsSlice";
 import { Loader } from "../Loader/Loader";
+import { empty } from "../BonusTab/BonusTab";
+import { Link } from "react-router";
 
 export const WishListTab = () => {
   const dispatch = useAppDispatch();
@@ -60,7 +62,7 @@ export const WishListTab = () => {
           <span>{t("wishlistPopup.titleDesktopPart2")}</span>
         </h2>
 
-        {!isMobile && (
+        {!isMobile && wishlistProducts.length > 0 && (
           <div className={s.navigationContainer}>
             <button className={s.prevButton}>
               <svg
@@ -167,7 +169,35 @@ export const WishListTab = () => {
           )}
         </>
       ) : (
-        <div className={s.emptyWishlist}>{t("wishlistPopup.empty")}</div>
+        <div className={s.emptyWishlist}>
+          <p> {t("wishlistPopup.empty")}</p>
+          {empty}
+
+          <Link to="/catalog">
+            В каталог
+            <svg
+              width="25"
+              height="24"
+              viewBox="0 0 25 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g clipPath="url(#clip0_4390_39352)">
+                <path d="M17.9177 5L16.8487 6.05572L21.6059 10.7535H0.5V12.2465H21.6059L16.8487 16.9443L17.9177 18L24.5 11.5L17.9177 5Z" />
+              </g>
+              <defs>
+                <clipPath id="clip0_4390_39352">
+                  <rect
+                    width="24"
+                    height="24"
+                    fill="white"
+                    transform="translate(0.5)"
+                  />
+                </clipPath>
+              </defs>
+            </svg>
+          </Link>
+        </div>
       )}
     </div>
   );

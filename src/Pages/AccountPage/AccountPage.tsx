@@ -260,7 +260,7 @@ const AccountPage = () => {
 
     setTimeout(() => {
       setLoading(false);
-    }, 500);
+    }, 1000);
 
     setActiveTab(tabId);
     window.location.hash = tabId;

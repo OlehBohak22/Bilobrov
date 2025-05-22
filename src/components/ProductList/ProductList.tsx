@@ -56,7 +56,9 @@ export const ProductList = ({
   useEffect(() => {
     if (products) {
       setLocalProducts(products);
-      setloader(false);
+      setTimeout(() => {
+        setloader(false);
+      }, 1000);
     }
   }, [products]);
 

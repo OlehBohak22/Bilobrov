@@ -16,7 +16,7 @@ import { Helmet } from "react-helmet";
 import { useTranslation } from "react-i18next";
 import { ProductDescription } from "../../components/ProductDescription/ProductDescription";
 
-const HomePage = () => {
+export const HomePage = () => {
   const seoData = usePageData(API_URL);
 
   const { t } = useTranslation();
@@ -130,5 +130,3 @@ const HomePage = () => {
     </main>
   );
 };
-
-export default HomePage;
