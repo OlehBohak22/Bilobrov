@@ -241,6 +241,7 @@ const productSlice = createSlice({
       state.sort = "popularity";
       state.selectedCategories = [];
       state.selectedBrands = [];
+      state.selectedAttributes = {};
       state.onSale = false;
       state.inStock = false;
       state.minPrice = 0;
