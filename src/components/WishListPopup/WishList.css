@@ -1,0 +1,8 @@
+.productListSwiper {
+  overflow: hidden;
+  max-width: 100%;
+  margin-left: 0;
+
+  .swiper-wrapper {
+  }
+}

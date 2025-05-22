@@ -14,6 +14,7 @@ import {
   setSelectedCategories,
   fetchProducts,
   setSelectedAttributes,
+  resetFilters,
 } from "../../store/slices/filterSlice";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
@@ -565,19 +566,31 @@ export const Filters: React.FC<{ onClose: () => void }> = ({ onClose }) => {
             })}
           </div>
         </div>
-
-        <button className={s.btn} onClick={applyFilters}>
-          {t("catalog.filterApply")}
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
+        <div>
+          <button
+            onClick={() => {
+              dispatch(resetFilters());
+              dispatch(fetchProducts());
+              onClose();
+            }}
+            className={s.resetFilters}
           >
-            <path d="M17.4177 5L16.3487 6.05572L21.1059 10.7535H0V12.2465H21.1059L16.3487 16.9443L17.4177 18L24 11.5L17.4177 5Z" />
-          </svg>
-        </button>
+            {t("reset")}
+          </button>
+
+          <button className={s.btn} onClick={applyFilters}>
+            {t("catalog.filterApply")}
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path d="M17.4177 5L16.3487 6.05572L21.1059 10.7535H0V12.2465H21.1059L16.3487 16.9443L17.4177 18L24 11.5L17.4177 5Z" />
+            </svg>
+          </button>
+        </div>
       </motion.div>
     </motion.div>,
     document.body

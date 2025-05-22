@@ -313,6 +313,11 @@ const OrderPage: React.FC = () => {
   const [paymentMethod, setPaymentMethod] = useState("cod");
 
   const handleNextStep = () => {
+    const catalogTop = document.querySelector(`body`);
+    catalogTop?.scrollIntoView({
+      block: "start",
+    });
+
     if (step === 1) {
       const valid = validateStepOne();
       setIsStepOneValid(valid);

@@ -21,7 +21,10 @@ export const Footer = () => {
     <footer className={s.footer}>
       <Layout>
         <div className={s.instaBlock}>
-          <a href="">
+          <a
+            target="__blank"
+            href="https://www.instagram.com/bilobrov_cosmetics/"
+          >
             <img src="/icons/footer-logo.svg" alt="Logo" />
             <div>
               <span>@bilobrov_cosmetics</span>

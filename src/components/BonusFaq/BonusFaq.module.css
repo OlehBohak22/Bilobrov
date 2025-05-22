@@ -32,6 +32,8 @@
 
     li {
       padding: 1.25vw;
+
+      padding-left: 2.9vw;
       background-color: #f9f7f8;
       cursor: pointer;
       overflow: hidden;
@@ -75,8 +77,8 @@
   .accordionContent {
     max-width: 53vw;
     padding: 1vw;
-    background-color: #000000;
-    color: #ffffff;
+    padding-left: 0;
+    color: black;
     font-family: Manrope;
     font-size: 0.9vw;
     font-weight: 600;
@@ -89,6 +91,7 @@
   .section {
     padding-top: 10vw;
     padding-bottom: 20vw;
+
     h2 {
       margin-bottom: 6.4vw;
 
@@ -131,6 +134,7 @@
       line-height: 150%;
       max-width: none;
       padding: 4.2vw;
+      padding-left: 0;
     }
   }
 }

@@ -469,7 +469,7 @@ export const CatalogPage: React.FC = () => {
               dispatch(setPage(newPage));
               dispatch(fetchProducts());
 
-              const catalogTop = document.querySelector(`.${s.list}`);
+              const catalogTop = document.querySelector(`body`);
               catalogTop?.scrollIntoView({
                 block: "start",
               });

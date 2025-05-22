@@ -2,7 +2,7 @@ import { Breadcrumbs } from "@mui/material";
 import { AboutHeroSection } from "../../components/AboutHeroSection/AboutHeroSection";
 import { BilobrovTodaySection } from "../../components/BilobrovTodaySection/BilobrovTodaySection";
 import { Layout } from "../../components/Layout/Layout";
-import { OurTeamSection } from "../../components/OurTeamSection/OurTeamSection";
+// import { OurTeamSection } from "../../components/OurTeamSection/OurTeamSection";
 import { PhilosophySection } from "../../components/PhilosophySection/PhilosophySection";
 import { ValuablesSection } from "../../components/ValuablesSection/ValuablesSection";
 import s from "./AboutPage.module.css";
@@ -74,7 +74,7 @@ const AboutPage = () => {
       <AboutHeroSection />
       <BilobrovTodaySection />
       <PhilosophySection />
-      <OurTeamSection />
+      {/* <OurTeamSection /> */}
       <ValuablesSection />
     </main>
   );

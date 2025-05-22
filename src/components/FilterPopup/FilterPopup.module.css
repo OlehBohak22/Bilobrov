@@ -342,6 +342,7 @@
   justify-content: center;
   gap: 0.5vw;
   transition: 0.3s;
+  width: 100%;
 
   svg {
     width: 1.2vw;
@@ -360,7 +361,23 @@
   }
 }
 
+.resetFilters {
+  text-align: left;
+  width: 100%;
+  color: black;
+  font-family: Manrope;
+  font-weight: 700;
+  font-size: 0.8vw;
+  line-height: 100%;
+  letter-spacing: 0.01vw;
+  margin-bottom: 1vw;
+}
+
 @media (max-width: 1024px) {
+  .resetFilters {
+    font-size: 5vw;
+    margin-bottom: 5vw;
+  }
   .modal {
     width: 100%;
     padding: 4.2vw;

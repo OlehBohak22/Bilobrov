@@ -16,6 +16,7 @@ import { useTranslation } from "react-i18next";
 import { fetchCartProducts } from "../../store/slices/productsSlice";
 import { Loader } from "../Loader/Loader";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
+import "./WishList.css";
 
 const WishListPopup: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const dispatch = useAppDispatch();
@@ -197,7 +198,7 @@ const WishListPopup: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                   prevEl: `.${s.prevButton}`,
                   nextEl: `.${s.nextButton}`,
                 }}
-                className={s.productListSwiper}
+                className="productListSwiper"
               >
                 {cartProducts.map((product) => (
                   <SwiperSlide className={s.slide} key={product.id}>

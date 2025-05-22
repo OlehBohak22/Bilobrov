@@ -8,7 +8,7 @@ import { CategoriesSection } from "../../components/CategoriesSection/Categories
 import { HomeAbout } from "../../components/HomeAbout/HomeAbout";
 import { HomeServices } from "../../components/HomeServices/HomeServices";
 import { CashbackSection } from "../../components/CashbackSection/CashbackSection";
-import { BlogSection } from "../../components/BlogSection/BlogSection";
+// import { BlogSection } from "../../components/BlogSection/BlogSection";
 import { Layout } from "../../components/Layout/Layout";
 import { API_URL } from "../../constants/api";
 import { usePageData } from "../../hooks/usePageData";
@@ -118,9 +118,15 @@ const HomePage = () => {
       </div>
       <HomeAbout />
       <HomeServices />
-      <CashbackSection />
-      <BlogSection />
-      <ProductDescription />
+
+      <div className="lg:pb-[8vw]">
+        <CashbackSection />
+      </div>
+      {/* <BlogSection /> */}
+
+      {seoData.og_description && (
+        <ProductDescription content={seoData.og_description} />
+      )}
     </main>
   );
 };

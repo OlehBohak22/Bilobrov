@@ -17,7 +17,6 @@
   min-width: 83.3vw;
 
   max-width: 90%;
-  max-height: 90%;
   min-width: 90%;
   min-height: 90%;
   display: flex;
@@ -211,11 +210,6 @@
 .mobileList::-webkit-scrollbar-thumb {
   width: 1vw;
   background-color: var(--primary);
-}
-
-.productListSwiper {
-  overflow: hidden;
-  max-width: 100%;
 }
 
 @media (max-width: 1024px) {

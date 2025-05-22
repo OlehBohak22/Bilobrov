@@ -2,7 +2,7 @@ import { useState } from "react";
 import s from "./MailingFormBlock.module.css";
 import { useTranslation } from "react-i18next";
 import axios from "axios";
-import { API_URL_WP } from "../../constants/api";
+import { API_URL_WP, consumerKey, consumerSecret } from "../../constants/api";
 
 export const MailingFormBlock = () => {
   const { t } = useTranslation();
@@ -14,10 +14,21 @@ export const MailingFormBlock = () => {
     if (!email) return;
 
     try {
-      await axios.post(`${API_URL_WP}save-email`, {
-        email,
-      });
+      await axios.post(
+        `${API_URL_WP}save-email`,
+        { email },
+        {
+          auth: {
+            username: consumerKey,
+            password: consumerSecret,
+          },
+        }
+      );
+
+      alert(t("thanks"));
+
       setSubscribed(true);
+      setEmail("");
     } catch (error) {
       console.error("Помилка підписки:", error);
       alert("Не вдалося підписатися. Спробуйте пізніше.");
@@ -25,8 +36,14 @@ export const MailingFormBlock = () => {
   };
 
   return (
-    <form className={s.form}>
-      <button onClick={handleSubscribe}>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        handleSubscribe();
+      }}
+      className={s.form}
+    >
+      <button type="submit">
         <span>{t("mailingForm.subscribe")}</span>
         <span>{t("mailingForm.newsletter")}</span>
       </button>
