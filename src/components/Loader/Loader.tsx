@@ -1,9 +1,20 @@
 // import React from "react";
 import styled from "styled-components";
+import { useWindowSize } from "../../hooks/useWindowSize";
 
 export const Loader = ({ product }: { product?: boolean }) => {
+  const { width } = useWindowSize();
+
+  const isMobile = width < 1024;
+
   return (
-    <div style={product ? { paddingTop: "20vw" } : undefined}>
+    <div
+      style={Object.assign(
+        { maxWidth: isMobile ? "80%" : "50%" },
+        { margin: "0 auto" },
+        product ? { paddingTop: isMobile ? "100vw" : "20vw" } : {}
+      )}
+    >
       <StyledWrapper>
         <svg
           className="heart"
@@ -39,7 +50,7 @@ export const Loader = ({ product }: { product?: boolean }) => {
 const StyledWrapper = styled.div`
   .heart #line {
     fill: none;
-    stroke: #e00000;
+    stroke: rgba(214, 61, 68, 1);
     stroke-width: 0.05vw;
     stroke-linecap: butt;
     stroke-linejoin: round;
@@ -51,7 +62,7 @@ const StyledWrapper = styled.div`
   }
   .heart #point {
     fill: none;
-    stroke: #f00000;
+    stroke: rgba(214, 61, 68, 1);
     stroke-width: 0.1vw;
     stroke-linecap: round;
     stroke-linejoin: round;
