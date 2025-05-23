@@ -23,6 +23,7 @@ const MenuPopup: React.FC<{
   const asideTopMenu = useSelector(
     (state: RootState) => state.menu.asideTopMenu?.items || []
   );
+
   const { i18n } = useTranslation();
 
   const [openMenu, setOpenMenu] = useState<number | null>(null);
@@ -34,6 +35,8 @@ const MenuPopup: React.FC<{
   const asideBottomMemu = useSelector(
     (state: RootState) => state.menu.asideBottomMenu?.items || []
   );
+
+  console.log(asideBottomMemu);
 
   const asideBottomMenuTree = buildMenuTree(asideBottomMemu);
   const asideTopMenuTree = buildMenuTree(asideTopMenu);
@@ -58,7 +61,7 @@ const MenuPopup: React.FC<{
         modalRef.current &&
         !modalRef.current.contains(event.target as Node)
       ) {
-        onClose(); // Якщо клік був за межами модалки — закриваємо
+        onClose();
       }
     };
 

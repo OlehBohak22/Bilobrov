@@ -12,6 +12,7 @@ import { OffertTab } from "../../components/OffertTab/OffertTab";
 import { PolicyTab } from "../../components/PolicyTab/PolicyTab";
 import { Helmet } from "react-helmet";
 import { DeliveryTab } from "../../components/DeliveryTab/DeliveryTab";
+import { PaymentTab } from "../../components/PaymentTab/PaymentTab";
 
 const ClientsSupportPage = () => {
   const { t } = useTranslation();
@@ -20,7 +21,7 @@ const ClientsSupportPage = () => {
       title: t("clientsSupport.customers"),
       tabs: [
         {
-          id: "delivery",
+          id: "dostavka",
           label: t("clientsSupport.delivery"),
           icon: (
             <svg
@@ -38,7 +39,7 @@ const ClientsSupportPage = () => {
           ),
         },
         {
-          id: "payment",
+          id: "oplata",
           label: t("clientsSupport.payment"),
           icon: (
             <svg
@@ -248,9 +249,9 @@ const ClientsSupportPage = () => {
     switch (activeTab) {
       case "obmin-ta-povernennya":
         return <ReturnTab />;
-      // case "payment":
-      //   return <PaymentTab />;
-      case "delivery":
+      case "oplata":
+        return <PaymentTab />;
+      case "dostavka":
         return <DeliveryTab />;
       case "faq":
         return <FaqTab />;

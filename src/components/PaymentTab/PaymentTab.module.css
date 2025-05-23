@@ -1,0 +1,98 @@
+.tab {
+  h2 {
+    color: #000000;
+    margin-bottom: 3.1vw;
+
+    span:nth-child(1) {
+      font-family: Playfair display;
+      font-size: 3.2vw;
+      font-style: italic;
+      font-weight: 400;
+      line-height: 3.2vw;
+    }
+
+    span:nth-child(2) {
+      display: block;
+      margin-top: -0.7vw;
+      font-family: Manrope;
+      font-size: 3.2vw;
+      font-weight: 500;
+      line-height: 3.2vw;
+      text-indent: 3.5vw;
+    }
+  }
+
+  .desc {
+    font-family: Manrope;
+    font-size: 1vw;
+    font-weight: 700;
+    line-height: 1.5vw;
+    margin-bottom: 2vw;
+    display: flex;
+    align-items: center;
+    gap: 0.8vw;
+  }
+
+  .paymentMethods {
+    display: flex;
+    gap: 0.6vw;
+    margin-bottom: 2vw;
+
+    li {
+      width: 27vw;
+      background-color: rgba(249, 247, 248, 1);
+      padding: 2vw;
+    }
+
+    svg {
+      width: 1.6vw;
+      height: 1.6vw;
+      margin-bottom: 1.2vw;
+    }
+
+    h4 {
+      font-family: Playfair Display;
+      font-weight: 600;
+      font-style: italic;
+      font-size: 1.2vw;
+      line-height: 100%;
+      margin-bottom: 0.8vw;
+    }
+
+    p {
+      font-family: Manrope;
+      font-weight: 400;
+      font-size: 0.9vw;
+      line-height: 140%;
+      letter-spacing: 0%;
+      color: rgba(102, 102, 102, 1);
+    }
+  }
+
+  .notice {
+    font-family: Manrope;
+    font-weight: 600;
+    font-size: 1vw;
+    line-height: 140%;
+    letter-spacing: 0%;
+    color: rgba(0, 0, 0, 1);
+    margin-bottom: 0.8vw;
+  }
+
+  .noticeList {
+    padding-left: 2vw;
+    margin-bottom: 0.8vw;
+    li {
+      list-style: disc;
+      font-family: Manrope;
+      font-weight: 600;
+      font-size: 0.9vw;
+      line-height: 150%;
+      letter-spacing: -2%;
+    }
+
+    li:not(:last-child) {
+      margin-bottom: 0.5vw;
+    }
+  }
+}

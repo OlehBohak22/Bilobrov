@@ -40,10 +40,8 @@ export const registerUser = createAsyncThunk(
   "user/register",
   async (data: { email: string; password: string; name: string }, thunkAPI) => {
     try {
-      // 1. Реєстрація
       await axiosInstance.post("/responses/v1/user_registration", data);
 
-      // 2. Логін (як у loginUser)
       const response = await axiosInstance.post(
         "/responses/v1/user_authorization",
         { email: data.email, password: data.password }
