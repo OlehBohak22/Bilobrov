@@ -76,7 +76,7 @@
         line-height: 150%;
         letter-spacing: -2%;
         text-align: center;
-        max-width: 10vw;
+        max-width: 13vw;
       }
     }
   }
@@ -129,26 +129,57 @@
 
     .desc {
       font-size: 4.2vw;
-      line-height: 120%;
+      line-height: 140%;
+      margin-bottom: 6.4vw;
+      max-width: none;
+      align-items: start;
+      gap: 4.2vw;
+      margin-bottom: 6.4vw;
+
+      svg {
+        width: 11.2vw;
+      }
+    }
+
+    .variants {
+      font-size: 4.2vw;
       margin-bottom: 6.4vw;
     }
 
     .list {
       flex-direction: column;
       gap: 3.2vw;
+      margin-bottom: 6.4vw;
 
       li {
         padding: 6.4vw;
+        width: auto;
+        height: auto;
 
         svg {
-          width: 8.5vw;
-          height: 8.5vw;
+          width: 13.8vw;
+          height: 13.8vw;
           margin-bottom: 4.2vw;
         }
 
         p {
           font-size: 4.2vw;
           line-height: 150%;
+          max-width: none;
+        }
+      }
+    }
+
+    .knows {
+      h5 {
+        font-size: 4.2vw;
+        margin-bottom: 4.2vw;
+      }
+
+      ul {
+        padding-left: 8vw;
+        li {
+          font-size: 3.7vw;
         }
       }
     }

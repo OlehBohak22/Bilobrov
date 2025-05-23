@@ -96,3 +96,84 @@
     }
   }
 }
+
+@media (max-width: 1024px) {
+  .tab {
+    h2 {
+      margin-bottom: 10vw;
+
+      span:nth-child(1) {
+        font-size: 9.6vw;
+        line-height: 9.6vw;
+      }
+
+      span:nth-child(2) {
+        margin-top: -0.5vw;
+        font-size: 8.5vw;
+        line-height: 8.5vw;
+        text-indent: 8vw;
+      }
+    }
+
+    .desc {
+      font-size: 4.2vw;
+      line-height: 140%;
+      margin-bottom: 6.4vw;
+      max-width: none;
+      align-items: start;
+      gap: 4.2vw;
+      margin-bottom: 6.4vw;
+
+      svg {
+        width: 11.2vw;
+      }
+    }
+
+    .variants {
+      font-size: 4.2vw;
+      margin-bottom: 6.4vw;
+    }
+
+    .paymentMethods {
+      flex-direction: column;
+      gap: 3.2vw;
+      margin-bottom: 6.4vw;
+
+      li {
+        padding: 6.4vw;
+        width: auto;
+        height: auto;
+
+        h4 {
+          font-size: 6.4vw;
+          margin-bottom: 4.2vw;
+        }
+
+        svg {
+          width: 13.8vw;
+          height: 13.8vw;
+          margin-bottom: 6.4vw;
+        }
+
+        p {
+          font-size: 4.2vw;
+          line-height: 150%;
+          max-width: none;
+        }
+      }
+    }
+
+    .notice {
+      font-size: 4.2vw;
+      margin-bottom: 4.2vw;
+    }
+
+    .noticeList {
+      padding-left: 8vw;
+      margin-bottom: 4.2vw;
+      li {
+        font-size: 3.7vw;
+      }
+    }
+  }
+}
