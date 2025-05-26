@@ -131,6 +131,11 @@
     gap: 0.5vw;
     width: fit-content;
 
+    span {
+      border-bottom: 1px solid transparent;
+      transition: border 0.3s;
+    }
+
     .icon {
       display: flex;
       justify-content: center;
@@ -158,12 +163,17 @@
   }
 
   .tgLink:hover {
+    color: white;
+
+    span {
+      border-bottom: 1px solid white;
+    }
     .icon {
       border-radius: 0;
       background-color: #ffffff;
 
       svg {
-        fill: black;
+        fill: var(--primary);
       }
     }
   }

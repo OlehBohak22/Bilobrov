@@ -15,12 +15,14 @@ export const FooterNavigationBlock = () => {
             <Link to="/support#faq">{t("footerNavigation.customers.faq")}</Link>
           </li>
           <li>
-            {/* <Link to="/delivery">
+            <Link to="/support#dostavka">
               {t("footerNavigation.customers.delivery")}
-            </Link> */}
+            </Link>
           </li>
           <li>
-            {/* <Link to="/payment">{t("footerNavigation.customers.payment")}</Link> */}
+            <Link to="/support#oplata">
+              {t("footerNavigation.customers.payment")}
+            </Link>
           </li>
           <li>
             <Link to="/support#obmin-ta-povernennya">

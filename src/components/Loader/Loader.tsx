@@ -11,7 +11,7 @@ export const Loader = ({ product }: { product?: boolean }) => {
     <div
       style={Object.assign(
         { maxWidth: isMobile ? "80%" : "50%" },
-        { margin: "0 auto" },
+        { margin: "0 auto", transform: "translateX(3.5vw)" },
         product ? { paddingTop: isMobile ? "100vw" : "20vw" } : {}
       )}
     >

@@ -19,7 +19,7 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1.2vw;
-  margin-top: 1.2vw;
+  /* margin-top: 1vw; */
 
   button {
     font-family: Manrope;

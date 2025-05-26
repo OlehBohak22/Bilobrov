@@ -29,6 +29,7 @@
 
   li {
     padding: 1.25vw;
+    padding-left: 2vw;
     background-color: #f9f7f8;
     cursor: pointer;
     overflow: hidden;
@@ -39,7 +40,7 @@
   }
 
   li:hover h3 div {
-    background-color: #ffc43a;
+    background-color: var(--primary);
   }
 }
 
@@ -51,7 +52,6 @@
   font-size: 1.2vw;
   font-weight: 700;
   line-height: 1.5vw;
-  margin-bottom: 0.8vw;
 
   div {
     background-color: #1a1a1a;
@@ -79,6 +79,7 @@
   font-weight: 600;
   line-height: 1.4vw;
   letter-spacing: -0.02em;
+  padding-top: 1vw;
 }
 
 @media (max-width: 1024px) {
@@ -103,5 +104,35 @@
       font-size: 4.2vw;
       font-weight: 600;
     }
+  }
+
+  .faqList {
+    max-width: none;
+    li {
+      padding: 4.2vw;
+    }
+
+    li:not(:last-child) {
+      margin-bottom: 3.2vw;
+    }
+  }
+
+  .accordionTitle {
+    font-size: 4.2vw;
+    line-height: 120%;
+    margin-bottom: 4.2vw;
+
+    div {
+      width: 11.2vw;
+      height: 11.2vw;
+    }
+  }
+
+  .accordionContent {
+    font-size: 3.7vw;
+    line-height: 150%;
+    max-width: none;
+    padding: 4.2vw;
+    padding-left: 0;
   }
 }

@@ -92,7 +92,7 @@
 .header:hover .headerLogo,
 .header.hovered .headerLogo {
   path {
-    fill: black;
+    fill: var(--primary);
   }
 
   /* rect {
@@ -199,7 +199,7 @@
       font-size: 0.8vw;
       line-height: 0.8vw;
       letter-spacing: 0.01vw;
-      padding: 1.2vw;
+      padding: 1vw;
       white-space: nowrap;
     }
 
@@ -272,11 +272,19 @@
 .headerBottomLine::after {
   position: absolute;
   content: "";
-  width: 100%;
+  width: 110vw;
   height: 1px;
-  left: 0;
-  background-color: rgba(0, 0, 0, 0.05);
+  left: -10vw;
+  background-color: rgba(255, 255, 255, 0.116);
   pointer-events: none;
+}
+
+.header.hovered .headerBottomLine::before,
+.header:hover .headerBottomLine::before,
+.header:hover .headerBottomLine::after,
+.header.hovered .headerBottomLine::after {
+  background-color: rgba(0, 0, 0, 0.062);
+  color: #ffffff !important;
 }
 
 body {

@@ -148,6 +148,11 @@
     gap: 1.2vw;
   }
 
+  .error {
+    margin-top: 0.5vw;
+    color: red;
+  }
+
   label {
     font-family: Manrope;
     font-weight: 500;

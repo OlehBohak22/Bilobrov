@@ -74,7 +74,7 @@ textarea {
 /* ProductPage.module.css */
 .breadcrumbs {
   display: flex;
-  margin: 1.6vw 0 !important;
+  margin: 1vw 0 !important;
 
   ol {
     gap: 0.4vw;

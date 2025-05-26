@@ -104,7 +104,7 @@
   }
 
   li:not(:last-child) {
-    margin-bottom: 1.6vw;
+    margin-bottom: 1.2vw;
   }
 }
 
@@ -130,7 +130,7 @@
   }
 
   li:not(:last-child) {
-    margin-bottom: 1.2vw;
+    margin-bottom: 1vw;
   }
 }
 

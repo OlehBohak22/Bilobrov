@@ -39,6 +39,8 @@ const MenuPopup: React.FC<{
   const asideBottomMenuTree = buildMenuTree(asideBottomMemu);
   const asideTopMenuTree = buildMenuTree(asideTopMenu);
 
+  console.log(asideBottomMenuTree, asideBottomMemu);
+
   const { pathname } = useLocation(); // Отримуємо поточний шлях
 
   const handleReset = () => {
