@@ -11,6 +11,8 @@ export const OrdersTab = () => {
 
   const { t } = useTranslation();
 
+  console.log(orders);
+
   return (
     <div className={s.tab}>
       <h3>

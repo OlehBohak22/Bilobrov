@@ -3,6 +3,7 @@ import axios from "axios";
 import { API_URL_WC, consumerKey, consumerSecret } from "../../constants/api";
 
 export interface OrderData {
+  meta_data?: any;
   id?: number;
   payment_method: string;
   payment_method_title: string;

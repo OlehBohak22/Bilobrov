@@ -110,6 +110,7 @@ export const Header: React.FC<HeaderProps> = ({
     <header
       className={`${s.header} ${
         location.pathname.startsWith("/product/") ||
+        location.pathname.startsWith("/order-success") ||
         location.pathname.startsWith("/catalog/") ||
         isMobile ||
         [

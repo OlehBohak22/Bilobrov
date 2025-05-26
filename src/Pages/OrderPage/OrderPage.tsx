@@ -8,7 +8,7 @@ import { Layout } from "../../components/Layout/Layout";
 import { OrderSidePanel } from "../../components/OrderSidePanel/OrderSidePanel";
 import { useEffect } from "react";
 import { CustomSelect } from "../../components/CustomSelect/CustomSelect";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { OrderFooter } from "./OrderFooter";
 import { OrderSucces } from "../../components/OrderSucces/OrderSucces";
 import { clearCart } from "../../store/slices/cartSlice";
@@ -32,7 +32,7 @@ const OrderPage: React.FC = () => {
   const [step, setStep] = useState(1);
   const { cities } = useSelector((state: RootState) => state.cities);
   const [selectedCity, setSelectedCity] = useState("");
-  const [orderSucces, setOrderSucces] = useState<OrderData | null>(null);
+  const [orderSucces] = useState<OrderData | null>(null);
   const [house, setHouse] = useState("");
   const [entrance, setEntrance] = useState("");
   const [apartment, setApartment] = useState("");
@@ -331,6 +331,8 @@ const OrderPage: React.FC = () => {
     setStep((prev) => prev + 1);
   };
 
+  const navigate = useNavigate(); // додай у компоненті OrderPage
+
   const handlePrevStep = () => setStep((prev) => prev - 1);
 
   let title: string = "";
@@ -380,7 +382,7 @@ const OrderPage: React.FC = () => {
       payment_method_title:
         paymentMethod === "cod" ? "Cash on delivery" : "Online payment",
       set_paid: false,
-      status: paymentMethod === "cod" ? "on-hold" : "processing",
+      status: paymentMethod === "cod" ? "on-hold" : "pending",
       customer_id: userData ? userData.ID : 0,
       shipping_type: departmentSelect,
 
@@ -452,7 +454,7 @@ const OrderPage: React.FC = () => {
               house: house,
               entrance: entrance,
               apartment: apartment,
-              selected: true, // тут обираємо основною
+              selected: true,
               delivery_type:
                 departmentSelect === "На відділення" ? "department" : "courier",
               department: departmentSelect === "На відділення" ? warehouse : "",
@@ -473,7 +475,7 @@ const OrderPage: React.FC = () => {
 
       if (createOrder.fulfilled.match(resultAction)) {
         dispatch(clearCart(token));
-        setOrderSucces(resultAction.payload);
+        navigate(`/order-success?order_id=${resultAction.payload.id}`);
 
         if (paymentMethod === "online payment") {
           const basicAuth = btoa(`${consumerKey}:${consumerSecret}`);

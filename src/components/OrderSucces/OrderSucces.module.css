@@ -4,7 +4,7 @@
   width: 42.5vw;
   background-color: rgba(252, 252, 252, 1);
   padding: 3.1vw;
-  margin-top: 16vw;
+  margin-top: 25vw;
   margin-bottom: 10vw;
 }
 
@@ -240,6 +240,7 @@
     width: 100%;
     margin-top: 55.2vw;
     padding: 10.6vw 4.2vw;
+    margin-top: 105vw;
   }
 
   .succesCard::before {

@@ -18,8 +18,8 @@ import { AnimatePresence } from "framer-motion";
 import { fetchProducts, fetchReviews } from "./store/slices/productsSlice";
 import { fetchCertificates, setSearchQuery } from "./store/slices/filterSlice";
 import "./utils/i18n";
-// import { OrderSuccesPage } from "./Pages/OrderSuccesPage/OrderSuccesPage";
 import { HomePage } from "./Pages/HomePage/HomePage";
+import OrderSuccesPage from "./Pages/OrderSuccesPage/OrderSuccesPage";
 
 // const HomePage = lazy(() => import("./Pages/HomePage/HomePage"));
 const AboutPage = lazy(() => import("./Pages/AboutPage/AboutPage"));
@@ -207,7 +207,7 @@ function App() {
                   <Route path="/brendy" element={<BrandsPage />} />
                   <Route path="/order" element={<OrderPage />} />
 
-                  {/* <Route path="/order-success" element={<OrderSuccesPage />} /> */}
+                  <Route path="/order-success" element={<OrderSuccesPage />} />
 
                   <Route path="/catalog" element={<CatalogPage />}>
                     <Route index element={<CatalogPage />} />

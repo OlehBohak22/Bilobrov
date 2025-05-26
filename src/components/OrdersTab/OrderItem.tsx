@@ -40,6 +40,9 @@ export const OrderItem: FC<OrderTabProp> = ({ info }) => {
       break;
   }
 
+  console.log(STATUS, info.status);
+  console.log(info);
+
   return (
     <li onClick={() => setIsOpen(!isOpen)} className={s.item}>
       <div className={s.orderHeading}>
@@ -165,7 +168,7 @@ export const OrderItem: FC<OrderTabProp> = ({ info }) => {
               </div>
               <div className={s.totalAmount}>
                 <p>{t("orders.total")}:</p>
-                <span>{info.grand_total} ₴</span>
+                <span>{info.total_price} ₴</span>
               </div>
             </div>
           </div>

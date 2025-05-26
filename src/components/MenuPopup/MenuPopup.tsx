@@ -36,8 +36,6 @@ const MenuPopup: React.FC<{
     (state: RootState) => state.menu.asideBottomMenu?.items || []
   );
 
-  console.log(asideBottomMemu);
-
   const asideBottomMenuTree = buildMenuTree(asideBottomMemu);
   const asideTopMenuTree = buildMenuTree(asideTopMenu);
 
