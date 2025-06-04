@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import s from "./AccountPage.module.css";
 import { Layout } from "../../components/Layout/Layout";
-import { MainAccountTab } from "../../components/MainAccountTab/MainAccountTab";
+import {
+  MainAccountTab,
+  vocativeCase,
+} from "../../components/MainAccountTab/MainAccountTab";
 import { UpdateInfoTab } from "../../components/UpdateInfoTab/UpdateInfoTab";
 import { WishListTab } from "../../components/WishListTab/WishListTab";
 import { BonusTab } from "../../components/BonusTab/BonusTab";
@@ -207,11 +210,13 @@ const AccountPage = () => {
   const isMobile = width < 1024;
   const { t } = useTranslation();
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
+  const user = useSelector((state: RootState) => state.user?.user);
+
+  const namePart = user?.name ? vocativeCase(user.name) : null;
 
   const { preferences: wishlist } = useSelector(
     (state: RootState) => state.wishlist || []
   );
-  const user = useSelector((state: RootState) => state.user.user);
 
   const [tabsMenuHidden, setTabsMenuHidden] = useState(false);
 
@@ -292,7 +297,9 @@ const AccountPage = () => {
   return (
     <main className={s.page}>
       <Helmet>
-        <title>{activeTab}</title>
+        <title>
+          {namePart} {t("accountPage.welcome.hello")}
+        </title>
 
         <meta
           name="robots"

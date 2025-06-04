@@ -20,6 +20,7 @@ import { fetchCertificates, setSearchQuery } from "./store/slices/filterSlice";
 import "./utils/i18n";
 import { HomePage } from "./Pages/HomePage/HomePage";
 import OrderSuccesPage from "./Pages/OrderSuccesPage/OrderSuccesPage";
+import { OrderFooter } from "./Pages/OrderPage/OrderFooter";
 
 // const HomePage = lazy(() => import("./Pages/HomePage/HomePage"));
 const AboutPage = lazy(() => import("./Pages/AboutPage/AboutPage"));
@@ -232,7 +233,11 @@ function App() {
               </Suspense>
             </div>
 
-            <Footer />
+            {location.pathname.startsWith("/order-succes") ? (
+              <OrderFooter />
+            ) : (
+              <Footer />
+            )}
           </>
         )}
       </>

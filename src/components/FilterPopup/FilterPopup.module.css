@@ -132,7 +132,8 @@
 
 .inputContainer {
   position: relative;
-  width: 90%;
+  width: 100%;
+  transform: translateX(-1vw);
 
   input {
     width: 100%;
@@ -164,6 +165,8 @@
 }
 
 .backDropCOntaienr {
+  position: relative;
+
   max-height: 50vh;
   overflow-y: auto;
   .backDrop:not(:last-child) {
@@ -362,20 +365,24 @@
 }
 
 .resetFilters {
-  text-align: left;
-  width: 100%;
-  color: black;
+  position: absolute;
+  top: 0;
+  right: 0;
   font-family: Manrope;
-  font-weight: 700;
-  font-size: 0.8vw;
+  font-weight: 500;
+  font-size: 0.7vw;
   line-height: 100%;
-  letter-spacing: 0.01vw;
-  margin-bottom: 1vw;
+  letter-spacing: 0%;
+  color: rgba(186, 186, 186, 1);
+}
+
+.resetFilters:hover {
+  color: black;
 }
 
 @media (max-width: 1024px) {
   .resetFilters {
-    font-size: 5vw;
+    font-size: 4vw;
     margin-bottom: 5vw;
   }
   .modal {

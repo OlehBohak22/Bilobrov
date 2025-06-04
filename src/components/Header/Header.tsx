@@ -133,8 +133,18 @@ export const Header: React.FC<HeaderProps> = ({
         </div>
       )}
       <Layout>
-        <div className={s.headerTopLine}>
-          <div className="flex gap-[4.8vw] lg:gap-[1.6vw]">
+        <div
+          className={`${s.headerTopLine} 
+               ${location.pathname.startsWith("/order-succes") && s.border} 
+        `}
+        >
+          <div
+            className={`flex gap-[4.8vw] lg:gap-[1.6vw] ${
+              location.pathname.startsWith("/order-succes") && "opacity-0"
+            }
+
+          } `}
+          >
             <button onClick={() => openMenu()} className={s.menuBtn}>
               <svg
                 width="24"
@@ -229,19 +239,43 @@ export const Header: React.FC<HeaderProps> = ({
             </div>
           </Link>
 
-          {!isMobile && (
+          {!isMobile && !location.pathname.startsWith("/order-succes") && (
             <LanguageSelect i18n={i18n} changeLanguage={i18n.changeLanguage} />
           )}
 
-          <HeaderUserSettings
-            isMobile={isMobile}
-            openRegister={openRegister}
-            openWishList={openWishList}
-            openCart={openCart}
-          />
+          {location.pathname.startsWith("/order-succes") ? (
+            <div className={s.orderTopPanel}>
+              {" "}
+              <a href="tel:380674811650">
+                {isMobile ? (
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M15.3106 22C14.6674 21.9291 14.0335 21.7983 13.4182 21.6096C12.2133 21.2176 11.0836 20.6474 10.0724 19.921C8.59671 18.872 7.2564 17.6666 6.07839 16.3291C4.96191 15.1129 4.00054 13.7798 3.21359 12.3565C2.60907 11.2725 2.21946 10.0953 2.06351 8.88179C1.92016 7.91129 2.02025 6.923 2.35592 5.99478C2.69158 5.06656 3.25363 4.22382 3.99776 3.53301C4.47742 3.09856 4.98739 2.69425 5.52428 2.32271C5.77496 2.11483 6.09861 2 6.43391 2C6.7692 2 7.09285 2.11483 7.34353 2.32271C7.67206 2.55465 7.95808 2.83483 8.19042 3.15234C8.72564 3.84143 9.20111 4.56931 9.61235 5.32898C9.80618 5.68282 9.93018 6.06632 9.97833 6.46118C10.0134 6.74779 9.97473 7.03808 9.86564 7.30797C9.75654 7.57785 9.58008 7.81959 9.35097 8.01314C8.97036 8.37463 8.55374 8.70145 8.10676 8.9892C7.70788 9.20424 7.41472 9.55616 7.28973 9.97002C7.16474 10.3839 7.21784 10.8269 7.43766 11.2048C7.76974 11.9909 8.23964 12.7199 8.82819 13.3619C9.58375 14.29 10.4463 15.1378 11.4003 15.8899C11.8845 16.2916 12.46 16.5852 13.0836 16.7488C13.3555 16.8175 13.6423 16.8157 13.9132 16.7434C14.184 16.6712 14.4286 16.5313 14.6206 16.3389C14.9761 15.9973 15.342 15.6752 15.7289 15.3628C16.1057 15.0113 16.6001 14.7908 17.1299 14.7381C17.5708 14.7275 18.0071 14.8251 18.395 15.0212C18.9646 15.3083 19.4948 15.6591 19.9738 16.0656C20.5755 16.5086 21.1226 17.0128 21.6048 17.5687C21.7467 17.7102 21.8547 17.8782 21.9217 18.0617C21.9887 18.2451 22.0131 18.4398 21.9933 18.6328C21.9736 18.8257 21.91 19.0125 21.807 19.1807C21.704 19.349 21.5638 19.4949 21.3957 19.6087C20.7812 20.1857 20.1051 20.7024 19.3778 21.1508C18.5839 21.5859 17.7001 21.8588 16.7849 21.9512H16.6907L15.3106 22Z"
+                      fill="#222222"
+                    />
+                  </svg>
+                ) : (
+                  "+38 (067) 481 16 50"
+                )}
+              </a>
+            </div>
+          ) : (
+            <HeaderUserSettings
+              isMobile={isMobile}
+              openRegister={openRegister}
+              openWishList={openWishList}
+              openCart={openCart}
+            />
+          )}
         </div>
 
-        {isMobile && (
+        {isMobile && !location.pathname.startsWith("/order-succes") && (
           <div className={s.headerInputSearch}>
             <input
               type="text"
@@ -278,7 +312,9 @@ export const Header: React.FC<HeaderProps> = ({
           <div
             className={`${s.headerBottomLine} ${
               location.pathname.startsWith("/account") && s.opacity
-            }`}
+            }
+               ${location.pathname.startsWith("/order-succes") && s.opacity} 
+            `}
           >
             <nav>
               <ul className={s.navMenu}>
@@ -368,7 +404,7 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
         )}
       </Layout>
-      {isMobile && (
+      {isMobile && !location.pathname.startsWith("/order-succes") && (
         <div className={s.headerBottomLine}>
           <nav>
             <ul className={s.navMenu}>

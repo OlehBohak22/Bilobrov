@@ -306,6 +306,31 @@ body {
   display: block; /* показуємо overlay при ховері на меню */
 }
 
+.border {
+  position: relative;
+}
+
+.orderTopPanel {
+  a {
+    color: black;
+    font-family: Manrope;
+    font-weight: 700;
+    font-size: 0.9vw;
+    line-height: 100%;
+  }
+}
+
+.border::before {
+  position: absolute;
+  content: "";
+  width: 110vw;
+  height: 1px;
+  left: -10vw;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.05);
+  pointer-events: none;
+}
+
 @media (max-width: 1024px) {
   .header {
     position: static;
@@ -314,6 +339,10 @@ body {
 
   .headerTopLine {
     padding: 4.2vw 0;
+  }
+
+  .border::before {
+    opacity: 0;
   }
 
   .menuBtn {
@@ -380,5 +409,6 @@ body {
   }
 
   .headerBottomLine::after {
+    display: none;
   }
 }

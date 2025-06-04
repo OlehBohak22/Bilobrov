@@ -4,14 +4,11 @@ import { OrderSucces } from "../../components/OrderSucces/OrderSucces";
 import { OrderData } from "../../store/slices/orderSlice";
 import axios from "axios";
 import { API_URL_BASE, consumerKey, consumerSecret } from "../../constants/api";
-import { Loader } from "../../components/Loader/Loader";
 
 export const OrderSuccessPage = () => {
   const [orderData, setOrderData] = useState<OrderData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
-  console.log(orderData);
 
   const [params] = useSearchParams();
   const orderId = params.get("order_id");
@@ -44,7 +41,7 @@ export const OrderSuccessPage = () => {
     fetchOrder();
   }, [orderId]);
 
-  if (loading) return <Loader />;
+  if (loading) return;
   if (error || !orderData) return <div>{error || "Order not found"}</div>;
 
   return (

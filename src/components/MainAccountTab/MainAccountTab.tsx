@@ -7,7 +7,7 @@ type MainAccountTabProps = {
   setTab: (tab: string) => void;
 };
 
-const vocativeCase = (name: string): string => {
+export const vocativeCase = (name: string): string => {
   const rules: Record<string, string> = {
     а: "о",
     ія: "іє",

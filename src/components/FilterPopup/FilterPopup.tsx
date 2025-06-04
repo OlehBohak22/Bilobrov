@@ -263,6 +263,17 @@ export const Filters: React.FC<{ onClose: () => void }> = ({ onClose }) => {
           </div>
 
           <div className={s.backDropCOntaienr}>
+            <button
+              onClick={() => {
+                dispatch(resetFilters());
+                dispatch(fetchProducts());
+                onClose();
+              }}
+              className={s.resetFilters}
+            >
+              {t("reset")}
+            </button>
+
             <div className={s.backDrop}>
               <label
                 className={`${brandsIsOpen ? s.active : ""}`}
@@ -567,17 +578,6 @@ export const Filters: React.FC<{ onClose: () => void }> = ({ onClose }) => {
           </div>
         </div>
         <div>
-          <button
-            onClick={() => {
-              dispatch(resetFilters());
-              dispatch(fetchProducts());
-              onClose();
-            }}
-            className={s.resetFilters}
-          >
-            {t("reset")}
-          </button>
-
           <button className={s.btn} onClick={applyFilters}>
             {t("catalog.filterApply")}
             <svg
