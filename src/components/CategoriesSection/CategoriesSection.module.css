@@ -32,6 +32,9 @@
     p {
       position: relative;
       z-index: 99;
+      font-family: Manrope;
+      font-weight: 700;
+      font-size: 1.4vw;
     }
 
     a {
@@ -211,6 +214,10 @@
       line-height: 137%;
       padding: 4.2vw;
 
+      p {
+        font-size: 4.8vw;
+      }
+
       .linkHover {
         display: none;
       }
@@ -232,7 +239,9 @@
         flex-basis: calc((100% - 4vw) / 2);
 
         img {
-          width: 100%;
+          max-width: none;
+          width: 130%;
+          transform: translateX(15%);
         }
       }
     }

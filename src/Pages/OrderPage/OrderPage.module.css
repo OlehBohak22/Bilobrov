@@ -49,7 +49,7 @@
     }
 
     path {
-      fill: black;
+      fill: var(--primary);
     }
   }
 }
@@ -165,11 +165,13 @@
 
   .errorInput {
     border-left-color: red !important;
+    border-left-width: 2px !important;
     outline: none;
   }
 
   .errorInput > div {
     border-left-color: red !important;
+    border-left-width: 2px !important;
   }
 
   input::placeholder {
@@ -313,8 +315,6 @@
 .stepController {
   display: flex;
   justify-content: space-between;
-  border-top: 1px solid rgba(239, 237, 238, 1);
-  padding-top: 1.6vw;
   margin-top: 1.6vw;
 
   .nextBtn {
@@ -373,6 +373,12 @@
     width: 12.5vw;
     border: 1px solid rgba(26, 26, 26, 1);
     cursor: pointer;
+    transition: 0.3s;
+  }
+
+  .prevBtn:hover {
+    border: 1px solid var(--primary);
+    color: var(--primary);
   }
 
   .disabled {

@@ -7,6 +7,7 @@ export interface MenuItem {
   title: string;
   url: string;
   parent_id: string;
+  svg: string;
 }
 
 interface Menu {

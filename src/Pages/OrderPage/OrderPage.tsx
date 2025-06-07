@@ -1322,11 +1322,11 @@ const OrderPage: React.FC = () => {
                         {t("orderStep.confirmOrder")}
                       </button>
 
-                      <p>
+                      {/* <p>
                         {t("orderStep.acceptTerms")}
 
                         <a href="">{t("orderStep.privacyPolicy")}</a>
-                      </p>
+                      </p> */}
                     </div>
                   ) : (
                     <div

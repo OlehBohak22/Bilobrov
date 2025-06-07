@@ -2,8 +2,16 @@
   padding-top: 0;
 }
 
+.topList {
+  padding-top: 3.1vw;
+}
+
 @media (max-width: 1024px) {
   .page {
     padding-top: 57vw;
+  }
+
+  .topList {
+    padding-top: 16vw;
   }
 }

@@ -225,6 +225,7 @@
 
   .clear {
     margin-top: 0;
+    gap: 2vw;
 
     svg {
       width: 5.3vw;
@@ -233,6 +234,7 @@
 
     span {
       font-size: 4.2vw;
+      font-weight: 600;
     }
   }
 

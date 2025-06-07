@@ -22,9 +22,11 @@ interface ProductListProps {
   products?: ProductInfo[];
   buyWith?: boolean;
   centered?: boolean;
+  className?: string;
 }
 
 export const ProductList = ({
+  className,
   categories = [],
   defaultCategory,
   children,
@@ -107,7 +109,9 @@ export const ProductList = ({
 
   return (
     <div
-      className={`${s.section} ${mini ? s.mini : ""} ${buyWith && "pt-0!"} `}
+      className={`${s.section} ${className} ${mini ? s.mini : ""} ${
+        buyWith && "pt-0!"
+      } `}
     >
       <div className={`${s.navigationContainer} ${centered && s.centered}`}>
         <div className={s.swiperController}>

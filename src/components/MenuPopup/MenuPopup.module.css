@@ -120,17 +120,23 @@
       font-weight: 500;
       font-size: 0.8vw;
       transition: color 0.3s;
-
+      display: flex;
+      align-items: center;
+      gap: 0.8vw;
       line-height: 100%;
     }
 
     a:hover {
       color: rgba(255, 196, 58, 1);
+
+      svg {
+        stroke: black !important;
+      }
     }
   }
 
   li:not(:last-child) {
-    margin-bottom: 1vw;
+    margin-bottom: 1.2vw;
   }
 }
 
@@ -248,6 +254,7 @@
     li {
       a {
         font-size: 4.2vw;
+        gap: 4.2vw;
       }
     }
 

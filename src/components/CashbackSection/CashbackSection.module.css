@@ -13,6 +13,7 @@
   .titleContainer {
     margin-bottom: 2vw;
     span {
+      display: block;
       font-family: Playfair Display;
       font-size: 1.2vw;
       font-style: italic;

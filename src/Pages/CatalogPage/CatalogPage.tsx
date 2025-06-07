@@ -268,12 +268,9 @@ export const CatalogPage: React.FC = () => {
 
       if (container && scrollbar) {
         const maxScroll = container.scrollWidth - container.clientWidth;
-
         const rawProgress =
           maxScroll > 0 ? (container.scrollLeft / maxScroll) * 100 : 0;
-
         const scrollProgress = Math.max(rawProgress, 15);
-
         scrollbar.style.width = `${scrollProgress}%`;
       }
     };
@@ -281,7 +278,7 @@ export const CatalogPage: React.FC = () => {
     const container = document.querySelector(`.${s.scroller}`);
     if (container) {
       container.addEventListener("scroll", handleScroll);
-      handleScroll();
+      handleScroll(); // 💡 Обов’язковий запуск для оновлення одразу
     }
 
     return () => {
@@ -289,7 +286,7 @@ export const CatalogPage: React.FC = () => {
         container.removeEventListener("scroll", handleScroll);
       }
     };
-  }, [location]);
+  }, [childCategories, selectedCategories]);
 
   let metaUrl = location.state;
 

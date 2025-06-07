@@ -245,10 +245,7 @@ export const OrderSidePanel = ({
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                   >
-                    <path
-                      d="M16 7.33203H0V8.66536H16V7.33203Z"
-                      fill="#D63D44"
-                    />
+                    <path d="M16 7.33203H0V8.66536H16V7.33203Z" fill="black" />
                   </svg>
                 </span>
                 {t("order-panel.payWithBonuses")}
@@ -266,7 +263,7 @@ export const OrderSidePanel = ({
                     <g clipPath="url(#clip0_1929_19716)">
                       <path
                         d="M6.411e-07 8.66667L7.33333 8.66667L7.33333 16L8.66667 16L8.66667 8.66667L16 8.66667L16 7.33333L8.66667 7.33333L8.66667 -6.411e-07L7.33333 -7.57664e-07L7.33333 7.33333L7.57664e-07 7.33333L6.411e-07 8.66667Z"
-                        fill="#D63D44"
+                        fill="black"
                       />
                     </g>
                     <defs>
@@ -393,7 +390,7 @@ export const OrderSidePanel = ({
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
-                  <path d="M16 7.33203H0V8.66536H16V7.33203Z" fill="#D63D44" />
+                  <path d="M16 7.33203H0V8.66536H16V7.33203Z" fill="black" />
                 </svg>
               </span>
               {t("order-panel.payWithCoupons")}
@@ -411,7 +408,7 @@ export const OrderSidePanel = ({
                   <g clipPath="url(#clip0_1929_19716)">
                     <path
                       d="M6.411e-07 8.66667L7.33333 8.66667L7.33333 16L8.66667 16L8.66667 8.66667L16 8.66667L16 7.33333L8.66667 7.33333L8.66667 -6.411e-07L7.33333 -7.57664e-07L7.33333 7.33333L7.57664e-07 7.33333L6.411e-07 8.66667Z"
-                      fill="#D63D44"
+                      fill="black"
                     />
                   </g>
                   <defs>

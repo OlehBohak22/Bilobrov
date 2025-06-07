@@ -233,7 +233,7 @@ const ReviewPopup: React.FC<CartPopupProps> = ({ onClose, product_id }) => {
                       <Field
                         id="email"
                         name="email"
-                        type="email"
+                        type="phone"
                         placeholder={t("reviewPopup.phonePlaceholder")}
                       />
                     </div>

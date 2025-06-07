@@ -11,6 +11,8 @@ export const BonusTab = () => {
   const { width } = useWindowSize();
   const isMobile = width < 10244;
 
+  const bonusHistory = [...(user?.bonus_history || [])].reverse();
+
   if (!user) {
     return;
   }
@@ -89,7 +91,7 @@ export const BonusTab = () => {
           {user?.bonus_history ? (
             <ul className={s.list}>
               <div className={s.scrollbarContainer}>
-                {user.bonus_history.map((item, index) => (
+                {bonusHistory.map((item, index) => (
                   <li key={index}>
                     <div className={s.transactionInfo}>
                       <div className={s.icon}>

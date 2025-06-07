@@ -223,6 +223,6 @@
 .scrollbar {
   height: 100%;
   width: 0; /* Початковий стан */
-  background: var(--primary);
+  background: rgba(26, 26, 26, 1);
   transition: width 0.1s ease-out; /* Плавне розширення */
 }

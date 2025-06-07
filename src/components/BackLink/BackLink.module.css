@@ -1,0 +1,13 @@
+.backLink {
+  display: flex;
+  align-items: center;
+  gap: 2.1vw;
+  font-family: Manrope;
+  font-weight: 500;
+  font-size: 3.7vw;
+  line-height: 100%;
+  letter-spacing: 0%;
+  color: rgba(26, 26, 26, 1);
+  padding-bottom: 6.6vw;
+  padding-top: 3vw;
+}

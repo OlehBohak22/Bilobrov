@@ -39,7 +39,7 @@
 }
 
 .disabled {
-  opacity: 0.5;
+  opacity: 0.4;
   pointer-events: none;
 }
 
@@ -49,11 +49,7 @@
       padding: 3.7vw;
     }
 
-    button:nth-child(2) {
-      svg {
-        stroke: var(--primary);
-      }
-
+    button {
       .qty {
         background-color: var(--primary);
       }

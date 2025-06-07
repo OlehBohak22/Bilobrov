@@ -22,6 +22,7 @@ import { Loader } from "../../components/Loader/Loader";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { useTranslation } from "react-i18next";
 import { Helmet } from "react-helmet";
+import { BackLink } from "../../components/BackLink/BackLink";
 
 const categories = [
   {
@@ -361,7 +362,10 @@ const AccountPage = () => {
           </div>
 
           {isMobile && tabsMenuHidden && (
-            <div className={s.tabsContent}>{renderContent()}</div>
+            <>
+              <BackLink />
+              <div className={s.tabsContent}>{renderContent()}</div>
+            </>
           )}
 
           {!isMobile && <div className={s.tabsContent}>{renderContent()}</div>}
